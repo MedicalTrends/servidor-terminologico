@@ -100,7 +100,11 @@
 
             <p:column headerText="Registro" rendered="#{cc.attrs.relationshipDefinition.ISP}">
                 <div style="text-align: center;">
-                    <h:outputText value="#{relationship.target.getCellByColumnName('registro')}"/>
+                    <p:commandLink update="@(.ispDetail)" oncomplete="PF('ispDetail').show('#{component.clientId}')" process="@this"
+                                   actionListener="#{ispbean.fetchData(relationship.target.getCellByColumnName('registro'))}">
+                        <h:outputText value="#{relationship.target.getCellByColumnName('registro')}"/>
+                        <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                    </p:commandLink>
                 </div>
             </p:column>
             <p:column headerText="Nombre" rendered="#{cc.attrs.relationshipDefinition.ISP}">
@@ -137,6 +141,21 @@
         </p:dataTable>
 
     </p:fieldset>
+
+    <p:overlayPanel widgetVar="ispDetail" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true" style="width: 600px">
+        <p:outputPanel id="descriptionSelected" styleClass="ispDetail">
+            <div class="ui-fluid ui-g">
+            <p:repeat value="#{ispbean.ispRecord.cells}" var="cell">
+                <div class="ui-g-12 ui-md-4 ui-lg-4">
+                    <p:outputLabel styleClass="label" value="#{cell.column.description}" />
+                </div>
+                <div class="ui-g-12 ui-md-8 ui-lg-8">
+                    <p:outputLabel value="#{cell}" />
+                </div>
+            </p:repeat>
+            </div>
+        </p:outputPanel>
+    </p:overlayPanel>
 
 </composite:implementation>
 </html>

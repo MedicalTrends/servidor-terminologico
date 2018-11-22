@@ -67,6 +67,14 @@
 
                         </p:outputPanel>
 
+                        <p:inputText id="helperTableRowIndex" value="#{helperTableEditBean.helperTableRowIndex}">
+                            <p:ajax oncomplete="changeHelperTableRowId();" />
+                        </p:inputText>
+
+                        <p:inputText id="helperTableRowId" type="hidden" value="#{helperTableEditBean.helperTableRowId}">
+                            <p:ajax event="change" listener="#{helperTableEditBean.updateHelperTableRowSelected}" />
+                        </p:inputText>
+
                     </div>
 
                     <p:outputPanel styleClass="edit-data-panel">
@@ -83,9 +91,15 @@
 
                             <p:ajax event="change" listener="#{helperTableEditBean.cellChangeEvent}" />
 
-                            <p:ajax event="rowSelect" listener="#{helperTableEditBean.rowSelectEvent}" process="@(.sheet)" >
-                                <f:attribute name="row" value="#{row.id}" />
+                            <p:ajax event="rowSelect" listener="#{helperTableEditBean.rowSelectEvent}" >
                             </p:ajax>
+
+                            <pe:sheetcolumn headerText="ID"
+                                            value="#{row.id}"
+                                            readonlyCell="true"
+                                            sortBy="#{row.id}"
+                                            filterBy="#{row.id}"
+                                            colType="numeric"/>
 
                             <pe:sheetcolumn headerText="CREACIÓN"
                                             value="#{row.creationDate}"
@@ -289,6 +303,15 @@
         </h:form>
 
         <script type="text/javascript">
+
+            setInterval( function() {
+                //$('.sheet').ge
+            }, 1000);
+
+            $('.finish').click( function() {
+                categories = [];
+                location.reload();
+            });
 
 
         </script>

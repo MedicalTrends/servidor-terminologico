@@ -14,6 +14,7 @@ import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.users.AuthenticationBean;
+import org.omnifaces.util.Ajax;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.data.PageEvent;
@@ -55,6 +56,10 @@ public class HelperTableEditBean implements Serializable {
     HelperTableRow helperTableRowPlaceHolder;
 
     HelperTableRow helperTableRowSelected = null;
+
+    Integer helperTableRowIndex;
+
+    Long helperTableRowId;
 
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
@@ -539,6 +544,22 @@ public class HelperTableEditBean implements Serializable {
         }
     }
 
+    public Integer getHelperTableRowIndex() {
+        return helperTableRowIndex;
+    }
+
+    public void setHelperTableRowIndex(Integer helperTableRowIndex) {
+        this.helperTableRowIndex = helperTableRowIndex;
+    }
+
+    public Long getHelperTableRowId() {
+        return helperTableRowId;
+    }
+
+    public void setHelperTableRowId(Long helperTableRowId) {
+        this.helperTableRowId = helperTableRowId;
+    }
+
     public List<SelectItem> getFilterOptionsBoolean() {
         return filterOptionsBoolean;
     }
@@ -578,12 +599,19 @@ public class HelperTableEditBean implements Serializable {
         return helperTableRowSelected;
     }
 
+    public void setHelperTableRowSelected(HelperTableRow helperTableRowSelected) {
+        this.helperTableRowSelected = helperTableRowSelected;
+    }
+
     public void rowSelectEvent(final SheetEvent event) {
         final Sheet sheet = event.getSheet();
         final int row = sheet.getSelectedRow();
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Row Selected", String.format("Row %d selected.", row)));
-        HelperTableRow helperTableRow = (HelperTableRow) UIComponent.getCurrentComponent(context).getAttributes().get("row");
+        helperTableRowIndex = row;
+        Ajax.update("form:helperTableRowIndex");
+    }
+
+    public void updateHelperTableRowSelected() {
+
     }
 
     public void addNewRow() {
