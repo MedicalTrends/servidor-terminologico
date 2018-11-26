@@ -21,6 +21,7 @@ import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static com.sun.org.apache.xerces.internal.util.XMLSymbols.EMPTY_STRING;
@@ -294,6 +295,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
                 someRelationships.add(relationship);
             }
         }
+        Collections.sort(someRelationships);
         return someRelationships;
     }
 
@@ -398,6 +400,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
                 someRelationships.add(relationship);
             }
         }
+        Collections.sort(someRelationships);
         return someRelationships;
     }
 

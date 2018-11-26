@@ -14,6 +14,8 @@
             <f:viewParam name="idHelperTable" value="#{helperTableEditBean.idHelperTable}" />
         </f:metadata>
 
+        <p:importEnum type="cl.minsal.semantikos.helpertables.BooleanOption" var="BooleanOption" />
+
         <h:form id="form">
 
             <div class="ui-g dashboard">
@@ -49,16 +51,10 @@
 
                             <div class="ui-g-12 ui-md-12 ui-lg-12">
 
-                                <p:commandButton process="@this"
+                                <p:commandButton process="@this" rendered="false"
                                                  style="float: right" icon="fa fa-plus"
                                                  update="@(.panelNewRow)"
                                                  oncomplete="PF('dialogNewRow').show()">
-                                </p:commandButton>
-
-                                <p:commandButton process="@this"
-                                                 rendered="#{helperTableEditBean.helperTableRowSelected != null}"
-                                                 style="float: right" icon="fa fa-trash"
-                                                 update="@(.sheet)">
                                 </p:commandButton>
 
                             </div>
@@ -66,14 +62,6 @@
                         </div>
 
                         </p:outputPanel>
-
-                        <p:inputText id="helperTableRowIndex" value="#{helperTableEditBean.helperTableRowIndex}">
-                            <p:ajax oncomplete="changeHelperTableRowId();" />
-                        </p:inputText>
-
-                        <p:inputText id="helperTableRowId" type="hidden" value="#{helperTableEditBean.helperTableRowId}">
-                            <p:ajax event="change" listener="#{helperTableEditBean.updateHelperTableRowSelected}" />
-                        </p:inputText>
 
                     </div>
 
@@ -91,20 +79,10 @@
 
                             <p:ajax event="change" listener="#{helperTableEditBean.cellChangeEvent}" />
 
-                            <p:ajax event="rowSelect" listener="#{helperTableEditBean.rowSelectEvent}" >
-                            </p:ajax>
-
-                            <pe:sheetcolumn headerText="ID"
-                                            value="#{row.id}"
-                                            readonlyCell="true"
-                                            sortBy="#{row.id}"
-                                            filterBy="#{row.id}"
-                                            colType="numeric"/>
-
                             <pe:sheetcolumn headerText="CREACIÓN"
                                             value="#{row.creationDate}"
                                             dateFormat="DD/MM/YYYY"
-                                            readonlyCell="true"
+                                            readonlyCell="true" styleClass="rows"
                                             sortBy="#{row.creationDate}"
                                             filterBy="#{row.creationDate}"
                                             colType="date">
@@ -137,8 +115,9 @@
 
                             <pe:sheetcolumn headerText="VIGENTE"
                                             value="#{row.valid}"
-                                            colType="checkbox"
+                                            colType="checkbox" converter="omnifaces.SelectItemsConverter"
                                             filterOptions="#{helperTableEditBean.filterOptionsBoolean}"
+                                            selectItems="#{BooleanOption.ALL_VALUES}"
                                             sortBy="#{row.valid}"
                                             filterBy="#{row.valid}"/>
 
@@ -303,16 +282,6 @@
         </h:form>
 
         <script type="text/javascript">
-
-            setInterval( function() {
-                //$('.sheet').ge
-            }, 1000);
-
-            $('.finish').click( function() {
-                categories = [];
-                location.reload();
-            });
-
 
         </script>
 

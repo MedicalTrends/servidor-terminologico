@@ -92,16 +92,7 @@ public class AuthenticationBean {
 
         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
         context.getSessionMap().remove(AUTH_KEY);
-
-        email = null;
-        password = null;
-        loggedUser = null;
-
-        try {
-            context.redirect(context.getRequestContextPath() + "/" + Constants.VIEWS_FOLDER+ "/" + Constants.LOGIN_PAGE );
-        } catch (IOException e) {
-            logger.error("Error en logout", e);
-        }
+        context.invalidateSession();
     }
 
     public static boolean isValidEmailAddress(String email) {

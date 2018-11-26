@@ -14,7 +14,7 @@
 
         <div class="ui-g">
 
-            <div class="ui-g-12 ui-md-12 ui-lg-12" style="max-width: 1200px">
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
 
                 <p:breadCrumb id="top-menu" rendered="true">
                     <p:menuitem value="Inicio" url="/" />
@@ -59,19 +59,19 @@
 
                                                 </p:outputPanel>
 
-                                                <p:column style="width: 20px; border: 0px; padding: 0px 10px; margin-top: 6px; text-align: center">
-                                                    <i class="fa fa-search fa-lg" style="opacity: 0.5"/>
+                                                <p:column style="width: 20px; border: 0px; padding: 0px 10px; margin-top: 6px; text-align: center" rendered="false">
+                                                    <i class="fa fa-search fa-lg" />
                                                 </p:column>
 
-                                                <p:column style="width: 90%; float: left; border: 0px; padding: 0px 0px; margin-top: 6px" styleClass="context">
-                                                    <h:outputText value="#{description.term}" style="font-weight: normal;" />
+                                                <p:column style="width: 90%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px" styleClass="context">
+                                                    <h:outputText value="#{description.term}" style="font-weight: normal; font-size: medium" />
                                                 </p:column>
 
-                                                <p:column style="width: 90%; float: left; ; border: 0px; padding: 0px 0px; margin-bottom: 12px">
+                                                <p:column style="width: 90%; float: left; ; border: 0px; padding: 0px 10px; margin-bottom: 12px">
                                                     <h:outputText value="#{description.conceptSMTK.category.name}" style="font-size: small;" />
                                                 </p:column>
 
-                                                <p:column style="width: 90%; float: left; ; border: 0px;  padding: 0px 0px; margin-bottom: 10px" rendered="false">
+                                                <p:column style="width: 90%; float: left; ; border: 0px;  padding: 0px 10px; margin-bottom: 10px" rendered="false">
                                                     <h:outputText value="#{description.descriptionType.name}" style="font-size: small;" />
                                                 </p:column>
 
@@ -127,6 +127,15 @@
                                     <p:commandButton value="Filtrar" onclick="listenOnClick();" icon="fa fa-filter">
                                     </p:commandButton>
 
+                                </div>
+
+                                <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding-bottom: 0px">
+                                    <p:outputPanel styleClass="search">
+                                        <p:outputLabel id="summary" style="font-size: small; color: #212121"
+                                                       value="Página #{browserBean.page} de #{browserBean.results} conceptos"/>
+                                        <p:remoteCommand name="onload" update="summary"
+                                                         autoRun="true" />
+                                    </p:outputPanel>
                                 </div>
 
                                 <!--/p:panelGrid-->

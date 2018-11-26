@@ -7,6 +7,7 @@ import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.crossmaps.*;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import cl.minsal.semantikos.modelweb.RelationshipWeb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,7 @@ import java.util.List;
  *
  * @author Andrés Farías
  */
-public class Relationship extends PersistentEntity implements AuditableEntity, Serializable {
+public class Relationship extends PersistentEntity implements Comparable<Relationship>, AuditableEntity, Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(Relationship.class);
 
@@ -386,6 +387,11 @@ public class Relationship extends PersistentEntity implements AuditableEntity, S
         result = 31 * result + (toBeUpdated ? 1 : 0);
         result = 31 * result + (relationshipAttributes != null ? relationshipAttributes.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public int compareTo(Relationship o) {
+        return this.getOrder() - o.getOrder();
     }
 
     public RelationshipAttribute getAttribute(RelationshipAttributeDefinition definition) {

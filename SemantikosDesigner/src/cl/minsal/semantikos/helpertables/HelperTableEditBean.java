@@ -55,12 +55,6 @@ public class HelperTableEditBean implements Serializable {
 
     HelperTableRow helperTableRowPlaceHolder;
 
-    HelperTableRow helperTableRowSelected = null;
-
-    Integer helperTableRowIndex;
-
-    Long helperTableRowId;
-
     @ManagedProperty(value = "#{authenticationBean}")
     private AuthenticationBean authenticationBean;
 
@@ -83,8 +77,11 @@ public class HelperTableEditBean implements Serializable {
 
     @PostConstruct
     protected void initialize() {
-        filterOptionsBoolean.add(new SelectItem(true));
-        filterOptionsBoolean.add(new SelectItem(false));
+        filterOptionsBoolean.add(new SelectItem("", "Todos"));
+        filterOptionsBoolean.add(new SelectItem(true, "Si"));
+        filterOptionsBoolean.add(new SelectItem(false, "No"));
+
+        //filterOptionsBoolean = createEnumList(BooleanOption.values());
     }
 
     public void createOrUpdateHelperTable() {
@@ -544,22 +541,6 @@ public class HelperTableEditBean implements Serializable {
         }
     }
 
-    public Integer getHelperTableRowIndex() {
-        return helperTableRowIndex;
-    }
-
-    public void setHelperTableRowIndex(Integer helperTableRowIndex) {
-        this.helperTableRowIndex = helperTableRowIndex;
-    }
-
-    public Long getHelperTableRowId() {
-        return helperTableRowId;
-    }
-
-    public void setHelperTableRowId(Long helperTableRowId) {
-        this.helperTableRowId = helperTableRowId;
-    }
-
     public List<SelectItem> getFilterOptionsBoolean() {
         return filterOptionsBoolean;
     }
@@ -595,24 +576,6 @@ public class HelperTableEditBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Actualización exitosa", Integer.toString(rowUpdates) + " registros actualizados"));
     }
 
-    public HelperTableRow getHelperTableRowSelected() {
-        return helperTableRowSelected;
-    }
-
-    public void setHelperTableRowSelected(HelperTableRow helperTableRowSelected) {
-        this.helperTableRowSelected = helperTableRowSelected;
-    }
-
-    public void rowSelectEvent(final SheetEvent event) {
-        final Sheet sheet = event.getSheet();
-        final int row = sheet.getSelectedRow();
-        helperTableRowIndex = row;
-        Ajax.update("form:helperTableRowIndex");
-    }
-
-    public void updateHelperTableRowSelected() {
-
-    }
 
     public void addNewRow() {
         manager.insertRow(helperTableRowPlaceHolder, authenticationBean.getLoggedUser().getEmail());
@@ -623,4 +586,13 @@ public class HelperTableEditBean implements Serializable {
         helperTableSelected.getRows().add(helperTableRowPlaceHolder);
     }
 
+    private <T extends Enum<?>> List<SelectItem> createEnumList(T[] values) {
+        List<SelectItem> result = new ArrayList<SelectItem>();
+        result.add(new SelectItem("", "Todos"));
+        for (T value : values)
+            result.add(new SelectItem(value, value.name()));
+        return result;
+    }
+
 }
+

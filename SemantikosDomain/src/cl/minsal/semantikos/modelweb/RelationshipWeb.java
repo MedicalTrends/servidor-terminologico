@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RelationshipWeb extends Relationship implements Comparable<RelationshipWeb>, Serializable {
+public class RelationshipWeb extends Relationship implements Serializable {
 
     private boolean hasBeenModified;
 
@@ -81,14 +81,10 @@ public class RelationshipWeb extends Relationship implements Comparable<Relation
         return null;
     }
 
-    public Relationship toRelationship(){
+    public Relationship toRelationship() {
         return new Relationship(this.getSourceConcept(), this.getTarget(), this.getRelationshipDefinition(), this.getRelationshipAttributes(), null);
     }
 
-    @Override
-    public int compareTo(RelationshipWeb o) {
-        return this.getOrder() - o.getOrder();
-    }
 
     public RelationshipAttribute getAttribute(RelationshipAttributeDefinition definition) {
         for (RelationshipAttribute attribute : getRelationshipAttributes()) {

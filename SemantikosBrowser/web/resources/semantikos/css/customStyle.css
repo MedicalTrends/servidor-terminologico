@@ -287,3 +287,7 @@
     min-width: 223px !important;
 }
 */
+
+.layout-main {
+    max-width: 1200px;
+}

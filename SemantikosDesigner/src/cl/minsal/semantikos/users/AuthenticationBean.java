@@ -360,7 +360,7 @@ public class AuthenticationBean {
             item7.setUpdate("mainContent");
             adminSubmenu.addElement(item7);
 
-            DefaultMenuItem item8 = new DefaultMenuItem("Tablas");
+            DefaultMenuItem item8 = new DefaultMenuItem("Tablas Auxiliares");
             item8.setUrl("/views/helpertables");
             item8.setIcon("fa fa-columns");
             item8.setId("rm_helpertables");
@@ -374,10 +374,10 @@ public class AuthenticationBean {
             item9.setIcon("fa fa-list-alt");
             item9.setId("rm_snapshot");
             item9.setUpdate("mainContent");
-            adminSubmenu.addElement(item9);
+            //adminSubmenu.addElement(item9);
 
             DefaultMenuItem item10 = new DefaultMenuItem("Extracción Fármacos");
-            item10.setUrl("/views/extract");
+            item10.setUrl("/views/concepts/extraction");
             item10.setIcon("fa fa-file-excel-o");
             item10.setStyleClass("loader-trigger");
             item10.setId("rm_extraction");

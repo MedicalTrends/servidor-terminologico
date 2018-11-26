@@ -4,6 +4,8 @@ import cl.minsal.semantikos.browser.AuthenticationBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,6 +39,11 @@ public class AuthFilterBrowser implements Filter {
                 ((HttpServletResponse) response).setHeader("Pragma", "no-cache"); // HTTP 1.0.
                 ((HttpServletResponse) response).setHeader("Expires", "0");
                 req.getSession().invalidate();
+                AuthenticationBean auth = (AuthenticationBean) req.getSession().getAttribute("authenticationBean");
+                if(auth != null) {
+                    auth.logout();
+                }
+
             }
         }
 
