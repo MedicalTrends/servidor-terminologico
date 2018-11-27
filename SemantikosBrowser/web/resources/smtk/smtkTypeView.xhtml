@@ -21,9 +21,38 @@
     <p:fieldset id="multiplicityN_with_attributes" legend="#{cc.attrs.relationshipDefinition.name}"
              rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}">
 
+        <div class="ui-fluid ui-g">
+
+            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}">
+                <ol type="1">
+                    <p:repeat value="#{concept.selectedConcept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}" var="relationship">
+                        <li>
+                            <p:link outcome="/views/concept" value="#{concept.formatSMTKRelationship(relationship)}" styleClass="value" >
+                                <f:param name="conceptID" value="#{relationship.target.conceptID}" />
+                            </p:link>
+                            <p:outputLabel outcome="/views/concept" value="#{concept.formatSMTKRelationshipAttributes(relationship)}" styleClass="value"/>
+                        </li>
+                    </p:repeat>
+                </ol>
+            </p:outputPanel>
+
+            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() == null}">
+                <ul>
+                    <p:repeat value="#{concept.selectedConcept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}" var="relationship">
+                        <li>
+                            <p:link outcome="/views/concept" value="#{concept.formatSMTKRelationship(relationship)}" styleClass="value" >
+                                <f:param name="conceptID" value="#{relationship.target.conceptID}" />
+                            </p:link>
+                            <p:outputLabel outcome="/views/concept" value="#{concept.formatSMTKRelationshipAttributes(relationship)}" styleClass="value"/>
+                        </li>
+                    </p:repeat>
+                </ul>
+            </p:outputPanel>
+
+        </div>
 
         <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
-                     id="tableRelationship3"
+                     id="tableRelationship3" rendered="false"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
                      draggableRows="false"
                      style="margin: 0px;" reflow="true"
@@ -60,8 +89,6 @@
             </p:columns>
 
         </p:dataTable>
-
-        <br/>
 
     </p:fieldset>
 

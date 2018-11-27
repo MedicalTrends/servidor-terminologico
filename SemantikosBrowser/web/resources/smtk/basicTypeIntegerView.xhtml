@@ -46,10 +46,17 @@
                 </div>
 
                 <!-- Atributos de relación -->
-                <smtk:attributes concept="#{cc.attrs.concept}"
-                                 relationshipDefinition="#{cc.attrs.relationshipDefinition}"
-                                 relationship="#{relationship}"
-                />
+                <p:repeat
+                        offset="0"
+                        size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
+                        step="1"
+                        varStatus="var"
+                        value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
+                        var="attribute">
+                    <smtk:basicTypeAttributeCellView attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.basicType}" />
+                    <smtk:helperTableTypeAttributeCellView attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
+                    <smtk:smtkTypeAttributeCellView attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.SMTKType}" />
+                </p:repeat>
 
             </div>
         </p:repeat>
