@@ -91,7 +91,7 @@
         <p:dataTable id="otherDescriptions"
                      styleClass="otherDescriptions TextAlCenter"
                      emptyMessage="El concepto no tiene otras descripciones"
-                     var="description"
+                     var="description" widgetVar="descriptionsTable"
                      style="margin: 10px;"
                      value="#{cc.attrs.descriptions}"
                      editable="true"
@@ -180,6 +180,22 @@
                 </div>
             </p:column>
 
+            <p:column headerText="Estado" filterBy="#{description.validityUntil eq null}"
+                      filterMatchMode="exact"
+                      rendered="#{conceptBean.concept.modeled}">
+                <f:facet name="filter">
+                    <p:selectOneMenu onchange="PF('descriptionsTable').filter()" value="true">
+                        <f:selectItem itemLabel="Todas" itemValue="#{null}" noSelectionOption="true" />
+                        <f:selectItem itemLabel="Vigentes" itemValue="#{true}" />
+                        <f:selectItem itemLabel="No Vigentes" itemValue="#{false}" />
+                    </p:selectOneMenu>
+                </f:facet>
+                <div style="text-align: center;">
+                    <h:outputText value="Vigente" rendered="#{description.validityUntil == null}" />
+                    <h:outputText value="No vigente" rendered="#{description.validityUntil != null}" />
+                </div>
+            </p:column>
+
             <p:column headerText="Acción">
 
                 <div style="text-align: center">
@@ -202,6 +218,17 @@
                                    update="@(.otherDescriptions)"
                                    style="padding: 5px" icon="fa fa-trash fa-lg"
                                    rendered="#{ not conceptBean.concept.modeled}">
+                        <p:confirm header="Confirmation" message="¿Desea eliminar esta descripción?"
+                                   icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton actionListener="#{descriptionBeans.removeDescription(description)}"
+                                     ajax="true"
+                                     process="@this"
+                                     title="Eliminar Descripción"
+                                     update="@(.otherDescriptions)"
+                                     style="padding: 5px" icon="fa fa-trash fa-lg"
+                                     rendered="#{ conceptBean.concept.modeled}">
                         <p:confirm header="Confirmation" message="¿Desea eliminar esta descripción?"
                                    icon="ui-icon-alert"/>
                     </p:commandButton>

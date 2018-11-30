@@ -23,7 +23,7 @@
             value="#{cc.attrs.relationship.getAttributesByAttributeDefinition(cc.attrs.attribute)}"
             var="attribute">
 
-        <h:outputText value="#{attribute.target.description}" style="font-size: small;" />
+        <h:outputText value="#{attribute.target.description}" title="#{attribute.relationAttributeDefinition.name}" />
 
     </p:repeat>
 

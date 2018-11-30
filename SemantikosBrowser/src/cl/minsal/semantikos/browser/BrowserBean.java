@@ -256,7 +256,7 @@ public class BrowserBean implements Serializable {
 
                 //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptsBy(category, first, pageSize);
 
-                if(isFilterChanged) {
+                   if(isFilterChanged) {
                     browserQuery.setPageNumber(0);
                     RequestContext context = RequestContext.getCurrentInstance();
                     context.execute("PF('conceptTable').getPaginator().setPage(0);");
@@ -280,7 +280,11 @@ public class BrowserBean implements Serializable {
                 }
                 */
 
+                int rowCount = 0;
+
                 List<ConceptSMTK> conceptSMTKs = queryManager.executeQuery(browserQuery);
+
+                rowCount = queryManager.countQueryResults(browserQuery);
 
                 browserQuery.setTruncateMatch(true);
 
@@ -290,7 +294,7 @@ public class BrowserBean implements Serializable {
                     }
                 }
 
-                this.setRowCount(queryManager.countQueryResults(browserQuery));
+                this.setRowCount(rowCount + queryManager.countQueryResults(browserQuery));
 
                 results = this.getRowCount();
                 seconds = (float) ((currentTimeMillis() - init)/1000.0);

@@ -65,7 +65,51 @@
     <p:fieldset id="helperTableTypeCollectionWithAttributes" legend="#{cc.attrs.relationshipDefinition.name}"
                 rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}">
 
-        <p:dataTable id="collectionValuesWithAttributes"
+        <div class="ui-fluid ui-g">
+
+            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}">
+
+                <ol type="1">
+
+                    <p:repeat value="#{cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}" var="relationship">
+
+                        <li>
+
+                            <p:outputLabel value="#{conceptView.formatSMTKRelationship(relationship)}" styleClass="value"/>
+
+                            <p:outputLabel outcome="/views/concepts/conceptView" value="#{conceptView.formatSMTKRelationshipAttributes(relationship)}" styleClass="value"/>
+
+                        </li>
+
+                    </p:repeat>
+
+                </ol>
+
+            </p:outputPanel>
+
+            <p:outputPanel rendered="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() == null}">
+
+                <ul>
+
+                    <p:repeat value="#{conceptView.selectedConcept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}" var="relationship">
+
+                        <li>
+
+                            <p:outputLabel value="#{conceptView.formatSMTKRelationship(relationship)}" styleClass="value"/>
+
+                            <p:outputLabel outcome="/views/concepts/conceptView" value="#{conceptView.formatSMTKRelationshipAttributes(relationship)}" styleClass="value"/>
+
+                        </li>
+
+                    </p:repeat>
+
+                </ul>
+
+            </p:outputPanel>
+
+        </div>
+
+        <p:dataTable id="collectionValuesWithAttributes" rendered="false"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
                      var="relationship"
                      value="#{cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}"

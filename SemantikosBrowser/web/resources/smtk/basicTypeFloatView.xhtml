@@ -43,20 +43,20 @@
 
                     <h:outputText id="basicTypeValue2" value="#{relationship.target}" styleClass="value" />
 
-                </div>
+                    <!-- Atributos de relación -->
+                    <p:repeat
+                            offset="0"
+                            size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
+                            step="1"
+                            varStatus="var"
+                            value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
+                            var="attribute">
+                        <smtk:basicTypeAttributeCellView attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.basicType}" />
+                        <smtk:helperTableTypeAttributeCellView attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
+                        <smtk:smtkTypeAttributeCellView attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.SMTKType}" />
+                    </p:repeat>
 
-                <!-- Atributos de relación -->
-                <p:repeat
-                        offset="0"
-                        size="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions.size()}"
-                        step="1"
-                        varStatus="var"
-                        value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
-                        var="attribute">
-                    <smtk:basicTypeAttributeCellView attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.basicType}" />
-                    <smtk:helperTableTypeAttributeCellView attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
-                    <smtk:smtkTypeAttributeCellView attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.SMTKType}" />
-                </p:repeat>
+                </div>
 
 
             </div>

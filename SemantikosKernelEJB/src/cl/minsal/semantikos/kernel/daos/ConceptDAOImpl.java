@@ -876,6 +876,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         conceptId = resultSet.getString("conceptid");
         String observation = resultSet.getString("observation");
         long idTagSMTK = resultSet.getLong("id_tag_smtk");
+        Timestamp validityUntil = resultSet.getTimestamp("validity_until");
 
         /**
          * Try y catch ignored porque no todas las funciones de la BD que recuperan Concepts de la BD traen esta
@@ -898,6 +899,8 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         /* Se recuperan las descripciones del concepto */
         conceptSMTK.setDescriptions(descriptionDAO.getDescriptionsByConcept(conceptSMTK));
+
+        conceptSMTK.setValidUntil(validityUntil);
 
         /* Se recuperan sus Etiquetas, solo si posee */
         /*

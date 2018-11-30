@@ -4,12 +4,17 @@ import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
+import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
+import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.refsets.RefSet;
+import cl.minsal.semantikos.model.relationships.BasicTypeType;
 import cl.minsal.semantikos.model.relationships.Relationship;
+import cl.minsal.semantikos.model.relationships.RelationshipAttribute;
 import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +25,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -280,5 +286,85 @@ public class ConceptViewBean implements Serializable {
     public void setConceptBeanExport(ConceptExportMBean conceptBeanExport) {
         this.conceptBeanExport = conceptBeanExport;
     }
+
+    public String formatSMTKRelationship(Relationship relationship) {
+
+        String term = "";
+
+        if(relationship.getRelationshipDefinition().getTargetDefinition().isSMTKType()) {
+            ConceptSMTK conceptSMTK = (ConceptSMTK) relationship.getTarget();
+            term = conceptSMTK.getDescriptionFavorite().getTerm() + " ";
+        }
+        if(relationship.getRelationshipDefinition().getTargetDefinition().isHelperTable()) {
+            HelperTableRow helperTableRow = (HelperTableRow) relationship.getTarget();
+            term = helperTableRow.getDescription() + " ";
+        }
+
+        return term;
+    }
+
+    public String formatSMTKRelationshipAttributes(Relationship relationship) {
+
+        String term = "";
+
+        if(relationship.getRelationshipDefinition().getTargetDefinition().isSMTKType()) {
+            if (relationship.getRelationshipDefinition().isSubstance()) {
+                ConceptSMTK conceptSMTK = (ConceptSMTK) relationship.getTarget();
+                //term = conceptSMTK.getDescriptionFavorite().getTerm() + " ";
+
+                for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
+
+                    if(relationshipAttribute.getRelationAttributeDefinition().isOrderAttribute()) {
+                        continue;
+                    }
+
+                    if(relationshipAttribute.getRelationAttributeDefinition().isCantidadPPAttribute()) {
+                        term = term + "/";
+                    }
+
+                    if(relationshipAttribute.getRelationAttributeDefinition().isUnidadPotenciaAttribute() ||
+                            relationshipAttribute.getRelationAttributeDefinition().isUnidadPPAttribute() ||
+                            relationshipAttribute.getRelationAttributeDefinition().isUnidadAttribute() ||
+                            relationshipAttribute.getRelationAttributeDefinition().isUnidadPackMultiAttribute() ||
+                            relationshipAttribute.getRelationAttributeDefinition().isUnidadVolumenTotalAttribute() ||
+                            relationshipAttribute.getRelationAttributeDefinition().isUnidadVolumenAttribute()) {
+                        HelperTableRow helperTableRow = (HelperTableRow) relationshipAttribute.getTarget();
+                        term = term + helperTableRow.getCellByColumnName("descripcion abreviada").getStringValue() + " ";
+                    }
+                    else {
+                        if(relationshipAttribute.getRelationAttributeDefinition().isCantidadPPAttribute() &&
+                                Float.parseFloat(relationshipAttribute.getTarget().toString()) == 1) {
+                            continue;
+                        }
+
+                        BasicTypeValue basicTypeValue = (BasicTypeValue) relationshipAttribute.getTarget();
+                        BasicTypeDefinition basicTypeDefinition = (BasicTypeDefinition) relationshipAttribute.getRelationAttributeDefinition().getTargetDefinition();
+
+                        if (basicTypeDefinition.getType().equals(BasicTypeType.FLOAT_TYPE)) {
+                            DecimalFormat df = new DecimalFormat("###,###.##");
+                            term = term + df.format(Float.parseFloat(basicTypeValue.getValue().toString())) + " ";
+                        }
+                    }
+                }
+            }
+        }
+        if(relationship.getRelationshipDefinition().getTargetDefinition().isHelperTable()) {
+            HelperTableRow helperTableRow = (HelperTableRow) relationship.getTarget();
+            //term = helperTableRow.getDescription() + " ";
+
+            for (RelationshipAttribute relationshipAttribute : relationship.getRelationshipAttributes()) {
+
+                if(relationshipAttribute.getRelationAttributeDefinition().isOrderAttribute()) {
+                    continue;
+                }
+
+                term = " " + term + relationshipAttribute.getTarget().toString() + " ";
+            }
+        }
+
+        return term;
+
+    }
+
 
 }

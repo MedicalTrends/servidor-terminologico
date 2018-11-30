@@ -188,23 +188,23 @@
 
                         <p:growl id="growl" showDetail="true" showSummary="true"/>
 
-                        <p:column headerText="Categoría" sortBy="#{1}">
+                        <p:column headerText="Categoría" sortBy="#{1}" style="font-size: small">
                             <h:outputText value="#{description.conceptSMTK.category.name}"/>
                         </p:column>
 
-                        <p:column headerText="Término Preferido" sortBy="#{2}">
+                        <p:column headerText="Término Preferido" sortBy="#{2}" style="font-size: small">
                             <h:outputText value="#{description.term}"/>
                         </p:column>
 
-                        <p:column headerText="Tipo" style="width: 10%">
+                        <p:column headerText="Tipo" style="font-size: small">
                             <h:outputText value="#{description.descriptionType.name}"/>
                         </p:column>
 
-                        <p:column headerText="STK_ID" style="width: 10%">
+                        <p:column headerText="STK_ID" style="font-size: small">
                             <h:outputText value="#{description.conceptSMTK.conceptID}"/>
                         </p:column>
 
-                        <p:column headerText="SCT_ID" style="width: 10%">
+                        <p:column headerText="SCT_ID" style="font-size: small">
                             <p:outputPanel>
                                 <smtk:sctTypeCell relationshipDefinition="#{description.conceptSMTK.relationships.get(0).relationshipDefinition}"
                                                   concept="#{description.conceptSMTK}"
@@ -213,11 +213,11 @@
                             </p:outputPanel>
                         </p:column>
 
-                        <p:column headerText="FSN_DSC">
+                        <p:column headerText="FSN_DSC" style="font-size: small">
                             <h:outputText value="#{description.conceptSMTK.descriptionFSN.term}"/>
                         </p:column>
 
-                        <p:column headerText="RefSet" priority="6">
+                        <p:column headerText="RefSet" style="font-size: small">
                             <p:repeat
                                     offset="0"
                                     size="#{descriptionsBrowserBean.refSetManager.getRefsetsBy(description.conceptSMTK).size()}"
@@ -232,18 +232,16 @@
                             </p:repeat>
                         </p:column>
 
-                        <p:column headerText="Acciones" exportable="false" style="width: 10%; text-align: center">
+                        <p:column headerText="Acciones" exportable="false" style="text-align: center">
 
                             <div style="text-align: center;">
 
-
-
-                                <p:button outcome="/views/concepts/conceptView" title="Consultar" style="padding: 5px"
+                                <p:button outcome="/views/concepts/conceptView" title="Consultar"
                                 icon="fa fa-eye fa-lg">
                                     <f:param name="conceptID" value="#{description.conceptSMTK.conceptID}" />
                                 </p:button>
 
-                                <p:button outcome="/views/concepts/conceptEdit" title="Editar" style="padding: 5px"
+                                <p:button outcome="/views/concepts/conceptEdit" title="Editar"
                                           rendered="#{profilePermissionsBeans.modeler}" icon="fa fa-edit fa-lg">
                                     <f:param name="idConcept" value="#{description.conceptSMTK.id}" />
                                 </p:button>

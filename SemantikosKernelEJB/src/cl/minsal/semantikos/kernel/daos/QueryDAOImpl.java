@@ -709,7 +709,7 @@ public class QueryDAOImpl implements QueryDAO {
             }
             else{
                 if(param.getType() == String.class) {
-                    call.setString(paramNumber, param.getValue().toString());
+                    call.setString(paramNumber, param.getValue().toString().trim());
                     return;
                 }
                 if(param.getType() == Long.class) {

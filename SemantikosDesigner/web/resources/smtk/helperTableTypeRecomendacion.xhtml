@@ -38,11 +38,11 @@
 
                 <div class="ui-g">
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
                         <p:outputLabel value="#{cc.attrs.relationshipDefinition.name}"/>
                     </div>
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
                         <p:selectOneMenu id="findHTRecords6" scrollHeight="200"
                                          forceSelection="true"
@@ -63,7 +63,6 @@
                             </p:column>
                             <p:ajax event="itemSelect"
                                     listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.selectedHelperTableRecord)}"
-
                                     process="@this"/>
                             <f:attribute name="helperTable" value="#{cc.attrs.relationshipDefinition.targetDefinition}"  />
                             <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
@@ -78,7 +77,7 @@
 
                 <div class="ui-g">
 
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    <div class="ui-g-12 ui-md-4 ui-lg-2">
                         <p:outputLabel value="Indicadores"/>
                     </div>
 
