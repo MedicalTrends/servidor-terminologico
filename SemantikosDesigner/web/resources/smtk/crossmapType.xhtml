@@ -242,7 +242,7 @@
                 <h:outputText value="#{relationship.getDateCreationFormat()}"/>
             </p:column>
 
-            <p:column headerText="Acción" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}" style="text-align: center;">
+            <p:column headerText="Acción" rendered="#{profilePermissionsBeans.modeler}" style="text-align: center;">
                 <p:commandButton
                         icon="fa fa-trash"
                         title="Eliminar"
