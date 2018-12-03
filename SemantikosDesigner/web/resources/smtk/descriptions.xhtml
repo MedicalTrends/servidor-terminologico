@@ -89,7 +89,7 @@
         </p:outputPanel>
 
         <p:dataTable id="otherDescriptions"
-                     styleClass="otherDescriptions TextAlCenter"
+                     styleClass="otherDescriptions"
                      emptyMessage="El concepto no tiene otras descripciones"
                      var="description" widgetVar="descriptionsTable"
                      style="margin: 10px;"
@@ -222,13 +222,13 @@
                                    icon="ui-icon-alert"/>
                     </p:commandButton>
 
-                    <p:commandButton actionListener="#{descriptionBeans.removeDescription(description)}"
+                    <p:commandButton actionListener="#{descriptionBeans.invalidateDescription(description)}"
                                      ajax="true"
                                      process="@this"
                                      title="Eliminar Descripción"
                                      update="@(.otherDescriptions)"
                                      style="padding: 5px" icon="fa fa-trash fa-lg"
-                                     rendered="#{ conceptBean.concept.modeled}">
+                                     rendered="#{ conceptBean.concept.modeled and description.validityUntil eq null}">
                         <p:confirm header="Confirmation" message="¿Desea eliminar esta descripción?"
                                    icon="ui-icon-alert"/>
                     </p:commandButton>

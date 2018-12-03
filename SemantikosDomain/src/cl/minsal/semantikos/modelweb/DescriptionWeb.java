@@ -67,6 +67,7 @@ public class DescriptionWeb extends Description implements Serializable {
         super.setTerm(descriptionWeb.getTerm());
         super.setDescriptionType(descriptionWeb.getDescriptionType());
         super.setCaseSensitive(descriptionWeb.isCaseSensitive());
+        super.setValidityUntil(descriptionWeb.getValidityUntil());
         this.setRepresentation(descriptionWeb.getRepresentation());
     }
 

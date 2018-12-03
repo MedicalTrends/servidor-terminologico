@@ -11,6 +11,7 @@ import cl.minsal.semantikos.model.tags.Tag;
 
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -165,7 +166,7 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
         DescriptionType favoriteType = DescriptionTypeFactory.getInstance().getFavoriteDescriptionType();
 
         for (DescriptionWeb descriptionWeb : getDescriptionsWeb()) {
-            if (!descriptionWeb.getDescriptionType().equals(fsnType) && !descriptionWeb.getDescriptionType().equals(favoriteType) && descriptionWeb.isValid()) {
+            if (!descriptionWeb.getDescriptionType().equals(fsnType) && !descriptionWeb.getDescriptionType().equals(favoriteType) /*&& descriptionWeb.isValid()*/) {
                 otherDescriptions.add(descriptionWeb);
             }
         }
@@ -297,6 +298,15 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
         this.descriptionsWeb.remove(new DescriptionWeb(description.getId(), description));
     }
 
+    /**
+     * Este método es responsable de invalidar una descripción de un concepto.
+     *
+     * @param description La descripción que es removida.
+     */
+    public void invalidateDescriptionWeb(Description description) {
+        description.setValidityUntil(new Timestamp(System.currentTimeMillis()));
+        //this.descriptionsWeb.remove(new DescriptionWeb(description.getId(), description));
+    }
 
     public void addDescriptionWeb(DescriptionWeb descriptionWeb) {
         this.addDescription(descriptionWeb);
@@ -500,8 +510,9 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
         //Restaurar descripciones a su estado original
         for (DescriptionWeb descriptionWeb : descriptionsWeb) {
             for (DescriptionWeb _descriptionWeb : _concept.getDescriptionsWeb()) {
-                if(descriptionWeb.getId()==_descriptionWeb.getId() && descriptionWeb.isPersistent() )
+                if(descriptionWeb.getId() ==_descriptionWeb.getId() && descriptionWeb.isPersistent() ) {
                     descriptionWeb.restore(_descriptionWeb);
+                }
             }
         }
 

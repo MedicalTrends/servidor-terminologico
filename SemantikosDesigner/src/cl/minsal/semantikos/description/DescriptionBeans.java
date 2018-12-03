@@ -116,6 +116,15 @@ public class DescriptionBeans {
     }
 
     /**
+     * Este método es el encargado de remover una descripción específica de la lista de descripciones del concepto.
+     */
+    public void invalidateDescription(Description description) {
+        conceptBean.getConcept().invalidateDescriptionWeb(description);
+        RequestContext reqCtx = RequestContext.getCurrentInstance();
+        reqCtx.execute("PF('descriptionsTable').filter();");
+    }
+
+    /**
      * Este método es el encargado de trasladar las descripciones al concepto especial no válido
      */
     public void traslateDescriptionNotValid() {
