@@ -294,7 +294,11 @@ public class BrowserBean implements Serializable {
                     }
                 }
 
-                this.setRowCount(rowCount + queryManager.countQueryResults(browserQuery));
+                if(rowCount == 0) {
+                    rowCount = queryManager.countQueryResults(browserQuery);
+                }
+
+                this.setRowCount(rowCount);
 
                 results = this.getRowCount();
                 seconds = (float) ((currentTimeMillis() - init)/1000.0);

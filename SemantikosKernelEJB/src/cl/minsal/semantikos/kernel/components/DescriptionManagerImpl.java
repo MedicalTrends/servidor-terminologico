@@ -163,7 +163,8 @@ public class DescriptionManagerImpl implements DescriptionManager {
     }
 
     @Override
-    public void updateDescription(@NotNull ConceptSMTK conceptSMTK, @NotNull Description initDescription, @NotNull Description finalDescription, @NotNull User user) {
+    public void updateDescription(@NotNull ConceptSMTK conceptSMTK, @NotNull Description initDescription,
+                                  @NotNull Description finalDescription, @NotNull User user) {
 
         logger.info("Se actualizan descripciones. \nOriginal: " + initDescription + "\nFinal: " + finalDescription);
 
@@ -171,12 +172,13 @@ public class DescriptionManagerImpl implements DescriptionManager {
         new DescriptionEditionBR().validatePreConditions(initDescription, finalDescription);
 
         /* Se actualiza el modelo de negocio primero */
-        if(initDescription.getConceptSMTK().getId()!=finalDescription.getConceptSMTK().getId()){
+        if(initDescription.getConceptSMTK().getId() != finalDescription.getConceptSMTK().getId()) {
             finalDescription.setId(PersistentEntity.NON_PERSISTED_ID);
             descriptionDAO.invalidate(initDescription);
             finalDescription.setConceptSMTK(conceptSMTK);
             this.bindDescriptionToConcept(conceptSMTK, finalDescription, true, user);
-        }else{
+        }
+        else {
             descriptionDAO.update(finalDescription);
         }
 

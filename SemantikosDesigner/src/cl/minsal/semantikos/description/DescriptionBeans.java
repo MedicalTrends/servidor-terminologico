@@ -4,6 +4,7 @@ import cl.minsal.semantikos.concept.ConceptBean;
 import cl.minsal.semantikos.messages.MessageBean;
 import cl.minsal.semantikos.MainMenuBean;
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.audit.EliminationCausal;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.descriptions.NoValidDescription;
@@ -16,7 +17,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,9 +64,14 @@ public class DescriptionBeans {
 
     private String error = "";
 
+    private List<SelectItem> eliminationCausals = new ArrayList<>();
+
+    private SelectItem selectedCausal;
+
     @PostConstruct
     public void init() {
         descriptionEdit= new DescriptionWeb();
+        eliminationCausals = createEnumList(EliminationCausal.values());
     }
 
     /**
@@ -223,7 +231,6 @@ public class DescriptionBeans {
             return true;
         }
 
-
         return false;
     }
 
@@ -249,5 +256,30 @@ public class DescriptionBeans {
 
     public void setMainMenuBean(MainMenuBean mainMenuBean) {
         this.mainMenuBean = mainMenuBean;
+    }
+
+    private <T extends Enum<?>> List<SelectItem> createEnumList(T[] values) {
+        List<SelectItem> result = new ArrayList<SelectItem>();
+        result.add(new SelectItem("", "Todos"));
+        for (T value : values) {
+            result.add(new SelectItem(value, value.name()));
+        }
+        return result;
+    }
+
+    public List<SelectItem> getEliminationCausals() {
+        return eliminationCausals;
+    }
+
+    public void setEliminationCausals(List<SelectItem> eliminationCausals) {
+        this.eliminationCausals = eliminationCausals;
+    }
+
+    public SelectItem getSelectedCausal() {
+        return selectedCausal;
+    }
+
+    public void setSelectedCausal(SelectItem selectedCausal) {
+        this.selectedCausal = selectedCausal;
     }
 }

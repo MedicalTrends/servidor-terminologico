@@ -113,7 +113,6 @@ public class InstitutionsBrowserBean {
 
     public Institution getInstitutionById(long institutionId){
         return institutionManager.getInstitutionById(institutionId);
-
     }
 
     public AuditManager getAuditManager() {

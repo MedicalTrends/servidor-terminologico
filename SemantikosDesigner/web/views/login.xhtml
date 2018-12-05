@@ -95,6 +95,7 @@
         $(document).ready(function() {
             listenOnClick();
             $.removeCookie('myCookie');
+            changeCapthaSize();
         });
 
         function changeCapthaSize() {
@@ -115,10 +116,6 @@
                 });
             }
         };
-
-        $(window).ready(function(){
-            changeCapthaSize();
-        });
 
         $(window).resize(function(){
             changeCapthaSize();

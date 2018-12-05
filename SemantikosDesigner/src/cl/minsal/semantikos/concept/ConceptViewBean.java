@@ -98,7 +98,6 @@ public class ConceptViewBean implements Serializable {
     //Inicializacion del Bean
     @PostConstruct
     protected void initialize() {
-
     }
 
     public RelationshipManager getRelationshipManager() {

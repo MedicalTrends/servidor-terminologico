@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.util.Collections.EMPTY_LIST;
+
 /**
  * Created by BluePrints Developer on 21-09-2016.
  */
@@ -96,7 +98,20 @@ public class QueryManagerImpl implements QueryManager {
     @Override
     public List<ConceptSMTK> executeQuery(GeneralQuery query) {
 
+        /*
+        if(query.getQuery().trim().isEmpty()) {
+            return EMPTY_LIST;
+        }
+        */
+
+        query.setQuery(descriptionSearchBR.escapeSpecialCharacters(query.getQuery()));
+
         List<ConceptSMTK> conceptSMTKs = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
+
+        if(conceptSMTKs.isEmpty()) {
+            query.setQuery(descriptionSearchBR.removeStopWords(query.getQuery()));
+            conceptSMTKs = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
+        }
 
         boolean showRelatedConcepts = query.isShowRelatedConcepts();//getShowableRelatedConceptsValue(category);
         List<RelationshipDefinition> sourceSecondOrderShowableAttributes = query.getSourceSecondOrderShowableAttributes();//getSourceSecondOrderShowableAttributesByCategory(category);
@@ -151,7 +166,20 @@ public class QueryManagerImpl implements QueryManager {
     @Override
     public List<Description> executeQuery(DescriptionQuery query) throws Exception {
 
+        /*
+        if(query.getQuery().trim().isEmpty()) {
+            return EMPTY_LIST;
+        }
+        */
+
+        query.setQuery(descriptionSearchBR.escapeSpecialCharacters(query.getQuery()));
+
         List<Description> descriptions = (List<Description>) (Object) queryDAO.executeQuery(query);
+
+        if(descriptions.isEmpty()) {
+            query.setQuery(descriptionSearchBR.removeStopWords(query.getQuery()));
+            descriptions = (List<Description>) (Object) queryDAO.executeQuery(query);
+        }
 
         /*
         if(descriptions.isEmpty()) {
@@ -199,7 +227,20 @@ public class QueryManagerImpl implements QueryManager {
     @Override
     public List<NoValidDescription> executeQuery(NoValidQuery query) {
 
+        /*
+        if(query.getQuery().trim().isEmpty()) {
+            return EMPTY_LIST;
+        }
+        */
+
+        query.setQuery(descriptionSearchBR.escapeSpecialCharacters(query.getQuery()));
+
         List<NoValidDescription> noValidDescriptions = (List<NoValidDescription>) (Object) queryDAO.executeQuery(query);
+
+        if(noValidDescriptions.isEmpty()) {
+            query.setQuery(descriptionSearchBR.removeStopWords(query.getQuery()));
+            noValidDescriptions = (List<NoValidDescription>) (Object) queryDAO.executeQuery(query);
+        }
 
         /*
         if(noValidDescriptions.isEmpty()) {
@@ -214,7 +255,20 @@ public class QueryManagerImpl implements QueryManager {
     @Override
     public List<PendingTerm> executeQuery(PendingQuery query) {
 
+        /*
+        if(query.getQuery().trim().isEmpty()) {
+            return EMPTY_LIST;
+        }
+        */
+
+        query.setQuery(descriptionSearchBR.escapeSpecialCharacters(query.getQuery()));
+
         List<PendingTerm> pendingTerms = (List<PendingTerm>) (Object) queryDAO.executeQuery(query);
+
+        if(pendingTerms.isEmpty()) {
+            query.setQuery(descriptionSearchBR.removeStopWords(query.getQuery()));
+            pendingTerms = (List<PendingTerm>) (Object) queryDAO.executeQuery(query);
+        }
 
         /*
         if(pendingTerms.isEmpty()) {
@@ -233,9 +287,18 @@ public class QueryManagerImpl implements QueryManager {
 
         //Principal principal = ctx.getCallerPrincipal();
 
+        if(query.getQuery().trim().isEmpty()) {
+            return EMPTY_LIST;
+        }
+
         query.setQuery(descriptionSearchBR.escapeSpecialCharacters(query.getQuery()));
 
         List<ConceptSMTK> concepts = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
+
+        if(concepts.isEmpty()) {
+            query.setQuery(descriptionSearchBR.removeStopWords(query.getQuery()));
+            concepts = (List<ConceptSMTK>) (Object) queryDAO.executeQuery(query);
+        }
 
         /*
         if(concepts.isEmpty()) {
@@ -271,6 +334,12 @@ public class QueryManagerImpl implements QueryManager {
     public int countQueryResults(Query query) {
         query.setQuery(descriptionSearchBR.escapeSpecialCharacters(query.getQuery()));
         int quantity = (int) queryDAO.countByQuery(query);
+
+        if(quantity == 0) {
+            query.setQuery(descriptionSearchBR.removeStopWords(query.getQuery()));
+            quantity = (int) queryDAO.countByQuery(query);
+        }
+
         query.setTruncateMatch(false);
         return quantity;
     }

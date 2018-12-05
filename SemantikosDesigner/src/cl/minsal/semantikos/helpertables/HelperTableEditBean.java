@@ -589,8 +589,9 @@ public class HelperTableEditBean implements Serializable {
     private <T extends Enum<?>> List<SelectItem> createEnumList(T[] values) {
         List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem("", "Todos"));
-        for (T value : values)
+        for (T value : values) {
             result.add(new SelectItem(value, value.name()));
+        }
         return result;
     }
 
