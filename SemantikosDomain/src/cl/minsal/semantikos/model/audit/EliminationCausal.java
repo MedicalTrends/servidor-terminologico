@@ -9,9 +9,9 @@ import static cl.minsal.semantikos.model.audit.AuditActionNature.*;
  */
 public enum EliminationCausal implements Serializable {
 
-    CONCEPT_CREATION(1, "1° Causal"),
-    CONCEPT_PUBLICATION(2, "2° Causal"),
-    CONCEPT_FAVOURITE_DESCRIPTION_CHANGE(3, "3° Causal")
+    CAUSAL_1(1, "Causal 1"),
+    CAUSAL_2(2, "Causal 2"),
+    CAUSAL_3(3, "Causal 3")
     ;
 
     /** Identificador único de la base de datos */

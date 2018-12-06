@@ -49,8 +49,6 @@ public class AuditDAOImpl implements AuditDAO {
     @Override
     public List<ConceptAuditAction> getConceptAuditActions(ConceptSMTK conceptSMTK, boolean changes) {
 
-        //ConnectionBD connect = new ConnectionBD();
-
         String sql = "begin ? := stk.stk_pck_audit.get_concept_audit_actions(?,?); end;";
 
         List<ConceptAuditAction> auditActions = new ArrayList<>();
@@ -64,7 +62,6 @@ public class AuditDAOImpl implements AuditDAO {
             call.setBoolean(3, changes);
             call.execute();
 
-            //ResultSet rs = call.getResultSet();
             ResultSet rs = (ResultSet) call.getObject(1);
 
             auditActions = createAuditActionsFromResultSet(rs, conceptSMTK);
@@ -83,8 +80,6 @@ public class AuditDAOImpl implements AuditDAO {
     @Override
     public List<UserAuditAction> getUserAuditActions(User user) {
 
-        //ConnectionBD connect = new ConnectionBD();
-
         String sql = "begin ? := stk.stk_pck_audit.get_user_audit_actions(?); end;";
 
         List<UserAuditAction> auditActions = new ArrayList<>();
@@ -97,7 +92,6 @@ public class AuditDAOImpl implements AuditDAO {
             call.setLong(2, user.getId());
             call.execute();
 
-            //ResultSet rs = call.getResultSet();
             ResultSet rs = (ResultSet) call.getObject(1);
 
             auditActions = createAuditActionsFromResultSet(rs, user);
@@ -116,8 +110,6 @@ public class AuditDAOImpl implements AuditDAO {
     @Override
     public List<InstitutionAuditAction> getInstitutionAuditActions(Institution institution) {
 
-        //ConnectionBD connect = new ConnectionBD();
-
         String sql = "begin ? := stk.stk_pck_audit.get_institution_audit_actions(?); end;";
 
         List<InstitutionAuditAction> auditActions = new ArrayList<>();
@@ -130,7 +122,6 @@ public class AuditDAOImpl implements AuditDAO {
             call.setLong(2, institution.getId());
             call.execute();
 
-            //ResultSet rs = call.getResultSet();
             ResultSet rs = (ResultSet) call.getObject(1);
 
             auditActions = createAuditActionsFromResultSet(rs, institution);
@@ -150,7 +141,7 @@ public class AuditDAOImpl implements AuditDAO {
     public void recordAuditAction(ConceptAuditAction conceptAuditAction) {
 
         logger.debug("Registrando información de Auditoría: " + conceptAuditAction);
-        //ConnectionBD connect = new ConnectionBD();
+
         /*
          * param 1: La fecha en que se realiza (Timestamp).
          * param 2: El usuario que realiza la acción (id_user).
@@ -178,8 +169,6 @@ public class AuditDAOImpl implements AuditDAO {
             call.setLong(6, auditableEntity.getId());
             call.execute();
 
-            //ResultSet rs = (ResultSet) call.getObject(1);
-
             if (call.getLong(1) > 0) {
                 call.getLong(1);
             } else {
@@ -197,8 +186,9 @@ public class AuditDAOImpl implements AuditDAO {
     }
 
     public void recordAuditAction(RefSetAuditAction refSetAuditAction){
+
         logger.debug("Registrando información de Auditoría: " + refSetAuditAction);
-        //ConnectionBD connect = new ConnectionBD();
+
         /*
          * param 1: La fecha en que se realiza (Timestamp).
          * param 2: El usuario que realiza la acción (id_user).
@@ -227,8 +217,6 @@ public class AuditDAOImpl implements AuditDAO {
             call.setLong(6, auditableEntity.getId());
             call.execute();
 
-            //ResultSet rs = (ResultSet) call.getObject(1);
-
             if (call.getLong(1) > 0) {
                 call.getLong(1);
             } else {
@@ -247,8 +235,9 @@ public class AuditDAOImpl implements AuditDAO {
     }
 
     public void recordAuditAction(UserAuditAction userAuditAction){
+
         logger.debug("Registrando información de Auditoría: " + userAuditAction);
-        //ConnectionBD connect = new ConnectionBD();
+
         /*
          * param 1: La fecha en que se realiza (Timestamp).
          * param 2: El usuario que realiza la acción (id_user).
@@ -277,8 +266,6 @@ public class AuditDAOImpl implements AuditDAO {
             call.setLong(6, auditableEntity.getId());
             call.execute();
 
-            //ResultSet rs = (ResultSet) call.getObject(1);
-
             if (call.getLong(1) > 0) {
                 call.getLong(1);
             } else {
@@ -296,9 +283,9 @@ public class AuditDAOImpl implements AuditDAO {
 
     }
 
-    public void recordAuditAction(InstitutionAuditAction institutionAuditAction){
+    public void recordAuditAction(InstitutionAuditAction institutionAuditAction) {
+
         logger.debug("Registrando información de Auditoría: " + institutionAuditAction);
-        //ConnectionBD connect = new ConnectionBD();
         /*
          * param 1: La fecha en que se realiza (Timestamp).
          * param 2: El usuario que realiza la acción (id_user).
@@ -328,8 +315,6 @@ public class AuditDAOImpl implements AuditDAO {
             call.setString(7, institutionAuditAction.getDetail());
             call.execute();
 
-            //ResultSet rs = (ResultSet) call.getObject(1);
-
             if (call.getLong(1) > 0) {
                 call.getLong(1);
             } else {
@@ -346,6 +331,56 @@ public class AuditDAOImpl implements AuditDAO {
         }
 
     }
+
+    @Override
+    public void recordAuditActionWithDetails(ConceptAuditAction conceptAuditAction) {
+
+        logger.debug("Registrando información de Auditoría: " + conceptAuditAction);
+
+        /*
+         * param 1: La fecha en que se realiza (Timestamp).
+         * param 2: El usuario que realiza la acción (id_user).
+         * param 3: concepto en el que se realiza la acción.
+         * param 4: El tipo de acción que realiza
+         * param 5: La entidad en la que se realizó la acción..
+         */
+        String sql = "begin ? := stk.stk_pck_audit.create_concept_audit_actions(?,?,?,?,?,?); end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            /* Se invoca la consulta para recuperar las relaciones */
+            Timestamp actionDate = conceptAuditAction.getActionDate();
+            User user = conceptAuditAction.getUser();
+            AuditableEntity subjectConcept = conceptAuditAction.getBaseEntity();
+            AuditActionType auditActionType = conceptAuditAction.getAuditActionType();
+            AuditableEntity auditableEntity = conceptAuditAction.getAuditableEntity();
+
+            call.registerOutParameter (1, Types.NUMERIC);
+            call.setTimestamp(2, actionDate);
+            call.setLong(3, user.getId());
+            call.setLong(4, subjectConcept.getId());
+            call.setLong(5, auditActionType.getId());
+            call.setLong(6, auditableEntity.getId());
+            call.setString(7, conceptAuditAction.getDetails().get(0));
+            call.execute();
+
+            if (call.getLong(1) > 0) {
+                call.getLong(1);
+            } else {
+                String errorMsg = "La información de auditoría del concepto no fue creada por una razón desconocida. Alertar al area de desarrollo" +
+                        " sobre esto";
+                logger.error(errorMsg);
+                throw new EJBException(errorMsg);
+            }
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al registrar en el log.";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+    }
+
 
     /**
      * Este método es responsable de crear un arreglo de objetos de auditoría a partir de una expresión JSON de la

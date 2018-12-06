@@ -369,6 +369,16 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    public void recordAuditAction(ConceptAuditAction conceptAuditAction) {
+        if(conceptAuditAction.getDetails() == null || conceptAuditAction.getDetails().isEmpty()) {
+            auditDAO.recordAuditAction(conceptAuditAction);
+        }
+        else {
+            auditDAO.recordAuditActionWithDetails(conceptAuditAction);
+        }
+    }
+
+    @Override
     public void recordInstitutiuonUpgrade(Institution institution, User user) {
 
         /* Se crea el registro de historial, para poder validar Reglas de Negocio */

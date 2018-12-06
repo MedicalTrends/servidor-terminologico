@@ -4,12 +4,16 @@ import cl.minsal.semantikos.concept.ConceptBean;
 import cl.minsal.semantikos.messages.MessageBean;
 import cl.minsal.semantikos.MainMenuBean;
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.audit.AuditActionType;
+import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.audit.EliminationCausal;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.descriptions.NoValidDescription;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
+import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.modelweb.DescriptionWeb;
+import cl.minsal.semantikos.users.AuthenticationBean;
 import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
@@ -18,10 +22,14 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_DESCRIPTION_DELETION;
 
 /**
  * @author Gustavo Punucura
@@ -39,6 +47,9 @@ public class DescriptionBeans {
 
     @ManagedProperty(value = "#{mainMenuBean}")
     MainMenuBean mainMenuBean;
+
+    @ManagedProperty(value = "#{authenticationBean}")
+    AuthenticationBean authenticationBean;
 
     DescriptionTypeFactory descriptionTypeFactory = DescriptionTypeFactory.getInstance();
 
@@ -64,14 +75,14 @@ public class DescriptionBeans {
 
     private String error = "";
 
-    private List<SelectItem> eliminationCausals = new ArrayList<>();
+    private List<EliminationCausal> eliminationCausals = new ArrayList<>();
 
-    private SelectItem selectedCausal;
+    private EliminationCausal selectedCausal;
 
     @PostConstruct
     public void init() {
         descriptionEdit= new DescriptionWeb();
-        eliminationCausals = createEnumList(EliminationCausal.values());
+        eliminationCausals = Arrays.asList(EliminationCausal.values());
     }
 
     /**
@@ -127,9 +138,20 @@ public class DescriptionBeans {
      * Este método es el encargado de remover una descripción específica de la lista de descripciones del concepto.
      */
     public void invalidateDescription(Description description) {
+        if(selectedCausal == null) {
+            messageBean.messageError("No se ha seleccionado la causal de eliminación");
+            return;
+        }
         conceptBean.getConcept().invalidateDescriptionWeb(description);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        User user = authenticationBean.getLoggedUser();
+        ConceptAuditAction conceptAuditAction = new ConceptAuditAction(conceptBean.getConcept(), CONCEPT_DESCRIPTION_DELETION, timestamp, user, description);
+        conceptAuditAction.getDetails().add(selectedCausal.getName());
+        conceptBean.getAuditAction().add(conceptAuditAction);
         RequestContext reqCtx = RequestContext.getCurrentInstance();
         reqCtx.execute("PF('descriptionsTable').filter();");
+        reqCtx.execute("PF('dlg').hide();");
+        selectedCausal = null;
     }
 
     /**
@@ -258,28 +280,27 @@ public class DescriptionBeans {
         this.mainMenuBean = mainMenuBean;
     }
 
-    private <T extends Enum<?>> List<SelectItem> createEnumList(T[] values) {
-        List<SelectItem> result = new ArrayList<SelectItem>();
-        result.add(new SelectItem("", "Todos"));
-        for (T value : values) {
-            result.add(new SelectItem(value, value.name()));
-        }
-        return result;
-    }
-
-    public List<SelectItem> getEliminationCausals() {
+    public List<EliminationCausal> getEliminationCausals() {
         return eliminationCausals;
     }
 
-    public void setEliminationCausals(List<SelectItem> eliminationCausals) {
+    public void setEliminationCausals(List<EliminationCausal> eliminationCausals) {
         this.eliminationCausals = eliminationCausals;
     }
 
-    public SelectItem getSelectedCausal() {
+    public EliminationCausal getSelectedCausal() {
         return selectedCausal;
     }
 
-    public void setSelectedCausal(SelectItem selectedCausal) {
+    public void setSelectedCausal(EliminationCausal selectedCausal) {
         this.selectedCausal = selectedCausal;
+    }
+
+    public AuthenticationBean getAuthenticationBean() {
+        return authenticationBean;
+    }
+
+    public void setAuthenticationBean(AuthenticationBean authenticationBean) {
+        this.authenticationBean = authenticationBean;
     }
 }

@@ -134,38 +134,6 @@ public class ConceptBean implements Serializable {
     @ManagedProperty( value = "#{categoryBean}")
     private CategoryBean categoryBean;
 
-    public AutogenerateBean getAutogenerateBean() {
-        return autogenerateBean;
-    }
-
-    public void setAutogenerateBean(AutogenerateBean autogenerateBean) {
-        this.autogenerateBean = autogenerateBean;
-    }
-
-    public CategoryBean getCategoryBean() {
-        return categoryBean;
-    }
-
-    public void setCategoryBean(CategoryBean categoryBean) {
-        this.categoryBean = categoryBean;
-    }
-
-    public void setPendingBrowserBean(PendingBrowserBean pendingBrowserBean) {
-        this.pendingBrowserBean = pendingBrowserBean;
-    }
-
-    public void setSensibilityDescriptionDefaultBean(SensibilityDescriptionDefaultBean sensibilityDescriptionDefaultBean) {
-        this.sensibilityDescriptionDefaultBean = sensibilityDescriptionDefaultBean;
-    }
-
-    public void setSctTypeBean(SCTTypeBean sctTypeBean) {
-        this.sctTypeBean = sctTypeBean;
-    }
-
-    public void setSnomedBeans(SnomedBeans snomedBeans) {
-        this.snomedBeans = snomedBeans;
-    }
-
     private List<Category> categoryList;
 
     private List<DescriptionWeb> descriptionsToTraslate = new ArrayList<>();
@@ -179,8 +147,6 @@ public class ConceptBean implements Serializable {
     private List<TagSMTK> tagSMTKs = new ArrayList<TagSMTK>();
 
     private List<ConceptAuditAction> auditAction;
-
-    private List<String> autoGenerateList = new ArrayList<>();
 
     private List<NoValidDescription> noValidDescriptions = new ArrayList<>();
 
@@ -240,16 +206,12 @@ public class ConceptBean implements Serializable {
 
     private CrossmapSetMember crossmapSetMemberSelected;
 
-    private Map<Long, ConceptSMTK> targetSelected;
-
     // Placeholders para los atributos de relacion
-
     private Map<Long, Relationship> relationshipPlaceholders = new HashMap<Long, Relationship>();
 
     private Map<RelationshipDefinition, List<RelationshipAttribute>> relationshipAttributesPlaceholder = new HashMap<RelationshipDefinition, List<RelationshipAttribute>>();
 
     //Parametros del formulario
-
     private String FSN;
 
     private boolean fullyDefined;
@@ -296,6 +258,8 @@ public class ConceptBean implements Serializable {
 
     private ConceptSMTK conceptSuggested;
 
+    public boolean pendingTerms;
+
     public void setObservationNoValids(List<ObservationNoValid> observationNoValids) {
         this.observationNoValids = observationNoValids;
     }
@@ -331,7 +295,37 @@ public class ConceptBean implements Serializable {
         this.relationshipAttributesPlaceholder = relationshipAttributesPlaceholder;
     }
 
-    public boolean pendingTerms;
+    public AutogenerateBean getAutogenerateBean() {
+        return autogenerateBean;
+    }
+
+    public void setAutogenerateBean(AutogenerateBean autogenerateBean) {
+        this.autogenerateBean = autogenerateBean;
+    }
+
+    public CategoryBean getCategoryBean() {
+        return categoryBean;
+    }
+
+    public void setCategoryBean(CategoryBean categoryBean) {
+        this.categoryBean = categoryBean;
+    }
+
+    public void setPendingBrowserBean(PendingBrowserBean pendingBrowserBean) {
+        this.pendingBrowserBean = pendingBrowserBean;
+    }
+
+    public void setSensibilityDescriptionDefaultBean(SensibilityDescriptionDefaultBean sensibilityDescriptionDefaultBean) {
+        this.sensibilityDescriptionDefaultBean = sensibilityDescriptionDefaultBean;
+    }
+
+    public void setSctTypeBean(SCTTypeBean sctTypeBean) {
+        this.sctTypeBean = sctTypeBean;
+    }
+
+    public void setSnomedBeans(SnomedBeans snomedBeans) {
+        this.snomedBeans = snomedBeans;
+    }
 
     public boolean isPendingTerms() {
         return pendingTerms;
@@ -403,6 +397,7 @@ public class ConceptBean implements Serializable {
 
     //Este método es responsable de a partir de un concepto SMTK y un término, devolver un concepto WEB con su FSN y su Preferida
     public ConceptSMTKWeb initConcept(ConceptSMTK concept, String term) {
+
         ConceptSMTKWeb conceptWeb = new ConceptSMTKWeb(concept, term);
 
         fullyDefined = concept.isFullyDefined();
@@ -462,6 +457,7 @@ public class ConceptBean implements Serializable {
     //Este método es responsable de pasarle a la vista un concepto, dado el id del concepto
     //(llamado desde la vista cuando se desea editar un concepto)
     public void getConceptById(long conceptId) {
+
         ConceptSMTK conceptSMTK = conceptManager.getConceptByID(conceptId);
         try {
             conceptSMTK.setRelationships(conceptManager.loadRelationships(conceptSMTK));
@@ -944,8 +940,14 @@ public class ConceptBean implements Serializable {
 
         changes = (refsetEditConcept) ? changes + 1 : changes;
 
-        if (changes == 0)
+        /* Se revisa la cola de auditoria */
+        for (ConceptAuditAction conceptAuditAction : auditAction) {
+            auditManager.recordAuditAction(conceptAuditAction);
+        }
+
+        if (changes == 0) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Advertencia", "No se ha realizado ningún cambio al concepto!!"));
+        }
         else {
             context.addMessage(null, new FacesMessage("Acción Exitosa", "Se han registrado " + changes + " cambios en el concepto."));
             // Se restablece el concepto, como el concepto está persistido, se le pasa su id
@@ -1122,9 +1124,11 @@ public class ConceptBean implements Serializable {
         att1.setTarget(new BasicTypeValue(targetOrder));
         att2.setTarget(new BasicTypeValue(sourceOrder));
 
-
         RelationshipDefinition relationshipDefinitionRowEdit = (RelationshipDefinition) UIComponent.getCurrentComponent(context).getAttributes().get("relationshipDefinitionRowEdit");
-        if(relationshipDefinitionRowEdit==null)relationshipDefinitionRowEdit=relationshipDefinition;
+
+        if(relationshipDefinitionRowEdit==null) {
+            relationshipDefinitionRowEdit=relationshipDefinition;
+        }
 
         autogenerateBean.load(concept, relationshipDefinition);
 
@@ -1479,16 +1483,6 @@ public class ConceptBean implements Serializable {
                     }
                 }
             }
-        }
-        return false;
-    }
-
-    public boolean changeIndirectMultiplicity(Relationship relation, RelationshipDefinition relationshipDefinition, RelationshipAttributeDefinition relationshipAttributeDefinition) {
-        if (relationshipAttributeDefinition.getId() == 8 && relation.getAttributesByAttributeDefinition(relationshipAttributeDefinition).size() > 0) {
-            return isEmpty(relation, relationshipDefinition, relationshipAttributeDefinition, 9L);
-        }
-        if (relationshipAttributeDefinition.getId() == 10 && relation.getAttributesByAttributeDefinition(relationshipAttributeDefinition).size() > 0) {
-            return isEmpty(relation, relationshipDefinition, relationshipAttributeDefinition, 11L);
         }
         return false;
     }

@@ -78,4 +78,11 @@ public interface AuditDAO {
      * @param institutionAuditAction La acción de auditoría que se desea registrar.
      */
     public void recordAuditAction(InstitutionAuditAction institutionAuditAction);
+
+    /**
+     * Este método es responsable de registrar una acción de auditoría (historial) en la base de datos.
+     *
+     * @param conceptAuditAction La acción de auditoría que se desea registrar.
+     */
+    public void recordAuditActionWithDetails(ConceptAuditAction conceptAuditAction);
 }

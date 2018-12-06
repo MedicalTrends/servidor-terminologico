@@ -222,22 +222,13 @@
                                    icon="ui-icon-alert"/>
                     </p:commandButton>
 
-                    <p:commandButton actionListener="#{descriptionBeans.invalidateDescription(description)}"
-                                     ajax="true" onclick="PF('dlg').show();"
+                    <p:commandButton onclick="PF('dlg').show();"
                                      process="@this"
                                      title="Eliminar Descripción"
-                                     update="@(.otherDescriptions)"
+                                     update="@(.cause2)" actionListener="#{descriptionBeans.setDescriptionEdit(description)}"
                                      style="padding: 5px" icon="fa fa-trash fa-lg"
                                      rendered="#{ conceptBean.concept.modeled and description.validityUntil eq null}">
-                        <p:confirm header="Confirmation" message="¿Desea eliminar esta descripción?"
-                                   icon="ui-icon-alert"/>
                     </p:commandButton>
-
-                    <p:commandButton onclick="PF('dlg').show();" update="@(.cause2)"
-                                     action="#{institutionsBrowser.setSelectedInstitution(institution)}"
-                                     icon="fa fa-trash fa-lg"
-                                     rendered="#{institution.validityUntil eq null}" title="Eliminar"
-                                     process="@this" style="padding: 5px"/>
 
                     <p:commandButton rendered="#{conceptBean.concept.persistent and description.persistent and profilePermissionsBeans.permissionsBy(conceptBean.category)}"
                                    process="@this"
@@ -374,7 +365,8 @@
                         <p:commandButton rendered="#{conceptBean.conceptSMTKTranslateDes!=null}"
                                          update=":#{cc.clientId}:conceptTranslate"
                                          value="Cambiar Concepto"><f:setPropertyActionListener value=""
-                                                                                               target="#{conceptBean.conceptSMTKTranslateDes}"/></p:commandButton>
+                                         target="#{conceptBean.conceptSMTKTranslateDes}"/>
+                        </p:commandButton>
                     </div>
                 </div>
             </p:panel>
@@ -628,27 +620,27 @@
     </p:overlayPanel>
 
     <p:dialog header="Causal de eliminación" widgetVar="dlg" resizable="false">
-        <p:panelGrid id="deletePanel" columns="2" cellpadding="5" styleClass="ui-panelgrid-blank cause2">
-            <h:outputLabel for="cause" value="Causal de eliminación:" />
-            <p:selectOneMenu id="cause" value="#{descriptionBeans.eliminationCausals}">
-                <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
-                <f:selectItems value="#{descriptionBeans.eliminationCausals}" var="causal"
-                               itemLabel="#{causal.label}" itemValue="#{causal.value}" />
-                <p:ajax event="itemSelect" update="@(.cause2)" process="@this" />
-            </p:selectOneMenu>
+        <p:outputPanel id="deletePanel" columns="2" cellpadding="5" styleClass="ui-panelgrid-blank cause2">
+            <div class="ui-fluid ui-g">
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:selectOneMenu id="cause" value="#{descriptionBeans.selectedCausal}" converter="omnifaces.SelectItemsConverter">
+                        <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
+                        <f:selectItems value="#{descriptionBeans.eliminationCausals}" var="causal"
+                                       itemLabel="#{causal.name}" itemValue="#{causal}" />
+                        <p:ajax event="itemSelect" update="@(.cause2)" process="@this" />
+                    </p:selectOneMenu>
+                </div>
 
-            <p:outputLabel for="cause2" value="Motivo:" rendered="#{institutionsBrowser.deleteCause.equals('Otro')}" />
-            <p:inputTextarea id="cause2" value="#{institutionsBrowser.deleteCause}" rendered="#{institutionsBrowser.deleteCause.equals('Otro')}" />
-
-            <p:outputPanel/>
-            <p:outputPanel>
-                <p:commandButton value="Aceptar" actionListener="#{institutionsBrowser.deleteInstitution}"
-                                 update="form:singleDT" styleClass="Fright">
-                    <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar este establecimiento?" icon="ui-icon-alert"/>
-                </p:commandButton>
-                <p:commandButton value="Cancelar" onclick="PF('dlg').hide();" styleClass="Fright" actionListener="#{institutionsBrowser.setDeleteCause(null)}"/>
-            </p:outputPanel>
-        </p:panelGrid>
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:commandButton value="Aceptar" actionListener="#{descriptionBeans.invalidateDescription(descriptionBeans.descriptionEdit)}"
+                                     update="@(.otherDescriptions)" style="float: right; width: auto">
+                        <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar esta descripción?" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="Cancelar" onclick="PF('dlg').hide();" style="float: right; width: auto"
+                                     actionListener="#{descriptionBeans.setSelectedCausal(null)}"/>
+                </div>
+            </div>
+        </p:outputPanel>
     </p:dialog>
 
 </composite:implementation>

@@ -9,11 +9,22 @@ import cl.minsal.semantikos.model.users.User;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author Andrés Farías on 8/23/16.
  */
 public class ConceptAuditAction extends AuditAction implements Serializable {
+
+    List<String> details;
+
+    public List<String> getDetails() {
+        return details;
+    }
+
+    public void setDetails(List<String> details) {
+        this.details = details;
+    }
 
     public ConceptAuditAction(ConceptSMTK subjectConcept, AuditActionType auditActionType, Timestamp actionDate, User user, AuditableEntity auditableEntity) {
         super(auditActionType, actionDate, user, auditableEntity, subjectConcept);

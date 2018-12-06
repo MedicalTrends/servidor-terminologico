@@ -342,6 +342,13 @@ public interface AuditManager {
     public void recordInstitutionDelete(Institution institution, User user);
 
     /**
+     * Este método es responsable de registrar en el log de auditoría una acción. Este es el método genérico,
+     *
+     * @param conceptAuditAction          El establecimiento al cual se elimina
+     */
+    public void recordAuditAction(ConceptAuditAction conceptAuditAction);
+
+    /**
      * Este método es responsable de obtener y agrupar en una lista todos los tipos de cambios existentes.
      *
      * @return Una <code>List</code> con los tipos de cambio.
