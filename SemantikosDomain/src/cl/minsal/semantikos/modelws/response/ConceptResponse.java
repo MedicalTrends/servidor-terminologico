@@ -127,7 +127,9 @@ public class ConceptResponse implements Serializable {
      */
     private void loadDescriptions(@NotNull ConceptSMTK sourceConcept) {
         for (Description description : sourceConcept.getDescriptions()) {
-            this.descriptions.add(new DescriptionResponse(description));
+            if(description.isValid()) {
+                this.descriptions.add(new DescriptionResponse(description));
+            }
         }
     }
 

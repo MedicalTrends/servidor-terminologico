@@ -410,6 +410,13 @@ public class AuditDAOImpl implements AuditDAO {
                 Timestamp date = rs.getTimestamp("date");
 
                 ConceptAuditAction conceptAuditAction = new ConceptAuditAction(conceptSMTK, auditActionType, date, user, auditableEntityByID);
+
+                String detail = rs.getString("detail");
+
+                if(detail != null && !detail.isEmpty()) {
+                    conceptAuditAction.getDetails().add(detail);
+                }
+
                 conceptAuditActions.add(conceptAuditAction);
             }
         } catch (SQLException e) {

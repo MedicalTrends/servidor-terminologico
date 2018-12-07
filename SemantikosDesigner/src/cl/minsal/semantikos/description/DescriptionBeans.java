@@ -83,6 +83,8 @@ public class DescriptionBeans {
     public void init() {
         descriptionEdit= new DescriptionWeb();
         eliminationCausals = Arrays.asList(EliminationCausal.values());
+        //RequestContext reqCtx = RequestContext.getCurrentInstance();
+        //reqCtx.execute("PF('descriptionsTable').filter();");
     }
 
     /**
@@ -147,11 +149,18 @@ public class DescriptionBeans {
         User user = authenticationBean.getLoggedUser();
         ConceptAuditAction conceptAuditAction = new ConceptAuditAction(conceptBean.getConcept(), CONCEPT_DESCRIPTION_DELETION, timestamp, user, description);
         conceptAuditAction.getDetails().add(selectedCausal.getName());
-        conceptBean.getAuditAction().add(conceptAuditAction);
+        conceptBean.getAuditActionQueue().add(conceptAuditAction);
         RequestContext reqCtx = RequestContext.getCurrentInstance();
         reqCtx.execute("PF('descriptionsTable').filter();");
         reqCtx.execute("PF('dlg').hide();");
         selectedCausal = null;
+    }
+
+    public void filter() {
+        if(conceptBean.getConcept().isModeled()) {
+            RequestContext reqCtx = RequestContext.getCurrentInstance();
+            reqCtx.execute("PF('descriptionsTable').filter();");
+        }
     }
 
     /**
@@ -232,7 +241,7 @@ public class DescriptionBeans {
         Matcher m = Pattern.compile("\\((.*?)\\)").matcher(conceptSMTK.getDescriptionFSN().getTerm());
 
         while(m.find()) {
-            if(mainMenuBean.getTagSMTKFactory().getInstance().findTagSMTKByName(m.group(1))!=null) {
+            if(mainMenuBean.getTagSMTKFactory().getInstance().findTagSMTKByName(m.group(1)) != null) {
                 conceptSMTK.getDescriptionFSN().getConceptSMTK().getDescriptionFSN().setTerm(conceptSMTK.getDescriptionFSN().getTerm().replace("("+m.group(1)+")","").trim());
                 return;
             }

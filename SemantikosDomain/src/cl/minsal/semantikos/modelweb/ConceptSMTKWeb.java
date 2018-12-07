@@ -42,10 +42,10 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
                 conceptSMTK.isFullyDefined(), conceptSMTK.isInherited(), conceptSMTK.isPublished(), conceptSMTK.getObservation(), conceptSMTK.getTagSMTK());
 
         // Agregar descripciones y relaciones
-        if(conceptSMTK.isPersistent()){
+        if(conceptSMTK.isPersistent()) {
             this.setId(conceptSMTK.getId());
             // Si el concepto esta persistido clonar las descripciones con su id
-            for (Description description : conceptSMTK.getValidDescriptions())
+            for (Description description : conceptSMTK.getDescriptions())
                 addDescriptionWeb(new DescriptionWeb(this, description.getId(), description));
             // Si el concepto esta persistido clonar las relaciones con su id
             for (Relationship relationship : conceptSMTK.getValidRelationships())

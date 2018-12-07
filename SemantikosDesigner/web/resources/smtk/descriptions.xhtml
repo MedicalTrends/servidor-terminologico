@@ -19,6 +19,10 @@
 
 <composite:implementation>
 
+    <p:remoteCommand name="onload" update="@(.otherDescriptions)"
+                     action="#{descriptionBeans.filter()}"
+                     autoRun="true" />
+
     <p:panel id="otherDescriptionsPanel" styleClass="otherDescriptionsPanel" widgetVar="panel">
 
         <p:growl id="growl" showDetail="true" showSummary="true"/>
@@ -215,7 +219,7 @@
                                    ajax="true"
                                    process="@this"
                                    title="Eliminar Descripción"
-                                   update="@(.otherDescriptions)"
+                                   update="@(.otherDescriptionsPanel)"
                                    style="padding: 5px" icon="fa fa-trash fa-lg"
                                    rendered="#{ not conceptBean.concept.modeled}">
                         <p:confirm header="Confirmation" message="¿Desea eliminar esta descripción?"
@@ -633,7 +637,7 @@
 
                 <div class="ui-g-12 ui-md-12 ui-lg-12">
                     <p:commandButton value="Aceptar" actionListener="#{descriptionBeans.invalidateDescription(descriptionBeans.descriptionEdit)}"
-                                     update="@(.otherDescriptions)" style="float: right; width: auto">
+                                     update="@(.otherDescriptions)" style="float: right; width: auto" onsuccess="PF('dlg').hide();">
                         <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar esta descripción?" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="Cancelar" onclick="PF('dlg').hide();" style="float: right; width: auto"

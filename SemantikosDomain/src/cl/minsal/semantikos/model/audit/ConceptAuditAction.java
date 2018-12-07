@@ -9,14 +9,19 @@ import cl.minsal.semantikos.model.users.User;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
+
+import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_DESCRIPTION_DELETION;
 
 /**
  * @author Andrés Farías on 8/23/16.
  */
 public class ConceptAuditAction extends AuditAction implements Serializable {
 
-    List<String> details;
+    List<String> details = new ArrayList<>();
+
+    protected static String newline = System.getProperty("line.separator");
 
     public List<String> getDetails() {
         return details;
@@ -42,6 +47,7 @@ public class ConceptAuditAction extends AuditAction implements Serializable {
             ConceptSMTK conceptSMTK = (ConceptSMTK) this.getAuditableEntity();
             detail = "Concepto: " + conceptSMTK.getDescriptionFavorite();
         }
+
         if (this.getAuditableEntity().getClass().equals(Description.class)) {
             Description description = (Description) this.getAuditableEntity();
             if(this.getAuditActionType().equals(AuditActionType.CONCEPT_FAVOURITE_DESCRIPTION_CHANGE)){
@@ -73,6 +79,11 @@ public class ConceptAuditAction extends AuditAction implements Serializable {
             detail = "Categoría Origen: " + category.getName();
 
         }
+        if(this.getAuditActionType().equals(CONCEPT_DESCRIPTION_DELETION)) {
+            for (String s : details) {
+                detail += "[" + s + "]";
+            }
+        }         
 
         return detail;
     }

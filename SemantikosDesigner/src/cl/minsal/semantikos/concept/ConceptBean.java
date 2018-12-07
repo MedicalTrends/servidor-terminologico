@@ -148,6 +148,8 @@ public class ConceptBean implements Serializable {
 
     private List<ConceptAuditAction> auditAction;
 
+    private List<ConceptAuditAction> auditActionQueue = new ArrayList<>();
+
     private List<NoValidDescription> noValidDescriptions = new ArrayList<>();
 
     private List<ConceptSMTK> conceptSuggestedList;
@@ -926,6 +928,14 @@ public class ConceptBean implements Serializable {
         }
     }
 
+    public List<ConceptAuditAction> getAuditActionQueue() {
+        return auditActionQueue;
+    }
+
+    public void setAuditActionQueue(List<ConceptAuditAction> auditActionQueue) {
+        this.auditActionQueue = auditActionQueue;
+    }
+
     /**
      * @param context
      */
@@ -941,14 +951,17 @@ public class ConceptBean implements Serializable {
         changes = (refsetEditConcept) ? changes + 1 : changes;
 
         /* Se revisa la cola de auditoria */
-        for (ConceptAuditAction conceptAuditAction : auditAction) {
+        for (ConceptAuditAction conceptAuditAction : auditActionQueue) {
             auditManager.recordAuditAction(conceptAuditAction);
         }
+
+        auditActionQueue.clear();
 
         if (changes == 0) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Advertencia", "No se ha realizado ningún cambio al concepto!!"));
         }
         else {
+
             context.addMessage(null, new FacesMessage("Acción Exitosa", "Se han registrado " + changes + " cambios en el concepto."));
             // Se restablece el concepto, como el concepto está persistido, se le pasa su id
             getConceptById(concept.getId());
