@@ -433,7 +433,7 @@ public class GeneralBrowserBean implements Serializable {
         // Si el concepto está persistido, invalidarlo
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
         String query = "";
-        if(generalQuery.getQuery() != null && concepts.getRowCount()==0) {
+        if(generalQuery.getQuery() != null && concepts.getRowCount() == 0) {
             query = generalQuery.getQuery();
         }
         if(query == null || query.isEmpty()) {

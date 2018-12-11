@@ -64,7 +64,7 @@
                                                         minQueryLength="3"
                                                         emptyMessage="No se encontraron conceptos"
                                                         forceSelection="false"
-                                                        size="5"
+                                                        size="5" scrollHeight="280"
                                                         completeMethod="#{browserBean.searchSuggestedDescriptions}"
                                                         placeholder="Buscar..."
                                                         converter="DescriptionConverter"
@@ -272,6 +272,8 @@
                 }, 0);
             });
         }
+
+        $('body').on('mousedown', '.ui-autocomplete-panel', function(event) { event.stopImmediatePropagation();});
 
     </script>
 </h:body>

@@ -17,7 +17,7 @@
 <composite:implementation>
 
     <p:panel id="historyConcept" styleClass="historyClass" >
-        <p:dataTable  rowIndexVar="rowIndex" id="historyDateTable" var="history"
+        <p:dataTable  rowIndexVar="rowIndex" id="historyDateTable" var="history" reflow="true"
                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                      value="#{cc.attrs.auditAction}" paginator="true" rows="10">
             <f:facet name="{Exporters}">

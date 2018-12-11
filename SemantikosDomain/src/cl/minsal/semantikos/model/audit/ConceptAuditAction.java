@@ -81,7 +81,7 @@ public class ConceptAuditAction extends AuditAction implements Serializable {
         }
         if(this.getAuditActionType().equals(CONCEPT_DESCRIPTION_DELETION)) {
             for (String s : details) {
-                detail += "[" + s + "]";
+                detail += " [" + s + "]";
             }
         }         
 

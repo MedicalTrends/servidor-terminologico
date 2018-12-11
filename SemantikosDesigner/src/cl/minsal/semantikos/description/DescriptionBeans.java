@@ -121,6 +121,7 @@ public class DescriptionBeans {
                 conceptBean.getConcept().addDescriptionWeb(description);
                 conceptBean.setOtherTermino("");
                 conceptBean.setOtherDescriptionType(null);
+                filter();
             } else {
                 messageBean.messageError("No se ha seleccionado el tipo de descripción");
             }
@@ -134,6 +135,7 @@ public class DescriptionBeans {
      */
     public void removeDescription(Description description) {
         conceptBean.getConcept().removeDescriptionWeb(description);
+        filter();
     }
 
     /**
@@ -148,7 +150,7 @@ public class DescriptionBeans {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         User user = authenticationBean.getLoggedUser();
         ConceptAuditAction conceptAuditAction = new ConceptAuditAction(conceptBean.getConcept(), CONCEPT_DESCRIPTION_DELETION, timestamp, user, description);
-        conceptAuditAction.getDetails().add(selectedCausal.getName());
+        conceptAuditAction.getDetails().add("Causal de Eliminación: " + selectedCausal.getName());
         conceptBean.getAuditActionQueue().add(conceptAuditAction);
         RequestContext reqCtx = RequestContext.getCurrentInstance();
         reqCtx.execute("PF('descriptionsTable').filter();");
@@ -250,12 +252,12 @@ public class DescriptionBeans {
         conceptSMTK.getDescriptionFSN().setTerm(conceptSMTK.getDescriptionFSN().getTerm());
     }
 
-    public boolean disableSensibilityFSN(Description description){
+    public boolean disableSensibilityFSN(Description description) {
 
-        if( description.getConceptSMTK().isModeled() && description.getConceptSMTK().getCategory().getId()== 33L){
+        if( description.getConceptSMTK().isModeled() && description.getConceptSMTK().getCategory().getId()== 33L) {
             return false;
         }
-        if( description.getConceptSMTK().isModeled() && description.getConceptSMTK().getCategory().getId()== 35L){
+        if( description.getConceptSMTK().isModeled() && description.getConceptSMTK().getCategory().getId()== 35L) {
             return false;
         }
         if(description.getConceptSMTK().isModeled()){

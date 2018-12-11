@@ -88,6 +88,13 @@ public class AuthenticationBean {
 
     public void login() {
 
+        Product prt = new Product();
+        prt.price = 200;
+        double newPrice = 100;
+
+        updatePrice(prt, newPrice);
+        System.out.println(prt.price + " : " + newPrice);
+
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         request.getSession().setMaxInactiveInterval(timeOutWeb.getTimeOut());
@@ -414,4 +421,14 @@ public class AuthenticationBean {
         return  categoriesByName;
     }
 
+    public void updatePrice(Product product, double price) {
+        price = price * 2;
+        product.price = product.price + price;
+    }
+
 }
+
+class Product {
+    double price;
+}
+

@@ -8,7 +8,7 @@
 .search {
     position: relative;
     color: #aaa;
-    font-size: 16px;
+    /*font-size: 16px;*/
 }
 
 .search input { text-indent: 32px;}

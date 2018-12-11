@@ -221,7 +221,7 @@
                                    title="Eliminar Descripción"
                                    update="@(.otherDescriptionsPanel)"
                                    style="padding: 5px" icon="fa fa-trash fa-lg"
-                                   rendered="#{ not conceptBean.concept.modeled}">
+                                   rendered="#{ not conceptBean.concept.modeled or not description.persistent}">
                         <p:confirm header="Confirmation" message="¿Desea eliminar esta descripción?"
                                    icon="ui-icon-alert"/>
                     </p:commandButton>
@@ -231,7 +231,7 @@
                                      title="Eliminar Descripción"
                                      update="@(.cause2)" actionListener="#{descriptionBeans.setDescriptionEdit(description)}"
                                      style="padding: 5px" icon="fa fa-trash fa-lg"
-                                     rendered="#{ conceptBean.concept.modeled and description.validityUntil eq null}">
+                                     rendered="#{ conceptBean.concept.modeled and description.persistent and description.validityUntil eq null}">
                     </p:commandButton>
 
                     <p:commandButton rendered="#{conceptBean.concept.persistent and description.persistent and profilePermissionsBeans.permissionsBy(conceptBean.category)}"
@@ -264,6 +264,7 @@
             </p:column>
 
         </p:dataTable>
+
     </p:panel>
 
 
@@ -379,7 +380,7 @@
 
         <div style="text-align: center;">
             <p:commandButton update="@(.otherDescriptionsPanel)" oncomplete="PF('dialogTDC').hide()"
-                             style="float: right" value="Trasladar"
+                             style="float: right; width: auto" value="Trasladar"
                              actionListener="#{descriptionBeans.traslateDescription}">
             </p:commandButton>
         </div>
@@ -545,20 +546,19 @@
     </p:dialog>
 
     <p:dialog id="dialogEditDescription" header="Editar descripción" widgetVar="dialogEditDescription" global="true"
-              showEffect="fade" hideEffect="fade" width="780px" height="300px">
+              showEffect="fade" hideEffect="fade">
 
 
         <p:panel id="panelEditDescription" styleClass="panelEditDescription" style="width: 100%; border: hidden;">
 
-            <div class="ui-g">
+            <div class="ui-fluid ui-g">
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
                     DESCID:
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-10">
                     <h:outputText value="#{descriptionBeans.descriptionEdit.descriptionId}"/>
                 </div>
-            </div>
-            <div class="ui-g">
+
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
                     Término:
                 </div>
@@ -566,47 +566,45 @@
                     <p:inputText id="termEdit"
                                  validator="#{validatorBean.validateTerm}"
                                  value="#{descriptionBeans.descriptionEdit.term}"
-                                 style="width:60%"
-                                 disabled="#{conceptBean.concept.modeled}">
+                                 readonly="#{conceptBean.concept.modeled}">
                         <f:attribute name="description" value="#{descriptionBeans.descriptionEdit}"/>
                         <p:growl id="otherDescriptionsTermError" showDetail="true"/>
                     </p:inputText>
                 </div>
-            </div>
-            <div class="ui-g">
+
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
                     Tipo:
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-10">
                     <p:selectOneMenu value="#{descriptionBeans.descriptionEdit.descriptionType}"
                                      validator="#{validatorBean.validateDescriptionType}"
-                                     converter="omnifaces.SelectItemsConverter" style="width:60%">
+                                     converter="omnifaces.SelectItemsConverter">
                         <f:selectItems value="#{conceptBean.descriptionTypesEdit}"
                                        var="descriptionType" itemLabel="#{descriptionType.name}"
                                        itemValue="#{descriptionType}"/>
                         <f:attribute name="description" value="#{descriptionBeans.descriptionEdit}"/>
                     </p:selectOneMenu>
                 </div>
-            </div>
 
-            <div class="ui-g">
                 <div class="ui-g-12 ui-md-6 ui-lg-2">
                     Sensibilidad:
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-lg-10">
-                    <p:selectOneMenu value="#{descriptionBeans.descriptionEdit.caseSensitive}" style="width:60%">
+                    <p:selectOneMenu value="#{descriptionBeans.descriptionEdit.caseSensitive}">
                         <f:selectItem itemValue="#{true}" itemLabel="Sensible"/>
                         <f:selectItem itemValue="#{false}" itemLabel="Insensible"/>
                     </p:selectOneMenu>
                 </div>
+
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:commandButton oncomplete="PF('dialogEditDescription').hide()" value="Aceptar"
+                                     update="@(.otherDescriptions),@(.conceptHeader)"
+                                     style="float: right; width: auto"
+                                     actionListener="#{descriptionBeans.descriptionEditRow(descriptionBeans.descriptionEdit)}"/>
+                    <p:commandButton oncomplete="PF('dialogEditDescription').hide()" value="Cancelar" style="float: right; width: auto" />
+                </div>
             </div>
-            <div style="text-align: center;">
-                <p:commandButton oncomplete="PF('dialogEditDescription').hide()" icon="fa fa-remove" style="float: right" />
-                <p:commandButton oncomplete="PF('dialogEditDescription').hide()"
-                                 update="@(.otherDescriptions),@(.conceptHeader)" icon="fa fa-exchange"
-                                 style="float: right"
-                                 actionListener="#{descriptionBeans.descriptionEditRow(descriptionBeans.descriptionEdit)}"/>
-            </div>
+
         </p:panel>
     </p:dialog>
 

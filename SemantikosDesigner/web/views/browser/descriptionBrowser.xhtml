@@ -184,7 +184,7 @@
                                  paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                  emptyMessage="No se han encontrado descripciones con los criterios utilizados">
 
-                        <p:ajax event="page" listener="#{descriptionsBrowserBean.updatePage}" oncomplete="" update="@(.search2)" />
+                        <p:ajax event="page" listener="#{descriptionsBrowserBean.updatePage}" oncomplete="unload();loader();" update="@(.search2)" />
 
                         <p:growl id="growl" showDetail="true" showSummary="true"/>
 
@@ -253,6 +253,14 @@
                     </p:dataTable>
 
                 </h:form>
+
+        <script type="text/javascript">
+
+            function unload() {
+                $.Toast.hideToast();
+            }
+
+        </script>
 
     </ui:define>
 

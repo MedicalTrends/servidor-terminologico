@@ -87,7 +87,7 @@
 
                             <p:ajax event="rowToggle" listener="#{generalBrowserBean.onRowToggle}" />
 
-                            <p:ajax event="page" listener="#{generalBrowserBean.updatePage}" oncomplete="scrollTop();" update="@(.search2)" />
+                            <p:ajax event="page" listener="#{generalBrowserBean.updatePage}" oncomplete="scrollTop();loader();" update="@(.search2)" />
 
                             <p:column headerText="Término Preferido">
                                 <div class="ui-g dashboard">
@@ -301,6 +301,8 @@
                             listenPageOnClickEvent();
                         }, 0);
 
+                $.Toast.hideToast();
+
             }
 
             // This function simply gets the window scroll position, works in all browsers.
@@ -322,6 +324,7 @@
                         $.cookie('myCookie', getPageScroll());
                     });
                 });
+                makeLoadable();
             }
 
             function listenSearchOnClickEvent() {
