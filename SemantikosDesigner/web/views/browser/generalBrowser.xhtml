@@ -23,7 +23,7 @@
 
                     <p:breadCrumb id="top-menu">
                         <p:menuitem value="Inicio" url="/views/home.xhtml" styleClass="loader-trigger" />
-                        <p:menuitem value="#{generalBrowserBean.category.name}" url="#" styleClass="loader-trigger" />
+                        <p:menuitem value="#{generalBrowserBean.category.name}" url="#" />
                     </p:breadCrumb>
 
                     <div class="card card-w-title">
@@ -294,6 +294,19 @@
                 mark();
             });
 
+            $(document).ready(function() {
+                $('.ui-paginator-next, .ui-paginator-last, .ui-paginator-prev, .ui-paginator-first').on('click', function() {
+                    $.Toast.showToast({
+                        // toast message
+                        "title": "Un momento por favor...",
+                        // "success", "none", "error"
+                        "icon": "Cargando",
+                        // default: 1500
+                        "duration": 10000
+                    });
+                });
+            });
+
             function scrollTop() {
                 setTimeout(
                         function() {
@@ -324,7 +337,8 @@
                         $.cookie('myCookie', getPageScroll());
                     });
                 });
-                makeLoadable();
+
+
             }
 
             function listenSearchOnClickEvent() {

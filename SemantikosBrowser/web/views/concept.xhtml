@@ -19,7 +19,7 @@
 
                 <p:breadCrumb id="top-menu" rendered="false">
                     <p:menuitem value="Inicio" url="/" />
-                    <p:menuitem value="Conceptos" url="/views/concepts.xhtml" />
+                    <p:menuitem value="Conceptos" url="/views/concepts.xhtml" styleClass="loader-trigger" />
                     <p:menuitem value="#{concept.selectedConcept.category.name}" url="#" rendered="false" />
                     <p:menuitem value="#{concept.selectedConcept.conceptID}" url="#" />
                 </p:breadCrumb>
@@ -517,7 +517,7 @@
                 <div class="ui-g ui-fluid">
 
                     <div class="ui-g-12 ui-md-4 ui-lg-2">
-                        <p:button outcome="concepts" value="Volver" styleClass="cyan-btn ui-priority-primary" icon="fa fa-arrow-left"/>
+                        <p:button outcome="concepts" value="Volver" styleClass="cyan-btn ui-priority-primary loader-trigger" icon="fa fa-arrow-left"/>
                     </div>
 
                 </div>

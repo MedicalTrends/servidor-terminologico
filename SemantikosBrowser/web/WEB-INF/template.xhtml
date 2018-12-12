@@ -20,6 +20,7 @@
         <h:outputScript name="js/ripple.js" library="ultima-layout" />
         <h:outputScript name="js/swipe.js" library="ultima-layout" />
         <h:outputScript name="js/jquery.mark.js" library="semantikos" />
+        <h:outputScript name="js/jquery.toast.js" library="semantikos" />
         <ui:insert name="head"/>
     </h:head>
 
@@ -68,6 +69,39 @@
         <script type="text/javascript">
 
             $('body').on('mousedown', '.ui-autocomplete-panel', function(event) { event.stopImmediatePropagation();});
+
+            loader();
+
+            function loader() {
+
+                $('.loader-trigger').on('click', function() {
+                    $.Toast.showToast({
+                        // toast message
+                        "title": "Un momento por favor...",
+                        // "success", "none", "error"
+                        "icon": "Cargando",
+                        // default: 1500
+                        "duration": 10000
+                    });
+                });
+
+                $('.ui-paginator-page').on('click', function() {
+                    $.Toast.showToast({
+                        // toast message
+                        "title": "Un momento por favor...",
+                        // "success", "none", "error"
+                        "icon": "Cargando",
+                        // default: 1500
+                        "duration": 10000
+                    });
+                });
+
+            }
+
+            $(document).ready(function() {
+                $.Toast.hideToast();
+            });
+
 
         </script>
 
