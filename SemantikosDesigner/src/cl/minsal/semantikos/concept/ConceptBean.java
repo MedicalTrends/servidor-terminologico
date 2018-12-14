@@ -15,6 +15,7 @@ import cl.minsal.semantikos.kernel.componentsweb.ViewAugmenter;
 import cl.minsal.semantikos.messages.MessageBean;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
+import cl.minsal.semantikos.model.audit.EliminationCausal;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.categories.Category;
@@ -48,8 +49,11 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.*;
 
+import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_DESCRIPTION_DELETION;
+import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_INVALIDATION;
 import static org.primefaces.util.Constants.EMPTY_STRING;
 
 /**
@@ -262,6 +266,10 @@ public class ConceptBean implements Serializable {
 
     public boolean pendingTerms;
 
+    private List<EliminationCausal> eliminationCausals = new ArrayList<>();
+
+    private EliminationCausal selectedCausal;
+
     public void setObservationNoValids(List<ObservationNoValid> observationNoValids) {
         this.observationNoValids = observationNoValids;
     }
@@ -347,6 +355,7 @@ public class ConceptBean implements Serializable {
         conceptSMTKNotValid = conceptManager.getNoValidConcept();
         conceptSuggestedList = new ArrayList<>();
         categoryBean.refreshDefinitions(category);
+        eliminationCausals = Arrays.asList(EliminationCausal.values());
     }
 
     public void addSuggest() {
@@ -1079,6 +1088,38 @@ public class ConceptBean implements Serializable {
 
 
     public void deleteConcept() throws IOException {
+
+        if(selectedCausal == null) {
+            messageBean.messageError("No se ha seleccionado la causal de eliminación");
+            return;
+        }
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        User user = authenticationBean.getLoggedUser();
+        ConceptAuditAction conceptAuditAction = new ConceptAuditAction(concept, CONCEPT_INVALIDATION, timestamp, user, concept);
+        conceptAuditAction.getDetails().add("Causal de Eliminación: " + selectedCausal.getName());
+        getAuditActionQueue().add(conceptAuditAction);
+        RequestContext reqCtx = RequestContext.getCurrentInstance();
+        reqCtx.execute("PF('descriptionsTable').filter();");
+        reqCtx.execute("PF('dlg').hide();");
+        selectedCausal = null;
+
+        conceptManager.invalidate(concept, user);
+        messageBean.messageSuccess("Acción exitosa", "Concepto invalidado");
+
+        // Si el concepto está persistido, invalidarlo
+        if (concept.isPersistent() && !concept.isModeled()) {
+            conceptManager.delete(concept, user);
+            messageBean.messageSuccess("Acción exitosa", "Concepto eliminado");
+            ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
+            eContext.redirect(eContext.getRequestContextPath() + "/views/browser/generalBrowser.xhtml?idCategory=" + category.getId());
+        } else {
+            conceptManager.invalidate(concept, user);
+            messageBean.messageSuccess("Acción exitosa", "Concepto invalidado");
+        }
+    }
+
+    public void invalidateConcept() throws IOException {
         // Si el concepto está persistido, invalidarlo
         if (concept.isPersistent() && !concept.isModeled()) {
             conceptManager.delete(concept, user);
@@ -1542,6 +1583,22 @@ public class ConceptBean implements Serializable {
 
     public void setMessageBean(MessageBean messageBean) {
         this.messageBean = messageBean;
+    }
+
+    public List<EliminationCausal> getEliminationCausals() {
+        return eliminationCausals;
+    }
+
+    public void setEliminationCausals(List<EliminationCausal> eliminationCausals) {
+        this.eliminationCausals = eliminationCausals;
+    }
+
+    public EliminationCausal getSelectedCausal() {
+        return selectedCausal;
+    }
+
+    public void setSelectedCausal(EliminationCausal selectedCausal) {
+        this.selectedCausal = selectedCausal;
     }
 
 }

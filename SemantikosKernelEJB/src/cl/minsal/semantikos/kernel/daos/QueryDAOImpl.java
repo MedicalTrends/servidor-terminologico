@@ -80,7 +80,7 @@ public class QueryDAOImpl implements QueryDAO {
         String QUERY = "";
 
         if(  query instanceof  GeneralQuery )
-            QUERY = "begin ? := stk.stk_pck_query.get_concept_by_general_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;";
+            QUERY = "begin ? := stk.stk_pck_query.get_concept_by_general_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;";
         if(  query instanceof  DescriptionQuery )
             QUERY = "begin ? := stk.stk_pck_query.get_description_by_description_query(?,?,?,?,?,?,?,?,?); end;";
         if(  query instanceof  NoValidQuery )
@@ -162,7 +162,7 @@ public class QueryDAOImpl implements QueryDAO {
         String QUERY = "";
 
         if(  query instanceof  GeneralQuery )
-            QUERY = "begin ? := stk.stk_pck_query.count_concept_by_general_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;";
+            QUERY = "begin ? := stk.stk_pck_query.count_concept_by_general_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;";
         if(  query instanceof  DescriptionQuery )
             QUERY = "begin ? := stk.stk_pck_query.count_description_by_description_query(?,?,?,?,?,?,?,?,?); end;";
         if(  query instanceof  NoValidQuery )
@@ -653,9 +653,9 @@ public class QueryDAOImpl implements QueryDAO {
     private void bindParameter(int paramNumber, CallableStatement call, Connection connection, QueryParameter param)
             throws SQLException {
 
-        if(param.getValue() == null){
+        if(param.getValue() == null) {
 
-            if(param.isArray()){
+            if(param.isArray()) {
                 //call.setNull(paramNumber, Types.ARRAY);
                 if(param.getType() == String.class) {
                     call.setNull(paramNumber, Types.ARRAY, "STK.TEXT_ARRAY");
@@ -697,7 +697,7 @@ public class QueryDAOImpl implements QueryDAO {
             }
         }
         else{
-            if(param.isArray()){
+            if(param.isArray()) {
                 if(param.getType() == String.class) {
                     call.setArray(paramNumber, connection.unwrap(OracleConnection.class).createARRAY("STK.TEXT_ARRAY", (String[]) param.getValue()));
                     return;

@@ -549,7 +549,7 @@ public class GeneralQuery extends Query implements IQuery, Serializable {
      * parámetros de los filtros
      */
     @Override
-    public List<QueryParameter> getQueryParameters(){
+    public List<QueryParameter> getQueryParameters() {
 
         List<QueryParameter> queryParameters = new ArrayList<>();
 

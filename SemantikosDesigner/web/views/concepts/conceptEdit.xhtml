@@ -262,6 +262,13 @@
                                     <p:confirm header="Confirmar Acción" message="¿Desea deshacer los cambios?" icon="ui-icon-alert"/>
                                 </p:commandButton>
 
+                                <p:commandButton icon="fa fa-trash"
+                                                 onclick="PF('dlg').show();"
+                                                 update="@(.cause2)"
+                                                 type="submit" process="mainForm"
+                                                 style="float: right" rendered="#{conceptBean.concept.modeled}">
+                                </p:commandButton>
+
                                 <p:commandButton actionListener="#{conceptBean.deleteConcept}" icon="fa fa-trash"
                                                  type="submit" process="mainForm"
                                                  style="float: right" rendered="#{not conceptBean.concept.modeled}"
@@ -359,6 +366,30 @@
                         </p:dataTable>
                     </p:dialog>
 
+                    <p:dialog header="Causal de eliminación" widgetVar="dlg" resizable="false">
+                        <p:outputPanel id="deletePanel" columns="2" cellpadding="5" styleClass="ui-panelgrid-blank cause2">
+                            <div class="ui-fluid ui-g">
+                                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                    <p:selectOneMenu id="cause" value="#{conceptBean.selectedCausal}" converter="omnifaces.SelectItemsConverter">
+                                        <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{conceptBean.eliminationCausals}" var="causal"
+                                                       itemLabel="#{causal.name}" itemValue="#{causal}" />
+                                        <p:ajax event="itemSelect" update="@(.cause2)" process="@this" />
+                                    </p:selectOneMenu>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                    <p:commandButton value="Aceptar" actionListener="#{conceptBean.invalidateConcept()}"
+                                                     update="@(.otherDescriptions)" style="float: right; width: auto" onsuccess="PF('dlg').hide();">
+                                        <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar esta descripción?" icon="ui-icon-alert"/>
+                                    </p:commandButton>
+                                    <p:commandButton value="Cancelar" onclick="PF('dlg').hide();" style="float: right; width: auto"
+                                                     actionListener="#{conceptBean.setSelectedCausal(null)}"/>
+                                </div>
+                            </div>
+                        </p:outputPanel>
+                    </p:dialog>
+
                 </p:outputPanel>
 
             </div>
@@ -368,7 +399,6 @@
         <h:outputStylesheet id="customCSS">
 
         </h:outputStylesheet>
-
 
     </ui:define>
 

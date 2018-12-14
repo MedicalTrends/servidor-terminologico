@@ -627,7 +627,7 @@
                 <div class="ui-g-12 ui-md-12 ui-lg-12">
                     <p:selectOneMenu id="cause" value="#{descriptionBeans.selectedCausal}" converter="omnifaces.SelectItemsConverter">
                         <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
-                        <f:selectItems value="#{descriptionBeans.eliminationCausals}" var="causal"
+                        <f:selectItems value="#{conceptBean.eliminationCausals}" var="causal"
                                        itemLabel="#{causal.name}" itemValue="#{causal}" />
                         <p:ajax event="itemSelect" update="@(.cause2)" process="@this" />
                     </p:selectOneMenu>
