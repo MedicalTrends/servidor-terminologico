@@ -556,6 +556,7 @@ public class GeneralQuery extends Query implements IQuery, Serializable {
         queryParameters.add(new QueryParameter(Long.class, getCategoryValues(), true)); /** ids categorias **/
         queryParameters.add(new QueryParameter(String.class, getQuery(), false)); /** patrón de búsqueda **/
         queryParameters.add(new QueryParameter(Boolean.class, getTruncateMatch(), false)); /** tipo de búsqueda **/
+        queryParameters.add(new QueryParameter(Boolean.class, getValid(), false)); /** está vigente? **/
         queryParameters.add(new QueryParameter(Boolean.class, getModeled(), false)); /** está modelado? **/
         queryParameters.add(new QueryParameter(Boolean.class, getToBeReviewed(), false)); /** para revisar? **/
         queryParameters.add(new QueryParameter(Boolean.class, getToBeConsulted(), false)); /** para consultar? **/

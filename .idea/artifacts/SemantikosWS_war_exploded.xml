@@ -7,8 +7,6 @@
           <element id="module-output" name="SemantikosWS" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Maven: net.bull.javamelody:javamelody-core:1.59.0" />
-          <element id="library" level="project" name="Maven: org.jrobin:jrobin:1.5.9" />
           <element id="library" level="project" name="Maven: org.primefaces:primefaces:6.2" />
           <element id="library" level="project" name="Maven: org.primefaces.themes:ultima:1.1" />
         </element>

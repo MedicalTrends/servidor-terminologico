@@ -54,7 +54,7 @@
     </context-param>
 
     <!-- melody -->
-    <filter>
+    <!--filter>
         <filter-name>javamelody</filter-name>
         <filter-class>net.bull.javamelody.MonitoringFilter</filter-class>
         <async-supported>true</async-supported>
@@ -62,8 +62,9 @@
             <param-name>datasources</param-name>
             <param-value>java:jboss/PostgresDS</param-value>
         </init-param>
-    </filter>
-    <filter-mapping>
+    </filter-->
+
+    <!--filter-mapping>
         <filter-name>javamelody</filter-name>
         <url-pattern>/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
@@ -71,7 +72,7 @@
     </filter-mapping>
     <listener>
         <listener-class>net.bull.javamelody.SessionListener</listener-class>
-    </listener>
+    </listener-->
 
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>

@@ -31,31 +31,27 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="JBoss 7.5.0.Final-redhat-21" level="application_server_libraries" />
-    <orderEntry type="module" module-name="SemantikosDomain" />
-    <orderEntry type="library" name="Maven: org.jboss:jboss-ejb-client:1.0.39.Final-redhat-1" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss:jboss-remote-naming:1.0.13.Final-redhat-1" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.1.4.GA-redhat-2" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.marshalling:jboss-marshalling:1.4.10.SP3-redhat-1" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.marshalling:jboss-marshalling-river:1.4.10.SP3-redhat-1" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.remoting3:jboss-remoting:3.3.10.Final-redhat-1" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.sasl:jboss-sasl:1.0.5.Final-redhat-1" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.spec.javax.transaction:jboss-transaction-api_1.1_spec:1.0.1.Final-redhat-3" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.spec.javax.ejb:jboss-ejb-api_3.1_spec:1.0.2.Final-redhat-3" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.xnio:xnio-api:3.0.16.GA-redhat-1" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.xnio:xnio-nio:3.0.16.GA-redhat-1" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.as:jboss-as-build-config:7.5.17.Final-redhat-4" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.spec.javax.servlet:jboss-servlet-api_3.1_spec:1.0.0.Final" level="project" />
-    <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.5.1" level="project" />
+    <orderEntry type="module" module-name="SemantikosDomain" scope="PROVIDED" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss:jboss-ejb-client:1.0.39.Final-redhat-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss:jboss-remote-naming:1.0.13.Final-redhat-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.logging:jboss-logging:3.1.4.GA-redhat-2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.marshalling:jboss-marshalling:1.4.10.SP3-redhat-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.marshalling:jboss-marshalling-river:1.4.10.SP3-redhat-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.remoting3:jboss-remoting:3.3.10.Final-redhat-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.sasl:jboss-sasl:1.0.5.Final-redhat-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.spec.javax.transaction:jboss-transaction-api_1.1_spec:1.0.1.Final-redhat-3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.spec.javax.ejb:jboss-ejb-api_3.1_spec:1.0.2.Final-redhat-3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.xnio:xnio-api:3.0.16.GA-redhat-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.xnio:xnio-nio:3.0.16.GA-redhat-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.as:jboss-as-build-config:7.5.17.Final-redhat-4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-lang:commons-lang:2.6" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.sun.mail:javax.mail:1.5.1" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-log4j12:1.7.21" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.21" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.17" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.axis:axis:1.4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-collections4:4.0" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.6" level="project" />
-    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
-    <orderEntry type="library" name="Maven: javax.cache:cache-api:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: org.ehcache:ehcache:3.1.2" level="project" />
-    <orderEntry type="library" name="Maven: javax.activation:activation:1.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.activation:activation:1.1.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.enterprise:cdi-api:1.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.inject:javax.inject:1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.jws:jsr181-api:1.0-MR1" level="project" />
@@ -74,6 +70,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.spec.javax.security.jacc:jboss-jacc-api_1.5_spec:1.0.0.Final" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.spec.javax.security.auth.message:jboss-jaspi-api_1.1_spec:1.0.0.Final" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.spec.javax.jms:jboss-jms-api_2.0_spec:1.0.0.Final" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.spec.javax.servlet:jboss-servlet-api_3.1_spec:1.0.0.Final" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.spec.javax.servlet.jsp:jboss-jsp-api_2.3_spec:1.0.1.Final" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.spec.javax.servlet.jstl:jboss-jstl-api_1.2_spec:1.1.2.Final" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec:1.0.0.Final" level="project" />
@@ -86,7 +83,6 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.0" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.0" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.0" level="project" />
-    <orderEntry type="library" name="Maven: postgresql:postgresql:9.1-901-1.jdbc4" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.oracle:ojdbc8:12.2.0.1.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.12" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
@@ -94,8 +90,6 @@
     <orderEntry type="library" name="Maven: org.apache.commons:commons-csv:1.3" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:1.3.2" level="project" />
     <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.10.1" level="project" />
-    <orderEntry type="library" name="Maven: net.bull.javamelody:javamelody-core:1.59.0" level="project" />
-    <orderEntry type="library" name="Maven: org.jrobin:jrobin:1.5.9" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:23.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:1.3.9" level="project" />
     <orderEntry type="library" name="Maven: com.google.errorprone:error_prone_annotations:2.0.18" level="project" />

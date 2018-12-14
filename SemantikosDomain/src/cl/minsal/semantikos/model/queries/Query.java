@@ -19,6 +19,8 @@ public class Query implements IQuery, Serializable {
 
     private Boolean truncateMatch = false;
 
+    private Boolean valid = true;
+
     /**
      * Order
      */
@@ -50,6 +52,14 @@ public class Query implements IQuery, Serializable {
 
     public void setTruncateMatch(Boolean truncateMatch) {
         this.truncateMatch = truncateMatch;
+    }
+
+    public Boolean getValid() {
+        return valid;
+    }
+
+    public void setValid(Boolean valid) {
+        this.valid = valid;
     }
 
     public int getOrder() {

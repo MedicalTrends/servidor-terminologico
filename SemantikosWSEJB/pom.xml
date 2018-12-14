@@ -26,12 +26,12 @@
             <version>1.7.21</version>
         </dependency>
 
-        <dependency>
+        <!--dependency>
             <groupId>javax.ejb</groupId>
             <artifactId>javax.ejb-api</artifactId>
             <version>3.2</version>
             <scope>provided</scope>
-        </dependency>
+        </dependency-->
 
         <dependency>
             <groupId>cl.minsal.semantikos</groupId>

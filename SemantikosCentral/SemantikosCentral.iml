@@ -22,6 +22,20 @@
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.21" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.17" level="project" />
     <orderEntry type="module" module-name="SemantikosKernelEJB" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-collections4:4.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.6" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-csv:1.3" level="project" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:1.3.2" level="project" />
+    <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.10.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:23.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:1.3.9" level="project" />
+    <orderEntry type="library" name="Maven: com.google.errorprone:error_prone_annotations:2.0.18" level="project" />
+    <orderEntry type="library" name="Maven: com.google.j2objc:j2objc-annotations:1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.mojo:animal-sniffer-annotations:1.14" level="project" />
+    <orderEntry type="module" module-name="SemantikosWSEJB" />
     <orderEntry type="module" module-name="SemantikosDomain" />
     <orderEntry type="library" name="Maven: org.jboss:jboss-ejb-client:1.0.39.Final-redhat-1" level="project" />
     <orderEntry type="library" name="Maven: org.jboss:jboss-remote-naming:1.0.13.Final-redhat-1" level="project" />
@@ -35,30 +49,9 @@
     <orderEntry type="library" name="Maven: org.jboss.xnio:xnio-api:3.0.16.GA-redhat-1" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.xnio:xnio-nio:3.0.16.GA-redhat-1" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.as:jboss-as-build-config:7.5.17.Final-redhat-4" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.spec.javax.servlet:jboss-servlet-api_3.1_spec:1.0.0.Final" level="project" />
+    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
     <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.5.1" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.axis:axis:1.4" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.commons:commons-collections4:4.0" level="project" />
-    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.6" level="project" />
-    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
-    <orderEntry type="library" name="Maven: javax.cache:cache-api:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: org.ehcache:ehcache:3.1.2" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.0" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.0" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.0" level="project" />
-    <orderEntry type="library" name="Maven: postgresql:postgresql:9.1-901-1.jdbc4" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.commons:commons-csv:1.3" level="project" />
-    <orderEntry type="library" name="Maven: commons-io:commons-io:1.3.2" level="project" />
-    <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.10.1" level="project" />
-    <orderEntry type="library" name="Maven: net.bull.javamelody:javamelody-core:1.59.0" level="project" />
-    <orderEntry type="library" name="Maven: org.jrobin:jrobin:1.5.9" level="project" />
-    <orderEntry type="library" name="Maven: com.google.guava:guava:23.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:1.3.9" level="project" />
-    <orderEntry type="library" name="Maven: com.google.errorprone:error_prone_annotations:2.0.18" level="project" />
-    <orderEntry type="library" name="Maven: com.google.j2objc:j2objc-annotations:1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.codehaus.mojo:animal-sniffer-annotations:1.14" level="project" />
-    <orderEntry type="module" module-name="SemantikosWSEJB" />
     <orderEntry type="module" module-name="SemantikosWS" />
     <orderEntry type="library" name="Maven: javax.validation:validation-api:1.0.0.GA" level="project" />
   </component>
