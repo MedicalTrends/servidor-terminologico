@@ -484,7 +484,7 @@ public class ConceptBean implements Serializable {
 
         fullyDefined=concept.isFullyDefined();
         concept.setEditable(editable);
-        auditAction = auditManager.getConceptAuditActions(concept, true);
+        auditAction = auditManager.getConceptAuditActions(concept);
         category = concept.getCategory();
         conceptBeanExport.setConceptSMTK(conceptSMTK);
         conceptBeanExport.loadConcept();
@@ -970,7 +970,6 @@ public class ConceptBean implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Advertencia", "No se ha realizado ningún cambio al concepto!!"));
         }
         else {
-
             context.addMessage(null, new FacesMessage("Acción Exitosa", "Se han registrado " + changes + " cambios en el concepto."));
             // Se restablece el concepto, como el concepto está persistido, se le pasa su id
             getConceptById(concept.getId());
@@ -1120,16 +1119,36 @@ public class ConceptBean implements Serializable {
     }
 
     public void invalidateConcept() throws IOException {
-        // Si el concepto está persistido, invalidarlo
-        if (concept.isPersistent() && !concept.isModeled()) {
-            conceptManager.delete(concept, user);
-            messageBean.messageSuccess("Acción exitosa", "Concepto eliminado");
-            ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-            eContext.redirect(eContext.getRequestContextPath() + "/views/browser/generalBrowser.xhtml?idCategory=" + category.getId());
-        } else {
-            conceptManager.invalidate(concept, user);
-            messageBean.messageSuccess("Acción exitosa", "Concepto invalidado");
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
+
+        try {
+            // Si el concepto está persistido, invalidarlo
+            if (concept.isPersistent() && !concept.isModeled()) {
+                conceptManager.delete(concept, user);
+                messageBean.messageSuccess("Acción exitosa", "Concepto eliminado");
+                eContext.redirect(eContext.getRequestContextPath() + "/views/browser/generalBrowser.xhtml?idCategory=" + category.getId());
+            } else {
+                if(selectedCausal == null) {
+                    messageBean.messageError("No se ha seleccionado la causal de eliminación");
+                    return;
+                }
+                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                User user = authenticationBean.getLoggedUser();
+                ConceptAuditAction conceptAuditAction = new ConceptAuditAction(concept, CONCEPT_INVALIDATION, timestamp, user, concept);
+                conceptAuditAction.getDetails().add("Causal de Eliminación: " + selectedCausal.getName());
+                getAuditActionQueue().add(conceptAuditAction);
+                conceptManager.invalidate(concept, user, auditActionQueue);
+                messageBean.messageSuccess("Acción exitosa", "Concepto invalidado");
+                eContext.redirect(eContext.getRequestContextPath() + "/views/browser/generalBrowser.xhtml?idCategory=" + category.getId());
+            }
         }
+        catch (Exception e) {
+            e.printStackTrace();
+            context.addMessage(null, new FacesMessage("Error", e.getMessage()));
+        }
+
     }
 
     public void cancelConcept() {

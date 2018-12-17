@@ -379,7 +379,7 @@ public class ConceptDAOImpl implements ConceptDAO {
         //ConnectionBD connect = new ConnectionBD();
         long updated;
 
-        String sql = "begin ? := stk.stk_pck_concept.update_concept(?,?,?,?,?,?,?,?,?,?,?); end;";
+        String sql = "begin ? := stk.stk_pck_concept.update_concept(?,?,?,?,?,?,?,?,?,?,?,?); end;";
 
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
@@ -396,6 +396,7 @@ public class ConceptDAOImpl implements ConceptDAO {
             call.setBoolean(10, conceptSMTK.isPublished());
             call.setString(11, conceptSMTK.getObservation());
             call.setLong(12, conceptSMTK.getTagSMTK().getId());
+            call.setTimestamp(13, conceptSMTK.getValidUntil());
             call.execute();
 
             //ResultSet rs = call.getResultSet();

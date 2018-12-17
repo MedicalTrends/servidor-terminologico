@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_DESCRIPTION_DELETION;
+import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_INVALIDATION;
 
 /**
  * @author Andrés Farías on 8/23/16.
@@ -79,7 +80,7 @@ public class ConceptAuditAction extends AuditAction implements Serializable {
             detail = "Categoría Origen: " + category.getName();
 
         }
-        if(this.getAuditActionType().equals(CONCEPT_DESCRIPTION_DELETION)) {
+        if(this.getAuditActionType().equals(CONCEPT_DESCRIPTION_DELETION) || this.getAuditActionType().equals(CONCEPT_INVALIDATION)) {
             for (String s : details) {
                 detail += " [" + s + "]";
             }

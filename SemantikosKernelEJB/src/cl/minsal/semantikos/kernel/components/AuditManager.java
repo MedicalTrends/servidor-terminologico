@@ -378,6 +378,18 @@ public interface AuditManager {
 
     /**
      * Este método es responsable de recuperar y retornar en una lista los últimos <code>numberOfChanges</code> cambios
+     * que ha tenido un concepto.
+     *
+     * @param conceptSMTK     El concepto cuyos cambios se desean recuperar.
+     *
+     * @return Una lista con los últimos <code>numberOfChanges</code> realizados sobre el concepto
+     * <code>conceptSMTK</code>
+     */
+    public List<ConceptAuditAction> getConceptAuditActions(ConceptSMTK conceptSMTK);
+
+
+    /**
+     * Este método es responsable de recuperar y retornar en una lista los últimos <code>numberOfChanges</code> cambios
      * que ha tenido un usuario.
      *
      * @param user     El usuario cuyos cambios se desean recuperar.

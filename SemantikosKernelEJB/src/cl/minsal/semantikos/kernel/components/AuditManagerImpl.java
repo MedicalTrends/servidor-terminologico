@@ -399,6 +399,11 @@ public class AuditManagerImpl implements AuditManager {
     }
 
     @Override
+    public List<ConceptAuditAction> getConceptAuditActions(ConceptSMTK conceptSMTK) {
+        return auditDAO.getConceptAuditActions(conceptSMTK);
+    }
+
+    @Override
     public List<UserAuditAction> getUserAuditActions(User user) {
         return auditDAO.getUserAuditActions(user);
     }

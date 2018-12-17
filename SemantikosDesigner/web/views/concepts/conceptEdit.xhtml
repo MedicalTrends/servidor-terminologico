@@ -263,10 +263,11 @@
                                 </p:commandButton>
 
                                 <p:commandButton icon="fa fa-trash"
-                                                 onclick="PF('dlg').show();"
-                                                 update="@(.cause2)"
-                                                 type="submit" process="mainForm"
-                                                 style="float: right" rendered="#{conceptBean.concept.modeled}">
+                                                 onclick="PF('dlg-elimination-causals').show();"
+                                                 update="@(.cause-concept)"
+                                                 type="submit" process="@this"
+                                                 style="float: right"
+                                                 rendered="#{conceptBean.concept.modeled and conceptBean.concept.valid}">
                                 </p:commandButton>
 
                                 <p:commandButton actionListener="#{conceptBean.deleteConcept}" icon="fa fa-trash"
@@ -284,6 +285,29 @@
                         </div>
 
                         <smtk:actionButtons rendered="false" />
+
+                        <p:dialog header="Causal de eliminación" widgetVar="dlg-elimination-causals" resizable="false">
+                            <p:outputPanel id="deletePanel" styleClass="ui-panelgrid-blank cause-concept">
+                                <div class="ui-fluid ui-g">
+                                    <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                        <p:selectOneMenu id="cause" value="#{conceptBean.selectedCausal}" converter="omnifaces.SelectItemsConverter">
+                                            <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
+                                            <f:selectItems value="#{conceptBean.eliminationCausals}" var="causal"
+                                                           itemLabel="#{causal.name}" itemValue="#{causal}" />
+                                            <p:ajax event="itemSelect" update="@(.cause-concept)" process="@this" />
+                                        </p:selectOneMenu>
+                                    </div>
+                                    <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                        <p:commandButton value="Aceptar" actionListener="#{conceptBean.invalidateConcept()}"
+                                                         update="@(.cause-concept)" style="float: right; width: auto" onsuccess="PF('dlg-elimination-causals').hide();">
+                                            <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar este concepto?" icon="ui-icon-alert"/>
+                                        </p:commandButton>
+                                        <p:commandButton value="Cancelar" onclick="PF('dlg-elimination-causals').hide();" style="float: right; width: auto"
+                                                         actionListener="#{conceptBean.setSelectedCausal(null)}"/>
+                                    </div>
+                                </div>
+                            </p:outputPanel>
+                        </p:dialog>
 
                     </h:form>
 
@@ -364,30 +388,6 @@
                             <p:column width="200" styleClass="FontBold Fs13">#{cell.column.description}</p:column>
                             <p:column width="400">#{cell}</p:column>
                         </p:dataTable>
-                    </p:dialog>
-
-                    <p:dialog header="Causal de eliminación" widgetVar="dlg" resizable="false">
-                        <p:outputPanel id="deletePanel" columns="2" cellpadding="5" styleClass="ui-panelgrid-blank cause2">
-                            <div class="ui-fluid ui-g">
-                                <div class="ui-g-12 ui-md-12 ui-lg-12">
-                                    <p:selectOneMenu id="cause" value="#{conceptBean.selectedCausal}" converter="omnifaces.SelectItemsConverter">
-                                        <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
-                                        <f:selectItems value="#{conceptBean.eliminationCausals}" var="causal"
-                                                       itemLabel="#{causal.name}" itemValue="#{causal}" />
-                                        <p:ajax event="itemSelect" update="@(.cause2)" process="@this" />
-                                    </p:selectOneMenu>
-                                </div>
-
-                                <div class="ui-g-12 ui-md-12 ui-lg-12">
-                                    <p:commandButton value="Aceptar" actionListener="#{conceptBean.invalidateConcept()}"
-                                                     update="@(.otherDescriptions)" style="float: right; width: auto" onsuccess="PF('dlg').hide();">
-                                        <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar esta descripción?" icon="ui-icon-alert"/>
-                                    </p:commandButton>
-                                    <p:commandButton value="Cancelar" onclick="PF('dlg').hide();" style="float: right; width: auto"
-                                                     actionListener="#{conceptBean.setSelectedCausal(null)}"/>
-                                </div>
-                            </div>
-                        </p:outputPanel>
                     </p:dialog>
 
                 </p:outputPanel>

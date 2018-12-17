@@ -75,11 +75,14 @@ public class DescriptionBeans {
 
     private String error = "";
 
+    private List<EliminationCausal> eliminationCausals = new ArrayList<>();
+
     private EliminationCausal selectedCausal;
 
     @PostConstruct
     public void init() {
         descriptionEdit= new DescriptionWeb();
+        eliminationCausals = Arrays.asList(EliminationCausal.values());
         //RequestContext reqCtx = RequestContext.getCurrentInstance();
         //reqCtx.execute("PF('descriptionsTable').filter();");
     }
@@ -286,6 +289,14 @@ public class DescriptionBeans {
 
     public void setMainMenuBean(MainMenuBean mainMenuBean) {
         this.mainMenuBean = mainMenuBean;
+    }
+
+    public List<EliminationCausal> getEliminationCausals() {
+        return eliminationCausals;
+    }
+
+    public void setEliminationCausals(List<EliminationCausal> eliminationCausals) {
+        this.eliminationCausals = eliminationCausals;
     }
 
     public EliminationCausal getSelectedCausal() {

@@ -229,7 +229,7 @@
                     <p:commandButton onclick="PF('dlg').show();"
                                      process="@this"
                                      title="Eliminar Descripción"
-                                     update="@(.cause2)" actionListener="#{descriptionBeans.setDescriptionEdit(description)}"
+                                     update="@(.cause-descriptions)" actionListener="#{descriptionBeans.setDescriptionEdit(description)}"
                                      style="padding: 5px" icon="fa fa-trash fa-lg"
                                      rendered="#{ conceptBean.concept.modeled and description.persistent and description.validityUntil eq null}">
                     </p:commandButton>
@@ -622,14 +622,15 @@
     </p:overlayPanel>
 
     <p:dialog header="Causal de eliminación" widgetVar="dlg" resizable="false">
-        <p:outputPanel id="deletePanel" columns="2" cellpadding="5" styleClass="ui-panelgrid-blank cause2">
+        <p:outputPanel id="deletePanel" columns="2" cellpadding="5" styleClass="ui-panelgrid-blank cause-descriptions">
             <div class="ui-fluid ui-g">
                 <div class="ui-g-12 ui-md-12 ui-lg-12">
-                    <p:selectOneMenu id="cause" value="#{descriptionBeans.selectedCausal}" converter="omnifaces.SelectItemsConverter">
+                    <p:selectOneMenu id="cause" value="#{descriptionBeans.selectedCausal}"
+                                     converter="omnifaces.SelectItemsConverter">
                         <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
-                        <f:selectItems value="#{conceptBean.eliminationCausals}" var="causal"
+                        <f:selectItems value="#{descriptionBeans.eliminationCausals}" var="causal"
                                        itemLabel="#{causal.name}" itemValue="#{causal}" />
-                        <p:ajax event="itemSelect" update="@(.cause2)" process="@this" />
+                        <p:ajax event="itemSelect" update="@(.cause-descriptions)" process="@this" />
                     </p:selectOneMenu>
                 </div>
 

@@ -54,7 +54,8 @@ public class ConceptEditionBusinessRuleContainer implements BusinessRulesContain
      * @param user        El usuario que realiza la acción.
      */
     public void preconditionsConceptInvalidation(ConceptSMTK conceptSMTK, User user) {
-        br101ConceptInvalidation(conceptSMTK);
+        //br101ConceptInvalidation(conceptSMTK);
+        br102ConceptInvalidation(conceptSMTK);
     }
 
     /**
@@ -66,6 +67,18 @@ public class ConceptEditionBusinessRuleContainer implements BusinessRulesContain
     private void br101ConceptInvalidation(ConceptSMTK conceptSMTK) {
         if (conceptSMTK.isModeled()) {
             throw new BusinessRuleException("BR-UNK", "No es posible invalidar un concepto que se encuentra Modelado.");
+        }
+    }
+
+    /**
+     * Este método es responsable de implementar la regla de negocio para invalidar un concepto: No es posible
+     * invalidar conceptos que se encuentran modelados.
+     *
+     * @param conceptSMTK Concepto que se desea invalidar.
+     */
+    private void br102ConceptInvalidation(ConceptSMTK conceptSMTK) {
+        if (conceptSMTK.getValidUntil() != null) {
+            throw new BusinessRuleException("BR-UNK", "No es posible invalidar un concepto que ya se encuentra invalidado.");
         }
     }
 

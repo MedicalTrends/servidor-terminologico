@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.kernel.components;
 
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.refsets.RefSet;
@@ -73,6 +74,14 @@ public interface ConceptManager {
      * @param user        El usuario que realiza la operación.
      */
     public void invalidate(@NotNull ConceptSMTK conceptSMTK, @NotNull User user);
+
+    /**
+     * Este método es responsable de dejar no vigente (eliminar en la jerga del análisis!).
+     *
+     * @param conceptSMTK El concepto que se desea dejar no vigente.
+     * @param user        El usuario que realiza la operación.
+     */
+    public void invalidate(@NotNull ConceptSMTK conceptSMTK, @NotNull User user, @NotNull List<ConceptAuditAction> auditActions);
 
     /**
      * Este método es responsable de cambiar el concepto de una categoría a otra.

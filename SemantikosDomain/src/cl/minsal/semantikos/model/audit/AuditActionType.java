@@ -28,7 +28,7 @@ public enum AuditActionType implements Serializable {
     CONCEPT_RELATIONSHIP_REFSET_ELIMINATION(15, "Referencia a RefSet eliminada en Concepto", REMOVAL),
     CONCEPT_DESCRIPTION_MOVEMENT(16, "Descripción traslada a otro concepto", AuditActionNature.CHANGE),
     CONCEPT_DESCRIPTION_DELETION(17, "Descripción eliminada de un concepto", AuditActionNature.CHANGE),
-    CONCEPT_INVALIDATION(18, "Concepto invalidado.", REMOVAL),
+    CONCEPT_INVALIDATION(18, "Concepto invalidado.", CHANGE),
     CONCEPT_DESCRIPTION_CREATION(19, "Descripción creada", CREATION),
     REFSET_CREATION(20, "Creación de RefSet", CREATION),
     REFSET_UPDATE(21, "Actualización de RefSet", CHANGE),

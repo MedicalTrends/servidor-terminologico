@@ -78,6 +78,36 @@ public class AuditDAOImpl implements AuditDAO {
     }
 
     @Override
+    public List<ConceptAuditAction> getConceptAuditActions(ConceptSMTK conceptSMTK) {
+
+        String sql = "begin ? := stk.stk_pck_audit.get_all_concept_audit_actions(?); end;";
+
+        List<ConceptAuditAction> auditActions = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            /* Se invoca la consulta para recuperar las relaciones */
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+            call.setLong(2, conceptSMTK.getId());
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+
+            auditActions = createAuditActionsFromResultSet(rs, conceptSMTK);
+
+            rs.close();
+
+        } catch (SQLException e) {
+            String errorMsg = "No se pudo parsear el JSON a BasicTypeDefinition.";
+            logger.error(errorMsg);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return auditActions;
+    }
+
+    @Override
     public List<UserAuditAction> getUserAuditActions(User user) {
 
         String sql = "begin ? := stk.stk_pck_audit.get_user_audit_actions(?); end;";

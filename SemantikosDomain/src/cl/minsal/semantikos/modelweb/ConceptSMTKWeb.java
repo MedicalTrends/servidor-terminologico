@@ -41,6 +41,8 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
         super(conceptSMTK.getConceptID(), conceptSMTK.getCategory(), conceptSMTK.isToBeReviewed(), conceptSMTK.isToBeConsulted(), conceptSMTK.isModeled(),
                 conceptSMTK.isFullyDefined(), conceptSMTK.isInherited(), conceptSMTK.isPublished(), conceptSMTK.getObservation(), conceptSMTK.getTagSMTK());
 
+        setValidUntil(conceptSMTK.getValidUntil());
+
         // Agregar descripciones y relaciones
         if(conceptSMTK.isPersistent()) {
             this.setId(conceptSMTK.getId());

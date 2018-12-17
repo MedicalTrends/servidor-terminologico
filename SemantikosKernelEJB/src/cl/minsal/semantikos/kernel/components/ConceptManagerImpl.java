@@ -9,6 +9,7 @@ import cl.minsal.semantikos.kernel.daos.ws.RelationshipWSDAO;
 import cl.minsal.semantikos.kernel.util.ConceptUtils;
 import cl.minsal.semantikos.kernel.util.IDGenerator;
 import cl.minsal.semantikos.model.*;
+import cl.minsal.semantikos.model.audit.ConceptAuditAction;
 import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
@@ -272,6 +273,42 @@ public class ConceptManagerImpl implements ConceptManager {
         /* Se registra en el historial */
         if (conceptSMTK.isModeled()) {
             auditManager.recordConceptInvalidation(conceptSMTK, user);
+        }
+        logger.info("Se ha dejado no vigente el concepto: " + conceptSMTK);
+    }
+
+    @Override
+    public void invalidate(@NotNull ConceptSMTK conceptSMTK, @NotNull User user, @NotNull List<ConceptAuditAction> auditActions) throws Exception {
+
+        logger.info("Se dejará no vigente el concepto: " + conceptSMTK);
+
+        /* Se validan las pre-condiciones para eliminar un concepto */
+        new ConceptEditionBusinessRuleContainer().preconditionsConceptInvalidation(conceptSMTK, user);
+
+        Timestamp timeStamp = new Timestamp(System.currentTimeMillis());
+
+        /* Se invalida el concepto */
+        conceptSMTK.setPublished(false);
+        conceptSMTK.setValidUntil(timeStamp);
+        conceptDAO.update(conceptSMTK);
+
+        /*
+        for (Description description : conceptSMTK.getDescriptions()) {
+            description.setValidityUntil(timeStamp);
+            descriptionDAO.update(description);
+        }
+
+        for (Relationship relationship : conceptSMTK.getRelationships()) {
+            relationship.setValidityUntil(timeStamp);
+            relationshipDAO.update(relationship);
+        }
+        */
+
+        /* Se registra en el historial */
+        if (conceptSMTK.isModeled()) {
+            for (ConceptAuditAction auditAction : auditActions) {
+                auditManager.recordAuditAction(auditAction);
+            }
         }
         logger.info("Se ha dejado no vigente el concepto: " + conceptSMTK);
     }
