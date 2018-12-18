@@ -37,6 +37,8 @@ import java.util.*;
 
 import static cl.minsal.semantikos.model.DAO.NON_PERSISTED_ID;
 import static cl.minsal.semantikos.model.PersistentEntity.getIdArray;
+import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_DESCRIPTION_DELETION;
+import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_RELATIONSHIP_REMOVAL;
 
 /**
  * @author Andrés Farías
@@ -292,17 +294,30 @@ public class ConceptManagerImpl implements ConceptManager {
         conceptSMTK.setValidUntil(timeStamp);
         conceptDAO.update(conceptSMTK);
 
-        /*
         for (Description description : conceptSMTK.getDescriptions()) {
-            description.setValidityUntil(timeStamp);
-            descriptionDAO.update(description);
+            if(description.isValid()) {
+                description.setValidityUntil(timeStamp);
+                descriptionDAO.update(description);
+                for (ConceptAuditAction auditAction : auditActions) {
+                    ConceptAuditAction conceptAuditAction = new ConceptAuditAction(conceptSMTK, CONCEPT_DESCRIPTION_DELETION, timeStamp, user, description);
+                    conceptAuditAction.getDetails().addAll(auditAction.getDetails());
+                    auditManager.recordAuditAction(conceptAuditAction);
+                }
+            }
         }
 
         for (Relationship relationship : conceptSMTK.getRelationships()) {
-            relationship.setValidityUntil(timeStamp);
-            relationshipDAO.update(relationship);
+            if(relationship.isValid()) {
+                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                relationship.setValidityUntil(timeStamp);
+                relationshipDAO.update(relationship);
+                for (ConceptAuditAction auditAction : auditActions) {
+                    ConceptAuditAction conceptAuditAction = new ConceptAuditAction(conceptSMTK, CONCEPT_RELATIONSHIP_REMOVAL, timeStamp, user, relationship);
+                    conceptAuditAction.getDetails().addAll(auditAction.getDetails());
+                    auditManager.recordAuditAction(conceptAuditAction);
+                }
+            }
         }
-        */
 
         /* Se registra en el historial */
         if (conceptSMTK.isModeled()) {
@@ -310,6 +325,7 @@ public class ConceptManagerImpl implements ConceptManager {
                 auditManager.recordAuditAction(auditAction);
             }
         }
+
         logger.info("Se ha dejado no vigente el concepto: " + conceptSMTK);
     }
 

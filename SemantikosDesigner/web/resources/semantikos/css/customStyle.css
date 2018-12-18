@@ -321,7 +321,7 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 }
 
 .first-heading {
-    font-size: 1.8em !important;
+    font-size: 1.7em !important;
     margin: 10px !important;
     line-height: 24px !important;
 }
@@ -375,4 +375,12 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 
 .sheet .ui-sortable-column-icon.ui-icon.ui-icon.ui-icon-carat-2-n-s.ui-icon-triangle-1-n {
     color: black !important;
+}
+
+.not-valid {
+    background: #f8f1f2;
+}
+
+.not-valid-description {
+    background: #f8f1f2 !important;
 }

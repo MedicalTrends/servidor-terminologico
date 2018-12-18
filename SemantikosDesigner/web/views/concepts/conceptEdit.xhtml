@@ -45,7 +45,7 @@
 
                         <smtk:changeMarketed />
 
-                        <p:outputPanel>
+                        <p:outputPanel styleClass="#{not conceptBean.concept.valid?'not-valid':''}">
 
                             <p:outputPanel styleClass="msgUpdate">
                                 <p:growl id="editMsgs3" showDetail="true"/>
@@ -253,11 +253,11 @@
                                 <smtk:export-xls rendered="#{conceptBean.concept.modeled}" />
 
                                 <!-- Botón para Trasladar el concepto modelado -->
-                                <smtk:trasnferConcept conceptSMTK="#{conceptBean.concept}"/>
+                                <smtk:trasnferConcept conceptSMTK="#{conceptBean.concept}" rendered="#{conceptBean.concept.valid}"/>
 
                                 <p:commandButton actionListener="#{conceptBean.cancelConcept}" icon="fa fa-undo"
                                                  type="submit" process="mainForm"
-                                                 style="float: right"
+                                                 style="float: right" rendered="#{conceptBean.concept.valid}"
                                                  update="growl, mainForm">
                                     <p:confirm header="Confirmar Acción" message="¿Desea deshacer los cambios?" icon="ui-icon-alert"/>
                                 </p:commandButton>
@@ -278,7 +278,7 @@
                                 </p:commandButton>
 
                                 <p:commandButton actionListener="#{conceptBean.saveConcept}" icon="fa fa-check"
-                                                 style="float: right"
+                                                 style="float: right" rendered="#{conceptBean.concept.valid}"
                                                  update="growl, mainForm, @(.breadUpdate)"/>
                             </div>
 

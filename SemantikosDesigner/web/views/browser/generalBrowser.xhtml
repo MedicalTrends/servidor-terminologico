@@ -92,7 +92,7 @@
                             <p:column headerText="Término Preferido">
                                 <div class="ui-g dashboard">
                                     <div class="ui-g-12">
-                                        <div class="card overview">
+                                        <p:outputPanel styleClass="card overview #{ not concept.valid?'not-valid':''}">
                                             <div class="overview-content clearfix task-list">
                                                 <span class="overview-title">
                                                     <p:link outcome="/views/concepts/conceptView" value="#{concept.descriptionFavorite.term} "
@@ -109,6 +109,10 @@
                                                         <i class="fa fa-edit" style="color: #5C5C5C"/>
                                                         <f:param name="conceptID" value="#{concept.conceptID}" />
                                                     </p:link>
+                                                    <p:link rendered="#{not concept.valid}" outcome="/views/concepts/conceptView">
+                                                        <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+                                                        <f:param name="conceptID" value="#{concept.conceptID}" />
+                                                    </p:link>
                                                 </span>
                                                 <span class="overview-badge">
                                                     <p:button outcome="/views/concepts/conceptView" icon="fa fa-search fa-lg" title="Consultar" style="padding: 5px"
@@ -121,7 +125,7 @@
                                                         <f:param name="idConcept" value="#{concept.id}" />
                                                     </p:button>
 
-                                                    <p:commandButton rendered="#{concept.modeled}" icon="fa fa-exchange fa-lg" oncomplete="PF('dialogTC2-browser').show()"
+                                                    <p:commandButton rendered="#{concept.modeled and concept.valid}" icon="fa fa-exchange fa-lg" oncomplete="PF('dialogTC2-browser').show()"
                                                                      update="@(.browserTable),@(.conceptTranslate)" title="Trasladar" style="padding: 5px">
                                                         <f:setPropertyActionListener value="#{concept}" target="#{transferConceptBean.conceptSMTKSelected}" />
                                                     </p:commandButton>
@@ -199,7 +203,7 @@
                                                     </p:outputPanel>
                                                 </span>
                                             </div>
-                                        </div>
+                                        </p:outputPanel>
                                     </div>
                                 </div>
                             </p:column>

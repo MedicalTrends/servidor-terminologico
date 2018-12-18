@@ -19,10 +19,6 @@
 
 <composite:implementation>
 
-    <p:remoteCommand name="onload" update="@(.otherDescriptions)"
-                     action="#{descriptionBeans.filter()}"
-                     autoRun="true" />
-
     <p:panel id="otherDescriptionsPanel" styleClass="otherDescriptionsPanel" widgetVar="panel">
 
         <p:growl id="growl" showDetail="true" showSummary="true"/>
@@ -96,7 +92,7 @@
                      styleClass="otherDescriptions"
                      emptyMessage="El concepto no tiene otras descripciones"
                      var="description" widgetVar="descriptionsTable"
-                     style="margin: 10px;"
+                     style="margin: 10px;" rowStyleClass="#{not description.valid?'not-valid-description':''}"
                      value="#{cc.attrs.descriptions}"
                      editable="true"
                      reflow="true">
@@ -188,7 +184,7 @@
                       filterMatchMode="exact"
                       rendered="#{conceptBean.concept.modeled}">
                 <f:facet name="filter">
-                    <p:selectOneMenu onchange="PF('descriptionsTable').filter()" value="true">
+                    <p:selectOneMenu onchange="PF('descriptionsTable').filter()" value="null">
                         <f:selectItem itemLabel="Todas" itemValue="#{null}" noSelectionOption="true" />
                         <f:selectItem itemLabel="Vigentes" itemValue="#{true}" />
                         <f:selectItem itemLabel="No Vigentes" itemValue="#{false}" />
@@ -204,7 +200,8 @@
 
                 <div style="text-align: center">
 
-                    <p:commandButton disabled="#{conceptBean.concept.id==conceptBean.conceptSMTKNotValid.id}"
+                    <p:commandButton
+                                   rendered="#{description.valid}"
                                    process="@this"
                                    title="Editar Descripción"
                                    style="padding: 5px" icon="fa fa-pencil-square-o fa-lg"
@@ -234,7 +231,7 @@
                                      rendered="#{ conceptBean.concept.modeled and description.persistent and description.validityUntil eq null}">
                     </p:commandButton>
 
-                    <p:commandButton rendered="#{conceptBean.concept.persistent and description.persistent and profilePermissionsBeans.permissionsBy(conceptBean.category)}"
+                    <p:commandButton rendered="#{conceptBean.concept.persistent and description.persistent and profilePermissionsBeans.permissionsBy(conceptBean.category) and description.valid}"
                                    process="@this"
                                    title="Trasladar descripción"
                                    style="padding: 5px" icon="fa fa-exchange fa-lg"
@@ -266,7 +263,6 @@
         </p:dataTable>
 
     </p:panel>
-
 
     <p:dialog id="dialogTDC" header="Trasladar descripción" widgetVar="dialogTDC" global="true"
               showEffect="fade" hideEffect="fade">
@@ -490,7 +486,7 @@
                 </div>
             </p:panel>
 
-            <div class="ui -fluid ui-g">
+            <div class="ui-fluid ui-g">
                 <div class="ui-g-12 ui-md-6 ui-lg-12">
                     <p:panel style="width: 100%;" styleClass="suggestedConcepts">
                         <h3>Conceptos sugeridos:</h3>

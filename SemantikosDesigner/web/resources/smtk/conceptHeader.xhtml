@@ -27,6 +27,9 @@
         <p:outputLabel rendered="#{cc.attrs.concept.modeled}">
             <i class="ui-icon ui-icon-public" title="Modelado" style="color: #5C5C5C" />
         </p:outputLabel>
+        <p:outputLabel rendered="#{not cc.attrs.concept.valid}">
+            <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+        </p:outputLabel>
     </h1>
 
     <p:separator styleClass="heading-separator"/>

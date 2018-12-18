@@ -28,6 +28,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -43,7 +44,7 @@ import java.util.Map;
  */
 
 @ManagedBean(name = "generalBrowserBean")
-@ViewScoped
+@SessionScoped
 public class GeneralBrowserBean implements Serializable {
 
     static final Logger logger = LoggerFactory.getLogger(GeneralBrowserBean.class);
@@ -143,7 +144,6 @@ public class GeneralBrowserBean implements Serializable {
             return;
         }
 
-
         /**
          * Si el objeto de consulta no está inicializado, inicializarlo
          */
@@ -222,6 +222,9 @@ public class GeneralBrowserBean implements Serializable {
      * @param idCategory
      */
     public void setIdCategory(int idCategory) {
+        if(this.idCategory != idCategory) {
+            this.generalQuery = null;
+        }
         this.idCategory = idCategory;
         this.category = categoryManager.getCategoryById(idCategory);
     }

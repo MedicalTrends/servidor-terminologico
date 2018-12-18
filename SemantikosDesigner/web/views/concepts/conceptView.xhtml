@@ -28,7 +28,7 @@
 
                 <h:form id="conceptForm">
 
-                <div class="card card-w-title">
+                <p:outputPanel styleClass="card card-w-title selectedConcept">
 
                     <h1 class="first-heading">
 
@@ -38,6 +38,9 @@
                         </p:outputLabel>
                         <p:outputLabel rendered="#{conceptView.selectedConcept.modeled}">
                             <i class="ui-icon ui-icon-public" title="Modelado" style="color: #5C5C5C" />
+                        </p:outputLabel>
+                        <p:outputLabel rendered="#{not conceptView.selectedConcept.valid}">
+                            <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
                         </p:outputLabel>
                         <p:repeat
                                 offset="0"
@@ -62,7 +65,7 @@
                                 <h:outputText value="ConceptID:" styleClass="label" />
                             </div>
 
-                            <div class="ui-g-12 ui-md-8 ui-lg-4">
+                            <div class="ui-g-12 ui-md-8 ui-lg-10">
                                 <h:outputText value="#{conceptView.selectedConcept.conceptID}" styleClass="value" />
                             </div>
 
@@ -70,7 +73,7 @@
                                 <h:outputText value="Categoría:" styleClass="label" />
                             </div>
 
-                            <div class="ui-g-12 ui-md-8 ui-lg-4">
+                            <div class="ui-g-12 ui-md-8 ui-lg-10">
                                 <h:outputText value="#{conceptView.selectedConcept.category}" styleClass="value"/>
                             </div>
 
@@ -357,7 +360,7 @@
 
                     </p:outputPanel>
 
-                </div>
+                </p:outputPanel>
 
                 <div class="ui-g ui-fluid">
 

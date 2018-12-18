@@ -47,7 +47,8 @@
                                         <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
                                         <f:selectItem itemLabel="Sin Revisar" itemValue="false"/>
                                         <f:selectItem itemLabel="Revisar" itemValue="true"/>
-                                        <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
+                                        <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus),@(.search2)"
+                                                listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
                                     </p:selectOneMenu>
                                 </div>
                                 <div class="ui-g-12">
@@ -58,7 +59,8 @@
                                         <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
                                         <f:selectItem itemLabel="Sin Consultar" itemValue="false"/>
                                         <f:selectItem itemLabel="Consultar" itemValue="true"/>
-                                        <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
+                                        <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus),@(.search2)"
+                                                listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
                                     </p:selectOneMenu>
                                 </div>
                                 <div class="ui-g-12">
@@ -69,7 +71,8 @@
                                         <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
                                         <f:selectItem itemLabel="Vigentes" itemValue="true"/>
                                         <f:selectItem itemLabel="No vigentes" itemValue="false"/>
-                                        <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
+                                        <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus),@(.search2)"
+                                                listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
                                     </p:selectOneMenu>
                                 </div>
                                 <div class="ui-g-12">
@@ -80,7 +83,8 @@
                                         <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
                                         <f:selectItem itemLabel="Borrador" itemValue="false"/>
                                         <f:selectItem itemLabel="Modelado" itemValue="true"/>
-                                        <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus)" listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
+                                        <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus),@(.search2)"
+                                                listener="#{generalBrowserBean.setFilterChanged(true)}" process="@this" />
                                     </p:selectOneMenu>
                                 </div>
                                 <div class="ui-g-12">
@@ -101,7 +105,7 @@
                                                               filterMatchMode="startsWith">
                                             <p:ajax event="change"
                                                     listener="#{generalBrowserBean.setFilterChanged(true)}"
-                                                    update="@(.browserTable),@(.filterStatus)"
+                                                    update="@(.browserTable),@(.filterStatus),@(.search2)"
                                                     process="@this" />
 
                                             <f:selectItems value="#{generalBrowserBean.tags}" var="tag"
@@ -112,7 +116,7 @@
                                             <div class="ui-g-12">
                                                 <span style="display: inherit; padding: 4px" class="ui-state-active ui-corner-all ui-helper-hidden">
                                                     <p:commandLink actionListener="#{cc.attrs.generalQuery.tags.remove(tag)}"
-                                                                   update="@(.browserTable),@(.filterStatus)" style="float: right">
+                                                                   update="@(.browserTable),@(.filterStatus),@(.search2)" style="float: right">
                                                         <i class="ui-icon ui-icon-close" />
                                                     </p:commandLink>
                                                     <span class="ui-autocomplete-token-label" style="font-size: small;">#{tag.name}</span>

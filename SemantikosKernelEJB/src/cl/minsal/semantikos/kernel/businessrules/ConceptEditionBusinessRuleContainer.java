@@ -1,19 +1,27 @@
 package cl.minsal.semantikos.kernel.businessrules;
 
+import cl.minsal.semantikos.kernel.components.ConceptManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
+import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ejb.EJB;
+import javax.ejb.Singleton;
+import java.util.List;
+
 /**
  * @author Andrés Farías on 8/25/16.
  */
+@Singleton
 public class ConceptEditionBusinessRuleContainer implements BusinessRulesContainer {
 
     private static final Logger logger = LoggerFactory.getLogger(ConceptEditionBusinessRuleContainer.class);
 
-
+    @EJB
+    private ConceptManager conceptManager;
 
     public void preconditionsConceptEditionTag(ConceptSMTK conceptSMTK) {
         brTagSMTK002UpdateTag(conceptSMTK);
@@ -56,6 +64,7 @@ public class ConceptEditionBusinessRuleContainer implements BusinessRulesContain
     public void preconditionsConceptInvalidation(ConceptSMTK conceptSMTK, User user) {
         //br101ConceptInvalidation(conceptSMTK);
         br102ConceptInvalidation(conceptSMTK);
+        br103ConceptInvalidation(conceptSMTK);
     }
 
     /**
@@ -72,7 +81,7 @@ public class ConceptEditionBusinessRuleContainer implements BusinessRulesContain
 
     /**
      * Este método es responsable de implementar la regla de negocio para invalidar un concepto: No es posible
-     * invalidar conceptos que se encuentran modelados.
+     * invalidar conceptos que se encuentran invalidados.
      *
      * @param conceptSMTK Concepto que se desea invalidar.
      */
@@ -80,6 +89,19 @@ public class ConceptEditionBusinessRuleContainer implements BusinessRulesContain
         if (conceptSMTK.getValidUntil() != null) {
             throw new BusinessRuleException("BR-UNK", "No es posible invalidar un concepto que ya se encuentra invalidado.");
         }
+    }
+
+    /**
+     * Este método es responsable de implementar la regla de negocio para invalidar un concepto: No es posible
+     * invalidar conceptos que se encuentran modelados.
+     *
+     * @param conceptSMTK Concepto que se desea invalidar.
+     */
+    private void br103ConceptInvalidation(ConceptSMTK conceptSMTK) {
+
+        List<ConceptSMTK> relatedConcepts = conceptManager.getRelatedConcepts(conceptSMTK);
+
+        throw new BusinessRuleException("BR-UNK", "No es posible invalidar el concepto, ya que tiene los siguientes conceptos relacionados: " + relatedConcepts);
     }
 
 }

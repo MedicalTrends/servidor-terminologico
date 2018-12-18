@@ -91,25 +91,6 @@
                     </ul>
                     </p:outputPanel>
 
-                    <p:dataGrid var="category" value="#{mainMenuBean.categories}" columns="4" layout="grid" rendered="false"
-                                paginator="false"
-                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                rowsPerPageTemplate="6,12,16"
-                                id="categories">
-
-                        <p:ajax event="page" oncomplete="loader();" />
-
-                        <p:panel header="#{category.name}" style="text-align:center" styleClass="hoverful">
-                            <h:panelGrid columns="1" style="width:100%">
-                                <p:button icon="ui-icon-search" styleClass="AquaButton" rendered="false"
-                                          outcome="/views/browser/generalBrowser.xhtml?idCategory=#{category.getId()}"/>
-                                <p:button icon="fa fa-list-alt fa-lg" styleClass="loader-trigger"
-                                          outcome="/views/browser/generalBrowser.xhtml?idCategory=#{category.getId()}"/>
-                            </h:panelGrid>
-                        </p:panel>
-
-                    </p:dataGrid>
-
                 </div>
 
         </p:outputPanel>
@@ -128,7 +109,7 @@
                                     <span style="font-weight:bold">Descripciones</span>
                                 </div>
                                 <div class="ui-g-2" style="text-align:right">
-                                    <p:button icon="fa fa-edit fa-lg" style="background: #E91E63" styleClass="loader-trigger"
+                                    <p:button icon="fa fa-edit fa-lg" styleClass="loader-trigger pink-btn"
                                               outcome="/views/browser/descriptionBrowser.xhtml"/>
                                 </div>
                             </div>
@@ -139,7 +120,7 @@
                                     <span style="font-weight:bold">Fármacos</span>
                                 </div>
                                 <div class="ui-g-2" style="text-align:right">
-                                    <p:button icon="fa fa-medkit fa-lg" style="background: #E91E63" styleClass="loader-trigger"
+                                    <p:button icon="fa fa-medkit fa-lg" styleClass="loader-trigger pink-btn"
                                               outcome="/views/browser/drugsBrowser.xhtml"/>
                                 </div>
                             </div>
@@ -150,7 +131,7 @@
                                     <span style="font-weight:bold">Pendientes</span>
                                 </div>
                                 <div class="ui-g-2" style="text-align:right">
-                                    <p:button icon="fa fa-exclamation-triangle fa-lg" style="background: #E91E63" styleClass="loader-trigger"
+                                    <p:button icon="ui-icon ui-icon-new-releases" styleClass="loader-trigger pink-btn"
                                               outcome="/views/browser/pendingBrowser.xhtml"/>
                                 </div>
                             </div>
@@ -161,45 +142,13 @@
                                     <span style="font-weight:bold">No Válidos</span>
                                 </div>
                                 <div class="ui-g-2" style="text-align:right">
-                                    <p:button icon="fa fa-ban fa-lg" style="background: #E91E63" styleClass="loader-trigger"
+                                    <p:button icon="fa fa-ban fa-lg" styleClass="loader-trigger pink-btn"
                                               outcome="/views/browser/noValidBrowser.xhtml"/>
                                 </div>
                             </div>
                         </li>
                     </ul>
 
-                    <p:panelGrid columns="4" layout="grid" rendered="false"
-                                 paginator="false" id="otros">
-
-                        <p:panel header="Descripciones" style="text-align:center">
-                            <h:panelGrid columns="1" style="width:100%">
-                                <p:button icon="fa fa-edit fa-lg" style="background: #E91E63" styleClass="loader-trigger"
-                                          outcome="/views/browser/descriptionBrowser.xhtml"/>
-                            </h:panelGrid>
-                        </p:panel>
-
-                        <p:panel header="Fármacos" style="text-align:center">
-                            <h:panelGrid columns="1" style="width:100%">
-                                <p:button icon="fa fa-medkit fa-lg" style="background: #E91E63" styleClass="loader-trigger"
-                                          outcome="/views/browser/drugsBrowser.xhtml"/>
-                            </h:panelGrid>
-                        </p:panel>
-
-                        <p:panel header="Pendientes" style="text-align:center">
-                            <h:panelGrid columns="1" style="width:100%">
-                                <p:button icon="fa fa-exclamation-triangle fa-lg" style="background: #E91E63" styleClass="loader-trigger"
-                                          outcome="/views/browser/pendingBrowser.xhtml"/>
-                            </h:panelGrid>
-                        </p:panel>
-
-                        <p:panel header="No Válidos" style="text-align:center">
-                            <h:panelGrid columns="1" style="width:100%">
-                                <p:button icon="fa fa-ban fa-lg" style="background: #E91E63" styleClass="loader-trigger"
-                                          outcome="/views/browser/noValidBrowser.xhtml"/>
-                            </h:panelGrid>
-                        </p:panel>
-
-                    </p:panelGrid>
                 </div>
                 </p:outputPanel>
 
@@ -265,45 +214,6 @@
                         </li>
                     </ul>
 
-                    <p:panelGrid columns="4" layout="grid" rendered="false"
-                                 paginator="false" id="managers">
-
-                        <p:panel header="Usuarios" style="text-align:center">
-                            <h:panelGrid columns="1" style="width:100%">
-                                <p:button icon="ui-icon ui-icon-people" style="background: #E91E63" styleClass="loader-trigger"
-                                          outcome="/views/users/users.xhtml"/>
-                            </h:panelGrid>
-                        </p:panel>
-
-                        <p:panel header="Establecimientos" style="text-align:center">
-                            <h:panelGrid columns="1" style="width:100%">
-                                <p:button icon="fa fa-bank fa-lg" style="background: #E91E63" styleClass="loader-trigger"
-                                          outcome="/views/institutions/institutions.xhtml"/>
-                            </h:panelGrid>
-                        </p:panel>
-
-                        <p:panel header="RefSets" style="text-align:center">
-                            <h:panelGrid columns="1" style="width:100%">
-                                <p:button icon="fa fa-dropbox fa-lg" style="background: #E91E63" styleClass="loader-trigger"
-                                          outcome="/views/refsets/admin_refsets.xhtml"/>
-                            </h:panelGrid>
-                        </p:panel>
-
-                        <p:panel header="Tablas Auxiliares" style="text-align:center">
-                            <h:panelGrid columns="1" style="width:100%">
-                                <p:button icon="fa fa-columns fa-lgh" style="background: #E91E63" styleClass="loader-trigger"
-                                          outcome="/views/helpertables/helpertables.xhtml"/>
-                            </h:panelGrid>
-                        </p:panel>
-
-                        <p:panel header="Extracción Fármacos" style="text-align:center">
-                            <h:panelGrid columns="1" style="width:100%">
-                                <p:button icon="fa fa-file-excel-o fa-lg" style="background: #E91E63" styleClass="loader-trigger"
-                                          outcome="/views/concepts/extractor.xhtml"/>
-                            </h:panelGrid>
-                        </p:panel>
-
-                    </p:panelGrid>
                 </div>
                 </p:outputPanel>
 
