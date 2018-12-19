@@ -210,16 +210,20 @@
                 <div style="text-align: center">
 
                     <p:commandButton title="Ver" oncomplete="PF('dialogC').show()" process="@this"
-                                     update="@(.query-concept-sct)" icon="fa fa-search">
+                                     update="@(.query-concept-sct)" icon="fa fa-search" rendered="#{rel.isValid()}">
                         <f:setPropertyActionListener value="#{rel.target}" target="#{sctBean.conceptSelected}"/>
                     </p:commandButton>
 
-                    <p:commandButton rendered="#{profilePermissionsBeans.modeler}" icon="fa fa-trash" title="Eliminar"
+                    <p:commandButton rendered="#{profilePermissionsBeans.modeler and rel.isValid()}" icon="fa fa-trash" title="Eliminar"
                                      actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
                                      update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}), @(.attributes),@(.crossmapindirect)"
                                      process="@this">
                         <p:confirm header="Confirmar Acción" message="¿Desea eliminar esta relación?" icon="ui-icon-alert"/>
                     </p:commandButton>
+
+                    <p:outputLabel rendered="#{not rel.isValid()}">
+                        <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+                    </p:outputLabel>
 
                 </div>
             </p:column>

@@ -10,15 +10,11 @@ import cl.minsal.semantikos.kernel.util.ConceptUtils;
 import cl.minsal.semantikos.kernel.util.IDGenerator;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.audit.ConceptAuditAction;
-import cl.minsal.semantikos.model.businessrules.*;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
-import cl.minsal.semantikos.model.relationships.Target;
-import cl.minsal.semantikos.model.relationships.TargetType;
 import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.users.User;
@@ -31,12 +27,10 @@ import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
-import java.text.Normalizer;
 import java.util.*;
 
 
 import static cl.minsal.semantikos.model.DAO.NON_PERSISTED_ID;
-import static cl.minsal.semantikos.model.PersistentEntity.getIdArray;
 import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_DESCRIPTION_DELETION;
 import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_RELATIONSHIP_REMOVAL;
 
@@ -92,6 +86,9 @@ public class ConceptManagerImpl implements ConceptManager {
 
     @EJB
     private ConceptSearchBR conceptSearchBR;
+
+    @EJB
+    private ConceptEditionBusinessRuleContainer conceptEditionBusinessRuleContainer;
 
     @Override
     public ConceptSMTK getConceptByCONCEPT_ID(String conceptId) {
@@ -265,7 +262,7 @@ public class ConceptManagerImpl implements ConceptManager {
         logger.info("Se dejará no vigente el concepto: " + conceptSMTK);
 
         /* Se validan las pre-condiciones para eliminar un concepto */
-        new ConceptEditionBusinessRuleContainer().preconditionsConceptInvalidation(conceptSMTK, user);
+        conceptEditionBusinessRuleContainer.preconditionsConceptInvalidation(conceptSMTK, user);
 
         /* Se invalida el concepto */
         conceptSMTK.setPublished(false);
@@ -285,7 +282,7 @@ public class ConceptManagerImpl implements ConceptManager {
         logger.info("Se dejará no vigente el concepto: " + conceptSMTK);
 
         /* Se validan las pre-condiciones para eliminar un concepto */
-        new ConceptEditionBusinessRuleContainer().preconditionsConceptInvalidation(conceptSMTK, user);
+        conceptEditionBusinessRuleContainer.preconditionsConceptInvalidation(conceptSMTK, user);
 
         Timestamp timeStamp = new Timestamp(System.currentTimeMillis());
 
@@ -298,11 +295,13 @@ public class ConceptManagerImpl implements ConceptManager {
             if(description.isValid()) {
                 description.setValidityUntil(timeStamp);
                 descriptionDAO.update(description);
+                /*
                 for (ConceptAuditAction auditAction : auditActions) {
                     ConceptAuditAction conceptAuditAction = new ConceptAuditAction(conceptSMTK, CONCEPT_DESCRIPTION_DELETION, timeStamp, user, description);
                     conceptAuditAction.getDetails().addAll(auditAction.getDetails());
                     auditManager.recordAuditAction(conceptAuditAction);
                 }
+                */
             }
         }
 
@@ -311,11 +310,13 @@ public class ConceptManagerImpl implements ConceptManager {
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                 relationship.setValidityUntil(timeStamp);
                 relationshipDAO.update(relationship);
+                /*
                 for (ConceptAuditAction auditAction : auditActions) {
                     ConceptAuditAction conceptAuditAction = new ConceptAuditAction(conceptSMTK, CONCEPT_RELATIONSHIP_REMOVAL, timeStamp, user, relationship);
                     conceptAuditAction.getDetails().addAll(auditAction.getDetails());
                     auditManager.recordAuditAction(conceptAuditAction);
                 }
+                */
             }
         }
 
@@ -352,7 +353,7 @@ public class ConceptManagerImpl implements ConceptManager {
     @Override
     public void changeTagSMTK(@NotNull ConceptSMTK conceptSMTK, @NotNull TagSMTK tagSMTK, User user) {
         /* Se realizan las validaciones básicas */
-        new ConceptEditionBusinessRuleContainer().preconditionsConceptEditionTag(conceptSMTK);
+        conceptEditionBusinessRuleContainer.preconditionsConceptEditionTag(conceptSMTK);
 
         /* Se realiza la actualización */
         conceptDAO.update(conceptSMTK);

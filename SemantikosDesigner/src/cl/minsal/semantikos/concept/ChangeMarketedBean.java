@@ -89,7 +89,7 @@ public class ChangeMarketedBean {
 
     public void showMessage() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Advertencia", "Los cambios serán efectivos al guardar el concepto"));
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Advertencia", "Los cambios serán efectivos al guardar el concepto"));
     }
 
 

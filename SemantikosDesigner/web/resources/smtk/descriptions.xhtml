@@ -92,7 +92,7 @@
                      styleClass="otherDescriptions"
                      emptyMessage="El concepto no tiene otras descripciones"
                      var="description" widgetVar="descriptionsTable"
-                     style="margin: 10px;" rowStyleClass="#{not description.valid?'not-valid-description':''}"
+                     style="margin: 10px;"
                      value="#{cc.attrs.descriptions}"
                      editable="true"
                      reflow="true">
@@ -243,7 +243,7 @@
                         <f:setPropertyActionListener value="" target="#{findConceptBean.selectedCategories}"/>
                     </p:commandButton>
 
-                    <p:commandButton rendered="#{conceptBean.concept.persistent and description.persistent and profilePermissionsBeans.permissionsBy(conceptBean.category)}"
+                    <p:commandButton rendered="#{conceptBean.concept.persistent and description.persistent and profilePermissionsBeans.permissionsBy(conceptBean.category) and description.valid}"
                                    disabled="#{conceptBean.concept.id==conceptBean.conceptSMTKNotValid.id}"
                                    process="@this"
                                    title="Enviar descripción a no válidos"
@@ -255,6 +255,10 @@
                         <f:setPropertyActionListener value="" target="#{conceptBean.observationNoValid}"/>
 
                     </p:commandButton>
+
+                    <p:outputLabel rendered="#{not description.valid }">
+                        <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+                    </p:outputLabel>
 
                 </div>
 

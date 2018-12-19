@@ -45,7 +45,7 @@
 
                         <smtk:changeMarketed />
 
-                        <p:outputPanel styleClass="#{not conceptBean.concept.valid?'not-valid':''}">
+                        <p:outputPanel>
 
                             <p:outputPanel styleClass="msgUpdate">
                                 <p:growl id="editMsgs3" showDetail="true"/>
@@ -273,7 +273,7 @@
                                 <p:commandButton actionListener="#{conceptBean.deleteConcept}" icon="fa fa-trash"
                                                  type="submit" process="mainForm"
                                                  style="float: right" rendered="#{not conceptBean.concept.modeled}"
-                                                 update="growl, mainForm">
+                                                 update="growl">
                                     <p:confirm header="Confirmar Acción" message="¿Desea eliminar este concepto?" icon="ui-icon-alert"/>
                                 </p:commandButton>
 
@@ -299,7 +299,7 @@
                                     </div>
                                     <div class="ui-g-12 ui-md-12 ui-lg-12">
                                         <p:commandButton value="Aceptar" actionListener="#{conceptBean.invalidateConcept()}"
-                                                         update="@(.cause-concept)" style="float: right; width: auto" onsuccess="PF('dlg-elimination-causals').hide();">
+                                                         update="@(.cause-concept),growl,@(.conceptRelated)" style="float: right; width: auto" onsuccess="PF('dlg-elimination-causals').hide();">
                                             <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar este concepto?" icon="ui-icon-alert"/>
                                         </p:commandButton>
                                         <p:commandButton value="Cancelar" onclick="PF('dlg-elimination-causals').hide();" style="float: right; width: auto"
@@ -358,7 +358,6 @@
                                         </p:column>
                                     </p:selectOneMenu>
 
-
                                 </div>
                                 <div class="ui-g-12 ui-md-6 ui-lg-2">
                                     <p:commandButton actionListener="#{conceptBean.createConcept}" update=":createEdit"
@@ -388,6 +387,31 @@
                             <p:column width="200" styleClass="FontBold Fs13">#{cell.column.description}</p:column>
                             <p:column width="400">#{cell}</p:column>
                         </p:dataTable>
+                    </p:dialog>
+
+                    <p:dialog id="conceptRelated" header="Conceptos relacionados" widgetVar="conceptRelated"
+                              global="true"
+                              showEffect="fade" hideEffect="fade" >
+
+                        <p:outputPanel id="panelconceptRelated" styleClass="conceptRelated">
+
+                            <p:dataTable id="dataTableConceptMarketed" var="concept" value="#{changeMarketedBean.conceptSMTKList}"
+                                         styleClass="conceptMarketed">
+
+                                <p:column headerText="Categoría">
+                                    <h:outputText value="#{concept.category.name}"/>
+                                </p:column>
+                                <p:column headerText=" Concepto">
+                                    <p:link outcome="/views/concepts/conceptView" value="#{concept.descriptionFavorite.term} - #{concept.conceptID}"
+                                            styleClass="loader-trigger">
+                                        <f:param name="conceptID" value="#{concept.conceptID}" />
+                                    </p:link>
+                                </p:column>
+
+                            </p:dataTable>
+
+                        </p:outputPanel>
+
                     </p:dialog>
 
                 </p:outputPanel>

@@ -50,7 +50,7 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
             for (Description description : conceptSMTK.getDescriptions())
                 addDescriptionWeb(new DescriptionWeb(this, description.getId(), description));
             // Si el concepto esta persistido clonar las relaciones con su id
-            for (Relationship relationship : conceptSMTK.getValidRelationships())
+            for (Relationship relationship : conceptSMTK.getRelationships())
                 addRelationshipWeb(new RelationshipWeb(this, relationship.getId(), relationship, relationship.getRelationshipAttributes(), relationship.getCreationDate()));
             for (Tag tag: conceptSMTK.getTags()) {
                 addTag(tag);
@@ -206,7 +206,7 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
     public List<RelationshipWeb> getValidRelationshipsWebByRelationDefinition(RelationshipDefinition relationshipDefinition) {
         List<RelationshipWeb> someRelationships = new ArrayList<RelationshipWeb>();
         for (RelationshipWeb relationship : relationshipsWeb) {
-            if (relationship.getRelationshipDefinition().equals(relationshipDefinition) && relationship.isValid()) {
+            if (relationship.getRelationshipDefinition().equals(relationshipDefinition) /*&& relationship.isValid()*/) {
                 someRelationships.add(relationship);
             }
         }

@@ -19,8 +19,6 @@
 <composite:implementation>
 
     <p:dialog id="conceptMarketed" header="Conceptos relacionados" widgetVar="conceptMarketed"
-              width="800px"
-              height="300px"
               styleClass="conceptMarketed" global="true"
               showEffect="fade" hideEffect="fade" >
 
@@ -32,9 +30,7 @@
             <p:dataTable id="dataTableConceptMarketed" var="concept" value="#{changeMarketedBean.conceptSMTKList}"
                          styleClass="conceptMarketed"
                          selection="#{changeMarketedBean.conceptSelected}" rowKey="#{concept.id}">
-                <f:facet name="header">
-                    Seleccionar
-                </f:facet>
+
                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                 <p:column headerText="Categoría">
                     <h:outputText value="#{concept.category.name}"/>
@@ -50,13 +46,13 @@
                 </p:column>
                 <f:facet name="footer">
 
-                    <p:commandButton  icon="fa fa-file-excel-o"
+                    <p:commandButton  icon="fa fa-file-excel-o" style="width: auto"
                                       value="Exportar" ajax="false">
                         <p:dataExporter target="dataTableConceptMarketed" type="xls" fileName="conceptos"/>
                     </p:commandButton>
 
                     <p:commandButton  icon="fa fa-exchange" actionListener="#{changeMarketedBean.showMessage}"
-                                      update="@(.conceptMarketed)"
+                                      update="@(.conceptMarketed)" style="width: auto"
                                      value="Cambiar comercializado" oncomplete="PF('conceptMarketed').hide()" />
 
                 </f:facet>

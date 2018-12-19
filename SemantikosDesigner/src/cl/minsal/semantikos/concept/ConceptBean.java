@@ -47,6 +47,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.print.attribute.standard.Severity;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -1088,21 +1089,6 @@ public class ConceptBean implements Serializable {
 
     public void deleteConcept() throws IOException {
 
-        if(selectedCausal == null) {
-            messageBean.messageError("No se ha seleccionado la causal de eliminación");
-            return;
-        }
-
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        User user = authenticationBean.getLoggedUser();
-        ConceptAuditAction conceptAuditAction = new ConceptAuditAction(concept, CONCEPT_INVALIDATION, timestamp, user, concept);
-        conceptAuditAction.getDetails().add("Causal de Eliminación: " + selectedCausal.getName());
-        getAuditActionQueue().add(conceptAuditAction);
-        RequestContext reqCtx = RequestContext.getCurrentInstance();
-        reqCtx.execute("PF('descriptionsTable').filter();");
-        reqCtx.execute("PF('dlg').hide();");
-        selectedCausal = null;
-
         conceptManager.invalidate(concept, user);
         messageBean.messageSuccess("Acción exitosa", "Concepto invalidado");
 
@@ -1113,6 +1099,18 @@ public class ConceptBean implements Serializable {
             ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
             eContext.redirect(eContext.getRequestContextPath() + "/views/browser/generalBrowser.xhtml?idCategory=" + category.getId());
         } else {
+
+            if(selectedCausal == null) {
+                messageBean.messageError("No se ha seleccionado la causal de eliminación");
+                return;
+            }
+
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            User user = authenticationBean.getLoggedUser();
+            ConceptAuditAction conceptAuditAction = new ConceptAuditAction(concept, CONCEPT_INVALIDATION, timestamp, user, concept);
+            conceptAuditAction.getDetails().add("Causal de Eliminación: " + selectedCausal.getName());
+            getAuditActionQueue().add(conceptAuditAction);
+
             conceptManager.invalidate(concept, user);
             messageBean.messageSuccess("Acción exitosa", "Concepto invalidado");
         }
@@ -1121,6 +1119,7 @@ public class ConceptBean implements Serializable {
     public void invalidateConcept() throws IOException {
 
         FacesContext context = FacesContext.getCurrentInstance();
+        RequestContext rContext = RequestContext.getCurrentInstance();
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
 
         try {
@@ -1146,9 +1145,15 @@ public class ConceptBean implements Serializable {
         }
         catch (Exception e) {
             e.printStackTrace();
-            context.addMessage(null, new FacesMessage("Error", e.getMessage()));
-        }
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
 
+            // Si ocurrió una excepción, puede ser por conceptos relacionados, manejar este caso mostrando el dialogo de conceptos relacionados
+            changeMarketedBean.setConceptSMTKList(conceptManager.getRelatedConcepts(concept));
+
+            if(!changeMarketedBean.getConceptSMTKList().isEmpty()) {
+                rContext.execute("PF('conceptRelated').show();");
+            }
+        }
     }
 
     public void cancelConcept() {

@@ -16,7 +16,15 @@
 <composite:implementation>
 
 
-    <p:fieldset legend="FSN">
+    <p:fieldset>
+
+        <f:facet name="legend">
+            <p:outputLabel value="FSN">
+            </p:outputLabel>
+            <p:outputLabel rendered="#{not cc.attrs.description.valid}">
+                <i class="fa fa-ban" title="No vigente" style="color: red" />
+            </p:outputLabel>
+        </f:facet>
 
         <div class="ui-g ui-fluid">
             <div class="ui-g-12 ui-md-4 ui-lg-2">

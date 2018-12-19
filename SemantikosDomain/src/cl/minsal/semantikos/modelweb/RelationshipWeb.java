@@ -20,9 +20,11 @@ public class RelationshipWeb extends Relationship implements Serializable {
 
     public RelationshipWeb(Relationship r) {
         super(r.getSourceConcept(),  r.getRelationshipDefinition(), new ArrayList<RelationshipAttribute>());
-        if(r.getTarget() != null)
+        if(r.getTarget() != null) {
             this.setTarget(r.getTarget().copy());
+        }
         this.hasBeenModified = false;
+        this.setValidityUntil(r.getValidityUntil());
 
     }
 
