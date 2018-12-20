@@ -16,7 +16,6 @@
 </composite:interface>
 <composite:implementation>
 
-
     <!-- Multiplicidad 1 + Nueva relacion + Sin atributos -->
     <p:panel
             id="basicTypeSimpleNew"
@@ -70,6 +69,10 @@
                    step="1"
                    var="relationship"
                    varStatus="var">
+
+            <p:outputLabel rendered="#{not relationship.isValid() }" style="float: right">
+                <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+            </p:outputLabel>
 
             <div class="ui-g ui-fluid">
 
@@ -143,12 +146,17 @@
             rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
                           and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
             widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
+
         <p:repeat  value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                    offset="0"
                    size="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition).size()}"
                    step="1"
                    var="relationship"
                    varStatus="var">
+
+            <p:outputLabel rendered="#{not relationship.isValid() }" style="float: right">
+                <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+            </p:outputLabel>
 
             <div class="ui-g ui-fluid">
 
@@ -242,7 +250,7 @@
             <p:column style="text-align: center;">
                 <p:commandButton
                         icon="fa fa-trash"
-                        title="Eliminar"
+                        title="Eliminar" rendered="#{relationship.isValid()}"
                         update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.relationships_#{cc.attrs.relationshipDefinition.id})"
                         style="float: right"
                         process="@this"
@@ -252,6 +260,10 @@
                     <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
                                icon="ui-icon-alert"/>
                 </p:commandButton>
+
+                <p:outputLabel rendered="#{not relationship.isValid() }">
+                    <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+                </p:outputLabel>
             </p:column>
         </p:dataTable>
 
@@ -338,7 +350,7 @@
             <p:column title="Eliminar" style="text-align: center;">
                 <p:commandButton
                         icon="fa fa-trash"
-                        title="Eliminar"
+                        title="Eliminar" rendered="#{relationship.isValid()}"
                         update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.relationships_#{cc.attrs.relationshipDefinition.id})"
                         process="@this"
                         immediate="true"
@@ -347,6 +359,10 @@
                     <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
                                icon="ui-icon-alert"/>
                 </p:commandButton>
+
+                <p:outputLabel rendered="#{not relationship.isValid() }">
+                    <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+                </p:outputLabel>
             </p:column>
         </p:dataTable>
 

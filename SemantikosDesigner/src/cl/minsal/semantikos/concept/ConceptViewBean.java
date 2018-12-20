@@ -135,8 +135,7 @@ public class ConceptViewBean implements Serializable {
         List<Description> otherDescriptions = new ArrayList<Description>();
 
         for (Description description : selectedConcept.getDescriptions()) {
-            if(DescriptionTypeFactory.getInstance().getDescriptionTypesButFSNandFavorite().contains(description.getDescriptionType()) &&
-                    description.isValid()) {
+            if(DescriptionTypeFactory.getInstance().getDescriptionTypesButFSNandFavorite().contains(description.getDescriptionType())) {
                 otherDescriptions.add(description);
             }
         }

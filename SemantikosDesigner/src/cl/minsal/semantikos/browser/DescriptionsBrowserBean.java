@@ -150,6 +150,8 @@ public class DescriptionsBrowserBean implements Serializable {
 
                 results = this.getRowCount();
 
+                descriptionQuery.setTruncateMatch(false);
+
                 return descriptions;
             }
 

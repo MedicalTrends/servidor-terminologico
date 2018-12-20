@@ -82,9 +82,9 @@ public class CategoryManagerImpl implements CategoryManager {
 
         /* Si la búsqueda resultó con al menos un término vigente, entonces si contiene */
         for (Description description : descriptions) {
-            if (description.isValid()) {
+            //if (description.isValid()) {
                 return description.getConceptSMTK();
-            }
+            //}
         }
         return null;
     }

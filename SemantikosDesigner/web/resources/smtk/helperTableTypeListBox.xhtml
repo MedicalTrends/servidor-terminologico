@@ -89,6 +89,10 @@
                    var="relationship"
                    varStatus="var">
 
+            <p:outputLabel rendered="#{not relationship.isValid() }" style="float: right">
+                <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+            </p:outputLabel>
+
             <div class="ui-fluid">
 
                 <div class="ui-g">
@@ -190,6 +194,10 @@
         <ui:repeat value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                    var="relationship"
                    varStatus="var">
+
+            <p:outputLabel rendered="#{not relationship.isValid() }" style="float: right">
+                <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+            </p:outputLabel>
 
             <div class="ui-fluid">
 
@@ -345,7 +353,7 @@
             <p:column style="text-align: center;" headerText="Eliminar">
                 <p:commandButton
                         icon="fa fa-trash"
-                        title="Eliminar"
+                        title="Eliminar" rendered="#{relationship.isValid()}"
                         update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                         process="@this"
                         immediate="true"
@@ -353,6 +361,10 @@
                         styleClass="relationships">
                     <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?" icon="ui-icon-alert"/>
                 </p:commandButton>
+
+                <p:outputLabel rendered="#{not relationship.isValid() }">
+                    <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+                </p:outputLabel>
             </p:column>
         </p:dataTable>
 
@@ -435,7 +447,7 @@
 
             <p:column style="text-align: center" headerText="Eliminar">
                 <p:commandButton
-                        icon="fa fa-trash"
+                        icon="fa fa-trash" rendered="#{relationship.isValid()}"
                         title="Eliminar"
                         update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.relationships_#{cc.attrs.relationshipDefinition.id})"
                         process="@this"
@@ -445,6 +457,10 @@
                     <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
                                icon="ui-icon-alert"/>
                 </p:commandButton>
+
+                <p:outputLabel rendered="#{not relationship.isValid() }">
+                    <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+                </p:outputLabel>
             </p:column>
         </p:dataTable>
 

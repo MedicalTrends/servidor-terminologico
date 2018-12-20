@@ -1,14 +1,17 @@
 package cl.minsal.semantikos.kernel.businessrules;
 
 import cl.minsal.semantikos.kernel.components.ConceptManager;
+import cl.minsal.semantikos.kernel.components.RefSetManager;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.exceptions.BusinessRuleException;
+import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +24,9 @@ public class ConceptEditionBusinessRuleContainerImpl implements BusinessRulesCon
 
     @EJB
     private ConceptManager conceptManager;
+
+    @EJB
+    private RefSetManager refSetManager;
 
     public void preconditionsConceptEditionTag(ConceptSMTK conceptSMTK) {
         brTagSMTK002UpdateTag(conceptSMTK);
@@ -64,6 +70,7 @@ public class ConceptEditionBusinessRuleContainerImpl implements BusinessRulesCon
         //br101ConceptInvalidation(conceptSMTK);
         br102ConceptInvalidation(conceptSMTK);
         br103ConceptInvalidation(conceptSMTK);
+        br104ConceptInvalidation(conceptSMTK);
     }
 
     /**
@@ -105,5 +112,30 @@ public class ConceptEditionBusinessRuleContainerImpl implements BusinessRulesCon
         }
 
     }
+
+    /**
+     * Este método es responsable de implementar la regla de negocio para invalidar un concepto: No es posible
+     * invalidar conceptos que se encuentran modelados.
+     *
+     * @param conceptSMTK Concepto que se desea invalidar.
+     */
+    private void br104ConceptInvalidation(ConceptSMTK conceptSMTK) {
+
+        List<RefSet> refSets = refSetManager.getRefsetsBy(conceptSMTK);
+        List<RefSet> validRefSets = new ArrayList<>();
+
+        for (RefSet refSet : refSets) {
+            if(refSet.isValid()) {
+                validRefSets.add(refSet);
+
+            }
+        }
+
+        if(!validRefSets.isEmpty()) {
+            throw new BusinessRuleException("BR-UNK", "No es posible invalidar el concepto, ya que pertenece a los siguientes RefSet vigentes: " + validRefSets);
+        }
+
+    }
+
 
 }

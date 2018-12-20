@@ -187,11 +187,11 @@
 
             <p:column headerText="Acción">
 
-                <p:rowEditor/>
+                <p:rowEditor rendered="#{relationship.isValid()}"/>
 
                 <p:commandButton
                         icon="fa fa-trash"
-                        title="Eliminar"
+                        title="Eliminar" rendered="#{relationship.isValid()}"
                         update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                         process="@this"
                         immediate="true"
@@ -200,6 +200,10 @@
                     <p:confirm header="Confirmar Acción" message="¿Desea eliminar esta recomendacion?"
                                icon="ui-icon-alert"/>
                 </p:commandButton>
+
+                <p:outputLabel rendered="#{not relationship.isValid() }">
+                    <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+                </p:outputLabel>
 
             </p:column>
         </p:dataTable>

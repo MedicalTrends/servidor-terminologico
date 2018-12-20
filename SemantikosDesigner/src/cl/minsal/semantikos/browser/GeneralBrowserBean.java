@@ -206,6 +206,7 @@ public class GeneralBrowserBean implements Serializable {
                 }
 
                 this.setRowCount(queryManager.countQueryResults(generalQuery));
+                generalQuery.setTruncateMatch(false);
 
                 results = this.getRowCount();
 

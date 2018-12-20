@@ -121,6 +121,24 @@
 
                                     </div>
 
+                                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+
+                                        <p:outputLabel value="Vigencia" />
+
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-8 ui-lg-4">
+
+                                        <p:selectOneMenu value="#{descriptionsBrowserBean.descriptionQuery.valid}" autoWidth="false" style="width: 100%">
+                                            <f:selectItem itemLabel="Todas" itemValue="#{null}"/>
+                                            <f:selectItem itemLabel="Vigentes" itemValue="true"/>
+                                            <f:selectItem itemLabel="No vigentes" itemValue="false"/>
+                                            <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus),@(.search2)"
+                                                    process="@this" />
+                                        </p:selectOneMenu>
+
+                                    </div>
+
                                     <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding-bottom: 0px">
                                         <p:outputPanel styleClass="search2">
                                             <p:outputLabel id="summary" style="font-size: small;"
@@ -178,7 +196,7 @@
                                  styleClass="browserTable"
                                  value="#{descriptionsBrowserBean.descriptions}"
                                  var="description"
-                                 rows="30"
+                                 rows="30" rowStyleClass="#{description.valid?'':'not-valid-description'}"
                                  sortBy="#{1}"
                                  paginator="true" lazy="true" dynamic="true" reflow="true"
                                  paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"

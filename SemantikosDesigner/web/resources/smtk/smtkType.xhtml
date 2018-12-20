@@ -72,7 +72,7 @@
         <p:spacer />
 
         <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
-                     id="tableRelationship2"
+                     id="tableRelationship2" reflow="true"
                      sortBy="#{rel.getOrder()}"
                      draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null and cc.attrs.concept.editable}" style="margin: 10px;"
                      value="#{conceptBean.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
@@ -91,13 +91,17 @@
                 <h:outputText value="#{rel.target.modeled}"/>
             </p:column>
             <p:column headerText="Eliminar" style="text-align: center;">
-                <p:commandButton icon="fa fa-trash" title="Eliminar"
+                <p:commandButton icon="fa fa-trash" title="Eliminar" rendered="#{rel.isValid()}"
                                  action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
                                  update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
                                  process="@this">
                     <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
                                icon="ui-icon-alert"/>
                 </p:commandButton>
+
+                <p:outputLabel rendered="#{not rel.isValid() }">
+                    <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+                </p:outputLabel>
             </p:column>
         </p:dataTable>
 
@@ -182,7 +186,7 @@
         </p:outputPanel>
 
         <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
-                     id="tableRelationship3"
+                     id="tableRelationship3" reflow="true"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
                      draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}"
                      style="margin: 0px;"
@@ -221,13 +225,17 @@
             </p:columns>
 
             <p:column headerText="Eliminar" style="text-align: center;">
-                <p:commandButton icon="fa fa-trash" title="Eliminar"
+                <p:commandButton icon="fa fa-trash" title="Eliminar" rendered="#{rel.isValid()}"
                                  action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
                                  update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                                  process="@this">
                     <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
                                icon="ui-icon-alert"/>
                 </p:commandButton>
+
+                <p:outputLabel rendered="#{not rel.isValid() }" >
+                    <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+                </p:outputLabel>
             </p:column>
         </p:dataTable>
 
@@ -298,6 +306,10 @@
             <ui:repeat value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                        var="relationship"
                        varStatus="var">
+
+                <p:outputLabel rendered="#{not relationship.isValid() }" style="float: right">
+                    <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+                </p:outputLabel>
 
                 <div class="ui-fluid">
 

@@ -72,6 +72,10 @@
                    var="relationship"
                    varStatus="var">
 
+            <p:outputLabel rendered="#{not relationship.isValid() }" style="float: right">
+                <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+            </p:outputLabel>
+
             <div class="ui-g ui-fluid">
 
                 <div class="ui-g-12 ui-md-4 ui-lg-2">
@@ -150,12 +154,17 @@
             rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
                           and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
             widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
+
         <p:repeat  value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                    offset="0"
                    size="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition).size()}"
                    step="1"
                    var="relationship"
                    varStatus="var">
+
+            <p:outputLabel rendered="#{not relationship.isValid() }" style="float: right">
+                <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+            </p:outputLabel>
 
             <div class="ui-g ui-fluid">
 

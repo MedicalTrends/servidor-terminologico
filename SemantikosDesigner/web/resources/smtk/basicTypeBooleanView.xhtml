@@ -43,6 +43,10 @@
 
                     <h:outputText value="#{relationship.target.value?'Sí':'No'}" styleClass="value"/>
 
+                    <p:outputLabel rendered="#{not relationship.isValid() }">
+                        <i class="fa fa-ban" title="No vigente" style="color: red" />
+                    </p:outputLabel>
+
                 </div>
 
                 <!-- Atributos de relación -->

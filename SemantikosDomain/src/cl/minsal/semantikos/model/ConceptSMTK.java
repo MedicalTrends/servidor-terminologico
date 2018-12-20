@@ -308,7 +308,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
 
         List<SnomedCTRelationship> snomedRelationships = new ArrayList<>();
         for (Relationship relationship : relationships) {
-            if (SnomedCTRelationship.isSnomedCTRelationship(relationship) && relationship.isValid()) {
+            if (SnomedCTRelationship.isSnomedCTRelationship(relationship) /*&& relationship.isValid()*/) {
                 snomedRelationships.add(SnomedCTRelationship.createSnomedCT(relationship));
             }
         }
@@ -396,7 +396,7 @@ public class ConceptSMTK extends PersistentEntity implements Target, AuditableEn
     public List<Relationship> getValidRelationshipsByRelationDefinition(RelationshipDefinition relationshipDefinition) {
         List<Relationship> someRelationships = new ArrayList<>();
         for (Relationship relationship : relationships) {
-            if (relationship.getRelationshipDefinition().equals(relationshipDefinition) && relationship.isValid()) {
+            if (relationship.getRelationshipDefinition().equals(relationshipDefinition) /*&& relationship.isValid()*/) {
                 someRelationships.add(relationship);
             }
         }

@@ -83,6 +83,9 @@
 
                             <div class="ui-g-12 ui-md-8 ui-lg-10">
                                 <h:outputText rows="1" value="#{conceptView.selectedConcept.descriptionFSN}" styleClass="value"/>
+                                <p:outputLabel rendered="#{not conceptView.selectedConcept.descriptionFSN.valid }">
+                                    <i class="fa fa-ban" title="No vigente" style="color: red" />
+                                </p:outputLabel>
                             </div>
 
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
@@ -91,6 +94,9 @@
 
                             <div class="ui-g-12 ui-md-8 ui-lg-10">
                                 <h:outputText rows="1" value="#{conceptView.selectedConcept.descriptionFavorite}" styleClass="value"/>
+                                <p:outputLabel rendered="#{not conceptView.selectedConcept.descriptionFSN.valid }">
+                                    <i class="fa fa-ban" title="No vigente" style="color: red" />
+                                </p:outputLabel>
                             </div>
 
                         </div>
@@ -111,6 +117,9 @@
 
                                 <div class="ui-g-12 ui-md-8 ui-lg-10">
                                     <h:outputText value="#{description.term}" styleClass="value"/>
+                                    <p:outputLabel rendered="#{not description.valid }">
+                                        <i class="fa fa-ban" title="No vigente" style="color: red" />
+                                    </p:outputLabel>
                                 </div>
 
                         </p:repeat>
@@ -203,6 +212,14 @@
                                 </h:dataTable>
                             </p:column>
 
+                            <p:column rendered="#{not conceptView.selectedConcept.valid}">
+                                <div style="text-align: center">
+                                    <p:outputLabel>
+                                        <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+                                    </p:outputLabel>
+                                </div>
+                            </p:column>
+
                         </p:dataTable>
 
                     </p:outputPanel>
@@ -241,6 +258,14 @@
                                     <h:outputText value="#{conceptView.getDateCreationFormat(crossmap.creationDate)}"/>
                                 </p:column>
 
+                                <p:column rendered="#{not conceptView.selectedConcept.valid}">
+                                    <div style="text-align: center">
+                                        <p:outputLabel>
+                                            <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+                                        </p:outputLabel>
+                                    </div>
+                                </p:column>
+
                             </p:dataTable>
 
                         </p:fieldset>
@@ -271,6 +296,14 @@
                                 </p:column>
                                 <p:column headerText="Origen">
                                     <h:outputText value=""/>
+                                </p:column>
+
+                                <p:column rendered="#{not conceptView.selectedConcept.valid}">
+                                    <div style="text-align: center">
+                                        <p:outputLabel>
+                                            <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+                                        </p:outputLabel>
+                                    </div>
                                 </p:column>
 
                             </p:dataTable>
@@ -391,12 +424,6 @@
             </div>
 
         </div>
-
-        <p:overlayPanel widgetVar="carOP" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
-            <p:outputPanel styleClass="conceptDetail" style="width: 500px;">
-
-            </p:outputPanel>
-        </p:overlayPanel>
 
     </ui:define>
 

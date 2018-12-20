@@ -43,6 +43,10 @@
 
                     <h:outputText id="basicTypeValue2" value="#{relationship.target}" styleClass="value" />
 
+                    <p:outputLabel rendered="#{not relationship.isValid() }">
+                        <i class="fa fa-ban" title="No vigente" style="color: red" />
+                    </p:outputLabel>
+
                     <!-- Atributos de relación -->
                     <p:repeat
                             offset="0"

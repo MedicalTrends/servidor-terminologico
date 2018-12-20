@@ -90,6 +90,10 @@
                    var="relationship"
                    varStatus="var">
 
+            <p:outputLabel rendered="#{not relationship.isValid() }" style="float: right">
+                <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+            </p:outputLabel>
+
             <div class="ui-fluid">
 
                 <div class="ui-g">
@@ -191,6 +195,10 @@
         <ui:repeat value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                    var="relationship"
                    varStatus="var">
+
+            <p:outputLabel rendered="#{not relationship.isValid() }" style="float: right">
+                <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+            </p:outputLabel>
 
             <div class="ui-fluid">
 
@@ -299,7 +307,7 @@
                 <div style="text-align: center">
                     <p:commandButton
                             icon="fa fa-trash"
-                            title="Eliminar"
+                            title="Eliminar" rendered="#{relationship.isValid()}"
                             update="@(.relationships_#{cc.attrs.relationshipDefinition.id}),@(.search)"
                             process="@this"
                             immediate="true"
@@ -308,6 +316,10 @@
                     <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
                                icon="ui-icon-alert"/>
                     </p:commandButton>
+
+                    <p:outputLabel rendered="#{not relationship.isValid() }">
+                        <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+                    </p:outputLabel>
                 </div>
             </p:column>
         </p:dataTable>
@@ -315,7 +327,6 @@
     </p:fieldset>
 
     <!-- Multiplicidad N con atributos-->
-
     <p:fieldset id="helperTableTypeCollectionWithAttributes" legend="#{cc.attrs.relationshipDefinition.name}"
                 rendered="#{cc.attrs.relationshipDefinition.multiplicity.collection and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}">
 
@@ -378,7 +389,6 @@
 
         </p:outputPanel>
 
-
         <p:dataTable id="collectionValuesWithAttributes"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
                      draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}"
@@ -420,7 +430,7 @@
                 <div style="text-align: center">
                     <p:commandButton
                             icon="fa fa-trash"
-                            title="Eliminar"
+                            title="Eliminar" rendered="#{relationship.isValid()}"
                             update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
                             style="float: right"
                             process="@this"
@@ -430,6 +440,10 @@
                         <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
                                    icon="ui-icon-alert"/>
                     </p:commandButton>
+
+                    <p:outputLabel rendered="#{not relationship.isValid() }">
+                        <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+                    </p:outputLabel>
                 </div>
             </p:column>
         </p:dataTable>

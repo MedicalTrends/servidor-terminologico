@@ -904,7 +904,7 @@ public class ConceptBean implements Serializable {
             ConceptSMTK aConcept = categoryManager.categoryContains(conceptSMTK.getCategory(), description.getTerm());
 
             if (aConcept != null) {
-                messageBean.messageError("Ya existe la descripción " + description.getTerm() + " en la categoría " + category.getName() +". Descripción perteneciente a concepto: "+aConcept);
+                messageBean.messageError("Ya existe la descripción: '" + description.getTerm() + "' en la categoría " + category.getName() +". Referencia: "+aConcept);
                 return true;
             }
         }

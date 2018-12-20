@@ -107,6 +107,7 @@ public class DescriptionQuery extends Query implements IQuery, Serializable {
         queryParameters.add(new QueryParameter(Long.class, getCategoryValues(), true)); /** ids categorias **/
         queryParameters.add(new QueryParameter(String.class, getQuery(), false)); /** patrón de búsqueda **/
         queryParameters.add(new QueryParameter(Boolean.class, getTruncateMatch(), false)); /** tipo de búsqueda **/
+        queryParameters.add(new QueryParameter(Boolean.class, getValid(), false)); /** está vigente? **/
         queryParameters.add(new QueryParameter(Long.class, getRefSetValues(), true)); /** refsets **/
         queryParameters.add(new QueryParameter(Long.class, getDescriptionTypeValues(), true)); /** description types **/
         queryParameters.add(new QueryParameter(Integer.class, getOrder(), false));

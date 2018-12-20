@@ -86,6 +86,10 @@
                    var="relationship"
                    varStatus="var">
 
+            <p:outputLabel rendered="#{not relationship.isValid() }" style="float: right">
+                <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+            </p:outputLabel>
+
             <div class="ui-fluid">
 
                 <div class="ui-g">
@@ -194,6 +198,10 @@
                    step="1"
                    var="relationship"
                    varStatus="var">
+
+            <p:outputLabel rendered="#{not relationship.isValid() }" style="float: right">
+                <i class="ui-icon ui-icon-block" title="No vigente" style="color: red" />
+            </p:outputLabel>
 
             <div class="ui-g ui-fluid">
 

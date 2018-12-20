@@ -379,9 +379,10 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 
 .not-valid {
     /*background: #f8f1f2 !important;*/
-    opacity: 0.8;
+    opacity: 0.7;
 }
 
 .not-valid-description {
-    background: #f8f1f2 !important;
+    /*background: #fce4e8 !important;*/
+    /*color: #F44336 !important;*/
 }

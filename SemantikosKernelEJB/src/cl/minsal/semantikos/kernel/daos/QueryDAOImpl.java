@@ -82,7 +82,7 @@ public class QueryDAOImpl implements QueryDAO {
         if(  query instanceof  GeneralQuery )
             QUERY = "begin ? := stk.stk_pck_query.get_concept_by_general_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;";
         if(  query instanceof  DescriptionQuery )
-            QUERY = "begin ? := stk.stk_pck_query.get_description_by_description_query(?,?,?,?,?,?,?,?,?); end;";
+            QUERY = "begin ? := stk.stk_pck_query.get_description_by_description_query(?,?,?,?,?,?,?,?,?,?); end;";
         if(  query instanceof  NoValidQuery )
             QUERY = "begin ? := stk.stk_pck_query.get_description_by_no_valid_query(?,?,?,?,?,?,?,?); end;";
         if(  query instanceof  PendingQuery )
@@ -164,7 +164,7 @@ public class QueryDAOImpl implements QueryDAO {
         if(  query instanceof  GeneralQuery )
             QUERY = "begin ? := stk.stk_pck_query.count_concept_by_general_query(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;";
         if(  query instanceof  DescriptionQuery )
-            QUERY = "begin ? := stk.stk_pck_query.count_description_by_description_query(?,?,?,?,?,?,?,?,?); end;";
+            QUERY = "begin ? := stk.stk_pck_query.count_description_by_description_query(?,?,?,?,?,?,?,?,?,?); end;";
         if(  query instanceof  NoValidQuery )
             QUERY = "begin ? := stk.stk_pck_query.count_description_by_no_valid_query(?,?,?,?,?,?,?,?); end;";
         if(  query instanceof  PendingQuery )

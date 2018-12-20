@@ -68,7 +68,7 @@
                                 </div>
                                 <div class="ui-g-12">
                                     <p:selectOneMenu value="#{cc.attrs.generalQuery.valid}" autoWidth="false" style="width: 100%">
-                                        <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                                        <f:selectItem itemLabel="Todos" itemValue="#{null}"/>
                                         <f:selectItem itemLabel="Vigentes" itemValue="true"/>
                                         <f:selectItem itemLabel="No vigentes" itemValue="false"/>
                                         <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus),@(.search2)"

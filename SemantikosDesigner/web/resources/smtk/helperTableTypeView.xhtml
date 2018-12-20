@@ -40,6 +40,9 @@
 
                         <h:outputText readonly="true" id="findHTRecords7" value="#{relationship.target.description}" styleClass="value" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
                         <h:outputText readonly="true" id="findHTRecords2_" value="#{relationship.target.cells[1].stringValue}" styleClass="value" rendered="#{cc.attrs.relationshipDefinition.ATC}" />
+                        <p:outputLabel rendered="#{not relationship.isValid() }">
+                            <i class="fa fa-ban" title="No vigente" style="color: red" />
+                        </p:outputLabel>
 
                     </div>
 
@@ -79,6 +82,10 @@
 
                             <p:outputLabel outcome="/views/concepts/conceptView" value="#{conceptView.formatSMTKRelationshipAttributes(relationship)}" styleClass="value"/>
 
+                            <p:outputLabel rendered="#{not relationship.isValid() }">
+                                <i class="fa fa-ban" title="No vigente" style="color: red" />
+                            </p:outputLabel>
+
                         </li>
 
                     </p:repeat>
@@ -98,6 +105,10 @@
                             <p:outputLabel value="#{conceptView.formatSMTKRelationship(relationship)}" styleClass="value"/>
 
                             <p:outputLabel outcome="/views/concepts/conceptView" value="#{conceptView.formatSMTKRelationshipAttributes(relationship)}" styleClass="value"/>
+
+                            <p:outputLabel rendered="#{not relationship.isValid() }">
+                                <i class="fa fa-ban" title="No vigente" style="color: red" />
+                            </p:outputLabel>
 
                         </li>
 
@@ -186,7 +197,7 @@
 
     </p:fieldset>
 
-    <p:overlayPanel widgetVar="ispDetail" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true" style="width: 600px">
+    <p:overlayPanel widgetVar="ispDetail" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
         <p:outputPanel id="descriptionSelected" styleClass="ispDetail">
             <div class="ui-fluid ui-g">
             <p:repeat value="#{ispbean.ispRecord.cells}" var="cell">

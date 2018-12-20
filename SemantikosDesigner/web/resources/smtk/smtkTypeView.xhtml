@@ -31,6 +31,9 @@
                                 <f:param name="conceptID" value="#{relationship.target.conceptID}" />
                             </p:link>
                             <p:outputLabel outcome="/views/concepts/conceptView" value="#{conceptView.formatSMTKRelationshipAttributes(relationship)}" styleClass="value"/>
+                            <p:outputLabel rendered="#{not relationship.isValid() }">
+                                <i class="fa fa-ban" title="No vigente" style="color: red" />
+                            </p:outputLabel>
                         </li>
                     </p:repeat>
                 </ol>
@@ -44,6 +47,9 @@
                                 <f:param name="conceptID" value="#{relationship.target.conceptID}" />
                             </p:link>
                             <p:outputLabel outcome="/views/concepts/conceptView" value="#{conceptView.formatSMTKRelationshipAttributes(relationship)}" styleClass="value"/>
+                            <p:outputLabel rendered="#{not relationship.isValid() }">
+                                <i class="fa fa-ban" title="No vigente" style="color: red" />
+                            </p:outputLabel>
                         </li>
                     </p:repeat>
                 </ul>
@@ -95,7 +101,6 @@
 
             <p:outputPanel id="panel_autocomplete" style="width: 100%">
 
-
                 <ui:repeat value="#{cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}"
                                        var="relationship"
                                        varStatus="var">
@@ -115,6 +120,10 @@
                                             <p:link outcome="/views/concepts/conceptView" value="#{relationship.target.descriptionFSN} - #{relationship.target.id}" styleClass="value" >
                                                 <f:param name="conceptID" value="#{relationship.target.conceptID}" />
                                             </p:link>
+
+                                            <p:outputLabel rendered="#{not relationship.isValid() }">
+                                                <i class="fa fa-ban" title="No vigente" style="color: red" />
+                                            </p:outputLabel>
 
                                         </div>
 
