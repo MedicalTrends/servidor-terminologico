@@ -134,7 +134,7 @@
                                             <f:selectItem itemLabel="Vigentes" itemValue="true"/>
                                             <f:selectItem itemLabel="No vigentes" itemValue="false"/>
                                             <p:ajax event="itemSelect" update="@(.browserTable),@(.filterStatus),@(.search2)"
-                                                    process="@this" />
+                                                    process="@this" listener="#{descriptionsBrowserBean.setFilterChanged(true)}" />
                                         </p:selectOneMenu>
 
                                     </div>

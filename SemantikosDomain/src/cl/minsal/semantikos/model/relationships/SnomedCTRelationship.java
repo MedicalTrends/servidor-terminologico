@@ -39,7 +39,7 @@ public class SnomedCTRelationship extends Relationship implements Serializable {
      *
      * @return Un objeto de tipo <code>SnomedCTRelationship</code> creado a partir de la relación.
      */
-    public static SnomedCTRelationship createSnomedCT(Relationship relationship) {
+     public static SnomedCTRelationship  createSnomedCT(Relationship relationship) {
 
         /* Se valida que la relación SI sea SnomedCT */
         if (!SnomedCTRelationship.isSnomedCTRelationship(relationship)) {
@@ -57,6 +57,7 @@ public class SnomedCTRelationship extends Relationship implements Serializable {
             long id = relationship.getId();
             new SnomedCTRelationship(id, sourceConcept, conceptSCT, relationshipDefinition, relationshipAttributes, validityUntil);
         }
+
         return new SnomedCTRelationship(sourceConcept, conceptSCT, relationshipDefinition, relationshipAttributes, validityUntil);
     }
 

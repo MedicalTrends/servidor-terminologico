@@ -21,6 +21,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ import java.util.Map;
  */
 
 @ManagedBean(name = "descriptionsBrowserBean")
-@ViewScoped
+@SessionScoped
 public class DescriptionsBrowserBean implements Serializable {
 
     static final Logger logger = LoggerFactory.getLogger(DescriptionsBrowserBean.class);
@@ -102,7 +103,7 @@ public class DescriptionsBrowserBean implements Serializable {
     /**
      * Este método es el responsable de ejecutar la consulta
      */
-    public void executeQuery() {
+    void executeQuery() {
 
         /**
          * Si el objeto de consulta no está inicializado, inicializarlo
