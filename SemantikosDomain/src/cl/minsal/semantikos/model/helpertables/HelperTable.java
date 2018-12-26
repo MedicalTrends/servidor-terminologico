@@ -83,7 +83,7 @@ public class HelperTable implements TargetDefinition, Serializable {
         List<HelperTableColumn> columns = new ArrayList<>();
 
         for (HelperTableColumn column: getColumns()) {
-            if(!column.getName().equals("CONCEPTO_STK") && !column.getName().equals("CONCEPTO STK")) {
+            if(!column.getName().equals("CONCEPTO_STK") && !column.getName().equals("CONCEPTO STK") && !column.getName().equals("ID_CONCEPTO_STK")) {
                 columns.add(column);
             }
         }

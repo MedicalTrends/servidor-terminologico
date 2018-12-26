@@ -280,7 +280,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
 
     private HelperTableData updateData(HelperTableData cell) {
 
-        String sql = "begin ? := stk.stk_pck_helper_table.update_helper_table_data(?,?,?,?,?,?,?); end;";
+        String sql = "begin ? := stk.stk_pck_helper_table.update_helper_table_data(?,?,?,?,?,?,?,?,?); end;";
 
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
@@ -290,25 +290,33 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             call.setString(3, cell.getStringValue());
             call.setDate(4, cell.getDateValue()==null?null:new Date(cell.getDateValue().getTime()));
 
-            if(cell.getFloatValue()==null)
+            if(cell.getFloatValue()==null) {
                 call.setNull(5, Types.REAL);
-            else
+            } else {
                 call.setFloat(5, cell.getFloatValue());
+            }
 
-            if(cell.getIntValue()==null)
+            if(cell.getIntValue()==null) {
                 call.setNull(6, Types.BIGINT);
-            else
+            } else {
                 call.setLong(6, cell.getIntValue());
+            }
 
-            if(cell.getBooleanValue()==null)
-                call.setNull(7, Types.BOOLEAN);
-            else
-                call.setBoolean(7,cell.getBooleanValue());
-            if(cell.getForeignKeyValue()==null){
+            if(cell.getBooleanValue()==null) {
+                //call.setNull(7, Types.BOOLEAN);
+                call.setNull(7, OracleTypes.NUMBER);
+            } else {
+                call.setBoolean(7, cell.getBooleanValue());
+            }
+
+            if(cell.getForeignKeyValue()==null) {
                 call.setNull(8, Types.BIGINT);
-            }else{
+            } else {
                 call.setLong(8, cell.getForeignKeyValue());
             }
+
+            call.setLong(9, cell.getRowId());
+            call.setLong(10, cell.getColumn().getId());
 
             call.execute();
 

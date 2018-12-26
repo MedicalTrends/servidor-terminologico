@@ -51,7 +51,7 @@
 
                             <div class="ui-g-12 ui-md-12 ui-lg-12">
 
-                                <p:commandButton process="@this" rendered="false"
+                                <p:commandButton process="@this" rendered="true"
                                                  style="float: right" icon="fa fa-plus"
                                                  update="@(.panelNewRow)"
                                                  oncomplete="PF('dialogNewRow').show()">
@@ -115,7 +115,7 @@
 
                             <pe:sheetcolumn headerText="VIGENTE"
                                             value="#{row.valid}"
-                                            colType="checkbox" converter="omnifaces.SelectItemsConverter"
+                                            colType="checkbox"
                                             filterOptions="#{helperTableEditBean.filterOptionsBoolean}"
                                             selectItems="#{BooleanOption.ALL_VALUES}"
                                             sortBy="#{row.valid}"
@@ -129,8 +129,7 @@
 
                             <ce:forEach items="#{helperTableEditBean.helperTableSelected.columns}" var="column" varStatus="status">
 
-                                <pe:sheetcolumn readonly="true"
-                                                headerText="#{column.description}"
+                                <pe:sheetcolumn headerText="#{column.description}"
                                                 value="#{row.getCellByColumnName(column.name).stringValue}"
                                                 sortBy="#{row.getCellByColumnName(column.name).stringValue}"
                                                 filterBy="#{row.getCellByColumnName(column.name).stringValue}"
@@ -138,8 +137,7 @@
                                                 colType="text">
                                 </pe:sheetcolumn>
 
-                                <pe:sheetcolumn readonly="true"
-                                                headerText="#{column.description}"
+                                <pe:sheetcolumn headerText="#{column.description}"
                                                 value="#{row.getCellByColumnName(column.name).booleanValue}"
                                                 sortBy="#{row.getCellByColumnName(column.name).booleanValue}"
                                                 filterBy="#{row.getCellByColumnName(column.name).booleanValue}"
@@ -147,32 +145,32 @@
                                                 colType="checkbox">
                                 </pe:sheetcolumn>
 
-                                <pe:sheetcolumn readonly="true"
-                                                headerText="#{column.description}"
+                                <pe:sheetcolumn headerText="#{column.description}"
                                                 value="#{row.getCellByColumnName(column.name).foreignKeyValue}"
                                                 sortBy="#{row.getCellByColumnName(column.name).foreignKeyValue}"
                                                 filterBy="#{row.getCellByColumnName(column.name).foreignKeyValue}"
                                                 rendered="#{column.helperTableDataTypeId eq 3}"
-                                                colType="numeric">
+                                                colType="text">
+                                    <f:convertNumber pattern="#0000" />
                                 </pe:sheetcolumn>
 
-                                <pe:sheetcolumn readonly="true"
-                                                headerText="#{column.description}"
+                                <pe:sheetcolumn headerText="#{column.description}"
                                                 value="#{row.getCellByColumnName(column.name).intValue}"
                                                 sortBy="#{row.getCellByColumnName(column.name).intValue}"
                                                 filterBy="#{row.getCellByColumnName(column.name).intValue}"
                                                 rendered="#{column.helperTableDataTypeId eq 4}"
-                                                colType="numeric">
+                                                colType="text">
+                                    <f:convertNumber pattern="#0000" />
                                 </pe:sheetcolumn>
 
-                                <pe:sheetcolumn readonly="true"
-                                                headerText="#{column.description}"
+                                <pe:sheetcolumn headerText="#{column.description}"
                                                 value="#{row.getCellByColumnName(column.name).dateValue}"
                                                 sortBy="#{row.getCellByColumnName(column.name).intValue}"
                                                 filterBy="#{row.getCellByColumnName(column.name).intValue}"
                                                 rendered="#{column.helperTableDataTypeId eq 5}"
                                                 colType="date">
                                 </pe:sheetcolumn>
+
                             </ce:forEach>
 
                         </pe:sheet>
@@ -206,7 +204,7 @@
             </div>
         </div>
 
-            <p:dialog id="dialogNewRow" header="Nuevo registro" widgetVar="dialogNewRow" global="true"
+            <p:dialog id="dialogNewRow" header="Nuevo registro" widgetVar="dialogNewRow" global="true" height="400"
                       showEffect="fade" hideEffect="fade">
 
                 <p:outputPanel id="panelNewRow" styleClass="panelNewRow" style="width: 100%;">
@@ -214,19 +212,23 @@
                     <div class="ui-fluid">
 
                         <div class="ui-g">
-                            <div class="ui-g-12 ui-md-6 ui-lg-2">
-                                Descripción:
+                            <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                DESCRIPCIÓN:
                             </div>
-                            <div class="ui-g-12 ui-md-6 ui-lg-10">
+                            <div class="ui-g-12 ui-md-12 ui-lg-12">
                                 <p:inputText value="#{helperTableEditBean.helperTableRowPlaceHolder.description}"/>
                             </div>
                             <p:repeat value="#{helperTableEditBean.helperTableSelected.getColumnsButSTK()}" var="column">
-                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                <div class="ui-g-12 ui-md-12 ui-lg-12">
                                     <h:outputText value="#{column.description}:"/>
                                 </div>
-                                <div class="ui-g-12 ui-md-6 ui-lg-10">
+                                <div class="ui-g-12 ui-md-12 ui-lg-12">
                                     <ui:repeat value="#{helperTableEditBean.helperTableRowPlaceHolder.getCellsByColumn(column)}" var="cell">
-                                        <p:inputText value="#{cell.stringValue}" rendered="#{!column.foreignKey and column.helperTableDataTypeId == 1 }"/>
+
+                                        <p:inputText value="#{cell.stringValue}"
+                                                     rendered="#{!column.foreignKey and column.helperTableDataTypeId == 1 }">
+                                            <p:ajax event="blur" update="@(.panelNewRow)" process="@this"/>
+                                        </p:inputText>
 
                                         <p:selectOneMenu value="#{cell.booleanValue}" autoWidth="false"
                                                          style="width: 70%"
@@ -240,6 +242,10 @@
                                                        rendered="#{!column.foreignKey and column.helperTableDataTypeId == 3 }"
                                                        decimalPlaces="0"/>
 
+                                        <p:inputNumber value="#{cell.foreignKeyValue}" thousandSeparator=""
+                                                       rendered="#{column.foreignKey }"
+                                                       decimalPlaces="0"/>
+
                                         <p:inputNumber value="#{cell.floatValue}"
                                                        rendered="#{!column.foreignKey and column.helperTableDataTypeId == 4}"/>
 
@@ -248,7 +254,7 @@
                                                     locale="es" navigator="true" pattern="dd-MM-yyyy"
                                                     mask="true"/>
 
-                                        <p:outputPanel rendered="#{column.foreignKey}">
+                                        <p:outputPanel rendered="#{column.foreignKey and false}">
                                             <p:selectOneMenu value="#{cell.foreignKeyValue}"
                                                              rendered="#{column.foreignKey }">
                                                 <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
@@ -268,8 +274,8 @@
                         <div class="ui-g">
                             <div class="ui-g-12 ui-md-12 ui-lg-12">
                                 <p:commandButton oncomplete="PF('dialogNewRow').hide()" value="Guardar"
-                                                 style="float: right; width: auto" update="@(.sheet)"
-                                                 process="@(.panelNewRow)"
+                                                 style="float: right; width: auto"
+                                                 update="@(.sheet)" process="@(.panelNewRow)"
                                                  actionListener="#{helperTableEditBean.addNewRow()}" />
                             </div>
                         </div>
@@ -277,6 +283,7 @@
                     </div>
 
                 </p:outputPanel>
+
             </p:dialog>
 
         </h:form>
