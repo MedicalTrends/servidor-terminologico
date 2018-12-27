@@ -236,7 +236,7 @@ public class HelperTableDAOImpl implements Serializable, HelperTableDAO {
             call.setDate(3, cell.getDateValue()==null?null:new Date(cell.getDateValue().getTime()));
 
             if(cell.getFloatValue()==null)
-                call.setNull(4, Types.REAL);
+                call.setNull(4, Types.FLOAT);
             else
                 call.setFloat(4, cell.getFloatValue());
 

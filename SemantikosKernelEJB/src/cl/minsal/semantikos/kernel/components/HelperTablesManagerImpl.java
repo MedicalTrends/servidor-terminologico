@@ -1,12 +1,15 @@
 package cl.minsal.semantikos.kernel.components;
 
 
+import cl.minsal.semantikos.kernel.businessrules.HelperTableRowCreationBR;
+import cl.minsal.semantikos.kernel.businessrules.HelperTableRowCreationBRImpl;
 import cl.minsal.semantikos.kernel.daos.HelperTableDAO;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.exceptions.RowInUseException;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.kernel.businessrules.HelperTableSearchBRImpl;
 import cl.minsal.semantikos.model.helpertables.*;
+import cl.minsal.semantikos.model.users.UserFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -28,6 +31,9 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
 
     @EJB
     HelperTableDAO dao;
+
+    @EJB
+    HelperTableRowCreationBR helperTableRowCreationBR;
 
     @Override
     public HelperTable getById(long id) {
@@ -62,6 +68,7 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
 
     @Override
     public HelperTableRow createEmptyRow(Long tableId, String username) {
+
         HelperTable table= getById(tableId);
 
         HelperTableRow newRow = new HelperTableRow();
@@ -90,7 +97,11 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
        inserta una fila no persistida
         */
     @Override
-    public HelperTableRow insertRow(HelperTableRow newRow,String username) {
+    public HelperTableRow insertRow(HelperTableRow newRow, String username) throws Exception {
+
+        User user = UserFactory.getInstance().findUserByMail(username);
+
+        helperTableRowCreationBR.apply(newRow, user);
 
         newRow.setCreationDate(new Timestamp(System.currentTimeMillis()));
         newRow.setCreationUsername(username);
@@ -100,6 +111,7 @@ public class HelperTablesManagerImpl implements HelperTablesManager {
         newRow = dao.createRow(newRow);
 
         for (HelperTableData cell: newRow.getCells()) {
+
             cell.setRowId(newRow.getId());
             dao.createData(cell);
         }

@@ -39,12 +39,18 @@
                              value="#{helperTableBean.administrableTables}" var="helperTable" widgetVar="helperTablesTable"
                              rowIndexVar="rowIndex1" style="margin-top: 20px">
 
-                        <p:column headerText="ID" filterBy="#{helperTable.id}" filterMatchMode="contains" sortBy="#{helperTable.id}">
+                        <p:ajax event="page" oncomplete="scrollTop();" />
+
+                        <p:ajax event="filter" oncomplete="loader();" />
+
+                        <p:column headerText="ID" filterBy="#{helperTable.id}" filterMatchMode="contains" sortBy="#{helperTable.id}" rendered="false">
                             <h:outputText value="#{helperTable.id}"/>
                         </p:column>
 
                         <p:column headerText="Nombre Tabla" filterBy="#{helperTable.name}" filterMatchMode="contains" sortBy="#{helperTable.name}">
-                            <h:outputText value="#{helperTable.name}"/>
+                            <p:link value="#{helperTable.name}" outcome="/views/helpertables/helpertable" styleClass="loader-trigger">
+                                <f:param name="idHelperTable" value="#{helperTable.id}" />
+                            </p:link>
                         </p:column>
 
                         <p:column headerText="Descripción" filterBy="#{helperTable.description}" filterMatchMode="contains" sortBy="#{helperTable.description}">

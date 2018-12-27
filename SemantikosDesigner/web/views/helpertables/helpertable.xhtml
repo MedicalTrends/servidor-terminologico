@@ -57,6 +57,10 @@
                                                  oncomplete="PF('dialogNewRow').show()">
                                 </p:commandButton>
 
+                                <p:commandButton icon="fa fa-file-excel-o" ajax="false" style="float: right">
+                                    <p:dataExporter target="export" type="xls" fileName="#{helperTableEditBean.helperTableSelected.name}"/>
+                                </p:commandButton>
+
                             </div>
 
                         </div>
@@ -78,6 +82,15 @@
                             </f:facet>
 
                             <p:ajax event="change" listener="#{helperTableEditBean.cellChangeEvent}" />
+
+                            <p:ajax event="filter" oncomplete="loader();" />
+
+                            <pe:sheetcolumn headerText="ID"
+                                            value="#{row.id}"
+                                            colType="text"
+                                            readonlyCell="true"
+                                            sortBy="#{row.id}"
+                                            filterBy="#{row.id}"/>
 
                             <pe:sheetcolumn headerText="CREACIÓN"
                                             value="#{row.creationDate}"
@@ -177,10 +190,54 @@
 
                     </p:outputPanel>
 
+                    <p:dataTable var="row" id="export" value="#{helperTableEditBean.helperTableSelected.rows}"
+                                 style="display: none" paginator="false" sortBy="#{row.id}">
+
+                        <p:column headerText="ID" sortable="true" sortBy="#{row.id}">
+                            <h:outputText value="#{row.id}"/>
+                        </p:column>
+
+                        <p:column headerText="CREACIÓN" sortable="true" sortBy="#{row.creationDate}">
+                            <h:outputText value="#{row.creationDate}"/>
+                        </p:column>
+
+                        <p:column headerText="CREADO POR" sortable="true" sortBy="#{row.creationUsername}">
+                            <h:outputText value="#{row.creationUsername}"/>
+                        </p:column>
+
+                        <p:column headerText="EDITADO POR" sortable="true" sortBy="#{row.lastEditUsername}">
+                            <h:outputText value="#{row.lastEditUsername}"/>
+                        </p:column>
+
+                        <p:column headerText="ULTIMA EDICIÓN" sortable="true" sortBy="#{row.lastEditDate}">
+                            <h:outputText value="#{row.lastEditDate}"/>
+                        </p:column>
+
+                        <p:column headerText="VIGENTE" sortable="true" sortBy="#{row.valid}">
+                            <h:outputText value="#{row.valid}"/>
+                        </p:column>
+
+                        <p:column headerText="DESCRIPCIÓN" sortable="true" sortBy="#{row.description}">
+                            <h:outputText value="#{row.description}"/>
+                        </p:column>
+
+                        <p:columns value="#{helperTableEditBean.helperTableSelected.columns}" var="column">
+
+                            <f:facet name="header">
+                                <h:outputText value="#{column.description}" />
+                            </f:facet>
+
+                            <h:outputText value="#{row.getCellByColumnName(column.name).toString()}"/>
+
+                        </p:columns>
+
+                    </p:dataTable>
+
                     <p:dialog id="dialog-concept-related"
                               header="Conceptos relacionados" widgetVar="dialog-concept-related"
                               global="true" showEffect="fade" hideEffect="fade" height="400" width="900"
                               positionType="absolute">
+
                         <p:outputPanel styleClass="dialog-concept-related-panel">
 
                             <div class="Container">
@@ -243,7 +300,7 @@
                                                        decimalPlaces="0"/>
 
                                         <p:inputNumber value="#{cell.foreignKeyValue}" thousandSeparator=""
-                                                       rendered="#{column.foreignKey }"
+                                                       rendered="#{column.foreignKey }" minValue="0"
                                                        decimalPlaces="0"/>
 
                                         <p:inputNumber value="#{cell.floatValue}"
@@ -275,7 +332,7 @@
                             <div class="ui-g-12 ui-md-12 ui-lg-12">
                                 <p:commandButton oncomplete="PF('dialogNewRow').hide()" value="Guardar"
                                                  style="float: right; width: auto"
-                                                 update="@(.sheet)" process="@(.panelNewRow)"
+                                                 update="@(.sheet), messages" process="@(.panelNewRow)"
                                                  actionListener="#{helperTableEditBean.addNewRow()}" />
                             </div>
                         </div>

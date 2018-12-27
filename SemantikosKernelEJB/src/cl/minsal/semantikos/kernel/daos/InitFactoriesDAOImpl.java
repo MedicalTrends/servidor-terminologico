@@ -15,9 +15,11 @@ import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetFactory;
 import cl.minsal.semantikos.model.descriptions.DescriptionType;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
+import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableColumn;
 import cl.minsal.semantikos.model.helpertables.HelperTableColumnFactory;
 
+import cl.minsal.semantikos.model.helpertables.HelperTableFactory;
 import cl.minsal.semantikos.model.queries.*;
 import cl.minsal.semantikos.model.relationships.MultiplicityFactory;
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
@@ -106,6 +108,7 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         }
         //this.testArrayOracle();
         this.refreshColumns();
+        this.refreshTables();
         this.refreshInstitutions();
         this.refreshCategories();
         this.refreshCrossmapSets();
@@ -399,7 +402,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
     @Override
     public HelperTableColumnFactory refreshColumns() {
-        //ConnectionBD connect = new ConnectionBD();
 
         List<HelperTableColumn> helperTableColumns = new ArrayList<>();
 
@@ -413,7 +415,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
             call.execute();
 
             ResultSet rs = (ResultSet) call.getObject(1);
-            //ResultSet rs = call.getResultSet();
 
             /* Se recuperan las columnas */
             while(rs.next()) {
@@ -430,6 +431,40 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         }
 
         return HelperTableColumnFactory.getInstance();
+    }
+
+    @Override
+    public HelperTableFactory refreshTables() {
+
+        List<HelperTable> helperTables = new ArrayList<>();
+
+        String sql = "begin ? := stk.stk_pck_helper_table.get_helper_tables; end;";
+
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement call = connection.prepareCall(sql)) {
+
+            call.registerOutParameter (1, OracleTypes.CURSOR);
+
+            call.execute();
+
+            ResultSet rs = (ResultSet) call.getObject(1);
+            //ResultSet rs = call.getResultSet();
+
+            /* Se recuperan las columnas */
+            while(rs.next()) {
+                helperTables.add(createHelperTableFromResultSet(rs));
+            }
+
+            /* Se setea la lista de tagsSMTK */
+            HelperTableFactory.getInstance().setHelperTables(helperTables);
+
+        } catch (SQLException e) {
+            String errorMsg = "Error al intentar recuperar la lista de tablas auxiliares de la BDD.";
+            logger.error(errorMsg, e);
+            throw new EJBException(errorMsg, e);
+        }
+
+        return HelperTableFactory.getInstance();
     }
 
     @Override
@@ -474,6 +509,35 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         }
 
         return descriptionType;
+
+    }
+
+    /**
+     * Este método es responsable de crear un HelperTable Record a partir de un objeto JSON.
+     *
+     * @param rs El objeto JSON a partir del cual se crea el objeto. El formato JSON será:
+     *                       <code>{"TableName":"helper_table_atc","records":[{"id":1,"codigo_atc":"atc1"}</code>
+     *
+     * @return Un objeto fresco de tipo <code>HelperTableRecord</code> creado a partir del objeto JSON.
+     *
+     * @throws IOException Arrojada si hay un problema.
+     */
+    public HelperTable createHelperTableFromResultSet(ResultSet rs) {
+
+        HelperTable helperTable = new HelperTable();
+
+        try {
+            helperTable.setId(rs.getLong("id"));
+            helperTable.setName(rs.getString("name"));
+            helperTable.setDescription(rs.getString("description"));
+
+            helperTable.setColumns(HelperTableColumnFactory.getInstance().findColumnsByHelperTable(rs.getLong("id")));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return helperTable;
 
     }
 

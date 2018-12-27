@@ -64,6 +64,9 @@ public class HelperTableEditBean implements Serializable {
     @ManagedProperty(value = "#{messageBean}")
     private MessageBean messageBean;
 
+    @ManagedProperty(value = "#{exportBean}")
+    private ExportBean exportBean;
+
     //@EJB
     HelperTablesManager manager = (HelperTablesManager) ServiceLocator.getInstance().getService(HelperTablesManager.class);
 
@@ -578,12 +581,16 @@ public class HelperTableEditBean implements Serializable {
 
 
     public void addNewRow() {
-        manager.insertRow(helperTableRowPlaceHolder, authenticationBean.getLoggedUser().getEmail());
-        helperTableRowPlaceHolder.setCreationDate(new Timestamp(System.currentTimeMillis()));
-        helperTableRowPlaceHolder.setCreationUsername(authenticationBean.getLoggedUser().getEmail());
-        helperTableRowPlaceHolder.setLastEditDate(new Timestamp(System.currentTimeMillis()));
-        helperTableRowPlaceHolder.setLastEditUsername(authenticationBean.getLoggedUser().getEmail());
-        helperTableSelected.getRows().add(helperTableRowPlaceHolder);
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        try {
+            helperTableRowPlaceHolder = manager.insertRow(helperTableRowPlaceHolder, authenticationBean.getLoggedUser().getEmail());
+            helperTableSelected.getRows().add(helperTableRowPlaceHolder);
+        }
+        catch(Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR ,"Error", e.getMessage()));
+        }
     }
 
     private <T extends Enum<?>> List<SelectItem> createEnumList(T[] values) {
@@ -593,6 +600,18 @@ public class HelperTableEditBean implements Serializable {
             result.add(new SelectItem(value, value.name()));
         }
         return result;
+    }
+
+    public ExportBean getExportBean() {
+        return exportBean;
+    }
+
+    public void setExportBean(ExportBean exportBean) {
+        this.exportBean = exportBean;
+    }
+
+    public void export() {
+        exportBean.export(helperTableSelected, helperTableSelected.getRows());
     }
 
 }

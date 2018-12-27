@@ -6,6 +6,7 @@ import cl.minsal.semantikos.model.categories.CategoryFactory;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetFactory;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.helpertables.HelperTableColumnFactory;
+import cl.minsal.semantikos.model.helpertables.HelperTableFactory;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.kernel.factories.EmailFactory;
 
@@ -59,6 +60,13 @@ public interface InitFactoriesDAO {
      * @return El factory correspondiente
      */
     HelperTableColumnFactory refreshColumns();
+
+    /**
+     * Este método es responsable de retornar un Factory.
+     *
+     * @return El factory correspondiente
+     */
+    HelperTableFactory refreshTables();
 
     /**
      * Este método es responsable de retornar un Factory.

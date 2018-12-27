@@ -98,7 +98,7 @@ public interface HelperTablesManager {
     /*
     inserta una fila no persistida
      */
-    HelperTableRow insertRow(HelperTableRow row, String username);
+    HelperTableRow insertRow(HelperTableRow row, String username) throws Exception;
 
     /**
      * Este método es responsable de recuperar los registros hijos de un registro, dada una columna de búsqueda

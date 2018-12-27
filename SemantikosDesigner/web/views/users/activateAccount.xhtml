@@ -34,15 +34,16 @@
 
             <div class="ui-g-12" style="padding: 0px">
                 <p:outputPanel styleClass="headerPanel">
-                    <div style="text-align: center;font-size: 24px; color: #009688">Activación de cuenta</div>
+                    <div style="text-align: center;font-size: 22px; color: #E91E63">Activación de cuenta</div>
                     <p:outputPanel rendered="#{not accountActivation.accountActive}">
-                        <div style="text-align: center; color: #607D8B">Por favor, complete el siguiente formulario.</div>
+                        <div style="text-align: center; color: #3F51B5">Por favor, complete el siguiente formulario.</div>
                     </p:outputPanel>
                     <p:outputPanel rendered="#{accountActivation.accountActive}">
                         <div style="text-align: center; color: #4CAF50">Su cuenta ha sido activada!</div>
                         <p:button outcome="/views/login.xhtml" value="Ir al login" styleClass="cyan-btn" icon="fa fa-arrow-left" style="width: auto; margin: 2em"/>
                     </p:outputPanel>
                 </p:outputPanel>
+                <br/>
             </div>
         </div>
 
@@ -57,40 +58,37 @@
 
                     <div class="ui-g">
 
-                        <div class="ui-g-12 ui-md-6 ui-lg-6">
-                            <p:outputLabel value="Contraseña Actual *" styleClass="#{accountActivation.passwordError}" />
+                        <div class="ui-g-12 ui-md-12 ui-lg-12">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:password id="default-password" value="#{accountActivation.password}" feedback="true" inline="true"
+                                            promptLabel="Ingrese su contraseña actual" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
+                                            redisplay="true" autocomplete="off"
+                                            styleClass="#{accountActivation.passwordError}">
+                                </p:password>
+                                <label>Contraseña Actual *</label>
+                            </h:panelGroup>
                         </div>
 
-                        <div class="ui-g-12 ui-md-6 ui-lg-6">
-                            <p:password id="default-password" value="#{accountActivation.password}" feedback="true" inline="true"
-                                        promptLabel="Ingrese su contraseña actual" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
-                                        redisplay="true" autocomplete="off"
-                                        styleClass="#{accountActivation.passwordError}">
-                            </p:password>
+                        <div class="ui-g-12 ui-md-12 ui-lg-12">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:password id="new-password" value="#{accountActivation.newPassword1}" feedback="true" inline="true"
+                                            promptLabel="Ingrese su nueva contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
+                                            redisplay="true" autocomplete="off"
+                                            styleClass="#{accountActivation.newPassword1Error}">
+                                </p:password>
+                                <label>Nueva Contraseña *</label>
+                            </h:panelGroup>
                         </div>
 
-                        <div class="ui-g-12 ui-md-6 ui-lg-6">
-                            <p:outputLabel value="Nueva Contraseña *" styleClass="#{accountActivation.newPassword1Error}" />
-                        </div>
-
-                        <div class="ui-g-12 ui-md-6 ui-lg-6">
-                            <p:password id="new-password" value="#{accountActivation.newPassword1}" feedback="true" inline="true"
-                                        promptLabel="Ingrese su nueva contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
-                                        redisplay="true" autocomplete="off"
-                                        styleClass="#{accountActivation.newPassword1Error}">
-                            </p:password>
-                        </div>
-
-                        <div class="ui-g-12 ui-md-6 ui-lg-6">
-                            <p:outputLabel value="Confirmar Contraseña *" styleClass="#{accountActivation.newPassword2Error} Wid20" />
-                        </div>
-
-                        <div class="ui-g-12 ui-md-6 ui-lg-6">
-                            <p:password id="new-password2" value="#{accountActivation.newPassword2}" feedback="true" inline="true"
-                                        promptLabel="Confirme su nueva contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
-                                        redisplay="true" autocomplete="off"
-                                        styleClass="#{accountActivation.newPassword2Error}">
-                            </p:password>
+                        <div class="ui-g-12 ui-md-12 ui-lg-12">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:password id="new-password2" value="#{accountActivation.newPassword2}" feedback="true" inline="true"
+                                            promptLabel="Confirme su nueva contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
+                                            redisplay="true" autocomplete="off"
+                                            styleClass="#{accountActivation.newPassword2Error}">
+                                </p:password>
+                                <label>Confirmar Contraseña *</label>
+                            </h:panelGroup>
                         </div>
 
                     </div>
@@ -117,6 +115,8 @@
                 <p:fieldset legend="Paso 2: Preguntas de seguridad" styleClass="questions">
 
                     <i style="font-size: small">Si usted olvida su contraseña, puede responder 3 preguntas de seguridad para recuperarla</i>
+
+                    <br/>
 
                     <div class="ui-fluid">
 

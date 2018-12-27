@@ -117,4 +117,8 @@ public class HelperTableColumnFactory implements Serializable {
         return columns;
     }
 
+    public static boolean isSTK(HelperTableColumn column) {
+        return (column.getName().equals("CONCEPTO_STK") || column.getName().equals("CONCEPTO STK") || column.getName().equals("ID_CONCEPTO_STK"));
+    }
+
 }

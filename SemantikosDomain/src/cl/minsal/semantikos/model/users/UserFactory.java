@@ -23,12 +23,16 @@ public class UserFactory implements Serializable {
     /** Mapa de tagSMTK por su nombre. */
     private static ConcurrentHashMap<Long, User> usersById;
 
+    /** Mapa de tagSMTK por su nombre. */
+    private static ConcurrentHashMap<String, User> usersByMail;
+
     /**
      * Constructor privado para el Singleton del Factory.
      */
     private UserFactory() {
         this.users = new ArrayList<>();
         this.usersById = new ConcurrentHashMap<>();
+        this.usersByMail = new ConcurrentHashMap<>();
     }
 
     public static synchronized UserFactory getInstance() {
@@ -37,6 +41,14 @@ public class UserFactory implements Serializable {
 
     public ConcurrentHashMap<Long, User> getUsersById() {
         return usersById;
+    }
+
+    public static ConcurrentHashMap<String, User> getUsersByMail() {
+        return usersByMail;
+    }
+
+    public static void setUsersByMail(ConcurrentHashMap<String, User> usersByMail) {
+        UserFactory.usersByMail = usersByMail;
     }
 
     /**
@@ -48,6 +60,20 @@ public class UserFactory implements Serializable {
 
         if (usersById.containsKey(id)) {
             return this.usersById.get(id);
+        }
+
+        return null;
+    }
+
+    /**
+     * Este método es responsable de retornar el tipo de descripción llamado FSN.
+     *
+     * @return Retorna una instancia de FSN.
+     */
+    public User findUserByMail(String mail) {
+
+        if (usersByMail.containsKey(mail)) {
+            return this.usersByMail.get(mail);
         }
 
         return null;
@@ -68,8 +94,12 @@ public class UserFactory implements Serializable {
 
         /* Se actualiza el mapa por nombres */
         this.usersById.clear();
+
+        this.usersByMail.clear();
+
         for (User user : users) {
             this.usersById.put(user.getId(), user);
+            this.usersByMail.put(user.getEmail(), user);
         }
     }
 
@@ -81,11 +111,13 @@ public class UserFactory implements Serializable {
         if(!users.contains(user)) {
             users.add(user);
             usersById.put(user.getId(), user);
+            usersByMail.put(user.getEmail(), user);
         }
         else {
             users.remove(user);
             users.add(user);
             usersById.put(user.getId(), user);
+            usersByMail.put(user.getEmail(), user);
         }
     }
 
