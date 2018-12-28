@@ -36,7 +36,7 @@
 
                     </div>
 
-                    <div class="ui-g-12 ui-md-8 ui-lg-4">
+                    <div class="ui-g-12 ui-md-8 ui-lg-#{cc.attrs.relationshipDefinition.ATC?'10':'4'}">
 
                         <h:outputText readonly="true" id="findHTRecords7" value="#{relationship.target.description}" styleClass="value" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
                         <h:outputText readonly="true" id="findHTRecords2_" value="#{relationship.target.cells[1].stringValue}" styleClass="value" rendered="#{cc.attrs.relationshipDefinition.ATC}" />
@@ -80,8 +80,6 @@
 
                             <p:outputLabel value="#{conceptView.formatSMTKRelationship(relationship)}" styleClass="value"/>
 
-                            <p:outputLabel outcome="/views/concepts/conceptView" value="#{conceptView.formatSMTKRelationshipAttributes(relationship)}" styleClass="value"/>
-
                             <p:outputLabel rendered="#{not relationship.isValid() }">
                                 <i class="fa fa-ban" title="No vigente" style="color: red" />
                             </p:outputLabel>
@@ -102,9 +100,13 @@
 
                         <li>
 
-                            <p:outputLabel value="#{conceptView.formatSMTKRelationship(relationship)}" styleClass="value"/>
+                            <p:outputLabel value="#{conceptView.formatSMTKRelationship(relationship)}" styleClass="value" rendered="#{not cc.attrs.relationshipDefinition.ISP}"/>
 
-                            <p:outputLabel outcome="/views/concepts/conceptView" value="#{conceptView.formatSMTKRelationshipAttributes(relationship)}" styleClass="value"/>
+                            <p:commandLink update="@(.ispDetail)" oncomplete="PF('ispDetail').show('#{component.clientId}')" process="@this"
+                                           rendered="#{cc.attrs.relationshipDefinition.ISP}" actionListener="#{ispbean.fetchData(relationship.target.getCellByColumnName('registro'))}">
+                                <h:outputText value="#{relationship.target.getCellByColumnName('registro')}"/>
+                                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                            </p:commandLink>
 
                             <p:outputLabel rendered="#{not relationship.isValid() }">
                                 <i class="fa fa-ban" title="No vigente" style="color: red" />
@@ -197,7 +199,7 @@
 
     </p:fieldset>
 
-    <p:overlayPanel widgetVar="ispDetail" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
+    <p:dialog widgetVar="ispDetail" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
         <p:outputPanel id="descriptionSelected" styleClass="ispDetail">
             <div class="ui-fluid ui-g">
             <p:repeat value="#{ispbean.ispRecord.cells}" var="cell">
@@ -210,7 +212,7 @@
             </p:repeat>
             </div>
         </p:outputPanel>
-    </p:overlayPanel>
+    </p:dialog>
 
 </composite:implementation>
 </html>

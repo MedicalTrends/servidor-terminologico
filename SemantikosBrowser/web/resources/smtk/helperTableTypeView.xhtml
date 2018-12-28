@@ -36,7 +36,7 @@
 
                     </div>
 
-                    <div class="ui-g-12 ui-md-8 ui-lg-4">
+                    <div class="ui-g-12 ui-md-8 ui-lg-#{cc.attrs.relationshipDefinition.ATC?'10':'4'}">
 
                         <h:outputText readonly="true" id="findHTRecords7" value="#{relationship.target.description}" styleClass="value" rendered="#{not cc.attrs.relationshipDefinition.ATC}" />
                         <h:outputText readonly="true" id="findHTRecords2_" value="#{relationship.target.cells[1].stringValue}" styleClass="value" rendered="#{cc.attrs.relationshipDefinition.ATC}" />
@@ -85,9 +85,13 @@
 
                         <li>
 
-                            <p:outputLabel value="#{concept.formatSMTKRelationship(relationship)}" styleClass="value"/>
+                            <p:outputLabel value="#{concept.formatSMTKRelationship(relationship)}" styleClass="value" rendered="#{not cc.attrs.relationshipDefinition.ISP}"/>
 
-                            <p:outputLabel outcome="/views/concept" value="#{concept.formatSMTKRelationshipAttributes(relationship)}" styleClass="value"/>
+                            <p:commandLink update="@(.ispDetail)" oncomplete="PF('ispDetail').show('#{component.clientId}')" process="@this"
+                                           rendered="#{cc.attrs.relationshipDefinition.ISP}" actionListener="#{concept.fetchData(relationship.target.getCellByColumnName('registro'))}">
+                                <h:outputText value="#{relationship.target.getCellByColumnName('registro')}"/>
+                                <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
+                            </p:commandLink>
 
                         </li>
 
@@ -177,6 +181,21 @@
         </p:dataTable>
 
     </p:fieldset>
+
+    <p:dialog widgetVar="ispDetail" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
+        <p:outputPanel id="descriptionSelected" styleClass="ispDetail">
+            <div class="ui-fluid ui-g">
+                <p:repeat value="#{concept.ispRecord.cells}" var="cell">
+                    <div class="ui-g-12 ui-md-4 ui-lg-4">
+                        <p:outputLabel styleClass="label" value="#{cell.column.description}" />
+                    </div>
+                    <div class="ui-g-12 ui-md-8 ui-lg-8">
+                        <p:outputLabel value="#{cell}" />
+                    </div>
+                </p:repeat>
+            </div>
+        </p:outputPanel>
+    </p:dialog>
 
 </composite:implementation>
 </html>

@@ -103,7 +103,7 @@ public class DescriptionsBrowserBean implements Serializable {
     /**
      * Este método es el responsable de ejecutar la consulta
      */
-    void executeQuery() {
+    public void executeQuery() {
 
         /**
          * Si el objeto de consulta no está inicializado, inicializarlo

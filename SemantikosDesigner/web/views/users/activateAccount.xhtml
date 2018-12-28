@@ -49,19 +49,19 @@
 
         <h:form id="loginform" rendered="#{not accountActivation.accountActive}" style="margin-bottom: 40px" onkeypress="return event.keyCode != 13">
             <p:growl id="growl" showDetail="true" showSummary="true"/>
-            <p:fieldset legend="Paso 1: Cambio de contraseña">
+            <p:fieldset legend="Cambio de contraseña">
 
-                <i style="font-size: small">Actualice su contraseña a una que usted pueda recordar fácilmente</i>
+                <i style="font-size: small; line-height: 16px">Actualice su contraseña a una que usted pueda recordar fácilmente</i>
                 <br/>
 
-                <div class="ui-fluid">
+                <div class="ui-fluid" style="padding-top: 1em">
 
                     <div class="ui-g">
 
                         <div class="ui-g-12 ui-md-12 ui-lg-12">
                             <h:panelGroup styleClass="md-inputfield">
                                 <p:password id="default-password" value="#{accountActivation.password}" feedback="true" inline="true"
-                                            promptLabel="Ingrese su contraseña actual" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
+                                            promptLabel="Contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
                                             redisplay="true" autocomplete="off"
                                             styleClass="#{accountActivation.passwordError}">
                                 </p:password>
@@ -72,7 +72,7 @@
                         <div class="ui-g-12 ui-md-12 ui-lg-12">
                             <h:panelGroup styleClass="md-inputfield">
                                 <p:password id="new-password" value="#{accountActivation.newPassword1}" feedback="true" inline="true"
-                                            promptLabel="Ingrese su nueva contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
+                                            promptLabel="Contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
                                             redisplay="true" autocomplete="off"
                                             styleClass="#{accountActivation.newPassword1Error}">
                                 </p:password>
@@ -83,7 +83,7 @@
                         <div class="ui-g-12 ui-md-12 ui-lg-12">
                             <h:panelGroup styleClass="md-inputfield">
                                 <p:password id="new-password2" value="#{accountActivation.newPassword2}" feedback="true" inline="true"
-                                            promptLabel="Confirme su nueva contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
+                                            promptLabel="Contraseña" weakLabel="Poco segura" goodLabel="Aceptable" strongLabel="Segura"
                                             redisplay="true" autocomplete="off"
                                             styleClass="#{accountActivation.newPassword2Error}">
                                 </p:password>
@@ -97,7 +97,7 @@
 
                         <div class="ui-g-12 ui-md-12 ui-lg-12">
                             <p:commandButton actionListener="#{accountActivation.checkPassword}"
-                                             style="width: auto;float: right"
+                                             style="width: auto;float: right; padding-bottom: 0px"
                                              value="Enviar" process="loginform"
                                              update="growl, loginform, @(.headerPanel)">
                             </p:commandButton>
@@ -112,13 +112,11 @@
             <br />
 
             <p:outputPanel rendered="#{accountActivation.passwordValid}">
-                <p:fieldset legend="Paso 2: Preguntas de seguridad" styleClass="questions">
+                <p:fieldset legend="Preguntas de seguridad" styleClass="questions">
 
-                    <i style="font-size: small">Si usted olvida su contraseña, puede responder 3 preguntas de seguridad para recuperarla</i>
+                    <i style="font-size: small; line-height: 16px">Si usted olvida su contraseña, puede responder 3 preguntas de seguridad para recuperarla</i>
 
-                    <br/>
-
-                    <div class="ui-fluid">
+                    <div class="ui-fluid" style="padding-top: 1em">
 
                         <div class="ui-g">
                             <p:repeat value="#{accountActivation.questionList}" var="question">
@@ -149,7 +147,7 @@
                                                     <p:commandLink process="@this"
                                                                    update="@(.questions)"
                                                                    action="#{accountActivation.user.answers.remove(answer)}">
-                                                        <i class="fa fa-close fa-lg" />
+                                                        <i class="fa fa-close fa-lg" style="line-height: 1em" />
                                                     </p:commandLink>
                                                 </p:outputPanel>
                                             </p:repeat>
@@ -162,7 +160,7 @@
                         <div class="ui-g">
                             <div class="ui-g-12 ui-md-12 ui-lg-12">
                                 <p:commandButton actionListener="#{accountActivation.activate}"
-                                                 style="width: auto; float: right"
+                                                 style="width: auto; float: right; padding-bottom: 0px"
                                                  value="Enviar" process="loginform"
                                                  update="growl, account-activation">
                                 </p:commandButton>

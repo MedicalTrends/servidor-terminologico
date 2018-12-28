@@ -2,10 +2,7 @@ package cl.minsal.semantikos.browser;
 
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.components.GuestPreferences;
-import cl.minsal.semantikos.kernel.components.ConceptManager;
-import cl.minsal.semantikos.kernel.components.CrossmapsManager;
-import cl.minsal.semantikos.kernel.components.RefSetManager;
-import cl.minsal.semantikos.kernel.components.RelationshipManager;
+import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
@@ -13,9 +10,11 @@ import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
+import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.*;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +23,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
@@ -48,6 +49,9 @@ public class ConceptBean implements Serializable {
     RelationshipManager relationshipManager = (RelationshipManager) ServiceLocator.getInstance().getService(RelationshipManager.class);
 
     //@EJB
+    HelperTablesManager helperTablesManager = (HelperTablesManager) ServiceLocator.getInstance().getService(HelperTablesManager.class);
+
+    //@EJB
     RefSetManager refSetManager = (RefSetManager) ServiceLocator.getInstance().getService(RefSetManager.class);
 
     //@EJB
@@ -56,6 +60,8 @@ public class ConceptBean implements Serializable {
     ConceptSMTK selectedConcept;
 
     String conceptID;
+
+    HelperTableRow ispRecord = null;
 
     List<IndirectCrossmap> indirectCrossmaps = new ArrayList<>();
 
@@ -311,6 +317,14 @@ public class ConceptBean implements Serializable {
         this.browserBean = browserBean;
     }
 
+    public HelperTableRow getIspRecord() {
+        return ispRecord;
+    }
+
+    public void setIspRecord(HelperTableRow ispRecord) {
+        this.ispRecord = ispRecord;
+    }
+
     public String formatSMTKRelationship(Relationship relationship) {
 
         String term = "";
@@ -388,6 +402,33 @@ public class ConceptBean implements Serializable {
 
         return term;
 
+    }
+
+    public void fetchData(String registro){
+
+        RequestContext context = RequestContext.getCurrentInstance();
+        FacesContext fContext = FacesContext.getCurrentInstance();
+
+        RelationshipDefinition relationshipDefinition = (RelationshipDefinition) UIComponent.getCurrentComponent(fContext).getAttributes().get("relationshipDefinition");
+
+        HelperTable ispHelperTable = (HelperTable) relationshipDefinition.getTargetDefinition();
+
+        String[] tokens = registro.split("/");
+
+        String regnum = tokens[0];
+        int ano = Integer.parseInt(tokens[1]);
+
+        ispRecord = null;
+
+        /**
+         * Primero se busca un registro isp local
+         */
+        for (HelperTableRow helperTableRecord : helperTablesManager.searchRows(ispHelperTable,regnum+"/"+ano)) {
+            ispRecord = helperTableRecord;
+            break;
+        }
+
+        //context.execute("PF('ispDetail').show();");
     }
 
 }
