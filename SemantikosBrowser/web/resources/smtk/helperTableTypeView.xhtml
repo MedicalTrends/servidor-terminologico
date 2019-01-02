@@ -87,7 +87,7 @@
 
                             <p:outputLabel value="#{concept.formatSMTKRelationship(relationship)}" styleClass="value" rendered="#{not cc.attrs.relationshipDefinition.ISP}"/>
 
-                            <p:commandLink update="@(.ispDetail)" oncomplete="PF('ispDetail').show('#{component.clientId}')" process="@this"
+                            <p:commandLink update="@(.isp-detail)" oncomplete="PF('isp-detail').show('#{component.clientId}')" process="@this"
                                            rendered="#{cc.attrs.relationshipDefinition.ISP}" actionListener="#{concept.fetchData(relationship.target.getCellByColumnName('registro'))}">
                                 <h:outputText value="#{relationship.target.getCellByColumnName('registro')}"/>
                                 <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
@@ -182,8 +182,8 @@
 
     </p:fieldset>
 
-    <p:dialog widgetVar="ispDetail" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
-        <p:outputPanel id="descriptionSelected" styleClass="ispDetail">
+    <p:dialog widgetVar="isp-detail" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
+        <p:outputPanel id="isp-detail" styleClass="isp-detail">
             <div class="ui-fluid ui-g">
                 <p:repeat value="#{concept.ispRecord.cells}" var="cell">
                     <div class="ui-g-12 ui-md-4 ui-lg-4">

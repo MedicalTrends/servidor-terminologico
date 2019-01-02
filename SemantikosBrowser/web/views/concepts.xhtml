@@ -114,30 +114,24 @@
 
                                 </div>
 
-                                <div class="ui-g-0 ui-md-6 ui-lg-8" style="padding-left: 0px; padding-right: 0px"></div>
-
-                                <div class="ui-g-12 ui-md-3 ui-lg-2">
-
-                                    <p:commandButton value="Exportar" icon="fa fa-file-excel-o" ajax="false">
-                                        <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
-                                    </p:commandButton>
-
-                                </div>
-
-                                <div class="ui-g-12 ui-md-3 ui-lg-2">
-
-                                    <p:commandButton value="Filtrar" onclick="listenOnClick();" icon="fa fa-filter">
-                                    </p:commandButton>
-
-                                </div>
-
-                                <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding-bottom: 0px">
+                                <div class="ui-g-8 ui-md-8 ui-lg-8" style="padding-bottom: 0px">
                                     <p:outputPanel styleClass="search">
                                         <p:outputLabel id="summary" style="font-size: small; color: #212121"
                                                        value="Página #{browserBean.page} de #{browserBean.results} conceptos"/>
                                         <p:remoteCommand name="onload" update="summary"
                                                          autoRun="true" />
                                     </p:outputPanel>
+                                </div>
+
+                                <div class="ui-g-4 ui-md-4 ui-lg-4">
+
+                                    <p:commandButton icon="fa fa-file-excel-o" ajax="false" style="float: right">
+                                        <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
+                                    </p:commandButton>
+
+                                    <p:commandButton onclick="listenOnClick();" icon="fa fa-filter" style="float: right">
+                                    </p:commandButton>
+
                                 </div>
 
                                 <!--/p:panelGrid-->

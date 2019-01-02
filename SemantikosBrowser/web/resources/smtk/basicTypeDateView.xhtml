@@ -12,7 +12,7 @@
 <composite:interface>
     <composite:attribute name="relationshipDefinition" type="cl.minsal.semantikos.model.relationships.RelationshipDefinition" />
     <composite:attribute name="targetDefinition" type="cl.minsal.semantikos.model.basictypes.BasicTypeDefinition" />
-    <composite:attribute name="concept" type="cl.minsal.semantikos.modelweb.ConceptSMTKWeb" />
+    <composite:attribute name="concept" type="cl.minsal.semantikos.model.ConceptSMTK" />
 </composite:interface>
 <composite:implementation>
 
@@ -20,7 +20,7 @@
     <!-- Multiplicidad 1 + Nueva relacion + Sin atributos -->
     <p:outputPanel
             id="basicTypeSimpleNew"
-            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
+            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
                          and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
             widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
 
@@ -61,13 +61,13 @@
 
     <p:panel
             id="basicTypeSimple"
-            rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
+            rendered="#{cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
                         and empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
             widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
 
-        <p:repeat  value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+        <p:repeat  value="#{cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}"
                    offset="0"
-                   size="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition).size()}"
+                   size="#{cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size()}"
                    step="1"
                    var="relationship"
                    varStatus="var">
@@ -104,7 +104,7 @@
 
     <p:panel
             id="basicTypeSimpleNewWithAttributes"
-            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
+            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
                           and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
             widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
 
@@ -145,12 +145,12 @@
 
     <p:panel
             id="basicTypeSimpleWithAttributes"
-            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)
+            rendered="#{ cc.attrs.relationshipDefinition.multiplicity.simple and not empty cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)
                           and not empty cc.attrs.relationshipDefinition.relationshipAttributeDefinitions }"
             widgetVar="panelBasicTypeSimple#{cc.attrs.relationshipDefinition.id}">
-        <p:repeat  value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
+        <p:repeat  value="#{cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}"
                    offset="0"
-                   size="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition).size()}"
+                   size="#{cc.attrs.concept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition).size()}"
                    step="1"
                    var="relationship"
                    varStatus="var">
@@ -170,7 +170,7 @@
                             <p:inputText readonly="true" id="basicTypeValue2" value="#{relationship.target}" />
                             <p:commandLink process="@this"
                                            update="@(.panel_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"
-                                           action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
+                                           action="#{concept.removeRelationship(cc.attrs.relationshipDefinition,relationship)}">
                                 <i class="fa fa-close fa-lg"  />
                             </p:commandLink>
                         </p:outputPanel>

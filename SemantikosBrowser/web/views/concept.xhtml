@@ -100,38 +100,42 @@
 
                         <p:separator styleClass="heading-separator"/>
 
-                        <p:repeat style="width: 100%;"
+                        <h:dataTable style="width: 100%;"
                                      value="#{categoryBean.getNotEmptySMTKDefinitionsByCategory(concept.selectedConcept)}"
                                      var="relationshipDefinition">
 
-                                <p:outputPanel
-                                        id="panelRelationshipDefiniton2"
-                                        styleClass="panel_#{relationshipDefinition.id}"
-                                        rendered="#{not relationshipDefinition.targetDefinition.crossMapType}">
+                                <h:column>
 
-                                    <p:growl id="growlAttributes2" showDetail="true" showSummary="true"/>
+                                    <p:outputPanel
+                                            id="panelRelationshipDefiniton2"
+                                            styleClass="panel_#{relationshipDefinition.id}"
+                                            rendered="#{not relationshipDefinition.targetDefinition.crossMapType}">
 
-                                    <smtk:smtkTypeView
-                                            rendered="#{relationshipDefinition.targetDefinition.SMTKType}"
-                                            targetDefinition="#{relationshipDefinition.targetDefinition}"
-                                            relationshipDefinition="#{relationshipDefinition}"
-                                            concept="#{concept.selectedConcept}"/>
+                                        <p:growl id="growlAttributes2" showDetail="true" showSummary="true"/>
 
-                                    <smtk:helperTableTypeView
-                                            rendered="#{relationshipDefinition.targetDefinition.helperTable}"
-                                            relationshipDefinition="#{relationshipDefinition}"
-                                            targetDefinition="#{relationshipDefinition.targetDefinition}"
-                                            concept="#{concept.selectedConcept}"/>
+                                        <smtk:smtkTypeView
+                                                rendered="#{relationshipDefinition.targetDefinition.SMTKType}"
+                                                targetDefinition="#{relationshipDefinition.targetDefinition}"
+                                                relationshipDefinition="#{relationshipDefinition}"
+                                                concept="#{concept.selectedConcept}"/>
 
-                                    <smtk:basicTypeView
-                                            targetDefinition="#{relationshipDefinition.targetDefinition}"
-                                            relationshipDefinition="#{relationshipDefinition}"
-                                            concept="#{concept.selectedConcept}"
-                                            rendered="#{relationshipDefinition.targetDefinition.basicType}"/>
+                                        <smtk:helperTableTypeView
+                                                rendered="#{relationshipDefinition.targetDefinition.helperTable}"
+                                                relationshipDefinition="#{relationshipDefinition}"
+                                                targetDefinition="#{relationshipDefinition.targetDefinition}"
+                                                concept="#{concept.selectedConcept}"/>
+
+                                        <smtk:basicTypeView
+                                                targetDefinition="#{relationshipDefinition.targetDefinition}"
+                                                relationshipDefinition="#{relationshipDefinition}"
+                                                concept="#{concept.selectedConcept}"
+                                                rendered="#{relationshipDefinition.targetDefinition.basicType}"/>
 
                                 </p:outputPanel>
 
-                        </p:repeat>
+                                </h:column>
+
+                        </h:dataTable>
 
                     </p:outputPanel>
 
