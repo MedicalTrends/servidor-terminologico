@@ -48,8 +48,8 @@
                                                   noSelectionOption="true"/>
                                     <f:selectItems value="#{refsetsBean.authenticationBean.loggedUser.institutions}"
                                                    var="institution" itemValue="#{institution}"
-                                                   itemLabel="#{institution.name}"></f:selectItems>
-                                    <p:column><h:outputText value="#{i.name}"></h:outputText></p:column>
+                                                   itemLabel="#{institution.name}"/>
+                                    <p:column><h:outputText value="#{i.name}"/></p:column>
                                 </p:selectOneMenu>
                             </div>
                         </div>
@@ -169,48 +169,58 @@
                 <p:dialog widgetVar="viewRefset"  showEffect="fade"
                           hideEffect="fade" resizable="true" style="margin:40px;"
                           header="Consultar RefSet">
-                    <p:outputPanel id="viewRefsetPanel" styleClass="viewRefSet" style="text-align:center;">
 
-                        <div class="Container100">
-                            <div class="ContainerIndent">
-                                <div class="Card ShadowEffect ui-fluid">
-                                    <div class="Container33 Responsive50">
-                                        <div class="ContainerIndent">
-                                            <h3>RefSet: #{refsetsBean.refSetSelect.name}</h3>
-                                        </div>
-                                    </div>
-                                    <div class="Container33 Responsive50">
-                                        <div class="ContainerIndent">
-                                            <h3>Total Conceptos:#{refsetsBean.refSetSelect.getCountConcepts()}</h3>
-                                        </div>
-                                    </div>
-                                </div>
+                    <p:outputPanel id="viewRefsetPanel" styleClass="viewRefSet">
+
+                        <div class="ui-fluid ui-g">
+
+                            <div class="ui-g-12 ui-md-4 ui-lg-2">
+                                <p:outputLabel styleClass="label" value="RefSet:"/>
                             </div>
-                        </div>
-                        <div class="Container">
-                            <div class="ContainerIndent">
-                                <div class="Card ShadowEffect ui-fluid">
+                            <div class="ui-g-12 ui-md-8 ui-lg-4">
+                                <p:outputLabel styleClass="value" value="#{refsetsBean.refSetSelect.name}"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-4 ui-lg-2">
+                                <p:outputLabel styleClass="label" value="Establecimiento:"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-8 ui-lg-4">
+                                <p:outputLabel styleClass="value" value="#{refsetsBean.refSetSelect.institution.name}"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-4 ui-lg-2">
+                                <p:outputLabel styleClass="label" value="Vigencia:"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-8 ui-lg-4">
+                                <p:outputLabel styleClass="value" value="#{refsetsBean.refSetSelect.valid?'Vigente':'No vigente'}"/>
+                            </div>
+                            <div class="ui-g-9 ui-md-9 ui-lg-9">
+                                <p:outputLabel value="Total Conceptos: #{refsetsBean.refSetSelect.getCountConcepts()}"
+                                               style="font-size: small"/>
+                            </div>
+                            <div class="ui-g-3 ui-md-3 ui-lg-3">
+                                <p:commandButton ajax="false" icon="fa fa-file-excel-o" style="float: right">
+                                    <p:dataExporter type="xls" target="conceptos" fileName="#{refsetsBean.refSetSelect.name}" />
+                                </p:commandButton>
+                            </div>
 
-                                    <h3>Conceptos:</h3>
-                                    <br/>
-                                    <p:dataTable value="#{refsetsBean.refSetSelect.concepts}" var="concepts" reflow="true"
-                                                 emptyMessage="El RefSet no contiene conceptos" style="width: 900px"
-                                                 scrollable="true" scrollHeight="150">
-                                        <p:column headerText="ConceptID">
-                                            <h:outputText value="#{concepts.conceptID}"/>
-                                        </p:column>
-                                        <p:column headerText="Termino Preferida">
-                                            <h:outputText value="#{concepts.descriptionFavorite.term}"/>
-                                        </p:column>
-                                        <p:column headerText="Categoría">
-                                            <h:outputText value="#{concepts.category.name}"/>
-                                        </p:column>
-                                        <p:column headerText="Fecha ingreso">
-                                            <h:outputText
-                                                    value="#{refsetsBean.conceptBindToRefsetHistory.get(concepts.id).getActionDateFormat()}"/>
-                                        </p:column>
-                                    </p:dataTable>
-                                </div>
+                            <div class="ui-g-12 ui-md-12 ui-lg-12">
+
+                                <p:dataTable id="conceptos" value="#{refsetsBean.refSetSelect.concepts}" var="concepts" reflow="true"
+                                             emptyMessage="El RefSet no contiene conceptos"
+                                             scrollable="true" scrollHeight="150">
+                                    <p:column headerText="ConceptID">
+                                        <h:outputText value="#{concepts.conceptID}"/>
+                                    </p:column>
+                                    <p:column headerText="Termino Preferida">
+                                        <h:outputText value="#{concepts.descriptionFavorite.term}"/>
+                                    </p:column>
+                                    <p:column headerText="Categoría">
+                                        <h:outputText value="#{concepts.category.name}"/>
+                                    </p:column>
+                                    <p:column headerText="Fecha ingreso">
+                                        <h:outputText value="#{refsetsBean.conceptBindToRefsetHistory.get(concepts.id).getActionDateFormat()}"/>
+                                    </p:column>
+                                </p:dataTable>
+
                             </div>
                         </div>
                     </p:outputPanel>
@@ -222,61 +232,96 @@
                           header="Editar RefSet"
                           hideEffect="fade" resizable="true" style="margin:40px;">
                     <p:outputPanel id="editRefsetPanel" styleClass="editRefset">
-                        <div class="Container100">
-                            <div class="ContainerIndent">
-                                <div class="Card ShadowEffect ui-fluid">
-                                    <div class="Container33 Responsive">
-                                        <div class="ContainerIndent">
-                                            <h3>RefSet: #{refsetsBean.refSetEdit.name}</h3>
-                                        </div>
-                                    </div>
-                                    <div class="Container33 Responsive">
-                                        <div class="ContainerIndent">
-                                            <h3>Total Conceptos:#{refsetsBean.refSetEdit.getCountConcepts()}</h3>
-                                        </div>
-                                    </div>
-                                    <div class="Container33 Responsive">
-                                        <div class="ContainerIndent">
-                                            <p:commandButton value="Agregar Conceptos"
-                                                             oncomplete="PF('selectConcept').show()"
-                                                             update="@(.selectConcept)"
-                                                             disabled="#{not refsetsBean.refSetEdit.valid}">
+                        <div class="ui-fluid">
+                            <div class="ui-g">
+                                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                                    <p:outputLabel styleClass="label" value="RefSet:"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-8 ui-lg-4">
+                                    <p:outputLabel styleClass="value" value="#{refsetsBean.refSetEdit.name}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                                    <p:outputLabel styleClass="label" value="Establecimiento:"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-8 ui-lg-4">
+                                    <p:outputLabel styleClass="value" value="#{refsetsBean.refSetEdit.institution.name}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                                    <p:outputLabel styleClass="label" value="Vigencia:"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-8 ui-lg-4">
+                                    <p:outputLabel styleClass="value" value="#{refsetsBean.refSetEdit.valid?'Vigente':'No vigente'}"/>
+                                </div>
+                                <div class="ui-g-9 ui-md-9 ui-lg-9">
+                                    <p:outputLabel value="Total Conceptos: #{refsetsBean.refSetEdit.getCountConcepts()}"
+                                    style="font-size: small"/>
+                                </div>
+                                <div class="ui-g-3 ui-md-3 ui-lg-3">
+                                    <p:commandButton icon="fa fa-plus" style="float: right;"
+                                                     oncomplete="PF('selectConcept').show()"
+                                                     update="@(.selectConcept)"
+                                                     rendered="#{refsetsBean.refSetEdit.valid}">
 
-                                                <f:setPropertyActionListener value=""
-                                                                             target="#{findConceptBean.pattern}"/>
-                                                <f:setPropertyActionListener value=""
-                                                                             target="#{findConceptBean.categorySelected}"/>
-                                                <f:setPropertyActionListener value=""
-                                                                             target="#{findConceptBean.selectedCategories}"/>
-                                                <f:setPropertyActionListener value=""
-                                                                             target="#{refsetsBean.conceptSMTKListSelected}"/>
-                                                <f:setPropertyActionListener value=""
-                                                                             target="#{refsetsBean.conceptSMTKListSelectedEdit}"/>
-                                                <f:setPropertyActionListener value=""
-                                                                             target="#{findConceptBean.findConcepts}"/>
-                                                <p:ajax/>
-                                            </p:commandButton>
-                                        </div>
-                                    </div>
+                                        <f:setPropertyActionListener value=""
+                                                                     target="#{findConceptBean.pattern}"/>
+                                        <f:setPropertyActionListener value=""
+                                                                     target="#{findConceptBean.categorySelected}"/>
+                                        <f:setPropertyActionListener value=""
+                                                                     target="#{findConceptBean.selectedCategories}"/>
+                                        <f:setPropertyActionListener value=""
+                                                                     target="#{refsetsBean.conceptSMTKListSelected}"/>
+                                        <f:setPropertyActionListener value=""
+                                                                     target="#{refsetsBean.conceptSMTKListSelectedEdit}"/>
+                                        <f:setPropertyActionListener value=""
+                                                                     target="#{findConceptBean.findConcepts}"/>
+                                        <p:ajax/>
+                                    </p:commandButton>
+                                    <p:commandButton rendered="#{not refsetsBean.refSetEdit.valid}"
+                                                     icon="fa fa-arrow-up" style="float: right"
+                                                     actionListener="#{refsetsBean.validRefset(refsetsBean.refSetEdit)}"
+                                                     update="formRefset">
+                                        <p:confirm header="Confirmar Acción" message="¿Desea validar este RefSet?"
+                                                   icon="ui-icon-alert"/>
+                                    </p:commandButton>
+                                    <p:commandButton ajax="false" icon="fa fa-file-excel-o" style="float: right">
+                                        <p:dataExporter type="xls" target="concepts" fileName="#{refsetsBean.refSetEdit.name}" />
+                                    </p:commandButton>
+                                </div>
+                                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                    <p:dataTable id="concepts" emptyMessage="No se han agregado conceptos al RefSets" reflow="true"
+                                                 value="#{refsetsBean.refSetEdit.concepts}" var="conceptSMTK" styleClass="conceptBindRefset">
+
+                                        <p:column headerText="ID">
+                                            <h:outputText value="#{conceptSMTK.conceptID}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Preferida">
+                                            <h:outputText value="#{conceptSMTK.descriptionFavorite.term}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Categoría">
+                                            <h:outputText value="#{conceptSMTK.category.name}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Acción" exportable="false">
+                                            <div style="text-align: center">
+                                                <p:commandButton icon="fa fa-trash"
+                                                                 title="Eliminar concepto del RefSets"
+                                                                 ajax="true"
+                                                                 process="@this"
+                                                                 actionListener="#{refsetsBean.removeConcept(refsetsBean.refSetEdit,conceptSMTK)}"
+                                                                 update="@(.conceptBindRefset)"
+                                                                 rendered="#{refsetsBean.refSetEdit.valid}">
+                                                    <p:confirm header="Confirmación"
+                                                               message="¿Está seguro de eliminar este concepto del RefSet?"/>
+                                                </p:commandButton>
+                                            </div>
+
+                                        </p:column>
+
+                                    </p:dataTable>
                                 </div>
                             </div>
-                        </div>
-                        <div class="Container">
-                        <div class="ContainerIndent">
-                            <div class="Container100 Responsive">
-                                <smtk:conceptRefset scroll="true" refset="#{refsetsBean.refSetEdit}"/>
-                            </div>
-                        </div>
-                        </div>
-                        <br/>
-                        <div style="text-align: right">
-                            <p:commandButton rendered="#{not refsetsBean.refSetEdit.valid}"
-                                             value="Pasar a vigente"
-                                             actionListener="#{refsetsBean.validRefset(refsetsBean.refSetEdit)}"
-                                             update="formRefset">
-                                <p:confirm header="Confirmar Acción" message="¿Desea validar este RefSet?"
-                                           icon="ui-icon-alert"/>
-                            </p:commandButton>
                         </div>
                     </p:outputPanel>
                 </p:dialog>

@@ -15,7 +15,7 @@
 
 <composite:implementation>
 
-    <p:panel id="otherDescriptionsPanel" styleClass="otherDescriptionsPanel" widgetVar="panel">
+    <p:outputPanel widgetVar="panel">
 
         <p:dataTable id="conceptLinkToRefset" emptyMessage="No se han agregado conceptos al RefSets" reflow="true"
                      value="#{cc.attrs.refset.concepts}" var="conceptSMTK" styleClass="conceptBindRefset">
@@ -50,7 +50,7 @@
 
         </p:dataTable>
 
-    </p:panel>
+    </p:outputPanel>
 
 </composite:implementation>
 </html>
