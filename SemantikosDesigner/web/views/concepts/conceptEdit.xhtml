@@ -241,10 +241,12 @@
 
                             <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding: 1px">
                                 <p:button outcome="/views/browser/generalBrowser.xhtml?idCategory=#{conceptBean.category.id}"
+                                          title="Volver"
                                           style="float: left" styleClass="loader-trigger"
                                           icon="fa fa-arrow-left"/>
 
                                 <p:button outcome="/views/concepts/conceptView"
+                                          title="Ver"
                                           style="float: right" rendered="#{conceptBean.concept.persistent}"
                                           icon="fa fa-eye">
                                     <f:param name="conceptID" value="#{conceptBean.concept.conceptID}" />
@@ -256,13 +258,13 @@
                                 <smtk:trasnferConcept conceptSMTK="#{conceptBean.concept}" rendered="#{conceptBean.concept.valid}"/>
 
                                 <p:commandButton actionListener="#{conceptBean.cancelConcept}" icon="fa fa-undo"
-                                                 type="submit" process="mainForm"
+                                                 type="submit" process="mainForm" title="Deshacer"
                                                  style="float: right" rendered="#{conceptBean.concept.valid}"
                                                  update="growl, mainForm">
                                     <p:confirm header="Confirmar Acción" message="¿Desea deshacer los cambios?" icon="ui-icon-alert"/>
                                 </p:commandButton>
 
-                                <p:commandButton icon="fa fa-trash"
+                                <p:commandButton icon="fa fa-trash" title="Dejar no válido"
                                                  onclick="PF('dlg-elimination-causals').show();"
                                                  update="@(.cause-concept)"
                                                  type="submit" process="@this"
@@ -271,14 +273,14 @@
                                 </p:commandButton>
 
                                 <p:commandButton actionListener="#{conceptBean.deleteConcept}" icon="fa fa-trash"
-                                                 type="submit" process="mainForm"
+                                                 type="submit" process="mainForm" title="Eliminar"
                                                  style="float: right" rendered="#{not conceptBean.concept.modeled and conceptBean.concept.persistent}"
                                                  update="growl">
                                     <p:confirm header="Confirmar Acción" message="¿Desea eliminar este concepto?" icon="ui-icon-alert"/>
                                 </p:commandButton>
 
                                 <p:commandButton actionListener="#{conceptBean.saveConcept}" icon="fa fa-check"
-                                                 style="float: right" rendered="#{conceptBean.concept.valid}"
+                                                 style="float: right" rendered="#{conceptBean.concept.valid}" title="Guardar"
                                                  update="growl, mainForm, @(.breadUpdate)">
                                     <p:confirm header="Confirmar Acción" message="¿Desea guardar los cambios?" icon="ui-icon-alert"/>
                                 </p:commandButton>

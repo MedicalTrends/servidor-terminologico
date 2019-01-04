@@ -15,7 +15,7 @@
 
 <composite:implementation>
 
-    <p:commandButton type="submit" process="mainForm"
+    <p:commandButton type="submit" process="mainForm" title="Trasladar"
                      rendered="#{conceptBean.concept.persistent and conceptBean.concept.modeled and profilePermissionsBeans.modeler}"
                      style="float: right"
                      update="mainForm" oncomplete="PF('dialogTC').show()" icon="fa fa-exchange" styleClass="ui-priority-primary" >

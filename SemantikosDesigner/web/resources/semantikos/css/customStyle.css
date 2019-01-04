@@ -114,7 +114,7 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 
 .search {
     position: relative;
-    font-size: 16px;
+    /*font-size: 16px;*/
 }
 
 .search input { text-indent: 32px;}

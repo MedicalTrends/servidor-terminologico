@@ -20,7 +20,11 @@
 
 <composite:implementation>
 
-    <div class="ui-g-12 ui-md-6 ui-lg-2">
+    <div class="ui-g-12 ui-md-4 ui-lg-2">
+        <p:outputLabel value="#{cc.attrs.relationshipAttributeDefinition.name}"/>
+    </div>
+
+    <div class="ui-g-12 ui-md-8 ui-lg-4">
 
         <div class="#{cc.attrs.relationshipDefinition.multiplicity.simple?'ContainerIndentRight':'ContainerIndent'}">
 

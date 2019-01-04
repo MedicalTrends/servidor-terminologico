@@ -26,6 +26,8 @@
                         <p:menuitem value="#{generalBrowserBean.category.name}" url="#" />
                     </p:breadCrumb>
 
+                    <p:growl id="growl2" showDetail="true" showSummary="true"/>
+
                     <div class="card card-w-title">
                         <h1 class="first-heading" style="font-weight: 400; color: #212121;">#{generalBrowserBean.category.name}</h1>
                         <p:separator styleClass="heading-separator-alt"/>
@@ -48,6 +50,7 @@
 
                             <div class="ui-g-12 ui-md-6 ui-lg-6">
                                 <p:commandButton icon="fa fa-plus" style="float: right;" title="Crear"
+                                                 update="growl2" oncomplete="unloader();"
                                                  type="submit" process="browserForm" styleClass="loader-trigger"
                                                  actionListener="#{generalBrowserBean.createConcept}"
                                                  rendered="#{profilePermissionsBeans.permissionsBy(generalBrowserBean.category)}">

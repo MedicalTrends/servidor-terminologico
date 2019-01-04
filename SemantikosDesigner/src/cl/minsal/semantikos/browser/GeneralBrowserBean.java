@@ -436,12 +436,22 @@ public class GeneralBrowserBean implements Serializable {
     public void createConcept() throws IOException {
         // Si el concepto está persistido, invalidarlo
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
+        FacesContext context = FacesContext.getCurrentInstance();
         String query = "";
         if(generalQuery.getQuery() != null && concepts.getRowCount() == 0) {
             query = generalQuery.getQuery();
         }
         if(query == null || query.isEmpty()) {
             query = "*";
+        }
+
+        ConceptSMTK aConcept = categoryManager.categoryContains(category, query);
+
+        String msg = "Ya existe el concepto: '" + aConcept + "' en la categoría '" + category;
+
+        if (aConcept != null) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msg ));
+            return;
         }
 
         eContext.redirect(eContext.getRequestContextPath() + Constants.VIEWS_FOLDER + "/concepts/new/" + idCategory + "/0/" + query);

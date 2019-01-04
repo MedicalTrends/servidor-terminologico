@@ -399,10 +399,10 @@
 
                     <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding: 0px">
                         <p:button outcome="/views/browser/generalBrowser.xhtml?idCategory=#{conceptView.selectedConcept.category.id}"
-                                  style="float: left" styleClass="loader-trigger"
+                                  style="float: left" styleClass="loader-trigger" title="Volver"
                                   icon="fa fa-arrow-left"/>
                         <p:button outcome="/views/concepts/conceptEdit"
-                                  style="float: right" styleClass="loader-trigger"
+                                  style="float: right" styleClass="loader-trigger" title="Editar"
                                   icon="fa fa-pencil">
                             <f:param name="idConcept" value="#{conceptView.selectedConcept.id}" />
                         </p:button>
