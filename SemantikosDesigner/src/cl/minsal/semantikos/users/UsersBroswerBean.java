@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -26,7 +27,7 @@ import static cl.minsal.semantikos.model.audit.AuditActionType.*;
  */
 
 @ManagedBean(name = "usersBrowser")
-@ViewScoped
+@SessionScoped
 public class UsersBroswerBean {
 
     static private final Logger logger = LoggerFactory.getLogger(UsersBroswerBean.class);

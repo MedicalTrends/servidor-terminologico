@@ -25,6 +25,7 @@ import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
@@ -43,7 +44,7 @@ import static java.util.Collections.EMPTY_LIST;
  * @author Gustavo Punucura on 20-09-16.
  */
 @ManagedBean(name = "refsetsBean")
-@ViewScoped
+@SessionScoped
 public class RefSetsBean implements Serializable {
 
     static private final Logger logger = LoggerFactory.getLogger(InstitutionsBean.class);

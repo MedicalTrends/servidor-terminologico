@@ -43,6 +43,7 @@ import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
@@ -62,7 +63,7 @@ import static org.primefaces.util.Constants.EMPTY_STRING;
  */
 
 @ManagedBean(name = "conceptBean",eager = true)
-@ViewScoped
+@SessionScoped
 public class ConceptBean implements Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(ConceptBean.class);

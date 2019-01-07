@@ -12,6 +12,7 @@ import org.primefaces.context.RequestContext;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -31,7 +32,7 @@ import static org.apache.commons.lang.ArrayUtils.EMPTY_LONG_OBJECT_ARRAY;
  * Created by des01c7 on 23-08-16.
  */
 @ManagedBean(name = "findConceptBean")
-@ViewScoped
+@SessionScoped
 public class FindConcept implements Serializable{
 
     private List<ConceptSMTK> findConcepts;

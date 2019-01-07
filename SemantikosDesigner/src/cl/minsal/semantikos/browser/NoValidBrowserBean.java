@@ -20,6 +20,7 @@ import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
@@ -33,7 +34,7 @@ import java.util.Map;
  */
 
 @ManagedBean(name = "noValidBrowserBean")
-@ViewScoped
+@SessionScoped
 public class NoValidBrowserBean implements Serializable {
 
     static final Logger logger = LoggerFactory.getLogger(NoValidBrowserBean.class);

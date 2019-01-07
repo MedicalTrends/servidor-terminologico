@@ -7,6 +7,7 @@ import cl.minsal.semantikos.model.crossmaps.*;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -21,7 +22,7 @@ import static java.util.Collections.emptyList;
  */
 
 @ManagedBean(name = "crossmapBean")
-@ViewScoped
+@SessionScoped
 public class CrossmapBean implements Serializable {
 
     private String pattern;

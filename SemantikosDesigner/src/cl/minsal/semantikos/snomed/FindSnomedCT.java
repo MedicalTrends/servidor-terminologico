@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
  * @author Andrés Farías on 10/26/16.
  */
 @ManagedBean(name = "findSnomedCTBean")
-@ViewScoped
+@SessionScoped
 public class FindSnomedCT {
 
     private static final Logger logger = LoggerFactory.getLogger(FindSnomedCT.class);

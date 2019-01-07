@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +32,7 @@ import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_U
  * Created by des01c7 on 02-12-16.
  */
 @ManagedBean(name = "relationshipBean")
-@ViewScoped
+@SessionScoped
 public class RelationshipBeans {
 
     private static final Logger logger = LoggerFactory.getLogger(RelationshipBeans.class);

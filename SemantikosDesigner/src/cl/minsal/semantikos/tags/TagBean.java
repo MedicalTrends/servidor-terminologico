@@ -12,6 +12,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
@@ -23,7 +24,7 @@ import java.util.List;
  */
 
 @ManagedBean(name = "tagBean")
-@ViewScoped
+@SessionScoped
 public class TagBean implements Serializable{
 
 

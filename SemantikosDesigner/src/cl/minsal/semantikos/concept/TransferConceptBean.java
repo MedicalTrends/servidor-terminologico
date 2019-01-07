@@ -15,6 +15,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -25,7 +26,7 @@ import java.io.IOException;
  */
 
 @ManagedBean(name = "transferConceptBean")
-@ViewScoped
+@SessionScoped
 public class TransferConceptBean {
 
     private static final Logger logger = LoggerFactory.getLogger(TransferConceptBean.class);

@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.List;
  * Created by des01c7 on 31-08-16.
  */
 @ManagedBean(name="beanCategory")
-@ViewScoped
+@SessionScoped
 public class beanCategory {
 
     private Category category;

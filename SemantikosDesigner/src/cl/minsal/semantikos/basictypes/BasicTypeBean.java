@@ -5,6 +5,7 @@ import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -17,7 +18,7 @@ import java.util.List;
  * Created by root on 22-07-16.
  */
 @ManagedBean(name = "basicTypeBean")
-@ViewScoped
+@SessionScoped
 public class BasicTypeBean implements Serializable {
 
     private String pattern;

@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -35,7 +36,7 @@ import java.util.List;
  */
 
 @ManagedBean(name = "conceptView")
-@ViewScoped
+@SessionScoped
 public class ConceptViewBean implements Serializable {
 
     static private final Logger logger = LoggerFactory.getLogger(ConceptBean.class);
@@ -86,7 +87,7 @@ public class ConceptViewBean implements Serializable {
             this.conceptID = conceptID;
             selectedConcept = conceptManager.getConceptByCONCEPT_ID(conceptID);
             selectedConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(selectedConcept));
-            auditAction = auditManager.getConceptAuditActions(selectedConcept, true);
+            auditAction = auditManager.getConceptAuditActions(selectedConcept);
             conceptBeanExport.setConceptSMTK(selectedConcept);
             conceptBeanExport.loadConcept();
         }

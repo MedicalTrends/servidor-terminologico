@@ -13,13 +13,14 @@ import cl.minsal.semantikos.modelweb.ConceptSMTKWeb;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 
 /**
  * Created by des01c7 on 02-12-16.
  */
 @ManagedBean( name = "snomedBean")
-@ViewScoped
+@SessionScoped
 public class SnomedBeans {
 
     private static final long ID_RELATIONSHIP_DEFINITION_SNOMED_CT = 101;

@@ -17,6 +17,7 @@ import org.primefaces.context.RequestContext;
 import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -27,7 +28,7 @@ import java.util.List;
  * Created by root on 02-09-16.
  */
 @ManagedBean(name = "validatorBean")
-@ViewScoped
+@SessionScoped
 public class ValidatorBean {
 
     //@EJB

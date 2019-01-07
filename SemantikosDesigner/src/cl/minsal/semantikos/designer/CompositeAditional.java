@@ -13,6 +13,7 @@ import cl.minsal.semantikos.modelweb.RelationshipWeb;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.Map;
  * Created by des01c7 on 14-10-16.
  */
 @ManagedBean(name = "compositeAditionalBean")
-@ViewScoped
+@SessionScoped
 public class CompositeAditional {
     //TODO: refactorizar
     //@EJB

@@ -18,6 +18,7 @@ import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -29,7 +30,7 @@ import java.util.*;
  * Created by des01c7 on 23-08-16.
  */
 @ManagedBean(name = "conceptExtractBean")
-@ViewScoped
+@SessionScoped
 public class ConceptExtractBean implements Serializable {
 
     private Map<Long, List<ConceptSMTK>> concepts = new HashMap<>();

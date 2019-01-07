@@ -19,6 +19,7 @@ import org.primefaces.context.RequestContext;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
@@ -36,7 +37,7 @@ import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_DESCRIPTI
  */
 
 @ManagedBean(name = "descriptionBeans")
-@ViewScoped
+@SessionScoped
 public class DescriptionBeans {
 
     @ManagedProperty(value = "#{conceptBean}")

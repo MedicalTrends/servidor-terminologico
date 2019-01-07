@@ -281,6 +281,11 @@ public class ConceptManagerImpl implements ConceptManager {
 
         logger.info("Se dejará no vigente el concepto: " + conceptSMTK);
 
+        /*Si no se han cargado las relaciones, cargarlas*/
+        if(!conceptSMTK.isRelationshipsLoaded()) {
+            conceptSMTK.setRelationships(relationshipManager.getRelationshipsBySourceConcept(conceptSMTK));
+        }
+
         /* Se validan las pre-condiciones para eliminar un concepto */
         conceptEditionBusinessRuleContainer.preconditionsConceptInvalidation(conceptSMTK, user);
 

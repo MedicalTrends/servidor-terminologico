@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -26,7 +27,7 @@ import static org.primefaces.util.Constants.EMPTY_STRING;
  * Created by root on 22-03-17.
  */
 @ManagedBean(name = "accountRecovery")
-@ViewScoped
+@SessionScoped
 public class AccountRecovery {
 
     private boolean valid;

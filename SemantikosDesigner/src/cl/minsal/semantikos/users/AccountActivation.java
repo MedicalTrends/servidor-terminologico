@@ -19,6 +19,7 @@ import javax.faces.bean.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -29,7 +30,7 @@ import java.util.List;
  * Created by root on 22-03-17.
  */
 @ManagedBean(name = "accountActivation")
-@ViewScoped
+@SessionScoped
 public class AccountActivation {
 
     //@ManagedProperty(value="#{param.key}")

@@ -1,6 +1,7 @@
 package cl.minsal.semantikos.concept;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 
 /**
@@ -8,7 +9,7 @@ import javax.faces.bean.ViewScoped;
  */
 
 @ManagedBean( name = "sensibilityBean")
-@ViewScoped
+@SessionScoped
 public class SensibilityDescriptionDefaultBean {
 
     private final static long FAMILIA_PRODUCTOS= 37;

@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -37,7 +38,7 @@ import java.util.List;
  */
 
 @ManagedBean(name = "concept")
-@ViewScoped
+@SessionScoped
 public class ConceptBean implements Serializable {
 
     static private final Logger logger = LoggerFactory.getLogger(ConceptBean.class);
@@ -264,6 +265,7 @@ public class ConceptBean implements Serializable {
     }
 
     public void updateMainMenu() {
+
         if(!browserBean.getCircularFifoQueue().contains(selectedConcept)) {
             browserBean.getCircularFifoQueue().add(selectedConcept);
         }

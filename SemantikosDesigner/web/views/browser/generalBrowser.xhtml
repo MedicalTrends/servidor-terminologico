@@ -70,6 +70,7 @@
                                                      autoRun="true" />
                                 </p:outputPanel>
                             </div>
+
                         </div>
                     </div>
 
@@ -119,7 +120,7 @@
                                                 </span>
                                                 <span class="overview-badge">
                                                     <p:button outcome="/views/concepts/conceptView" icon="fa fa-search fa-lg" title="Consultar" style="padding: 5px"
-                                                              styleClass="myCustomLinkStyle loader-trigger">
+                                                              styleClass="myCustomLinkStyle loader-trigger" rendered="true">
                                                         <f:param name="conceptID" value="#{concept.conceptID}" />
                                                     </p:button>
 
@@ -139,6 +140,14 @@
                                                                      rendered="#{not concept.modeled and profilePermissionsBeans.permissionsBy(generalBrowserBean.category)}"
                                                                      update="@(.browserTable), growl" title="Eliminar" style="padding: 5px">
                                                         <p:confirm header="Confirmar Acción" message="¿Desea eliminar este concepto?" icon="ui-icon-alert"/>
+                                                    </p:commandButton>
+
+                                                    <p:commandButton icon="fa fa-trash" title="Dejar no válido"
+                                                                     onclick="PF('dlg-elimination-causals').show();"
+                                                                     update="@(.browserTable),@(.cause-concept)"
+                                                                     type="submit" process="@this"
+                                                                     style="float: right" actionListener="#{generalBrowserBean.setSelectedConcept(concept)}"
+                                                                     rendered="#{concept.modeled and concept.valid}">
                                                     </p:commandButton>
                                                 </span>
 
@@ -254,6 +263,54 @@
 
                             </div>
                         </p:panel>
+                    </p:dialog>
+
+                    <p:dialog header="Causal de eliminación" widgetVar="dlg-elimination-causals" resizable="false">
+                        <p:outputPanel id="deletePanel" styleClass="ui-panelgrid-blank cause-concept">
+                            <div class="ui-fluid ui-g">
+                                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                    <p:selectOneMenu id="cause" value="#{generalBrowserBean.selectedCausal}" converter="omnifaces.SelectItemsConverter">
+                                        <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{generalBrowserBean.eliminationCausals}" var="causal"
+                                                       itemLabel="#{causal.name}" itemValue="#{causal}" />
+                                        <p:ajax event="itemSelect" update="@(.cause-concept)" process="@this" />
+                                    </p:selectOneMenu>
+                                </div>
+                                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                    <p:commandButton value="Aceptar" actionListener="#{generalBrowserBean.invalidateConcept()}"
+                                                     update="@(.cause-concept),growl2,@(.conceptRelated),@(.browserTable)" style="float: right; width: auto" onsuccess="PF('dlg-elimination-causals').hide();">
+                                        <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar este concepto?" icon="ui-icon-alert"/>
+                                    </p:commandButton>
+                                    <p:commandButton value="Cancelar" onclick="PF('dlg-elimination-causals').hide();" style="float: right; width: auto"
+                                                     actionListener="#{generalBrowserBean.setSelectedCausal(null)}"/>
+                                </div>
+                            </div>
+                        </p:outputPanel>
+                    </p:dialog>
+
+                    <p:dialog id="conceptRelated" header="Conceptos relacionados" widgetVar="conceptRelated"
+                              global="true"
+                              showEffect="fade" hideEffect="fade" >
+
+                        <p:outputPanel id="panelconceptRelated" styleClass="conceptRelated">
+
+                            <p:dataTable id="dataTableConceptMarketed" var="concept" value="#{generalBrowserBean.relatedConcepts}"
+                                         styleClass="conceptMarketed">
+
+                                <p:column headerText="Categoría">
+                                    <h:outputText value="#{concept.category.name}"/>
+                                </p:column>
+                                <p:column headerText=" Concepto">
+                                    <p:link outcome="/views/concepts/conceptView" value="#{concept.descriptionFavorite.term} - #{concept.conceptID}"
+                                            styleClass="loader-trigger">
+                                        <f:param name="conceptID" value="#{concept.conceptID}" />
+                                    </p:link>
+                                </p:column>
+
+                            </p:dataTable>
+
+                        </p:outputPanel>
+
                     </p:dialog>
 
                     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">

@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -22,7 +23,7 @@ import java.util.List;
  */
 
 @ManagedBean(name = "smtkBean")
-@ViewScoped
+@SessionScoped
 public class SMTKTypeBean implements Serializable {
 
     private String pattern;

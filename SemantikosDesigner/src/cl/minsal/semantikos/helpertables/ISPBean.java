@@ -20,6 +20,7 @@ import org.primefaces.context.RequestContext;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -33,7 +34,7 @@ import java.util.*;
  * Created by BluePrints Developer on 16-11-2016.
  */
 @ManagedBean(name="ispbean")
-@ViewScoped
+@SessionScoped
 public class ISPBean {
 
 

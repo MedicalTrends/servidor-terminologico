@@ -67,11 +67,11 @@
                                                     <h:outputText value="#{description.term}" style="font-weight: normal; font-size: medium" />
                                                 </p:column>
 
-                                                <p:column style="width: 90%; float: left; ; border: 0px; padding: 0px 10px; margin-bottom: 12px">
+                                                <p:column style="width: 90%; float: left; ; border: 0px; padding: 0px 10px; margin-bottom: 6px">
                                                     <h:outputText value="#{description.conceptSMTK.category.name}" style="font-size: small;" />
                                                 </p:column>
 
-                                                <p:column style="width: 90%; float: left; ; border: 0px;  padding: 0px 10px; margin-bottom: 10px" rendered="false">
+                                                <p:column style="width: 90%; float: left; ; border: 0px;  padding: 0px 10px; margin-bottom: 6px" rendered="false">
                                                     <h:outputText value="#{description.descriptionType.name}" style="font-size: small;" />
                                                 </p:column>
 
@@ -133,6 +133,20 @@
                                     </p:commandButton>
 
                                 </div>
+
+                                <p:outputPanel styleClass="filterStatus" style="width: 100%">
+                                    <p:repeat value="#{browserBean.browserQuery.categories}" var="category">
+                                        <div class="ui-g-12 ui-md-4 ui-lg-2" style="padding-bottom: 0px">
+                                            <span style="display: inherit; padding: 4px" class="ui-state-active ui-corner-all ui-helper-hidden">
+                                                <p:commandLink actionListener="#{browserBean.browserQuery.categories.remove(category)}"
+                                                               update="@(.conceptTable),@(.filterStatus)" style="float: right">
+                                                    <i class="ui-icon ui-icon-close" />
+                                                </p:commandLink>
+                                                <span class="ui-autocomplete-token-label" style="font-size: small;">#{category.name}</span>
+                                            </span>
+                                        </div>
+                                    </p:repeat>
+                                </p:outputPanel>
 
                                 <!--/p:panelGrid-->
 
@@ -210,7 +224,7 @@
                                      paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                      emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
-                            <p:ajax event="page" listener="#{browserBean.updatePage}" oncomplete="scrollTop(); mark(); loader();" update="@(.search)" />
+                            <p:ajax event="page" listener="#{browserBean.updatePage}" oncomplete="scrollTop(); loader(); listen();" update="@(.search)" />
 
                             <p:column headerText="Termino Preferido">
                                 <div class="ui-g dashboard">
@@ -342,6 +356,13 @@
                 listenSearchOnFocusEvent();
                 mark();
             });
+
+            function listen() {
+                listenPageOnClickEvent();
+                listenSearchOnClickEvent();
+                listenSearchOnFocusEvent();
+                mark();
+            }
 
             function scrollTop() {
                 setTimeout(

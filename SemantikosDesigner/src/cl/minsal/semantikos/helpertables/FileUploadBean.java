@@ -33,6 +33,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
@@ -41,7 +42,7 @@ import java.io.Reader;
 import java.util.List;
 
 @ManagedBean(name = "fileUploadBean")
-@ViewScoped
+@SessionScoped
 public class FileUploadBean {
 
     private static final Logger logger = LoggerFactory.getLogger(FileUploadBean.class);

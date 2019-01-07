@@ -127,9 +127,10 @@
             </param-value>
         </init-param>
     </filter>
+
     <filter-mapping>
         <filter-name>gzipResponseFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/views/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>

@@ -15,6 +15,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
@@ -28,7 +29,7 @@ import static java.util.Collections.emptyList;
  */
 
 @ManagedBean(name = "sctBean")
-@ViewScoped
+@SessionScoped
 public class SCTTypeBean implements Serializable {
 
     //@EJB

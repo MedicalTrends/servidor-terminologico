@@ -18,6 +18,7 @@ import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ import java.util.List;
  */
 
 @ManagedBean(name = "institutions")
-@ViewScoped
+@SessionScoped
 public class InstitutionsBean {
 
     static private final Logger logger = LoggerFactory.getLogger(InstitutionsBean.class);

@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import static java.util.Collections.EMPTY_LIST;
  */
 
 @ManagedBean(name = "drugsBrowserBean")
-@ViewScoped
+@SessionScoped
 public class DrugsBrowserBean implements Serializable {
 
     static final Logger logger = LoggerFactory.getLogger(DrugsBrowserBean.class);

@@ -19,10 +19,7 @@ import cl.minsal.semantikos.modelweb.RelationshipDefinitionWeb;
 import cl.minsal.semantikos.modelweb.RelationshipWeb;
 import cl.minsal.semantikos.util.StringUtils;
 
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.*;
 import java.sql.BatchUpdateException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -37,7 +34,7 @@ import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_U
  * Created by des01c7 on 14-10-16.
  */
 @ManagedBean(name = "autogenerateBean")
-@ViewScoped
+@SessionScoped
 public class AutogenerateBean {
 
     //@EJB

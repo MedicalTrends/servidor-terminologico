@@ -15,6 +15,7 @@ import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.util.Date;
@@ -24,7 +25,7 @@ import java.util.Date;
  */
 
 @ManagedBean(name = "pendingTerms")
-@ViewScoped
+@SessionScoped
 public class PendingTermsBean {
 
     static final Logger logger = LoggerFactory.getLogger(PendingTermsBean.class);

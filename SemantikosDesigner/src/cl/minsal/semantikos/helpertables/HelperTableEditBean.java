@@ -28,6 +28,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -40,7 +41,7 @@ import java.util.*;
  * Created by Blueprints on 1/27/2016.
  */
 @ManagedBean(name = "helperTableEditBean")
-@ViewScoped
+@SessionScoped
 public class HelperTableEditBean implements Serializable {
 
     private static final long serialVersionUID = 1L;

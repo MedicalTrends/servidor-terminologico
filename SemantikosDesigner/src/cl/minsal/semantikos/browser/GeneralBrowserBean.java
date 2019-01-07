@@ -2,6 +2,9 @@ package cl.minsal.semantikos.browser;
 
 import cl.minsal.semantikos.Constants;
 import cl.minsal.semantikos.clients.ServiceLocator;
+import cl.minsal.semantikos.concept.ChangeMarketedBean;
+import cl.minsal.semantikos.model.audit.ConceptAuditAction;
+import cl.minsal.semantikos.model.audit.EliminationCausal;
 import cl.minsal.semantikos.users.AuthenticationBean;
 
 import cl.minsal.semantikos.kernel.components.*;
@@ -34,9 +37,13 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_INVALIDATION;
 
 
 /**
@@ -90,7 +97,6 @@ public class GeneralBrowserBean implements Serializable {
      */
     private boolean isCategoryChanged = false;
 
-
     private boolean showSettings;
 
     private int results;
@@ -103,6 +109,16 @@ public class GeneralBrowserBean implements Serializable {
     private HelperTableRow helperTableRecord = null;
 
     private ConceptSMTK conceptSMTK = null;
+
+    private List<EliminationCausal> eliminationCausals = new ArrayList<>();
+
+    private EliminationCausal selectedCausal;
+
+    private List<ConceptAuditAction> auditActionQueue = new ArrayList<>();
+
+    private List<ConceptSMTK> relatedConcepts = new ArrayList<>();
+
+    private ConceptSMTK selectedConcept;
 
     @ManagedProperty(value = "#{authenticationBean}")
     private transient AuthenticationBean authenticationBean;
@@ -130,6 +146,7 @@ public class GeneralBrowserBean implements Serializable {
         tags = tagManager.getAllTags();
         users = userManager.getAllUsers();
         generalQuery = null;
+        eliminationCausals = Arrays.asList(EliminationCausal.values());
     }
 
     /**
@@ -457,6 +474,45 @@ public class GeneralBrowserBean implements Serializable {
         eContext.redirect(eContext.getRequestContextPath() + Constants.VIEWS_FOLDER + "/concepts/new/" + idCategory + "/0/" + query);
     }
 
+    public void invalidateConcept() throws IOException {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        RequestContext rContext = RequestContext.getCurrentInstance();
+        ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
+
+        try {
+            // Si el concepto está persistido, invalidarlo
+            if(selectedCausal == null) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se ha seleccionado la causal de eliminación" ));
+                return;
+            }
+            if(selectedConcept == null) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se ha seleccionado el concepto" ));
+                return;
+            }
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            User user = authenticationBean.getLoggedUser();
+            ConceptAuditAction conceptAuditAction = new ConceptAuditAction(selectedConcept, CONCEPT_INVALIDATION, timestamp, user, selectedConcept);
+            conceptAuditAction.getDetails().add("Causal de Eliminación: " + selectedCausal.getName());
+            getAuditActionQueue().add(conceptAuditAction);
+
+            conceptManager.invalidate(selectedConcept, user, auditActionQueue);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Acción exitosa", "Concepto invalidado" ));
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+
+            // Si ocurrió una excepción, puede ser por conceptos relacionados, manejar este caso mostrando el dialogo de conceptos relacionados
+            relatedConcepts = conceptManager.getRelatedConcepts(selectedConcept);
+
+            if(!relatedConcepts.isEmpty()) {
+                rContext.execute("PF('conceptRelated').show();");
+            }
+        }
+    }
+
     public void onRowToggle(ToggleEvent event) {
 
 
@@ -501,6 +557,46 @@ public class GeneralBrowserBean implements Serializable {
 
     public void setPage(int page) {
         this.page = page;
+    }
+
+    public List<EliminationCausal> getEliminationCausals() {
+        return eliminationCausals;
+    }
+
+    public void setEliminationCausals(List<EliminationCausal> eliminationCausals) {
+        this.eliminationCausals = eliminationCausals;
+    }
+
+    public EliminationCausal getSelectedCausal() {
+        return selectedCausal;
+    }
+
+    public void setSelectedCausal(EliminationCausal selectedCausal) {
+        this.selectedCausal = selectedCausal;
+    }
+
+    public List<ConceptAuditAction> getAuditActionQueue() {
+        return auditActionQueue;
+    }
+
+    public void setAuditActionQueue(List<ConceptAuditAction> auditActionQueue) {
+        this.auditActionQueue = auditActionQueue;
+    }
+
+    public List<ConceptSMTK> getRelatedConcepts() {
+        return relatedConcepts;
+    }
+
+    public void setRelatedConcepts(List<ConceptSMTK> relatedConcepts) {
+        this.relatedConcepts = relatedConcepts;
+    }
+
+    public ConceptSMTK getSelectedConcept() {
+        return selectedConcept;
+    }
+
+    public void setSelectedConcept(ConceptSMTK selectedConcept) {
+        this.selectedConcept = selectedConcept;
     }
 
 }

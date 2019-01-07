@@ -18,6 +18,7 @@ import org.primefaces.model.SortOrder;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -32,7 +33,7 @@ import static java.util.Collections.EMPTY_LIST;
  * Created by Blueprints on 1/27/2016.
  */
 @ManagedBean(name = "helperTableBean")
-@ViewScoped
+@SessionScoped
 public class HelperTableBean implements Serializable {
 
     private static final long serialVersionUID = 1L;

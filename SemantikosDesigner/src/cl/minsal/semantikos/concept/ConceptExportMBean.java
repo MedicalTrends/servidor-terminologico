@@ -14,6 +14,7 @@ import cl.minsal.semantikos.modelweb.ConceptSMTKWeb;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UINamingContainer;
 import java.sql.Timestamp;
@@ -31,7 +32,7 @@ import static java.util.Collections.EMPTY_LIST;
  * @author Francisco Mendez
  */
 @ManagedBean(name = "conceptExport")
-@ViewScoped
+@SessionScoped
 public class ConceptExportMBean extends UINamingContainer {
 
     private String init;

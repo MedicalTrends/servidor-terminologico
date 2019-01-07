@@ -18,6 +18,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -35,7 +36,7 @@ import static cl.minsal.semantikos.model.audit.AuditActionType.INSTITUTION_DELET
  */
 
 @ManagedBean(name = "institutionsBrowser")
-@ViewScoped
+@SessionScoped
 public class InstitutionsBrowserBean {
 
     static private final Logger logger = LoggerFactory.getLogger(InstitutionsBrowserBean.class);

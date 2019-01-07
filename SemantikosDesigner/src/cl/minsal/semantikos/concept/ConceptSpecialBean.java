@@ -7,13 +7,14 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 
 /**
  * Created by des01c7 on 02-02-17.
  */
 @ManagedBean(name = "conceptSpecialBean")
-@ViewScoped
+@SessionScoped
 public class ConceptSpecialBean {
 
     private ConceptSMTK conceptSMTKPending;
