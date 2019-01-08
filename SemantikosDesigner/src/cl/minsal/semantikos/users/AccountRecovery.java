@@ -27,7 +27,7 @@ import static org.primefaces.util.Constants.EMPTY_STRING;
  * Created by root on 22-03-17.
  */
 @ManagedBean(name = "accountRecovery")
-@SessionScoped
+@ViewScoped
 public class AccountRecovery {
 
     private boolean valid;

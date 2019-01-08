@@ -321,6 +321,7 @@ public class ConceptExtractBean implements Serializable {
         concepts.remove(getLast());
         sizes.remove(getLast());
         flags.remove(getLast());
+        processing = false;
         System.gc();
         /*
         if( (categoryList.size() - concepts.size()) == selectedCategories.size()) {

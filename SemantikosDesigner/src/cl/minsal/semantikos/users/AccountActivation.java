@@ -30,7 +30,7 @@ import java.util.List;
  * Created by root on 22-03-17.
  */
 @ManagedBean(name = "accountActivation")
-@SessionScoped
+@ViewScoped
 public class AccountActivation {
 
     //@ManagedProperty(value="#{param.key}")

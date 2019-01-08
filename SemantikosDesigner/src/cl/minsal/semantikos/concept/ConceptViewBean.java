@@ -83,6 +83,7 @@ public class ConceptViewBean implements Serializable {
 
     public void setConceptID(String conceptID) {
         try {
+            showMore = false;
             Long.parseLong(conceptID);
             this.conceptID = conceptID;
             selectedConcept = conceptManager.getConceptByCONCEPT_ID(conceptID);

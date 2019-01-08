@@ -275,7 +275,7 @@
 
         function listenSearchOnFocusEvent() {
 
-            $('input[id$=search_input]').on('focus', function () {
+            $('input[id$=search_input], .search-button-tiny').on('focus', function () {
                 /*
                 if(offSet != 0) {
                     $('.hideable').hide();
@@ -285,21 +285,24 @@
                 $(this).trigger('keydown');
                 $(this).trigger('input');
                 $(this).trigger('keyup');
-
+                /*
                 $('html, body').animate({
                     scrollTop: offSet
                 }, 0);
+                */
             });
 
-            $('input[id$=search_input]').on('blur', function () {
+            $('input[id$=search_input], .search-button-tiny').on('blur', function () {
                 /*
                 if(offSet != 0) {
                     $('.hideable').show();
                 }
                 */
+                /*
                 $('html, body').animate({
                     scrollTop: 0
                 }, 0);
+                */
             });
         }
 

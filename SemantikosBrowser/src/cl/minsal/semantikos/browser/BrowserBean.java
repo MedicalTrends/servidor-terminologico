@@ -104,6 +104,8 @@ public class BrowserBean implements Serializable {
 
     private int page = 1;
 
+    private boolean sort;
+
     @ManagedProperty(value = "#{guestPreferences}")
     GuestPreferences guestPreferences;
 
@@ -636,6 +638,24 @@ public class BrowserBean implements Serializable {
 
     public void setPerformSearch(boolean performSearch) {
         this.performSearch = performSearch;
+    }
+
+    public boolean isSort() {
+        return sort;
+    }
+
+    public void setSort(boolean sort) {
+        this.sort = sort;
+    }
+
+    public void changeSort() {
+        if(sort) {
+            browserQuery.setAsc("desc");
+        }
+        else {
+            browserQuery.setAsc("asc");
+        }
+        performSearch = true;
     }
 
     public boolean isSnomedCT() {
