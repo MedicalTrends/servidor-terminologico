@@ -9,7 +9,7 @@ import javax.faces.bean.ViewScoped;
  */
 
 @ManagedBean( name = "sensibilityBean")
-@SessionScoped
+@ViewScoped
 public class SensibilityDescriptionDefaultBean {
 
     private final static long FAMILIA_PRODUCTOS= 37;

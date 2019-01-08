@@ -34,7 +34,7 @@ import java.util.*;
  * Created by BluePrints Developer on 16-11-2016.
  */
 @ManagedBean(name="ispbean")
-@SessionScoped
+@ViewScoped
 public class ISPBean {
 
 

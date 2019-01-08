@@ -44,7 +44,7 @@ import static java.util.Collections.EMPTY_LIST;
  * @author Gustavo Punucura on 20-09-16.
  */
 @ManagedBean(name = "refsetsBean")
-@SessionScoped
+@ViewScoped
 public class RefSetsBean implements Serializable {
 
     static private final Logger logger = LoggerFactory.getLogger(InstitutionsBean.class);

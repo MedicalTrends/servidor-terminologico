@@ -28,7 +28,7 @@ import java.util.List;
  * Created by root on 02-09-16.
  */
 @ManagedBean(name = "validatorBean")
-@SessionScoped
+@ViewScoped
 public class ValidatorBean {
 
     //@EJB

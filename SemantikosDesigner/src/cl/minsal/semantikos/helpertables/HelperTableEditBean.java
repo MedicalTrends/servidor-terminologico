@@ -41,7 +41,7 @@ import java.util.*;
  * Created by Blueprints on 1/27/2016.
  */
 @ManagedBean(name = "helperTableEditBean")
-@SessionScoped
+@ViewScoped
 public class HelperTableEditBean implements Serializable {
 
     private static final long serialVersionUID = 1L;

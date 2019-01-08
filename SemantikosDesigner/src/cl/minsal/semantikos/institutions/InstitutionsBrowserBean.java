@@ -36,7 +36,7 @@ import static cl.minsal.semantikos.model.audit.AuditActionType.INSTITUTION_DELET
  */
 
 @ManagedBean(name = "institutionsBrowser")
-@SessionScoped
+@ViewScoped
 public class InstitutionsBrowserBean {
 
     static private final Logger logger = LoggerFactory.getLogger(InstitutionsBrowserBean.class);

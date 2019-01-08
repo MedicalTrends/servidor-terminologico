@@ -33,7 +33,7 @@ import static java.util.Collections.EMPTY_LIST;
  * Created by Blueprints on 1/27/2016.
  */
 @ManagedBean(name = "helperTableBean")
-@SessionScoped
+@ViewScoped
 public class HelperTableBean implements Serializable {
 
     private static final long serialVersionUID = 1L;

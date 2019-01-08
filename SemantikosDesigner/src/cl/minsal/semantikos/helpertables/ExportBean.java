@@ -34,7 +34,7 @@ import javax.faces.bean.ViewScoped;
  * Created by des01c7 on 27-12-18.
  */
 @ManagedBean(name = "exportBean")
-@SessionScoped
+@ViewScoped
 public class ExportBean {
 
         private static final String NEW_LINE = System.getProperty("line.separator");

@@ -34,7 +34,7 @@ import java.util.Map;
  */
 
 @ManagedBean(name = "noValidBrowserBean")
-@SessionScoped
+@ViewScoped
 public class NoValidBrowserBean implements Serializable {
 
     static final Logger logger = LoggerFactory.getLogger(NoValidBrowserBean.class);

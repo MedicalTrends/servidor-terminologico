@@ -29,7 +29,7 @@ import static java.util.Collections.emptyList;
  */
 
 @ManagedBean(name = "sctBean")
-@SessionScoped
+@ViewScoped
 public class SCTTypeBean implements Serializable {
 
     //@EJB

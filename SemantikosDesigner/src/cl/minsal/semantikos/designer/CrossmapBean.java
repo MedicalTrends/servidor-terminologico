@@ -22,7 +22,7 @@ import static java.util.Collections.emptyList;
  */
 
 @ManagedBean(name = "crossmapBean")
-@SessionScoped
+@ViewScoped
 public class CrossmapBean implements Serializable {
 
     private String pattern;

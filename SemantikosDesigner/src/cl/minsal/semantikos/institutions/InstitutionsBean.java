@@ -30,7 +30,7 @@ import java.util.List;
  */
 
 @ManagedBean(name = "institutions")
-@SessionScoped
+@ViewScoped
 public class InstitutionsBean {
 
     static private final Logger logger = LoggerFactory.getLogger(InstitutionsBean.class);

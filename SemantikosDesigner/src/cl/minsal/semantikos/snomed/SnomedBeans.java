@@ -20,7 +20,7 @@ import javax.faces.bean.ViewScoped;
  * Created by des01c7 on 02-12-16.
  */
 @ManagedBean( name = "snomedBean")
-@SessionScoped
+@ViewScoped
 public class SnomedBeans {
 
     private static final long ID_RELATIONSHIP_DEFINITION_SNOMED_CT = 101;

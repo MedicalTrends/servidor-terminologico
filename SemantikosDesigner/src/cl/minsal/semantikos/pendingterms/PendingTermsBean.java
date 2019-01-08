@@ -25,7 +25,7 @@ import java.util.Date;
  */
 
 @ManagedBean(name = "pendingTerms")
-@SessionScoped
+@ViewScoped
 public class PendingTermsBean {
 
     static final Logger logger = LoggerFactory.getLogger(PendingTermsBean.class);

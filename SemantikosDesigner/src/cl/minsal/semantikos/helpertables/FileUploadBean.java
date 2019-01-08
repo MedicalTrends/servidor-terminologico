@@ -42,7 +42,7 @@ import java.io.Reader;
 import java.util.List;
 
 @ManagedBean(name = "fileUploadBean")
-@SessionScoped
+@ViewScoped
 public class FileUploadBean {
 
     private static final Logger logger = LoggerFactory.getLogger(FileUploadBean.class);

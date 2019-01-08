@@ -23,7 +23,7 @@ import java.util.List;
  */
 
 @ManagedBean(name = "conceptSCT")
-@SessionScoped
+@ViewScoped
 public class ConceptSCTBean {
 
     static private final Logger logger = LoggerFactory.getLogger(ConceptSCTBean.class);

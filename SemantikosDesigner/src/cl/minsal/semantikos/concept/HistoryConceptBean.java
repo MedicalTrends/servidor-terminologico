@@ -18,7 +18,7 @@ import java.util.List;
  */
 
 @ManagedBean(name = "historyConcept")
-@SessionScoped
+@ViewScoped
 public class HistoryConceptBean {
 
     //@EJB

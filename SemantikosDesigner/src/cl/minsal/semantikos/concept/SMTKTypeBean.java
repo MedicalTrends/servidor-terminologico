@@ -23,7 +23,7 @@ import java.util.List;
  */
 
 @ManagedBean(name = "smtkBean")
-@SessionScoped
+@ViewScoped
 public class SMTKTypeBean implements Serializable {
 
     private String pattern;

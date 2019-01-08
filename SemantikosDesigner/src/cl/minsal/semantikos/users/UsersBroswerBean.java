@@ -27,7 +27,7 @@ import static cl.minsal.semantikos.model.audit.AuditActionType.*;
  */
 
 @ManagedBean(name = "usersBrowser")
-@SessionScoped
+@ViewScoped
 public class UsersBroswerBean {
 
     static private final Logger logger = LoggerFactory.getLogger(UsersBroswerBean.class);

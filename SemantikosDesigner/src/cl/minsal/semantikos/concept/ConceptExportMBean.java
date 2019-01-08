@@ -32,7 +32,7 @@ import static java.util.Collections.EMPTY_LIST;
  * @author Francisco Mendez
  */
 @ManagedBean(name = "conceptExport")
-@SessionScoped
+@ViewScoped
 public class ConceptExportMBean extends UINamingContainer {
 
     private String init;

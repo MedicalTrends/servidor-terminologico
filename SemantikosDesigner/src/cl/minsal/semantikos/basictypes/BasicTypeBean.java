@@ -18,7 +18,7 @@ import java.util.List;
  * Created by root on 22-07-16.
  */
 @ManagedBean(name = "basicTypeBean")
-@SessionScoped
+@ViewScoped
 public class BasicTypeBean implements Serializable {
 
     private String pattern;

@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import static java.util.Collections.EMPTY_LIST;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.apache.commons.lang.ArrayUtils.EMPTY_LONG_ARRAY;
 
 
@@ -76,6 +77,7 @@ public class SearchServiceRest {
     // REQ-WS-001
     @GET
     @Path("/perfectmatch")
+    @Produces(APPLICATION_JSON)
     //@WebResult(name = "respuestaBuscarTermino")
     //@WebMethod(operationName = "buscarTerminoPerfectMatch")
     public GenericTermSearchResponse buscarTermino( //GenericTermSearchResponse buscarTermino(

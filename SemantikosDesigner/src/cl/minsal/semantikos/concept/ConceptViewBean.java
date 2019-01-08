@@ -36,7 +36,7 @@ import java.util.List;
  */
 
 @ManagedBean(name = "conceptView")
-@SessionScoped
+@ViewScoped
 public class ConceptViewBean implements Serializable {
 
     static private final Logger logger = LoggerFactory.getLogger(ConceptBean.class);
@@ -83,7 +83,6 @@ public class ConceptViewBean implements Serializable {
 
     public void setConceptID(String conceptID) {
         try {
-            showMore = false;
             Long.parseLong(conceptID);
             this.conceptID = conceptID;
             selectedConcept = conceptManager.getConceptByCONCEPT_ID(conceptID);

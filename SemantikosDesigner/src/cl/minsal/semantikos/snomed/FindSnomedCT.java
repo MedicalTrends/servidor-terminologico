@@ -17,7 +17,7 @@ import java.util.List;
  * @author Andrés Farías on 10/26/16.
  */
 @ManagedBean(name = "findSnomedCTBean")
-@SessionScoped
+@ViewScoped
 public class FindSnomedCT {
 
     private static final Logger logger = LoggerFactory.getLogger(FindSnomedCT.class);

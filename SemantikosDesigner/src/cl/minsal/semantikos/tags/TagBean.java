@@ -24,7 +24,7 @@ import java.util.List;
  */
 
 @ManagedBean(name = "tagBean")
-@SessionScoped
+@ViewScoped
 public class TagBean implements Serializable{
 
 

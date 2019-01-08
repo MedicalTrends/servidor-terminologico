@@ -63,7 +63,7 @@ import static org.primefaces.util.Constants.EMPTY_STRING;
  */
 
 @ManagedBean(name = "conceptBean",eager = true)
-@SessionScoped
+@ViewScoped
 public class ConceptBean implements Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(ConceptBean.class);
@@ -445,9 +445,6 @@ public class ConceptBean implements Serializable {
      * desde el conceptBrowser cuando se desea crear un nuevo concepto dentro de una categoria
      */
     public void setIdCategory(int idCategory) {
-        if(this.idCategory != idCategory) {
-            this.concept = null;
-        }
         this.idCategory = idCategory;
     }
 
@@ -460,9 +457,6 @@ public class ConceptBean implements Serializable {
      * desde el conceptBrowser cuando se desea ver o editar un concepto existente
      */
     public void setIdConcept(int idConcept) {
-        if(this.idConcept != idConcept) {
-            this.concept = null;
-        }
         this.idConcept = idConcept;
         if (idConcept != 0 && concept == null) {
             createConcept();

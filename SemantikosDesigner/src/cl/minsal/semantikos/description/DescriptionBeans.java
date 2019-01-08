@@ -37,7 +37,7 @@ import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_DESCRIPTI
  */
 
 @ManagedBean(name = "descriptionBeans")
-@SessionScoped
+@ViewScoped
 public class DescriptionBeans {
 
     @ManagedProperty(value = "#{conceptBean}")

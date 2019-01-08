@@ -25,7 +25,7 @@ import java.util.List;
  * Created by des01c7 on 31-08-16.
  */
 @ManagedBean(name="beanCategory")
-@SessionScoped
+@ViewScoped
 public class beanCategory {
 
     private Category category;

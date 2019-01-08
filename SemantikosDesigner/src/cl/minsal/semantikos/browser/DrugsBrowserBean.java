@@ -28,7 +28,7 @@ import static java.util.Collections.EMPTY_LIST;
  */
 
 @ManagedBean(name = "drugsBrowserBean")
-@SessionScoped
+@ViewScoped
 public class DrugsBrowserBean implements Serializable {
 
     static final Logger logger = LoggerFactory.getLogger(DrugsBrowserBean.class);

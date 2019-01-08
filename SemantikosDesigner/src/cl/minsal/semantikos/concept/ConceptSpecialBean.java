@@ -14,7 +14,7 @@ import javax.faces.bean.ViewScoped;
  * Created by des01c7 on 02-02-17.
  */
 @ManagedBean(name = "conceptSpecialBean")
-@SessionScoped
+@ViewScoped
 public class ConceptSpecialBean {
 
     private ConceptSMTK conceptSMTKPending;

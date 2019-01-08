@@ -23,7 +23,7 @@ import java.util.Map;
  * Created by des01c7 on 14-10-16.
  */
 @ManagedBean(name = "compositeAditionalBean")
-@SessionScoped
+@ViewScoped
 public class CompositeAditional {
     //TODO: refactorizar
     //@EJB

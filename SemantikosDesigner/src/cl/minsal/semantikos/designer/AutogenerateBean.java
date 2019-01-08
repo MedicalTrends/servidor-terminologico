@@ -34,7 +34,7 @@ import static cl.minsal.semantikos.model.relationships.SnomedCTRelationship.ES_U
  * Created by des01c7 on 14-10-16.
  */
 @ManagedBean(name = "autogenerateBean")
-@SessionScoped
+@ViewScoped
 public class AutogenerateBean {
 
     //@EJB

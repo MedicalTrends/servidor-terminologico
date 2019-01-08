@@ -26,7 +26,7 @@ import java.io.IOException;
  */
 
 @ManagedBean(name = "transferConceptBean")
-@SessionScoped
+@ViewScoped
 public class TransferConceptBean {
 
     private static final Logger logger = LoggerFactory.getLogger(TransferConceptBean.class);

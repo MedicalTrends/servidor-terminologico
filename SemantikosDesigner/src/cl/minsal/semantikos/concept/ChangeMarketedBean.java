@@ -28,7 +28,7 @@ import java.util.List;
  */
 
 @ManagedBean(name = "changeMarketedBean")
-@SessionScoped
+@ViewScoped
 public class ChangeMarketedBean {
 
     List<ConceptSMTK> conceptSMTKList;

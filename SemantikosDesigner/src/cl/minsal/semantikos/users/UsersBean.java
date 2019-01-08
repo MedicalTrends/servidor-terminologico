@@ -37,7 +37,7 @@ import java.util.List;
  */
 
 @ManagedBean(name = "users")
-@SessionScoped
+@ViewScoped
 public class UsersBean {
 
     static private final Logger logger = LoggerFactory.getLogger(UsersBean.class);

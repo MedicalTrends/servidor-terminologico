@@ -23,7 +23,7 @@ import javax.faces.context.FacesContext;
  */
 
 @ManagedBean(name = "descriptionTestsBean")
-@SessionScoped
+@ViewScoped
 public class DescriptionBean {
 
     static final Logger logger = LoggerFactory.getLogger(DescriptionBean.class);

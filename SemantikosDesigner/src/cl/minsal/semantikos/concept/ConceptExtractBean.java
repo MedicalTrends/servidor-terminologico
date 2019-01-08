@@ -30,7 +30,7 @@ import java.util.*;
  * Created by des01c7 on 23-08-16.
  */
 @ManagedBean(name = "conceptExtractBean")
-@SessionScoped
+@ViewScoped
 public class ConceptExtractBean implements Serializable {
 
     private Map<Long, List<ConceptSMTK>> concepts = new HashMap<>();

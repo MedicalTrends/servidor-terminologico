@@ -23,7 +23,7 @@ import java.util.List;
 import static java.lang.System.currentTimeMillis;
 
 @ManagedBean(name = "snapshotBean")
-@SessionScoped
+@ViewScoped
 public class Snapshot {
 
     private String destination = "/home/des01c7/Documentos/temp/";
