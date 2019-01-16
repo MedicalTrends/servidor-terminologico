@@ -260,8 +260,8 @@ public class ConceptBean implements Serializable {
         selectedConcept = conceptManager.getConceptByCONCEPT_ID(conceptID);
         selectedConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(selectedConcept));
 
-        updateMainMenu();
-        updateNavigationMenu();
+        //updateMainMenu();
+        //updateNavigationMenu();
     }
 
     public void updateMainMenu() {

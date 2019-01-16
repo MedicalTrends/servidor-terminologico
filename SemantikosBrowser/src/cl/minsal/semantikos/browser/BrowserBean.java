@@ -130,7 +130,7 @@ public class BrowserBean implements Serializable {
     //@EJB
     private TimeOutWeb timeOutWeb = (TimeOutWeb) ServiceLocator.getInstance().getService(TimeOutWeb.class);
 
-    private transient MenuModel menu;
+    private transient MenuModel menu = new DefaultMenuModel();
 
     private transient MenuModel navegation;
 
@@ -153,13 +153,11 @@ public class BrowserBean implements Serializable {
 
         setSnomedCT(false);
 
-        initMenu();
+        //initMenu();
 
     }
 
     public void initMenu() {
-
-        menu = new DefaultMenuModel();
 
         //Inicio
         DefaultMenuItem item0 = new DefaultMenuItem("Inicio");
