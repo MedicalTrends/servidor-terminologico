@@ -31,7 +31,7 @@ public class TimeOutSessionBean {
 
     public void redirectSession() throws IOException {
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-        eContext.redirect("/views/home.xhtml");
+        eContext.redirect("/views/concept.xhtml");
         return;
     }
 

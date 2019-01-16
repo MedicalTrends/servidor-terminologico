@@ -82,7 +82,7 @@ public class BrowserBean implements Serializable {
     private LazyDataModel<ConceptSMTK> concepts;
     private ConceptSMTK conceptSelected;
 
-    private Description descriptionSelected;
+    private Description descriptionSelected = DescriptionTypeFactory.DUMMY_DESCRIPTION;
 
     /**
      * Indica si cambió algún filtro. Se utiliza para resetear la páginación al comienzo si se ha filtrado
@@ -151,51 +151,19 @@ public class BrowserBean implements Serializable {
         tags = tagManager.getAllTags();
         categories = categoryManager.getCategories();
 
+        browserQuery = queryManager.getDefaultBrowserQuery();
+
+        try {
+            test();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         setSnomedCT(false);
 
-        //initMenu();
-
     }
 
-    public void initMenu() {
 
-        //Inicio
-        DefaultMenuItem item0 = new DefaultMenuItem("Inicio");
-        item0.setUrl("/");
-        item0.setIcon("fa fa-home");
-        item0.setId("rm_home");
-
-        menu.addElement(item0);
-
-        //Conceptos
-        DefaultMenuItem item1 = new DefaultMenuItem("Conceptos");
-        item1.setUrl("/views/concepts.xhtml");
-        item1.setIcon("fa fa-search");
-        item1.setId("rm_volver");
-
-        menu.addElement(item1);
-
-        //Snomed
-        /*
-        DefaultMenuItem item2 = new DefaultMenuItem("Snomed-CT");
-        item2.setUrl("/views/snomed/concepts");
-        item2.setIcon("fa fa-arrow-left");
-        item2.setId("rm_snomed");
-
-        menu.addElement(item2);
-        */
-
-
-        //Últimos visitados
-        DefaultSubMenu conceptSubmenu = new DefaultSubMenu("Recientes");
-        conceptSubmenu.setIcon("fa fa-list");
-        conceptSubmenu.setId("rm_concepts");
-        conceptSubmenu.setExpanded(true);
-
-        menu.addElement(conceptSubmenu);
-
-        circularFifoQueue = new CircularFifoQueue<Target>(5);
-    }
 
     public int getResults() {
         return results;
@@ -217,8 +185,6 @@ public class BrowserBean implements Serializable {
      * Este método es el responsable de ejecutar la consulta
      */
     public void executeQuery() {
-
-        resetNavigation();
 
         resetTheme();
 
@@ -308,25 +274,6 @@ public class BrowserBean implements Serializable {
 
         };
 
-    }
-
-    public void resetNavigation() {
-
-        navegation = new DefaultMenuModel();
-
-        //Inicio
-        DefaultMenuItem item0 = new DefaultMenuItem("Inicio");
-        item0.setUrl("/views/home.xhtml");
-        item0.setId("rm_home");
-
-        navegation.addElement(item0);
-
-        //Volver
-        DefaultMenuItem item1 = new DefaultMenuItem("Conceptos");
-        item1.setUrl("/views/concepts.xhtml");
-        item1.setId("rm_volver");
-
-        navegation.addElement(item1);
     }
 
     public void resetTheme() {

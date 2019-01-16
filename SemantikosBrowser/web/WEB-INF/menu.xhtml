@@ -5,8 +5,12 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui"
     xmlns:pu="http://primefaces.org/ultima">
-    
-    <h:form id="menuform"> 
+
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{browserBean.executeQuery}" />
+    </f:metadata>
+
+    <h:form id="browserForm">
         <div class="layout-menu #{guestPreferences.menuClass}">
             <div class="nano">
                 <div class="nano-content menu-scroll-content">
@@ -22,12 +26,12 @@
                         <div class="ui-fluid ui-g">
                             <div class="ui-g-12 ui-md-12 ui-lg-12">
 
-                                <p:outputPanel styleClass="search" style="width: 100%">
+                                <p:outputPanel style="width: 100%" styleClass="search">
 
                                     <p:inputText value="#{browserBean.browserQuery.query}" placeholder="Buscar..." style="width: 100%"
                                                  onkeyup="return (this.value.length >= 3 || this.value.length == 0)">
-                                        <p:ajax event="keyup" update="@(.browserTable),@(.search2)" process="@this"
-                                                listener="#{browserBean.setFilterChanged(true)}" delay="500" />
+                                        <p:ajax event="keyup" update="@(.conceptPanel),@(.search2)" process="@this"
+                                                listener="#{browserBean.setFilterChanged(true)}"/>
                                     </p:inputText>
 
                                     <i class="fa fa-search fa-lg" />
@@ -37,22 +41,124 @@
                             </div>
                         </div>
                     </p:outputPanel>
-                    <p:outputPanel rendered="true" styleClass="browserTable">
-                        <div class="ui-g dashboard">
-                            <ul class="activity-list">
-                                <p:repeat value="#{browserBean.concepts}" var="concept">
-                                    <li class="hoverful">
-                                        <div class="ui-g">
-                                            <div class="ui-g-12">
-                                                <p:link outcome="/views/concept" value="#{concept.descriptionFavorite.term}" styleClass="myCustomLinkStyle context loader-trigger" >
-                                                    <f:param name="conceptID" value="#{concept.conceptID}" />
-                                                </p:link>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </p:repeat>
-                            </ul>
+
+                    <div class="ui-fluid ui-g">
+                        <div class="ui-g-12 ui-md-12 ui-lg-12">
+
+                            <p:outputPanel styleClass="search2">
+                                <p:outputLabel id="summary" style="font-size: small; color: #212121"
+                                               value="Página #{browserBean.page} de #{browserBean.results} conceptos"/>
+                                <p:remoteCommand name="onload" update="summary"
+                                                 autoRun="true" />
+                            </p:outputPanel>
+
                         </div>
+                    </div>
+
+                    <p:outputPanel id="conceptPanel" styleClass="conceptPanel">
+
+                    <p:dataTable id="conceptTable" value="#{browserBean.concepts}" var="conceptSMTK" styleClass="conceptTable"
+                                 widgetVar="conceptTable"
+                                 rendered="#{not empty browserBean.concepts}"
+                                 multiViewState="true"
+                                 rows="15"
+                                 paginator="true" lazy="true" dynamic="true"
+                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
+                                 emptyMessage="No se han encontrado conceptos con los criterios utilizados">
+
+                        <p:ajax event="page" listener="#{browserBean.updatePage}" oncomplete="scrollTop(); loader(); listen();" update="@(.search)" />
+
+                        <p:column headerText="Termino Preferido" style="padding: 0px">
+                            <div class="ui-g dashboard">
+                                <div class="ui-g-12" style="padding: 0px">
+                                    <div class="card overview" style="min-height: 0px; border-bottom: 1px solid #cfcfcf;">
+                                        <div class="overview-content clearfix" style="padding: 10px">
+                                            <span class="overview-title">
+                                                <p:commandLink value="#{conceptSMTK.descriptionFavorite.term}"
+                                                               actionListener="#{concept.setConceptID(conceptSMTK.conceptID)}"
+                                                               update="@(.conceptForm)"
+                                                        styleClass="context" style="font-size: medium">
+                                                </p:commandLink>
+                                            </span>
+                                            <span class="overview-detail">
+                                                <h:outputText value="#{conceptSMTK.conceptID}" style="font-size: small; color: #006621" />
+                                                <br/>
+                                                <h:outputText value="#{conceptSMTK.category.name}" style="font-size: small; color:#545454;" />
+
+                                                <p:separator style="border-top: 0px solid rgb(219, 219, 219)" rendered="#{ not empty conceptSMTK.tags }"/>
+
+                                                 <p:outputPanel rendered="#{ not empty conceptSMTK.tags}">
+                                                    <i class="fa fa-tags" style="font-size: small"/>
+                                                    <p:repeat
+                                                            offset="0"
+                                                            size="#{conceptSMTK.tags.size()}"
+                                                            step="1"
+                                                            varStatus="var"
+                                                            value="#{conceptSMTK.tags}"
+                                                            var="tag">
+
+                                                        <h:outputText value=" #{tag}" style="font-size: small; background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
+                                                        <h:outputText value=", " style="font-size: small; color: #545454"/>
+
+                                                    </p:repeat>
+                                                </p:outputPanel>
+
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </p:column>
+
+                    </p:dataTable>
+
+                    <p:dataTable id="conceptTableExcel" widgetVar="conceptTableExcel" value="#{browserBean.concepts}" var="conceptSMTK" styleClass="conceptTable"
+                                 style="display: none"
+                                 rows="15" rendered="false"
+                                 paginator="true" lazy="true" dynamic="true"
+                                 reflow="true"
+                                 paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                 emptyMessage="No se han encontrado conceptos con los criterios utilizados">
+
+                        <f:facet name="{Exporters}">
+                            <p:commandButton ajax="false" value="Exportar a Excel" process="@this" update="@this"
+                                             icon="fa fa-file-excel-o">
+                                <p:dataExporter type="xls" target="conceptTable"
+                                                fileName="conceptos"/>
+                            </p:commandButton>
+                        </f:facet>
+
+                        <p:column headerText="Concept ID">
+                            <h:outputText value="#{conceptSMTK.conceptID}"/>
+                        </p:column>
+
+                        <p:column headerText="Termino Preferido">
+                            <h:outputText value="#{conceptSMTK.descriptionFavorite.term}"/>
+                        </p:column>
+
+                        <p:column headerText="Categoría">
+                            <h:outputText value="#{conceptSMTK.category.name}"/>
+                        </p:column>
+
+                        <p:column headerText="Etiquetas" styleClass="tags" exportable="false">
+
+                            <p:repeat
+                                    offset="0"
+                                    size="#{conceptSMTK.tags.size()}"
+                                    step="1"
+                                    varStatus="var"
+                                    value="#{conceptSMTK.tags}"
+                                    var="tag">
+
+                                <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
+                                <h:outputText value=", " rendered="#{conceptSMTK.tags.size() > 1}" />
+
+                            </p:repeat>
+
+                        </p:column>
+
+                    </p:dataTable>
+
                     </p:outputPanel>
 
                 </div>

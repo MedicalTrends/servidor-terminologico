@@ -145,7 +145,7 @@
 }
 
 #browserForm\:conceptTable_paginator_top {
-    display: none !important;
+    /*display: none !important;*/
 }
 
 /* */
@@ -294,4 +294,8 @@
 
 .ui-dialog {
     max-width: 1200px;
+}
+
+.nano {
+    height: 90% !important;
 }
