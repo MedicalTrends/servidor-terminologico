@@ -14,323 +14,178 @@
 
         <div class="ui-g">
 
-            <div class="ui-g-12 ui-md-12 ui-lg-12" style="max-width: 1200px">
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
 
-                <p:breadCrumb id="top-menu" rendered="false">
-                    <p:menuitem value="Inicio" url="/" />
-                    <p:menuitem value="Snomed" url="#" />
-                    <p:menuitem value="Conceptos" url="#" />
-                </p:breadCrumb>
+                <p:outputPanel styleClass="conceptForm">
 
-                <h:form id="browserForm">
+                    <p:outputPanel rendered="#{conceptSCT.selectedConcept == null}">
+                        <div class="card card-w-title">
+                            <h1 class="first-heading">Bienvenido al sitio de consulta Semantikos</h1>
+                            <p:separator styleClass="heading-separator"/>
 
-                    <div class="card card-w-title">
+                            <ul>
+                                <li>
+                                    <p:outputLabel value="En este sitio usted puede navegar por los distintos conceptos de la terminología"/>
+                                </li>
+                                <li>
+                                    <p:outputLabel value="Puede navegar tanto por la terminología nacional Semantikos, además de la terminología internacional Snomed-CT"/>
+                                </li>
+                                <li>
+                                    <p:outputLabel value="Puede filtrar por los dominios de conocimiento específicos a su búsqueda"/>
+                                </li>
+                            </ul>
 
-                        <p:outputPanel>
+                            <h2 class="second-heading">¿Qué es Semantikos?</h2>
+                            <p:separator styleClass="heading-separator"/>
+                            <p style="padding-left: 10px">
+                                Una terminología clínica es un vocabulario estructurado que se utiliza en la práctica clínica para describir con precisión el cuidado y tratamiento de los pacientes. Las terminologías clínicas abarcan conceptos complejos tales como enfermedades, procedimientos, tratamientos y medicamentos. Pueden cubrir todas las dimensiones necesarias para describir el trabajo clínico o sólo algunas de ellas.
+                                <a href="http://www.salud-e.cl/servicios-terminologicos/pagina-menu-int-prueba/">Leer más</a>
+                            </p>
 
-                            <div class="ui-fluid">
+                            <h2 class="second-heading">Mejor información es más y mejor salud</h2>
+                            <p:separator styleClass="heading-separator"/>
+                            <p style="padding-left: 10px">
+                                La Estrategia Digital en Salud o Plan de e-Salud tiene como misión contribuir a mejorar la salud de la población a través de una gestión oportuna, eficiente y confiable de información estandarizada.
+                                <a href="http://www.salud-e.cl/servicios-terminologicos/pagina-menu-int-prueba/">Leer más</a>
+                            </p>
+                        </div>
+                    </p:outputPanel>
 
-                                <div class="ui-g">
+                    <h:form id="snomedForm" rendered="#{conceptSCT.selectedConcept != null}">
 
-                                    <!--p:panelGrid columns="3" columnClasses="ui-grid-col-6,ui-grid-col-3,ui-grid-col-3" layout="grid"
-                                                 styleClass="ui-panelgrid-blank form-group"-->
+                        <div class="card card-w-title">
 
-                                    <div class="ui-g-12 ui-md-12 ui-lg-12">
+                            <h1 class="first-heading">#{conceptSCT.selectedConcept.descriptionFSN}</h1>
 
-                                        <p:outputPanel styleClass="ui-inputgroup search-2">
+                            <p:separator styleClass="heading-separator"/>
 
-                                            <h:panelGroup styleClass="md-inputfield">
+                            <div class="ui-g ui-fluid" style="margin-bottom: 20px">
 
-                                                <p:autoComplete minQueryLength="3"
-                                                                id="search"
-                                                                emptyMessage="No se encontraron conceptos"
-                                                                forceSelection="false"
-                                                                size="5"
-                                                                completeMethod="#{browserSCTBean.searchSuggestedDescriptions}"
-                                                                placeholder="Buscar..."
-                                                                converter="DescriptionSCTConverter"
-                                                                var="description"
-                                                                value="#{browserSCTBean.descriptionSelected}"
-                                                                itemLabel="#{description.getRepresentation()}"
-                                                                itemValue="#{description}">
-
-                                                    <p:outputPanel rendered="false">
-
-                                                        <p:column style="width: 500px;" rendered="#{description.getId() != -1}">
-                                                            <h:outputText value="#{description.term}" />
-                                                        </p:column>
-
-                                                    </p:outputPanel>
-
-                                                    <p:column style="width: 90%; float: left; border: 0px; padding: 0px 10px; margin-top: 6px">
-                                                        <h:outputText value="#{description.term}" style="font-weight: bold;" />
-                                                        <p:outputLabel rendered="#{description.favourite}">
-                                                            <i class="ui-icon ui-icon-star" style="font-size: small; color: #FFC107"/>
-                                                        </p:outputLabel>
-                                                    </p:column>
-
-                                                    <p:column style="width: 90%; float: left; ; border: 0px;  padding: 0px 10px; margin-bottom: 10px">
-                                                        <h:outputText value="#{description.descriptionType.name}" style="font-size: small;" />
-                                                    </p:column>
-
-                                                    <p:ajax event="itemSelect"
-                                                                listener="#{browserSCTBean.test()}"
-                                                                update="@(.conceptPanel),@(.search-2)"
-                                                                process="@this"/>
-
-                                                </p:autoComplete>
-
-                                                <p:commandLink styleClass="search-button-tiny" icon="fa fa-search" style="color: #009688"
-                                                               rendered="#{browserSCTBean.descriptionSelected eq null}">
-                                                    <i class="fa fa-lg fa-search"/>
-                                                </p:commandLink>
-
-                                                <p:outputPanel rendered="#{browserSCTBean.descriptionSelected != null}">
-                                                    <p:commandLink process="@this" style="color: #aaa;"
-                                                                   update="@(.search)" oncomplete="listenSearchOnClickEvent();"
-                                                                   action="#{browserSCTBean.setDescriptionSelected(null)}">
-                                                        <i class="fa fa-close fa-lg"  />
-                                                    </p:commandLink>
-                                                </p:outputPanel>
-
-                                            </h:panelGroup>
-
-                                        </p:outputPanel>
-
-                                    </div>
-
-                                    <!--/p:panelGrid-->
-
+                                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                                    <h:outputText value="ConceptID" styleClass="label" />
                                 </div>
 
-                                <div class="ui-g">
-
-                                    <div class="ui-g-12 ui-md-3 ui-lg-2">
-
-                                        <p:selectBooleanCheckbox style="width: 100%"
-                                                                 value="#{browserBean.snomedCT}"
-                                                                 itemLabel="Snomed-CT">
-                                            <p:ajax event="change"
-                                                    listener="#{browserBean.redirectSnomedCT()}"
-                                                    process="@this" />
-                                        </p:selectBooleanCheckbox>
-
-                                    </div>
-
-                                    <div class="ui-g-0 ui-md-6 ui-lg-8" style="padding-left: 0px; padding-right: 0px"></div>
-
-                                    <div class="ui-g-12 ui-md-3 ui-lg-2">
-
-                                        <p:commandButton value="Exportar" icon="fa fa-file-excel-o" ajax="false">
-                                            <p:dataExporter target="conceptTableExcel" type="xls" fileName="concepts" />
-                                        </p:commandButton>
-
-                                    </div>
-
+                                <div class="ui-g-12 ui-md-8 ui-lg-10">
+                                    <h:outputText value="#{conceptSCT.selectedConcept.idSnomedCT}" styleClass="value"/>
                                 </div>
+
+                                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                                    <h:outputText value="FSN" styleClass="label" />
+                                </div>
+
+                                <div class="ui-g-12 ui-md-8 ui-lg-10">
+                                    <h:outputText value="#{conceptSCT.selectedConcept.descriptionFSN}" styleClass="value"/>
+                                    <p:outputLabel rendered="#{conceptSCT.selectedConcept.descriptionFSN.favourite}">
+                                        <i class="ui-icon ui-icon-star" style="font-size: small; color: #FFC107"/>
+                                    </p:outputLabel>
+                                </div>
+
+                                <p:repeat value="#{conceptSCT.otherDescriptions}" var="otherDescription">
+                                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+                                        <h:outputText value="#{otherDescription.descriptionType.name}" styleClass="label" />
+                                    </div>
+                                    <div class="ui-g-12 ui-md-8 ui-lg-10">
+                                        <h:outputText value="#{otherDescription.term}" styleClass="value" />
+                                        <p:outputLabel rendered="#{otherDescription.favourite}">
+                                            <i class="ui-icon ui-icon-star" style="font-size: small; color: #FFC107"/>
+                                        </p:outputLabel>
+                                    </div>
+                                </p:repeat>
 
                             </div>
 
-                            <p:panel id="filters" rendered="#{false}" styleClass="filtros">
+                            <h2 class="second-heading">Relaciones</h2>
 
-                                <div class="ui-g">
+                            <p:separator styleClass="heading-separator"/>
 
-                                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <div class="ui-g ui-fluid">
 
-                                        <p:outputLabel value="Categorías" />
+                                <p:repeat value="#{conceptSCT.getRelationshipDefinitions()}" var="relationshipDefinition">
 
-                                    </div>
+                                    <p:fieldset legend="#{relationshipDefinition.getDescriptionFSN()}" style="width: 100%"
+                                                rendered="#{ not empty conceptSCT.getRelationshipsByRelationshipDefinition(relationshipDefinition)}">
 
-                                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                        <p:repeat value="#{conceptSCT.getRelationshipsByRelationshipDefinition(relationshipDefinition)}"
+                                                  var="rel">
 
-                                        <p:selectCheckboxMenu id="menu2"
-                                                              converter="omnifaces.SelectItemsConverter"
-                                                              value="#{browserBean.browserQuery.categories}"
-                                                              label="Seleccione..." style="width: 95%"
-                                                              filter="true" filterMatchMode="startsWith">
-                                            <f:selectItems value="#{browserBean.categories}" var="category"
-                                                           itemLabel="#{category.name}" itemValue="#{category}"/>
-                                            <p:ajax event="toggleSelect" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
-                                            <p:ajax update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
-                                        </p:selectCheckboxMenu>
+                                            <div class="ui-g-12 ui-md-12 ui-lg-12">
 
-                                    </div>
+                                                <p:link value="#{rel.destinationConcept.getRepresentation()}" outcome="/views/concept-snomed">
+                                                    <f:param name="conceptID" value="#{rel.destinationConcept.idSnomedCT}" />
+                                                </p:link>
 
-                                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                            </div>
 
-                                        <p:outputLabel value="Etiquetas" />
+                                        </p:repeat>
 
-                                    </div>
+                                    </p:fieldset>
 
-                                    <div class="ui-g-12 ui-md-6 ui-lg-4">
+                                </p:repeat>
 
-                                        <p:selectCheckboxMenu id="tags2"
-                                                              value="#{browserBean.browserQuery.tags}"
-                                                              converter="omnifaces.SelectItemsConverter"
-                                                              label="Seleccione..."
-                                                              style="width: 95%"
-                                                              filter="true"
-                                                              filterMatchMode="startsWith">
-                                            <p:ajax event="change" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
-                                            <p:ajax event="toggleSelect" update="@(.conceptTable),@(.filterStatus)" listener="#{browserBean.setFilterChanged(true)}" />
-
-                                            <f:selectItems value="#{browserBean.tags}" var="tag"
-                                                           itemLabel="#{tag.name}" itemValue="#{tag}"/>
-                                        </p:selectCheckboxMenu>
-
-                                    </div>
-
-                                </div>
-
-                            </p:panel>
-
-                        </p:outputPanel>
-
-                    </div>
-
-                <p:outputPanel id="conceptPanel" styleClass="conceptPanel">
-
-                    <p:dataTable id="conceptTable" value="#{browserSCTBean.concepts}" var="conceptSCT" styleClass="conceptTable"
-                                 widgetVar="conceptTable"
-                                 rendered="#{not empty browserSCTBean.concepts}"
-                                 multiViewState="true"
-                                 rows="15"
-                                 paginator="true" lazy="true" dynamic="true"
-                                 paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                 emptyMessage="No se han encontrado conceptos con los criterios utilizados">
-
-                        <p:ajax event="page" listener="#{browserSCTBean.updatePage}" oncomplete="scrollTop();" update="@(.search)" />
-
-                        <p:column headerText="Termino Preferido">
-                            <div class="ui-g dashboard">
-                                <div class="ui-g-12">
-                                    <div class="card overview">
-                                        <div class="overview-content clearfix">
-                                                    <span class="overview-title">
-                                                        <p:link outcome="/views/concept-snomed" value="#{conceptSCT.getDescriptionFSN().term}" styleClass="myCustomLinkStyle" >
-                                                            <f:param name="conceptID" value="#{conceptSCT.id}" />
-                                                        </p:link>
-                                                    </span>
-                                                    <span class="overview-detail">
-                                                        <h:outputText value="#{conceptSCT.id}" style="font-size: small; color: #006621" />
-                                                        <br/>
-
-                                                    </span>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
-                        </p:column>
 
-                    </p:dataTable>
+                        </div>
 
-                    <p:dataTable id="conceptTableExcel" widgetVar="conceptTableExcel" value="#{browserSCTBean.concepts}" var="conceptSCT" styleClass="conceptTable"
-                                 style="display: none"
-                                 rows="15"
-                                 paginator="true" lazy="true" dynamic="true"
-                                 reflow="true"
-                                 paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                                 emptyMessage="No se han encontrado conceptos con los criterios utilizados">
-                        <f:facet name="{Exporters}">
-                            <p:commandButton ajax="false" value="Exportar a Excel" process="@this" update="@this"
-                                             icon="fa fa-file-excel-o">
-                                <p:dataExporter type="xls" target="conceptTable"
-                                                fileName="conceptos"/>
-                            </p:commandButton>
-                        </f:facet>
+                        <p:tabView rendered="false">
+                            <p:tab title="Otras Descripciones" rendered="#{not empty conceptSCT.getOtherDescriptions()}">
+                                <p:dataTable id="otherDescriptions"
+                                             rows="5"
+                                             paginator="false"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                             var="description"
+                                             value="#{conceptSCT.getOtherDescriptions()}"
+                                             editable="true"
+                                             reflow="true">
 
-                        <p:column headerText="Concept ID">
-                            <h:outputText value="#{conceptSCT.id}"/>
-                        </p:column>
+                                    <p:column headerText="Tipo Descripción" style="font-weight: bold">
+                                        #{description.descriptionType.name}
+                                    </p:column>
+                                    <p:column headerText="Término">
+                                        #{description.term}
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
 
-                        <p:column headerText="Termino Preferido">
-                            <h:outputText value="#{conceptSCT.getDescriptionFSN().term}"/>
-                        </p:column>
+                            <p:tab title="Relaciones" rendered="#{not empty conceptSCT.selectedConcept.getRelationships()}">
+                                <p:dataTable id="relationships"
+                                             rows="5"
+                                             paginator="false"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                             var="relationship"
+                                             value="#{conceptSCT.selectedConcept.getRelationships()}"
+                                             editable="true"
+                                             reflow="true">
 
-                    </p:dataTable>
+                                    <p:column headerText="Tipo Relación" style="font-weight: bold">
+                                        <p:link value="#{relationship.typeConcept.getRepresentation()}" outcome="/views/concept-snomed">
+                                            <f:param name="conceptID" value="#{relationship.typeConcept.idSnomedCT}" />
+                                        </p:link>
+                                    </p:column>
+                                    <p:column headerText="Destino">
+                                        <p:link value="#{relationship.destinationConcept.getRepresentation()}" outcome="/views/concept-snomed">
+                                            <f:param name="conceptID" value="#{relationship.destinationConcept.idSnomedCT}" />
+                                        </p:link>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
 
+                        </p:tabView>
+
+                        <div class="ui-g ui-fluid">
+
+                            <div class="ui-g-12 ui-md-4 ui-lg-2">
+                                <p:button outcome="concepts-snomed" value="Volver" styleClass="blue-grey-btn ui-priority-primary" icon="fa fa-arrow-left" rendered="false"/>
+                            </div>
+
+                        </div>
+
+                    </h:form>
                 </p:outputPanel>
-
-                </h:form>
-
-                <div class="ui-g ui-fluid">
-
-                    <div class="ui-g-12 ui-md-4 ui-lg-2">
-                        <p:button outcome="home" value="Inicio" styleClass="blue-grey-btn ui-priority-primary" icon="fa fa-arrow-left"/>
-                    </div>
-
-                </div>
 
             </div>
 
         </div>
 
-
-        <p:overlayPanel widgetVar="carOP" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true">
-            <p:outputPanel styleClass="conceptDetail" style="width: 500px;">
-
-            </p:outputPanel>
-        </p:overlayPanel>
-
-        <script type="text/javascript">
-
-            $(function() {
-
-                // Set window scroll position if cookie is set.
-                window.scroll(0, $.cookie('myCookie'));
-                // Unset cookie after setting scroll position.
-                $.removeCookie('myCookie');
-                listenPageOnClickEvent();
-                listenSearchOnClickEvent();
-            });
-
-            function scrollTop() {
-                setTimeout(
-                    function() {
-                        window.scroll(0, 0);
-                        listenPageOnClickEvent();
-                    }, 0);
-
-            }
-
-            // This function simply gets the window scroll position, works in all browsers.
-            function getPageScroll() {
-                var yScroll;
-                if (self.pageYOffset) {
-                    yScroll = self.pageYOffset;
-                } //else if (document.documentElement document.documentElement.scrollTop) {
-//                    yScroll = document.documentElement.scrollTop;
-                //}
-                else if (document.body) {
-                    yScroll = document.body.scrollTop;
-                }
-                return yScroll;
-            }
-
-            function listenPageOnClickEvent() {
-                // Make this class objects keep page scroll position.
-                $('.myCustomLinkStyle').each(function() {
-                    $(this).on('click', function() {
-                        $.cookie('myCookie', getPageScroll());
-                    });
-                });
-            }
-
-            function listenSearchOnClickEvent() {
-                $('.search-button-tiny').on("click", function () {
-                    if ($('input[id$=search_hinput]').val().length >= 3) {
-                        //$('input[id$=search_input]').trigger('keydown');
-                        //$('input[id$=search_input]').trigger('input');
-                        $('span[id$=search_panel] .ui-autocomplete-item:first-child').trigger('click');
-                        //$('input[id$=search_input]').parent().trigger('click');
-                    }
-                    else {
-                        return false;
-                    }
-                });
-            }
-
-        </script>
 
 
     </ui:define>

@@ -20,8 +20,40 @@
                     <p:menuitem value="#{concept.selectedConcept.conceptID}" url="#" />
                 </p:breadCrumb>
 
-
                 <p:outputPanel styleClass="conceptForm">
+
+                <p:outputPanel rendered="#{concept.selectedConcept == null}">
+                    <div class="card card-w-title">
+                        <h1 class="first-heading">Bienvenido al sitio de consulta Semantikos</h1>
+                        <p:separator styleClass="heading-separator"/>
+
+                        <ul>
+                            <li>
+                                <p:outputLabel value="En este sitio usted puede navegar por los distintos conceptos de la terminología"/>
+                            </li>
+                            <li>
+                                <p:outputLabel value="Puede navegar tanto por la terminología nacional Semantikos, además de la terminología internacional Snomed-CT"/>
+                            </li>
+                            <li>
+                                <p:outputLabel value="Puede filtrar por los dominios de conocimiento específicos a su búsqueda"/>
+                            </li>
+                        </ul>
+
+                        <h2 class="second-heading">¿Qué es Semantikos?</h2>
+                        <p:separator styleClass="heading-separator"/>
+                        <p style="padding-left: 10px">
+                            Una terminología clínica es un vocabulario estructurado que se utiliza en la práctica clínica para describir con precisión el cuidado y tratamiento de los pacientes. Las terminologías clínicas abarcan conceptos complejos tales como enfermedades, procedimientos, tratamientos y medicamentos. Pueden cubrir todas las dimensiones necesarias para describir el trabajo clínico o sólo algunas de ellas.
+                            <a href="http://www.salud-e.cl/servicios-terminologicos/pagina-menu-int-prueba/">Leer más</a>
+                        </p>
+
+                        <h2 class="second-heading">Mejor información es más y mejor salud</h2>
+                        <p:separator styleClass="heading-separator"/>
+                        <p style="padding-left: 10px">
+                            La Estrategia Digital en Salud o Plan de e-Salud tiene como misión contribuir a mejorar la salud de la población a través de una gestión oportuna, eficiente y confiable de información estandarizada.
+                            <a href="http://www.salud-e.cl/servicios-terminologicos/pagina-menu-int-prueba/">Leer más</a>
+                        </p>
+                    </div>
+                </p:outputPanel>
 
                 <h:form id="conceptForm" rendered="#{concept.selectedConcept != null}">
 
@@ -142,8 +174,24 @@
 
                             <p:separator styleClass="heading-separator"/>
 
+                            <div class="ui-g ui-fluid">
+
+                                <p:repeat value="#{concept.getSnomedCTRelationships()}" var="relationship">
+
+                                    <div class="ui-g-12 ui-md-4 ui-lg-2">
+                                        <h:outputText value="#{relationship.getRelationshipTypeAttribute().target.description}:" styleClass="label" />
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-8 ui-lg-10">
+                                        <h:outputText value="#{relationship.target.getDescriptionFSN().term}" styleClass="value"/>
+                                    </div>
+
+                                </p:repeat>
+
+                            </div>
+
                             <p:dataTable id="snomedAttributes2"
-                                         paginator="false"
+                                         paginator="false" rendered="false"
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                          var="relationship"
                                          value="#{concept.getSnomedCTRelationships()}"
@@ -518,7 +566,7 @@
                     <div class="ui-g ui-fluid">
 
                         <div class="ui-g-12 ui-md-4 ui-lg-2">
-                            <p:button outcome="concepts" value="Volver" styleClass="cyan-btn ui-priority-primary loader-trigger" icon="fa fa-arrow-left"/>
+                            <p:button outcome="concepts" value="Volver" rendered="false" styleClass="cyan-btn ui-priority-primary loader-trigger" icon="fa fa-arrow-left"/>
                         </div>
 
                     </div>

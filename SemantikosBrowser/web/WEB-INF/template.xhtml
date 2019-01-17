@@ -120,7 +120,8 @@
             function mark() {
 
                 // Read the keyword
-                var keyword =  $('input[id$=search_input]').val();
+                //var keyword =  $('input[id$=search_input]').val();
+                var keyword =  $('.search_input').val();
 
                 // Determine selected options
                 var options = {};
@@ -174,7 +175,7 @@
                 listenPageOnClickEvent();
                 listenSearchOnClickEvent();
                 listenSearchOnFocusEvent();
-                //mark();
+                mark();
             }
 
             function scrollTop() {

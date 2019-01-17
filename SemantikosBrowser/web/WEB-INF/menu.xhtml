@@ -24,14 +24,38 @@
 
                     <p:outputPanel rendered="true">
                         <div class="ui-fluid ui-g">
+                            <div class="ui-g-4 ui-md-4 ui-lg-4">
+                                <p:outputLabel value="Buscar en:"/>
+                            </div>
+                            <div class="ui-g-8 ui-md-8 ui-lg-8">
+                                <p:selectOneMenu value="#{browserBean.snomedCT}" styleClass="searchMenu">
+                                    <f:selectItem itemLabel="Semantikos" itemValue="false"/>
+                                    <f:selectItem itemLabel="Snomed-CT" itemValue="true"/>
+                                    <p:ajax event="itemSelect" listener="#{browserBean.redirectSnomedCT()}" process="@this"
+                                           update="@(.search)"  />
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+                    </p:outputPanel>
+
+                    <p:outputPanel rendered="true">
+                        <div class="ui-fluid ui-g">
                             <div class="ui-g-12 ui-md-12 ui-lg-12">
 
                                 <p:outputPanel style="width: 100%" styleClass="search">
 
-                                    <p:inputText value="#{browserBean.browserQuery.query}" placeholder="Buscar..." style="width: 100%"
-                                                 onkeyup="return (this.value.length >= 3 || this.value.length == 0)">
-                                        <p:ajax event="keyup" update="@(.conceptPanel),@(.search2)" process="@this"
+                                    <p:inputText id="search_input" value="#{browserBean.browserQuery.query}" placeholder="Buscar en Semantikos..."
+                                                 style="width: 100%" styleClass="search_input"
+                                                 onkeyup="return (this.value.length >= 3 || this.value.length == 0)" rendered="#{ not browserBean.snomedCT}">
+                                        <p:ajax event="keyup" update="@(.conceptPanel),@(.search2)" process="@this" oncomplete="mark();"
                                                 listener="#{browserBean.setFilterChanged(true)}"/>
+                                    </p:inputText>
+
+                                    <p:inputText id="search_input2" value="#{browserSCTBean.snomedQuery.query}" placeholder="Buscar en Snomed-CT..."
+                                                 style="width: 100%" styleClass="search_input"
+                                                 onkeyup="return (this.value.length >= 3 || this.value.length == 0)" rendered="#{browserBean.snomedCT}">
+                                        <p:ajax event="keyup" update="@(.conceptPanel),@(.search2)" process="@this" oncomplete="mark();"
+                                                listener="#{browserSCTBean.setFilterChanged(true)}"/>
                                     </p:inputText>
 
                                     <i class="fa fa-search fa-lg" />
@@ -59,7 +83,7 @@
 
                     <p:dataTable id="conceptTable" value="#{browserBean.concepts}" var="conceptSMTK" styleClass="conceptTable"
                                  widgetVar="conceptTable"
-                                 rendered="#{not empty browserBean.concepts}"
+                                 rendered="#{not empty browserBean.concepts and not browserBean.snomedCT}"
                                  multiViewState="true"
                                  rows="15"
                                  paginator="true" lazy="true" dynamic="true"
@@ -111,6 +135,42 @@
                         </p:column>
 
                     </p:dataTable>
+
+                        <p:dataTable id="conceptTableSCT" value="#{browserSCTBean.concepts}" var="concept" styleClass="conceptTableSCT"
+                                     widgetVar="conceptTable"
+                                     rendered="#{not empty browserSCTBean.concepts and browserBean.snomedCT}"
+                                     multiViewState="true"
+                                     rows="15"
+                                     paginator="true" lazy="true" dynamic="true"
+                                     paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
+                                     emptyMessage="No se han encontrado conceptos con los criterios utilizados">
+
+                            <p:ajax event="page" listener="#{browserSCTBean.updatePage}" oncomplete="scrollTop(); loader(); listen();" update="@(.search)" />
+
+                            <p:column headerText="Termino Preferido" style="padding: 0px">
+                                <div class="ui-g dashboard">
+                                    <div class="ui-g-12" style="padding: 0px">
+                                        <div class="card overview" style="min-height: 0px; border-bottom: 1px solid #cfcfcf;">
+                                            <div class="overview-content clearfix" style="padding: 10px">
+                                                    <span class="overview-title">
+                                                        <p:commandLink value="#{concept.getDescriptionFSN().term}"
+                                                                       actionListener="#{conceptSCT.setConceptID(concept.id)}"
+                                                                       update="@(.conceptForm)"
+                                                                       styleClass="context" style="font-size: medium">
+                                                        </p:commandLink>
+                                                    </span>
+                                                    <span class="overview-detail">
+                                                        <h:outputText value="#{concept.id}" style="font-size: small; color: #006621" />
+                                                        <br/>
+
+                                                    </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p:column>
+
+                        </p:dataTable>
 
                     <p:dataTable id="conceptTableExcel" widgetVar="conceptTableExcel" value="#{browserBean.concepts}" var="conceptSMTK" styleClass="conceptTable"
                                  style="display: none"

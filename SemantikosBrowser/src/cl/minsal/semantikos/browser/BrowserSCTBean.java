@@ -108,45 +108,7 @@ public class BrowserSCTBean implements Serializable {
     @PostConstruct
     protected void initialize() {
         guestPreferences.setTheme("teal");
-    }
-
-    public void initMenu() {
-
-        menu = new DefaultMenuModel();
-
-        //Inicio
-        DefaultMenuItem item0 = new DefaultMenuItem("Inicio");
-        item0.setUrl("/views/home.xhtml");
-        item0.setIcon("fa fa-home");
-        item0.setId("rm_home");
-
-        menu.addElement(item0);
-
-        //Volver
-        DefaultMenuItem item1 = new DefaultMenuItem("Conceptos");
-        item1.setUrl("/views/snomed/concepts");
-        item1.setIcon("fa fa-search");
-        item1.setId("rm_volver");
-
-        menu.addElement(item1);
-
-        //Snomed
-        DefaultMenuItem item2 = new DefaultMenuItem("Semantikos");
-        item2.setUrl("/views/concepts");
-        item2.setIcon("fa fa-arrow-left");
-        item2.setId("rm_snomed");
-
-        menu.addElement(item2);
-
-        //Últimos visitados
-        DefaultSubMenu conceptSubmenu = new DefaultSubMenu("Recientes");
-        conceptSubmenu.setIcon("fa fa-list");
-        conceptSubmenu.setId("rm_concepts");
-        conceptSubmenu.setExpanded(true);
-
-        menu.addElement(conceptSubmenu);
-
-        circularFifoQueue = new CircularFifoQueue(5);
+        performSearch = true;
     }
 
     public int getResults() {
@@ -209,7 +171,7 @@ public class BrowserSCTBean implements Serializable {
                 if(isFilterChanged) {
                     snomedQuery.setPageNumber(0);
                     RequestContext context = RequestContext.getCurrentInstance();
-                    context.execute("PF('conceptTable').getPaginator().setPage(0);");
+                    context.execute("PF('conceptTableSCT').getPaginator().setPage(0);");
                     this.setRowIndex(0);
                 }
                 else {

@@ -259,7 +259,7 @@ public class ConceptBean implements Serializable {
         this.conceptID = conceptID;
         selectedConcept = conceptManager.getConceptByCONCEPT_ID(conceptID);
         selectedConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(selectedConcept));
-
+        indirectCrossmaps = new ArrayList<>();
         //updateMainMenu();
         //updateNavigationMenu();
     }

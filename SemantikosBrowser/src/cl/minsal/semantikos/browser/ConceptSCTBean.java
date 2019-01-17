@@ -124,12 +124,6 @@ public class ConceptSCTBean {
         this.conceptID = conceptID;
         selectedConcept = snomedCTManager.getConceptByID(conceptID);
         selectedConcept.setRelationships(snomedCTManager.getRelationshipsFrom(selectedConcept));
-
-        if(!browserBean.getCircularFifoQueue().contains(selectedConcept)) {
-            browserBean.getCircularFifoQueue().add(selectedConcept);
-        }
-
-        browserBean.refreshLastVisitedMenu();
     }
 
     public BrowserBean getBrowserBean() {
