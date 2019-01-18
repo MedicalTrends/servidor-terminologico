@@ -3,6 +3,7 @@ package cl.minsal.semantikos.session;
 
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.componentsweb.TimeOutWeb;
+import cl.minsal.semantikos.model.system.SystemFactory;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -26,12 +27,13 @@ public class TimeOutSessionBean {
 
     @PostConstruct
     public void init() {
-        timeOut=timeOutWeb.getTimeOut();
+        //timeOut = timeOutWeb.getTimeOut();
+        timeOut = SystemFactory.getTimeout();
     }
 
     public void redirectSession() throws IOException {
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-        eContext.redirect("/views/concepts.xhtml");
+        eContext.redirect("/");
         return;
     }
 

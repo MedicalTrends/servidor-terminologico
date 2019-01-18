@@ -4,8 +4,10 @@ import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.CategoryManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.kernel.components.TagSMTKManager;
+import cl.minsal.semantikos.kernel.componentsweb.TimeOutWeb;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
+import cl.minsal.semantikos.model.system.SystemFactory;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +42,11 @@ public class ApplicationContainer implements Serializable {
 
     private DescriptionTypeFactory descriptionTypeFactory;
 
+    //@EJB
+    private TimeOutWeb timeOutWeb= (TimeOutWeb) ServiceLocator.getInstance().getService(TimeOutWeb.class);
+
+    private static int timeOut;
+
     @PostConstruct
     public void init() {
 
@@ -53,6 +60,8 @@ public class ApplicationContainer implements Serializable {
         TagSMTKFactory.getInstance().setTagsSMTKByName(tagSMTKFactory.getTagsSMTKByName());
 
         DescriptionTypeFactory.getInstance().setDescriptionTypes(descriptionTypeFactory.getDescriptionTypes());
+
+        SystemFactory.getInstance().setTimeout(timeOutWeb.getTimeOut());
 
     }
 
@@ -70,6 +79,14 @@ public class ApplicationContainer implements Serializable {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    public static int getTimeOut() {
+        return timeOut;
+    }
+
+    public static void setTimeOut(int timeOut) {
+        ApplicationContainer.timeOut = timeOut;
     }
 
 }

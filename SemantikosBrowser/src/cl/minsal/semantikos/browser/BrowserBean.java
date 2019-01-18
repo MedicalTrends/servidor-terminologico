@@ -367,7 +367,7 @@ public class BrowserBean implements Serializable {
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
         if(browserQuery.getQuery() != null && browserQuery.getQuery().length() >= 3) {
             performSearch = true;
-            eContext.redirect(eContext.getRequestContextPath() + "/views/concepts");
+            eContext.redirect(eContext.getRequestContextPath() + "/");
         }
     }
 
@@ -379,7 +379,7 @@ public class BrowserBean implements Serializable {
             eContext.redirect(eContext.getRequestContextPath() + "/views/snomed/concepts");
         }
         else {
-            eContext.redirect(eContext.getRequestContextPath() + "/views/concepts");
+            eContext.redirect(eContext.getRequestContextPath() + "/");
         }
     }
 
