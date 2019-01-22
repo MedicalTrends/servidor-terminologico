@@ -34,6 +34,7 @@ public class AuthFilterBrowser implements Filter {
                 req.getSession().invalidate();
             }
 
+            /*
             if((req.getRequestURI().equals("/views/home.xhtml") || req.getRequestURI().equals("/")) && req.getParameterMap().isEmpty()) {
                 ((HttpServletResponse) response).setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
                 ((HttpServletResponse) response).setHeader("Pragma", "no-cache"); // HTTP 1.0.
@@ -43,8 +44,8 @@ public class AuthFilterBrowser implements Filter {
                 if(auth != null) {
                     auth.logout();
                 }
-
             }
+            */
         }
 
         chain.doFilter(request, response);

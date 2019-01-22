@@ -11,6 +11,7 @@ import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.queries.BrowserQuery;
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import cl.minsal.semantikos.model.system.SystemFactory;
 import cl.minsal.semantikos.model.tags.Tag;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.primefaces.context.RequestContext;
@@ -145,7 +146,7 @@ public class BrowserBean implements Serializable {
 
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        request.getSession().setMaxInactiveInterval(timeOutWeb.getTimeOut());
+        request.getSession().setMaxInactiveInterval(SystemFactory.getTimeout());
 
         //ServiceLocator.getInstance().closeContext();
         tags = tagManager.getAllTags();

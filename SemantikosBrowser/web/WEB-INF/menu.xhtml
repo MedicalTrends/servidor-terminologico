@@ -28,8 +28,8 @@
                                 <p:selectOneMenu value="#{browserBean.snomedCT}" styleClass="searchMenu">
                                     <f:selectItem itemLabel="Semantikos" itemValue="false"/>
                                     <f:selectItem itemLabel="Snomed-CT" itemValue="true"/>
-                                    <p:ajax event="itemSelect" listener="#{browserBean.redirectSnomedCT()}" process="@this"
-                                           update="@(.search)"  />
+                                    <p:ajax event="itemSelect" process="@this"
+                                           update="@(.search),@(.conceptPanel)"  />
                                 </p:selectOneMenu>
                             </div>
                         </div>
@@ -80,14 +80,14 @@
 
                     <p:dataTable id="conceptTable" value="#{browserBean.concepts}" var="conceptSMTK" styleClass="conceptTable"
                                  widgetVar="conceptTable"
-                                 rendered="#{false}"
+                                 rendered="#{not empty browserBean.concepts and not browserBean.snomedCT}"
                                  multiViewState="true"
                                  rows="15"
                                  paginator="true" lazy="true" dynamic="true"
                                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
                                  emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
-                        <p:ajax event="page" listener="#{browserBean.updatePage}" oncomplete="scrollTop(); loader(); listen();" update="@(.search)" />
+                        <p:ajax event="page" listener="#{browserBean.updatePage}" oncomplete="scrollTop(); loader(); listen();" update="@(.search),@(.search2)" />
 
                         <p:column headerText="Termino Preferido" style="padding: 0px">
                             <div class="ui-g dashboard">
@@ -135,14 +135,14 @@
 
                     <p:dataTable id="conceptTableSCT" value="#{browserSCTBean.concepts}" var="concept" styleClass="conceptTableSCT"
                                  widgetVar="conceptTable"
-                                 rendered="#{false}"
+                                 rendered="#{not empty browserSCTBean.concepts and browserBean.snomedCT}"
                                  multiViewState="true"
                                  rows="15"
                                  paginator="true" lazy="true" dynamic="true"
                                  paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
                                  emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
-                        <p:ajax event="page" listener="#{browserSCTBean.updatePage}" oncomplete="scrollTop(); loader(); listen();" update="@(.search)" />
+                        <p:ajax event="page" listener="#{browserSCTBean.updatePage}" oncomplete="scrollTop(); loader(); listen();" update="@(.search),@(.search2)" />
 
                         <p:column headerText="Termino Preferido" style="padding: 0px">
                             <div class="ui-g dashboard">

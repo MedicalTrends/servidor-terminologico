@@ -107,7 +107,7 @@ public class BrowserSCTBean implements Serializable {
 
     @PostConstruct
     protected void initialize() {
-        guestPreferences.setTheme("teal");
+        //guestPreferences.setTheme("teal");
         performSearch = true;
     }
 
@@ -132,7 +132,7 @@ public class BrowserSCTBean implements Serializable {
      */
     public void executeQuery() {
 
-        guestPreferences.setTheme("teal");
+        //guestPreferences.setTheme("teal");
 
         init = currentTimeMillis();
 
