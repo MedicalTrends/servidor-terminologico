@@ -28,7 +28,7 @@
                                 <p:selectOneMenu value="#{browserBean.snomedCT}" styleClass="searchMenu">
                                     <f:selectItem itemLabel="Semantikos" itemValue="false"/>
                                     <f:selectItem itemLabel="Snomed-CT" itemValue="true"/>
-                                    <p:ajax event="itemSelect" process="@this"
+                                    <p:ajax event="itemSelect" process="@this" listener="#{browserBean.redirectSnomedCT()}"
                                            update="@(.search),@(.conceptPanel)"  />
                                 </p:selectOneMenu>
                             </div>
@@ -57,6 +57,20 @@
 
                                     <i class="fa fa-search fa-lg" />
 
+                                </p:outputPanel>
+
+                                <p:outputPanel styleClass="filterStatus" style="width: 100%">
+                                    <p:repeat value="#{browserBean.browserQuery.categories}" var="category">
+                                        <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding-bottom: 0px">
+                                            <span style="display: inherit; padding: 4px" class="ui-state-active ui-corner-all ui-helper-hidden">
+                                                <p:commandLink actionListener="#{browserBean.browserQuery.categories.remove(category)}"
+                                                               update="@(.conceptTable),@(.filterStatus)" style="float: right">
+                                                    <i class="ui-icon ui-icon-close" />
+                                                </p:commandLink>
+                                                <span class="ui-autocomplete-token-label" style="font-size: small;">#{category.name}</span>
+                                            </span>
+                                        </div>
+                                    </p:repeat>
                                 </p:outputPanel>
 
                             </div>
@@ -95,11 +109,16 @@
                                     <div class="card overview" style="min-height: 0px; border-bottom: 1px solid #cfcfcf;">
                                         <div class="overview-content clearfix" style="padding: 10px">
                                             <span class="overview-title">
-                                                <p:commandLink value="#{conceptSMTK.descriptionFavorite.term}"
+                                                <p:commandLink value="#{conceptSMTK.descriptionFavorite.term}" rendered="false"
                                                                actionListener="#{concept.setConceptID(conceptSMTK.conceptID)}"
-                                                               update="@(.conceptForm)"
+                                                               update="@(.conceptForm)" oncomplete="scrolltop();"
                                                         styleClass="context" style="font-size: medium">
                                                 </p:commandLink>
+                                                <p:link value="#{conceptSMTK.descriptionFavorite.term}" rendered="true"
+                                                               oncomplete="scrolltop();" outcome="/views/concept"
+                                                               styleClass="context" style="font-size: medium">
+                                                    <f:param name="conceptID" value="#{conceptSMTK.conceptID}" />
+                                                </p:link>
                                             </span>
                                             <span class="overview-detail">
                                                 <h:outputText value="#{conceptSMTK.conceptID}" style="font-size: small; color: #006621" />
@@ -150,11 +169,16 @@
                                     <div class="card overview" style="min-height: 0px; border-bottom: 1px solid #cfcfcf;">
                                         <div class="overview-content clearfix" style="padding: 10px">
                                                 <span class="overview-title">
-                                                    <p:commandLink value="#{concept.getDescriptionFSN().term}"
+                                                    <p:commandLink value="#{concept.getDescriptionFSN().term}" rendered="false"
                                                                    actionListener="#{conceptSCT.setConceptID(concept.id)}"
                                                                    update="@(.conceptForm)"
                                                                    styleClass="context" style="font-size: medium">
                                                     </p:commandLink>
+                                                    <p:link value="#{concept.getDescriptionFSN().term}" rendered="true"
+                                                            oncomplete="scrolltop();" outcome="/views/concept-snomed"
+                                                            styleClass="context" style="font-size: medium">
+                                                        <f:param name="conceptID" value="#{concept.id}" />
+                                                    </p:link>
                                                 </span>
                                                 <span class="overview-detail">
                                                     <h:outputText value="#{concept.id}" style="font-size: small; color: #006621" />
@@ -223,4 +247,16 @@
             </div>
         </div>
     </h:form>
+
+    <script type="text/javascript">
+
+        function scrolltop() {
+            setTimeout(
+                    function() {
+                        window.scroll(0, 0);
+                    }, 0);
+        }
+
+    </script>
+
 </ui:composition>

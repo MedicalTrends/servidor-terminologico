@@ -102,12 +102,12 @@
 
                                 <p:repeat value="#{conceptSCT.selectedConcept.getRelationships()}" var="relationship">
                                     <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                        <p:link value="#{relationship.typeConcept.getRepresentation()}" outcome="/views/snomed/concept-snomed">
+                                        <p:link value="#{relationship.typeConcept.getRepresentation()}" outcome="/views/concept-snomed">
                                             <f:param name="conceptID" value="#{relationship.typeConcept.idSnomedCT}" />
                                         </p:link>
                                     </div>
                                     <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                        <p:link value="#{relationship.destinationConcept.getRepresentation()}" outcome="/views/snomed/concept-snomed">
+                                        <p:link value="#{relationship.destinationConcept.getRepresentation()}" outcome="/views/concept-snomed">
                                             <f:param name="conceptID" value="#{relationship.destinationConcept.idSnomedCT}" />
                                         </p:link>
                                     </div>

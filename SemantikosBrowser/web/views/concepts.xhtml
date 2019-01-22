@@ -191,7 +191,9 @@
                                     </div>
 
                                     <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                        <h:outputText value="#{relationship.target.getDescriptionFSN().term}" styleClass="value"/>
+                                        <p:commandLink value="#{relationship.target.getDescriptionFSN().term}" update="@(.conceptForm)"
+                                                       actionListener="#{conceptSCT.setConceptID(relationship.target.id)}"
+                                                       styleClass="value"/>
                                     </div>
 
                                 </p:repeat>
@@ -355,12 +357,12 @@
 
                             <p:repeat value="#{conceptSCT.selectedConcept.getRelationships()}" var="relationship">
                                 <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                    <p:commandLink value="#{relationship.typeConcept.getRepresentation()}" update="@(.conceptForm)"
+                                    <p:commandLink value="#{relationship.typeConcept.descriptionFSN}" update="@(.conceptForm)"
                                                    actionListener="#{conceptSCT.setConceptID(relationship.typeConcept.idSnomedCT)}">
                                     </p:commandLink>
                                 </div>
                                 <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                    <p:commandLink value="#{relationship.destinationConcept.getRepresentation()}" update="@(.conceptForm)"
+                                    <p:commandLink value="#{relationship.destinationConcept.descriptionFSN}" update="@(.conceptForm)"
                                                    actionListener="#{conceptSCT.setConceptID(relationship.destinationConcept.idSnomedCT)}">
                                     </p:commandLink>
                                 </div>

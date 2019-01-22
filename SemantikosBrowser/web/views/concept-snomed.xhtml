@@ -14,8 +14,6 @@
 
         <div class="ui-g">
 
-            <div class="ui-g-0 ui-md-0 ui-lg-0"></div>
-
             <div class="ui-g-12 ui-md-12 ui-lg-12">
 
                 <p:breadCrumb id="top-menu">
@@ -25,15 +23,15 @@
                     <p:menuitem value="#{conceptSCT.selectedConcept.id}" url="#" />
                 </p:breadCrumb>
 
-                <h:form id="browserForm">
+                <h:form id="snomedForm" rendered="#{browserBean.snomedCT and conceptSCT.selectedConcept != null}">
 
-                <div class="card card-w-title">
+                    <div class="card card-w-title">
 
-                    <h1 class="first-heading">#{conceptSCT.selectedConcept.descriptionFSN}</h1>
+                        <h1 class="first-heading">#{conceptSCT.selectedConcept.descriptionFSN}</h1>
 
-                    <p:separator styleClass="heading-separator"/>
+                        <p:separator styleClass="heading-separator"/>
 
-                    <div class="ui-g ui-fluid" style="margin-bottom: 20px">
+                        <div class="ui-g ui-fluid" style="margin-bottom: 20px">
 
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
                                 <h:outputText value="ConceptID" styleClass="label" />
@@ -68,96 +66,40 @@
 
                         </div>
 
-                    <h2 class="second-heading">Relaciones</h2>
+                        <h2 class="second-heading">Relaciones</h2>
 
-                    <p:separator styleClass="heading-separator"/>
+                        <p:separator styleClass="heading-separator"/>
+
+                        <div class="ui-g ui-fluid">
+
+                            <p:repeat value="#{conceptSCT.selectedConcept.getRelationships()}" var="relationship">
+                                <div class="ui-g-12 ui-md-4 ui-lg-2">
+                                    <p:commandLink value="#{relationship.typeConcept.descriptionFSN}" update="@(.conceptForm)"
+                                                   actionListener="#{conceptSCT.setConceptID(relationship.typeConcept.idSnomedCT)}">
+                                    </p:commandLink>
+                                </div>
+                                <div class="ui-g-12 ui-md-8 ui-lg-10">
+                                    <p:commandLink value="#{relationship.destinationConcept.descriptionFSN}" update="@(.conceptForm)"
+                                                   actionListener="#{conceptSCT.setConceptID(relationship.destinationConcept.idSnomedCT)}">
+                                    </p:commandLink>
+                                </div>
+                            </p:repeat>
+
+                        </div>
+
+                    </div>
 
                     <div class="ui-g ui-fluid">
 
-                        <p:repeat value="#{conceptSCT.getRelationshipDefinitions()}" var="relationshipDefinition">
-
-                            <p:fieldset legend="#{relationshipDefinition.getDescriptionFSN()}" style="width: 100%"
-                            rendered="#{ not empty conceptSCT.getRelationshipsByRelationshipDefinition(relationshipDefinition)}">
-
-                                <p:repeat value="#{conceptSCT.getRelationshipsByRelationshipDefinition(relationshipDefinition)}"
-                                          var="rel">
-
-                                    <div class="ui-g-12 ui-md-12 ui-lg-12">
-
-                                        <p:link value="#{rel.destinationConcept.getRepresentation()}" outcome="/views/concept-snomed">
-                                            <f:param name="conceptID" value="#{rel.destinationConcept.idSnomedCT}" />
-                                        </p:link>
-
-                                    </div>
-
-                                </p:repeat>
-
-                            </p:fieldset>
-
-                        </p:repeat>
+                        <div class="ui-g-12 ui-md-4 ui-lg-2">
+                            <p:button outcome="concepts-snomed" value="Volver" styleClass="blue-grey-btn ui-priority-primary" icon="fa fa-arrow-left" rendered="false"/>
+                        </div>
 
                     </div>
-
-                </div>
-
-                <p:tabView rendered="false">
-                    <p:tab title="Otras Descripciones" rendered="#{not empty conceptSCT.getOtherDescriptions()}">
-                        <p:dataTable id="otherDescriptions"
-                                     rows="5"
-                                     paginator="false"
-                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                     var="description"
-                                     value="#{conceptSCT.getOtherDescriptions()}"
-                                     editable="true"
-                                     reflow="true">
-
-                            <p:column headerText="Tipo Descripción" style="font-weight: bold">
-                                #{description.descriptionType.name}
-                            </p:column>
-                            <p:column headerText="Término">
-                                #{description.term}
-                            </p:column>
-                        </p:dataTable>
-                    </p:tab>
-
-                    <p:tab title="Relaciones" rendered="#{not empty conceptSCT.selectedConcept.getRelationships()}">
-                        <p:dataTable id="relationships"
-                                     rows="5"
-                                     paginator="false"
-                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                     var="relationship"
-                                     value="#{conceptSCT.selectedConcept.getRelationships()}"
-                                     editable="true"
-                                     reflow="true">
-
-                            <p:column headerText="Tipo Relación" style="font-weight: bold">
-                                <p:link value="#{relationship.typeConcept.getRepresentation()}" outcome="/views/concept-snomed">
-                                    <f:param name="conceptID" value="#{relationship.typeConcept.idSnomedCT}" />
-                                </p:link>
-                            </p:column>
-                            <p:column headerText="Destino">
-                                <p:link value="#{relationship.destinationConcept.getRepresentation()}" outcome="/views/concept-snomed">
-                                    <f:param name="conceptID" value="#{relationship.destinationConcept.idSnomedCT}" />
-                                </p:link>
-                            </p:column>
-                        </p:dataTable>
-                    </p:tab>
-
-                </p:tabView>
-
-                <div class="ui-g ui-fluid">
-
-                    <div class="ui-g-12 ui-md-4 ui-lg-2">
-                        <p:button outcome="concepts-snomed" value="Volver" styleClass="blue-grey-btn ui-priority-primary" icon="fa fa-arrow-left"/>
-                    </div>
-
-                </div>
 
                 </h:form>
 
             </div>
-
-            <div class="ui-g-0 ui-md-0 ui-lg-0"></div>
 
         </div>
 
