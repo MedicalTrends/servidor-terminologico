@@ -34,7 +34,7 @@
                         <div class="ui-g ui-fluid" style="margin-bottom: 20px">
 
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <h:outputText value="ConceptID" styleClass="label" />
+                                <h:outputText value="ConceptID:" styleClass="label" />
                             </div>
 
                             <div class="ui-g-12 ui-md-8 ui-lg-10">
@@ -42,7 +42,7 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <h:outputText value="FSN" styleClass="label" />
+                                <h:outputText value="FSN:" styleClass="label" />
                             </div>
 
                             <div class="ui-g-12 ui-md-8 ui-lg-10">
@@ -54,7 +54,7 @@
 
                             <p:repeat value="#{conceptSCT.otherDescriptions}" var="otherDescription">
                                 <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                    <h:outputText value="#{otherDescription.descriptionType.name}" styleClass="label" />
+                                    <h:outputText value="#{otherDescription.descriptionType.name}:" styleClass="label" />
                                 </div>
                                 <div class="ui-g-12 ui-md-8 ui-lg-10">
                                     <h:outputText value="#{otherDescription.term}" styleClass="value" />
@@ -74,7 +74,7 @@
 
                             <p:repeat value="#{conceptSCT.selectedConcept.getRelationships()}" var="relationship">
                                 <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                    <p:commandLink value="#{relationship.typeConcept.descriptionFSN}" update="@(.conceptForm)"
+                                    <p:commandLink value="#{relationship.typeConcept.descriptionFSN}:" update="@(.conceptForm)"
                                                    actionListener="#{conceptSCT.setConceptID(relationship.typeConcept.idSnomedCT)}">
                                     </p:commandLink>
                                 </div>

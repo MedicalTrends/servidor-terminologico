@@ -181,14 +181,16 @@ public class BrowserSCTBean implements Serializable {
                 isFilterChanged = false;
 
                 snomedQuery.setPageSize(pageSize);
-                snomedQuery.setOrder(new Integer(sortField==null?"1":sortField));
+                //snomedQuery.setOrder(new Integer(sortField==null?"1":sortField));
 
+                /*
                 if(sortOrder.name().substring(0,3).toLowerCase().equals("asc")) {
                     snomedQuery.setAsc(sortOrder.name().substring(0, 3).toLowerCase());
                 }
                 else {
                     snomedQuery.setAsc(sortOrder.name().substring(0, 4).toLowerCase());
                 }
+                */
 
                 List<ConceptSCT> conceptSCTs = queryManager.executeQuery(snomedQuery);
 

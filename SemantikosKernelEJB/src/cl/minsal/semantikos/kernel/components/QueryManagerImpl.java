@@ -87,12 +87,16 @@ public class QueryManagerImpl implements QueryManager {
 
     @Override
     public BrowserQuery getDefaultBrowserQuery() {
-        return new BrowserQuery();
+        BrowserQuery browserQuery = new BrowserQuery();
+        browserQuery.resetQuery();
+        return browserQuery;
     }
 
     @Override
     public SnomedQuery getDefaultSnomedQuery() {
-        return new SnomedQuery();
+        SnomedQuery snomedQuery = new SnomedQuery();
+        snomedQuery.resetQuery();
+        return snomedQuery;
     }
 
     @Override

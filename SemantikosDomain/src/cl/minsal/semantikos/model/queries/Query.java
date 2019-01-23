@@ -161,7 +161,7 @@ public class Query implements IQuery, Serializable {
     }
 
     public void resetQuery() {
-        setOrder(1);
+        setOrder(0);
         setAsc("asc");
         setQuery(EMPTY_STRING);
         setTruncateMatch(false);

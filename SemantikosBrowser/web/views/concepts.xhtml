@@ -43,7 +43,9 @@
                                 <p:outputLabel value="Puede navegar tanto por la terminología nacional Semantikos, además de la terminología internacional Snomed-CT"/>
                             </li>
                             <li>
-                                <p:outputLabel value="Puede filtrar por los dominios de conocimiento específicos a su búsqueda"/>
+                                <p:outputLabel value="Puede filtrar por los "/>
+                                <p:commandLink value="dominios de conocimiento " oncomplete="PF('categories-dialog').show()"/>
+                                <p:outputLabel value="específicos a su búsqueda"/>
                             </li>
                         </ul>
 
@@ -64,6 +66,8 @@
                 </p:outputPanel>
 
                 <h:form id="conceptForm" rendered="#{not browserBean.snomedCT and concept.selectedConcept != null}">
+
+                    <p:menu model="#{browserBean.conceptTree}" style="width: 100%" rendered="false"/>
 
                     <div class="card card-w-title">
 
@@ -317,7 +321,7 @@
                         <div class="ui-g ui-fluid" style="margin-bottom: 20px">
 
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <h:outputText value="ConceptID" styleClass="label" />
+                                <h:outputText value="ConceptID:" styleClass="label" />
                             </div>
 
                             <div class="ui-g-12 ui-md-8 ui-lg-10">
@@ -325,7 +329,7 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <h:outputText value="FSN" styleClass="label" />
+                                <h:outputText value="FSN:" styleClass="label" />
                             </div>
 
                             <div class="ui-g-12 ui-md-8 ui-lg-10">
@@ -337,7 +341,7 @@
 
                             <p:repeat value="#{conceptSCT.otherDescriptions}" var="otherDescription">
                                 <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                    <h:outputText value="#{otherDescription.descriptionType.name}" styleClass="label" />
+                                    <h:outputText value="#{otherDescription.descriptionType.name}:" styleClass="label" />
                                 </div>
                                 <div class="ui-g-12 ui-md-8 ui-lg-10">
                                     <h:outputText value="#{otherDescription.term}" styleClass="value" />
@@ -357,7 +361,7 @@
 
                             <p:repeat value="#{conceptSCT.selectedConcept.getRelationships()}" var="relationship">
                                 <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                    <p:commandLink value="#{relationship.typeConcept.descriptionFSN}" update="@(.conceptForm)"
+                                    <p:commandLink value="#{relationship.typeConcept.descriptionFSN}:" update="@(.conceptForm)"
                                                    actionListener="#{conceptSCT.setConceptID(relationship.typeConcept.idSnomedCT)}">
                                     </p:commandLink>
                                 </div>
@@ -383,6 +387,18 @@
                 </h:form>
 
                 </p:outputPanel>
+
+                <p:dialog widgetVar="categories-dialog" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true" header="Categorías" height="300">
+                    <p:outputPanel id="categories-dialog" styleClass="categories-dialog">
+                        <div class="ui-fluid ui-g">
+                            <p:repeat value="#{browserBean.categories}" var="category">
+                                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                    <p:outputLabel styleClass="label" value="#{category.name}" />
+                                </div>
+                            </p:repeat>
+                        </div>
+                    </p:outputPanel>
+                </p:dialog>
 
             </div>
 

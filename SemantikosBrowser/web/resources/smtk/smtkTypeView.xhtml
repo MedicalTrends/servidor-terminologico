@@ -28,10 +28,15 @@
                     <p:repeat value="#{concept.selectedConcept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}" var="relationship">
                         <li>
                             <p:commandLink value="#{concept.formatSMTKRelationship(relationship)}" styleClass="value context"
+                                           rendered="true" oncomplete="scrolltop();"
                                            actionListener="#{concept.setConceptID(relationship.target.conceptID)}"
                                            update="@(.conceptForm)">
                             </p:commandLink>
-                            <p:outputLabel outcome="/views/concept" value="#{concept.formatSMTKRelationshipAttributes(relationship)}" styleClass="value"/>
+                            <p:link value="#{concept.formatSMTKRelationship(relationship)}" rendered="false"
+                                    oncomplete="scrolltop();" outcome="/views/concept"
+                                    styleClass="context">
+                                <f:param name="conceptID" value="#{relationship.target.conceptID}" />
+                            </p:link>
                         </li>
                     </p:repeat>
                 </ol>
@@ -42,10 +47,15 @@
                     <p:repeat value="#{concept.selectedConcept.getValidRelationshipsByRelationDefinition(cc.attrs.relationshipDefinition)}" var="relationship">
                         <li>
                             <p:commandLink value="#{concept.formatSMTKRelationship(relationship)}" styleClass="value context"
-                                           actionListener="#{concept.setConceptID(relationship.target.conceptID)}"
+                                           oncomplete="scrolltop();"
+                                           actionListener="#{concept.setConceptID(relationship.target.conceptID)}" rendered="true"
                                            update="@(.conceptForm)">
                             </p:commandLink>
-                            <p:outputLabel outcome="/views/concept" value="#{concept.formatSMTKRelationshipAttributes(relationship)}" styleClass="value"/>
+                            <p:link value="#{concept.formatSMTKRelationship(relationship)}" rendered="false"
+                                    oncomplete="scrolltop();" outcome="/views/concept"
+                                    styleClass="context">
+                                <f:param name="conceptID" value="#{relationship.target.conceptID}" />
+                            </p:link>
                         </li>
                     </p:repeat>
                 </ul>
@@ -118,9 +128,16 @@
                             <div class="ui-g-12 ui-md-8 ui-lg-10">
 
                                 <p:commandLink value="#{concept.formatSMTKRelationship(relationship)}" styleClass="value context"
+                                               rendered="true" oncomplete="scrolltop();"
                                                actionListener="#{concept.setConceptID(relationship.target.conceptID)}"
                                                update="@(.conceptForm)">
                                 </p:commandLink>
+
+                                <p:link value="#{concept.formatSMTKRelationship(relationship)}" rendered="false"
+                                        oncomplete="scrolltop();" outcome="/views/concept"
+                                        styleClass="context">
+                                    <f:param name="conceptID" value="#{relationship.target.conceptID}" />
+                                </p:link>
 
                             </div>
 

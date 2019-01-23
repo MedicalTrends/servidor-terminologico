@@ -62,6 +62,7 @@ public class ApplicationContainer implements Serializable {
         DescriptionTypeFactory.getInstance().setDescriptionTypes(descriptionTypeFactory.getDescriptionTypes());
 
         SystemFactory.getInstance().setTimeout(timeOutWeb.getTimeOut());
+        //SystemFactory.getInstance().setTimeout(5000);
 
     }
 

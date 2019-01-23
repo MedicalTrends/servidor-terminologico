@@ -153,8 +153,15 @@
 
                                     <div class="ui-g-12 ui-md-8 ui-lg-10">
                                         <p:commandLink value="#{relationship.target.getDescriptionFSN().term}" update="@(.conceptForm)"
+                                                       rendered="true" oncomplete="scrolltop();"
                                                        actionListener="#{conceptSCT.setConceptID(relationship.target.id)}"
                                                        styleClass="value"/>
+
+                                        <p:link value="#{relationship.target.getDescriptionFSN().term}" rendered="false"
+                                                oncomplete="scrolltop();" outcome="/views/concept-snomed"
+                                                styleClass="context">
+                                            <f:param name="conceptID" value="#{relationship.target.id}" />
+                                        </p:link>
                                     </div>
 
                                 </p:repeat>
@@ -213,7 +220,7 @@
 
                                 <p:dataTable id="indirectCrossmaps2"
                                              paginator="false"
-                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                              var="crossmap"
                                              value="#{concept.getIndirectCrossmapsRelationships()}"
                                              reflow="true">

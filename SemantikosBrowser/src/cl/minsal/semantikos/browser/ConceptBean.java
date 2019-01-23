@@ -15,7 +15,7 @@ import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.*;
 import org.primefaces.context.RequestContext;
-import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -253,54 +253,78 @@ public class ConceptBean implements Serializable {
     }
 
     public void setConceptID(String conceptID) {
-        if(conceptID.equals("RES_NOT_FOUND")) {
+        if(conceptID.equals("RES_NOT_FOUND") || conceptID.equals("0")) {
             return;
         }
         this.conceptID = conceptID;
         selectedConcept = conceptManager.getConceptByCONCEPT_ID(conceptID);
         selectedConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(selectedConcept));
         indirectCrossmaps = new ArrayList<>();
-        //updateMainMenu();
-        //updateNavigationMenu();
+        //updateConceptTree();
     }
 
-    public void updateMainMenu() {
+    public void updateConceptTree() {
 
-        if(!browserBean.getCircularFifoQueue().contains(selectedConcept)) {
-            browserBean.getCircularFifoQueue().add(selectedConcept);
+        MenuModel menu = browserBean.getConceptTree();
+        DefaultMenuItem item = new DefaultMenuItem(selectedConcept.getDescriptionFavorite().getTerm());
+        item.setTitle(this.conceptID);
+
+        if(menu.getElements().isEmpty()) {
+            menu.getElements().add(item);
+            return;
         }
 
-        browserBean.refreshLastVisitedMenu();
+        // 1° determinar si existe el elemento en el arbol
+        for (MenuElement menuElement : menu.getElements()) {
+            DefaultMenuItem item2 = (DefaultMenuItem) menuElement;
+            if(item2.getTitle().equals(this.conceptID)) {
+                return;
+            }
+        }
+        // Si no existe, determinar si es el padre del 1er elemento o hijo del ultimo elemento
+        // Si es hijo, el concepto seleccionado debe estar entre las relaciones del ultimo elemento
+        DefaultMenuItem last = (DefaultMenuItem) menu.getElements().get(menu.getElements().size()-1);
+        DefaultMenuItem first = (DefaultMenuItem) menu.getElements().get(0);
+
+        // Si es hijo, agregarlo como un submenú
+        if(isChild(last.getTitle())) {
+            Submenu submenu = new DefaultSubMenu();
+            submenu.getElements().add(item);
+            menu.addElement(submenu);
+            return;
+        }
+
+        // Si es padre, reconstruir el menu empezando desde la nueva raíz
+        if(isParent(first.getId())) {
+            // TODO
+            return;
+        }
+
+        // Si el concepto no esta relacionado con ninguno de los elementos evaluados, volver a crear el menu
+        menu.getElements().clear();
+        menu.getElements().add(item);
+
     }
 
-    public void updateNavigationMenu() {
-        DefaultMenuItem item = new DefaultMenuItem(selectedConcept.getConceptID());
-        item.setUrl("/views/concept/"+selectedConcept.getConceptID());
-        /*
-        boolean flag = false;
+    public boolean isChild(String conceptID) {
+        ConceptSMTK concept = conceptManager.getConceptByCONCEPT_ID(conceptID);
+        concept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(concept));
 
-        Iterator<MenuElement> it = browserBean.getNavegation().getElements().iterator();
-
-        while (it.hasNext()) {
-            MenuElement element = it.next();
-            DefaultMenuItem defaultMenuItem = (DefaultMenuItem) element;
-            if(defaultMenuItem.getValue().equals(selectedConcept.getDescriptionFSN())) {
-                flag = true;
-            }
-            if(flag) {
-                it.remove();
+        for (Relationship relationship : concept.getRelationships()) {
+            if(relationship.getRelationshipDefinition().getTargetDefinition().isSMTKType()) {
+                ConceptSMTK child = (ConceptSMTK) relationship.getTarget();
+                if(child.getConceptID().equals(this.conceptID)) {
+                    return true;
+                }
             }
         }
-        browserBean.getNavegation().addElement(item);
-        */
 
-        if(browserBean.getNavegation().getElements().size() > 2) {
-            browserBean.getNavegation().getElements().set(2, item);
-        }
-        else {
-            browserBean.getNavegation().addElement(item);
-        }
+        return false;
+    }
 
+    public boolean isParent(String conceptID) {
+        // TODO
+        return false;
     }
 
     public GuestPreferences getGuestPreferences() {

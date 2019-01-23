@@ -28,7 +28,7 @@
                                 <p:selectOneMenu value="#{browserBean.snomedCT}" styleClass="searchMenu">
                                     <f:selectItem itemLabel="Semantikos" itemValue="false"/>
                                     <f:selectItem itemLabel="Snomed-CT" itemValue="true"/>
-                                    <p:ajax event="itemSelect" process="@this" listener="#{browserBean.redirectSnomedCT()}"
+                                    <p:ajax event="itemSelect" process="@this"
                                            update="@(.search),@(.conceptPanel)"  />
                                 </p:selectOneMenu>
                             </div>
@@ -103,18 +103,18 @@
 
                         <p:ajax event="page" listener="#{browserBean.updatePage}" oncomplete="scrollTop(); loader(); listen();" update="@(.search),@(.search2)" />
 
-                        <p:column headerText="Termino Preferido" style="padding: 0px">
+                        <p:column headerText="Termino Preferido" style="padding: 0px" styleClass="#{concept == concept.selectedConcept ? 'concept-selected':''}">
                             <div class="ui-g dashboard">
                                 <div class="ui-g-12" style="padding: 0px">
                                     <div class="card overview" style="min-height: 0px; border-bottom: 1px solid #cfcfcf;">
                                         <div class="overview-content clearfix" style="padding: 10px">
                                             <span class="overview-title">
-                                                <p:commandLink value="#{conceptSMTK.descriptionFavorite.term}" rendered="false"
+                                                <p:commandLink value="#{conceptSMTK.descriptionFavorite.term}" rendered="true"
                                                                actionListener="#{concept.setConceptID(conceptSMTK.conceptID)}"
                                                                update="@(.conceptForm)" oncomplete="scrolltop();"
                                                         styleClass="context" style="font-size: medium">
                                                 </p:commandLink>
-                                                <p:link value="#{conceptSMTK.descriptionFavorite.term}" rendered="true"
+                                                <p:link value="#{conceptSMTK.descriptionFavorite.term}" rendered="false"
                                                                oncomplete="scrolltop();" outcome="/views/concept"
                                                                styleClass="context" style="font-size: medium">
                                                     <f:param name="conceptID" value="#{conceptSMTK.conceptID}" />
@@ -169,12 +169,12 @@
                                     <div class="card overview" style="min-height: 0px; border-bottom: 1px solid #cfcfcf;">
                                         <div class="overview-content clearfix" style="padding: 10px">
                                                 <span class="overview-title">
-                                                    <p:commandLink value="#{concept.getDescriptionFSN().term}" rendered="false"
+                                                    <p:commandLink value="#{concept.getDescriptionFSN().term}" rendered="true"
                                                                    actionListener="#{conceptSCT.setConceptID(concept.id)}"
                                                                    update="@(.conceptForm)"
                                                                    styleClass="context" style="font-size: medium">
                                                     </p:commandLink>
-                                                    <p:link value="#{concept.getDescriptionFSN().term}" rendered="true"
+                                                    <p:link value="#{concept.getDescriptionFSN().term}" rendered="false"
                                                             oncomplete="scrolltop();" outcome="/views/concept-snomed"
                                                             styleClass="context" style="font-size: medium">
                                                         <f:param name="conceptID" value="#{concept.id}" />

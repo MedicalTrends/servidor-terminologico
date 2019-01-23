@@ -306,3 +306,7 @@
 .nano {
     height: 90% !important;
 }
+
+.concept-selected {
+    background-color: #e8e8e8;
+}

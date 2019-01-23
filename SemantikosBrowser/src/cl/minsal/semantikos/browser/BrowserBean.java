@@ -48,16 +48,6 @@ public class BrowserBean implements Serializable {
     private static final long serialVersionUID = 20120925L;
 
     /**
-     * Variables para el layout
-     */
-    private String stateOne;
-    private String stateTwo;
-    private boolean layoutOneShown = true;
-
-    private LayoutOptions layoutOptionsOne;
-    private LayoutOptions layoutOptionsTwo;
-
-    /**
      * Variables para el browser
      */
     static final Logger logger = LoggerFactory.getLogger(BrowserBean.class);
@@ -110,6 +100,12 @@ public class BrowserBean implements Serializable {
     @ManagedProperty(value = "#{guestPreferences}")
     GuestPreferences guestPreferences;
 
+    @ManagedProperty(value = "#{conceptBean}")
+    ConceptBean conceptBean;
+
+    @ManagedProperty(value = "#{conceptSCTBean}")
+    ConceptSCTBean conceptSCTBean;
+
     //@EJB
     private QueryManager queryManager = (QueryManager) ServiceLocator.getInstance().getService(QueryManager.class);
 
@@ -128,14 +124,9 @@ public class BrowserBean implements Serializable {
     //@EJB
     private RelationshipManager relationshipManager = (RelationshipManager) ServiceLocator.getInstance().getService(RelationshipManager.class);
 
-    //@EJB
-    private TimeOutWeb timeOutWeb = (TimeOutWeb) ServiceLocator.getInstance().getService(TimeOutWeb.class);
+    private transient MenuModel conceptTree = new DefaultMenuModel();
 
     private transient MenuModel menu = new DefaultMenuModel();
-
-    private transient MenuModel navegation;
-
-    private CircularFifoQueue<Target> circularFifoQueue;
 
     private boolean snomedCT;
 
@@ -163,8 +154,6 @@ public class BrowserBean implements Serializable {
         setSnomedCT(false);
 
     }
-
-
 
     public int getResults() {
         return results;
@@ -281,18 +270,6 @@ public class BrowserBean implements Serializable {
         getGuestPreferences().setTheme("indigo");
     }
 
-    public void refreshLastVisitedMenu() {
-
-        for (MenuElement menuElement : getMenu().getElements()) {
-            if (menuElement.getId().equals("2")) {
-                DefaultSubMenu conceptSubmenu = (DefaultSubMenu) menuElement;
-                conceptSubmenu.getElements().clear();
-                for (Object o : Arrays.asList(getCircularFifoQueue().toArray())) {
-                    enqueque((Target) o, conceptSubmenu);
-                }
-            }
-        }
-    }
 
     public void enqueque(Target target, DefaultSubMenu subMenu) {
 
@@ -307,7 +284,6 @@ public class BrowserBean implements Serializable {
     public void enqueueConcept(ConceptSMTK conceptSMTK, DefaultSubMenu subMenu) {
         DefaultMenuItem item = new DefaultMenuItem(conceptSMTK.getDescriptionFSN());
         item.setUrl("/views/concept/"+conceptSMTK.getConceptID());
-        //item.setIcon("fa fa-list-alt");
         item.setStyleClass("loader-trigger");
         item.setId("rm_"+conceptSMTK.getConceptID());
         if(!subMenu.getElements().contains(item)) {
@@ -318,7 +294,6 @@ public class BrowserBean implements Serializable {
     public void enqueueConceptSCT(ConceptSCT conceptSCT, DefaultSubMenu subMenu) {
         DefaultMenuItem item = new DefaultMenuItem(conceptSCT.getDescriptionFSN());
         item.setUrl("/views/snomed/concept/"+conceptSCT.getId());
-        //item.setIcon("fa fa-list-alt");
         item.setStyleClass("loader-trigger");
         item.setId("rm_"+conceptSCT.getId());
         if(!subMenu.getElements().contains(item)) {
@@ -376,6 +351,12 @@ public class BrowserBean implements Serializable {
     public void redirectSnomedCT() throws IOException {
 
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
+        if(conceptBean != null) {
+            conceptBean.selectedConcept = null;
+        }
+        if(conceptSCTBean != null) {
+            conceptSCTBean.selectedConcept = null;
+        }
 
         if(snomedCT) {
             eContext.redirect(eContext.getRequestContextPath() + "/views/snomed/concepts");
@@ -467,38 +448,6 @@ public class BrowserBean implements Serializable {
         this.tagManager = tagManager;
     }
 
-    public String getStateOne() {
-        return stateOne;
-    }
-
-    public void setStateOne(String stateOne) {
-        this.stateOne = stateOne;
-    }
-
-    public String getStateTwo() {
-        return stateTwo;
-    }
-
-    public void setStateTwo(String stateTwo) {
-        this.stateTwo = stateTwo;
-    }
-
-    public void toogleLayout(ActionEvent event) {
-        layoutOneShown = !layoutOneShown;
-    }
-
-    public boolean isLayoutOneShown() {
-        return layoutOneShown;
-    }
-
-    public LayoutOptions getLayoutOptionsOne() {
-        return layoutOptionsOne;
-    }
-
-    public LayoutOptions getLayoutOptionsTwo() {
-        return layoutOptionsTwo;
-    }
-
     public boolean isFilterChanged() {
         return isFilterChanged;
     }
@@ -547,30 +496,6 @@ public class BrowserBean implements Serializable {
         this.page = page;
     }
 
-    public CircularFifoQueue getCircularFifoQueue() {
-        return circularFifoQueue;
-    }
-
-    public void setCircularFifoQueue(CircularFifoQueue circularFifoQueue) {
-        this.circularFifoQueue = circularFifoQueue;
-    }
-
-    public MenuModel getMenu() {
-        return menu;
-    }
-
-    public void setMenu(MenuModel menu) {
-        this.menu = menu;
-    }
-
-    public MenuModel getNavegation() {
-        return navegation;
-    }
-
-    public void setNavegation(MenuModel navegation) {
-        this.navegation = navegation;
-    }
-
     public GuestPreferences getGuestPreferences() {
         return guestPreferences;
     }
@@ -611,6 +536,39 @@ public class BrowserBean implements Serializable {
 
     public void setSnomedCT(boolean snomedCT) {
         this.snomedCT = snomedCT;
+    }
+
+    public ConceptSCTBean getConceptSCTBean() {
+        return conceptSCTBean;
+    }
+
+    public void setConceptSCTBean(ConceptSCTBean conceptSCTBean) {
+        this.conceptSCTBean = conceptSCTBean;
+    }
+
+    public ConceptBean getConceptBean() {
+        return conceptBean;
+    }
+
+    public void setConceptBean(ConceptBean conceptBean) {
+        this.conceptBean = conceptBean;
+    }
+
+    public MenuModel getConceptTree() {
+        return conceptTree;
+    }
+
+    public void setConceptTree(MenuModel conceptTree) {
+        this.conceptTree = conceptTree;
+    }
+
+
+    public MenuModel getMenu() {
+        return menu;
+    }
+
+    public void setMenu(MenuModel menu) {
+        this.menu = menu;
     }
 
 }
