@@ -6,6 +6,7 @@ import cl.minsal.semantikos.kernel.components.DescriptionManager;
 import cl.minsal.semantikos.kernel.components.TagSMTKManager;
 import cl.minsal.semantikos.kernel.componentsweb.TimeOutWeb;
 import cl.minsal.semantikos.model.categories.Category;
+import cl.minsal.semantikos.model.categories.CategoryFactory;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.system.SystemFactory;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
@@ -42,6 +43,8 @@ public class ApplicationContainer implements Serializable {
 
     private DescriptionTypeFactory descriptionTypeFactory;
 
+    private CategoryFactory categoryFactory;
+
     //@EJB
     private TimeOutWeb timeOutWeb= (TimeOutWeb) ServiceLocator.getInstance().getService(TimeOutWeb.class);
 
@@ -54,12 +57,16 @@ public class ApplicationContainer implements Serializable {
 
         tagSMTKFactory = tagSMTKManager.getTagSMTKFactory();
 
+        categoryFactory = categoryManager.getCategoryFactory();
+
         descriptionTypeFactory = descriptionManager.getDescriptionTypeFactory();
 
         TagSMTKFactory.getInstance().setTagsSMTK(tagSMTKFactory.getTagsSMTK());
         TagSMTKFactory.getInstance().setTagsSMTKByName(tagSMTKFactory.getTagsSMTKByName());
 
         DescriptionTypeFactory.getInstance().setDescriptionTypes(descriptionTypeFactory.getDescriptionTypes());
+
+        CategoryFactory.getInstance().setCategories(categoryFactory.getCategories());
 
         SystemFactory.getInstance().setTimeout(timeOutWeb.getTimeOut());
         //SystemFactory.getInstance().setTimeout(5000);

@@ -250,11 +250,40 @@
 
     <script type="text/javascript">
 
+
+        function loader() {
+
+            $('.loader-trigger').on('click', function() {
+                $.Toast.showToast({
+                    // toast message
+                    "title": "Un momento por favor...",
+                    // "success", "none", "error"
+                    "icon": "Cargando",
+                    // default: 1500
+                    "duration": 10000
+                });
+            });
+
+            $('.ui-paginator-page').on('click', function() {
+                $.Toast.showToast({
+                    // toast message
+                    "title": "Un momento por favor...",
+                    // "success", "none", "error"
+                    "icon": "Cargando",
+                    // default: 1500
+                    "duration": 10000
+                });
+            });
+
+        }
+
+
         function scrolltop() {
             setTimeout(
                     function() {
                         window.scroll(0, 0);
                     }, 0);
+            $.Toast.hideToast();
         }
 
     </script>

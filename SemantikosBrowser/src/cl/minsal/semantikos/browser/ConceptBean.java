@@ -6,6 +6,7 @@ import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
+import cl.minsal.semantikos.model.categories.CategoryFactory;
 import cl.minsal.semantikos.model.crossmaps.DirectCrossmap;
 import cl.minsal.semantikos.model.crossmaps.IndirectCrossmap;
 import cl.minsal.semantikos.model.descriptions.Description;
@@ -14,7 +15,10 @@ import cl.minsal.semantikos.model.helpertables.HelperTable;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.*;
+import org.primefaces.component.inputtextarea.InputTextareaRenderer;
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
 import org.primefaces.model.menu.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,6 +63,8 @@ public class ConceptBean implements Serializable {
     CrossmapsManager crossmapsManager = (CrossmapsManager) ServiceLocator.getInstance().getService(CrossmapsManager.class);
 
     ConceptSMTK selectedConcept;
+
+    ConceptSMTK previousConcept;
 
     String conceptID;
 
@@ -257,70 +263,57 @@ public class ConceptBean implements Serializable {
             return;
         }
         this.conceptID = conceptID;
+        previousConcept = selectedConcept;
         selectedConcept = conceptManager.getConceptByCONCEPT_ID(conceptID);
         selectedConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(selectedConcept));
         indirectCrossmaps = new ArrayList<>();
-        //updateConceptTree();
+        if(browserBean.isSnomedCT()) {
+            browserBean.setSnomedCT(false);
+        }
+        updateConceptTree(browserBean.getRoot());
     }
 
-    public void updateConceptTree() {
-
-        MenuModel menu = browserBean.getConceptTree();
-        DefaultMenuItem item = new DefaultMenuItem(selectedConcept.getDescriptionFavorite().getTerm());
-        item.setTitle(this.conceptID);
-
-        if(menu.getElements().isEmpty()) {
-            menu.getElements().add(item);
-            return;
-        }
-
-        // 1° determinar si existe el elemento en el arbol
-        for (MenuElement menuElement : menu.getElements()) {
-            DefaultMenuItem item2 = (DefaultMenuItem) menuElement;
-            if(item2.getTitle().equals(this.conceptID)) {
-                return;
-            }
-        }
-        // Si no existe, determinar si es el padre del 1er elemento o hijo del ultimo elemento
-        // Si es hijo, el concepto seleccionado debe estar entre las relaciones del ultimo elemento
-        DefaultMenuItem last = (DefaultMenuItem) menu.getElements().get(menu.getElements().size()-1);
-        DefaultMenuItem first = (DefaultMenuItem) menu.getElements().get(0);
-
-        // Si es hijo, agregarlo como un submenú
-        if(isChild(last.getTitle())) {
-            Submenu submenu = new DefaultSubMenu();
-            submenu.getElements().add(item);
-            menu.addElement(submenu);
-            return;
-        }
-
-        // Si es padre, reconstruir el menu empezando desde la nueva raíz
-        if(isParent(first.getId())) {
-            // TODO
-            return;
-        }
-
-        // Si el concepto no esta relacionado con ninguno de los elementos evaluados, volver a crear el menu
-        menu.getElements().clear();
-        menu.getElements().add(item);
-
+    public void initConceptTree() {
+        browserBean.setRoot(new DefaultTreeNode(new Object(), null));
+        DefaultTreeNode node = new DefaultTreeNode(selectedConcept, browserBean.getRoot());
     }
 
-    public boolean isChild(String conceptID) {
-        ConceptSMTK concept = conceptManager.getConceptByCONCEPT_ID(conceptID);
-        concept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(concept));
+    public TreeNode updateConceptTree(TreeNode treeNode) {
 
-        for (Relationship relationship : concept.getRelationships()) {
-            if(relationship.getRelationshipDefinition().getTargetDefinition().isSMTKType()) {
-                ConceptSMTK child = (ConceptSMTK) relationship.getTarget();
-                if(child.getConceptID().equals(this.conceptID)) {
-                    return true;
-                }
+        treeNode.setExpanded(true);
+
+        if(browserBean.getRoot().getChildren().isEmpty()){
+            initConceptTree();
+            return treeNode;
+        }
+
+        if(treeNode.getChildren().isEmpty()) {
+            switch (browserBean.getRelationship(treeNode.getData(), selectedConcept)) {
+                case "CHILD":
+                    new DefaultTreeNode(selectedConcept, treeNode);
+                    return treeNode;
+                case "NON_RELATED":
+                    initConceptTree();
+                    return browserBean.getRoot();
             }
         }
 
-        return false;
+        for (TreeNode node : treeNode.getChildren()) {
+            if(node.getData().equals(selectedConcept)) {
+                node.getChildren().clear();
+                return node;
+            }
+            else {
+                return updateConceptTree(node);
+            }
+        }
+
+        initConceptTree();
+        return browserBean.getRoot();
+
     }
+
+
 
     public boolean isParent(String conceptID) {
         // TODO
@@ -456,5 +449,7 @@ public class ConceptBean implements Serializable {
 
         //context.execute("PF('ispDetail').show();");
     }
+
+
 
 }

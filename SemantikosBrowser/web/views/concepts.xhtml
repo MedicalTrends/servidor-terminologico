@@ -65,9 +65,27 @@
                     </div>
                 </p:outputPanel>
 
-                <h:form id="conceptForm" rendered="#{not browserBean.snomedCT and concept.selectedConcept != null}">
+                <p:tree value="#{browserBean.root}" var="node" style="width: 100%"
+                        rendered="#{concept.selectedConcept != null || conceptSCT.selectedConcept !=null}"
+                        dynamic="true">
+                    <p:treeNode>
+                        <h:outputText value="#{node}" rendered="false" />
+                        <p:commandLink value="#{node.descriptionFavorite.term}" rendered="#{node['class'].simpleName eq 'ConceptSMTK'}"
+                                       actionListener="#{concept.setConceptID(node.conceptID)}"
+                                       update="@(.conceptForm)" oncomplete="scrolltop();"
+                                       styleClass="context">
+                        </p:commandLink>
+                        <p:commandLink value="#{node.descriptionFSN.term}" rendered="#{node['class'].simpleName eq 'ConceptSCT'}"
+                                       actionListener="#{conceptSCT.setConceptID(node.id)}" style="color: #E91E63"
+                                       update="@(.conceptForm)" oncomplete="scrolltop();"
+                                       styleClass="context">
+                        </p:commandLink>
+                    </p:treeNode>
+                </p:tree>
 
-                    <p:menu model="#{browserBean.conceptTree}" style="width: 100%" rendered="false"/>
+                <br/>
+
+                <h:form id="conceptForm" rendered="#{not browserBean.snomedCT and concept.selectedConcept != null}">
 
                     <div class="card card-w-title">
 
@@ -361,7 +379,8 @@
 
                             <p:repeat value="#{conceptSCT.selectedConcept.getRelationships()}" var="relationship">
                                 <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                    <p:commandLink value="#{relationship.typeConcept.descriptionFSN}:" update="@(.conceptForm)"
+                                    <p:outputLabel value="#{relationship.typeConcept.descriptionFSN}:"/>
+                                    <p:commandLink value="#{relationship.typeConcept.descriptionFSN}:" update="@(.conceptForm)" rendered="false"
                                                    actionListener="#{conceptSCT.setConceptID(relationship.typeConcept.idSnomedCT)}">
                                     </p:commandLink>
                                 </div>

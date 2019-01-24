@@ -9,16 +9,20 @@ import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.queries.BrowserQuery;
+import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.Target;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import cl.minsal.semantikos.model.snomedct.RelationshipSCT;
 import cl.minsal.semantikos.model.system.SystemFactory;
 import cl.minsal.semantikos.model.tags.Tag;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.data.PageEvent;
 import org.primefaces.extensions.model.layout.LayoutOptions;
+import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import org.primefaces.model.TreeNode;
 import org.primefaces.model.menu.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,6 +101,8 @@ public class BrowserBean implements Serializable {
 
     private boolean sort;
 
+    private transient TreeNode root;
+
     @ManagedProperty(value = "#{guestPreferences}")
     GuestPreferences guestPreferences;
 
@@ -124,8 +130,6 @@ public class BrowserBean implements Serializable {
     //@EJB
     private RelationshipManager relationshipManager = (RelationshipManager) ServiceLocator.getInstance().getService(RelationshipManager.class);
 
-    private transient MenuModel conceptTree = new DefaultMenuModel();
-
     private transient MenuModel menu = new DefaultMenuModel();
 
     private boolean snomedCT;
@@ -144,6 +148,8 @@ public class BrowserBean implements Serializable {
         categories = categoryManager.getCategories();
 
         browserQuery = queryManager.getDefaultBrowserQuery();
+
+        setRoot(new DefaultTreeNode(new Object(), null));
 
         try {
             test();
@@ -169,6 +175,14 @@ public class BrowserBean implements Serializable {
 
     public void setSeconds(float seconds) {
         this.seconds = seconds;
+    }
+
+    public TreeNode getRoot() {
+        return root;
+    }
+
+    public void setRoot(TreeNode root) {
+        this.root = root;
     }
 
     /**
@@ -380,6 +394,65 @@ public class BrowserBean implements Serializable {
         reqCtx.execute("PF('conceptTableExcel').getPaginator().setPage("+pageindex+")");
     }
 
+    public String getRelationship(Object first, Object second) {
+        if(first instanceof ConceptSMTK && second instanceof ConceptSMTK) {
+            return getRelationshipSMTK((ConceptSMTK) first, (ConceptSMTK) second);
+        }
+        if(first instanceof ConceptSCT && second instanceof ConceptSCT) {
+            return getRelationshipSCT((ConceptSCT) first, (ConceptSCT) second);
+        }
+        if(first instanceof ConceptSMTK && second instanceof ConceptSCT) {
+            return getRelationshipCrossmap((ConceptSMTK) first, (ConceptSCT) second);
+        }
+        return "NON_RELATED";
+    }
+
+    public String getRelationshipSMTK(ConceptSMTK first, ConceptSMTK second) {
+
+        for (Relationship relationship : first.getRelationships()) {
+            if(relationship.getRelationshipDefinition().getTargetDefinition().isSMTKType()) {
+                ConceptSMTK child = (ConceptSMTK) relationship.getTarget();
+                if(child.equals(second)) {
+                    return "CHILD";
+                }
+            }
+        }
+
+        for (ConceptSMTK concept : conceptManager.getRelatedConcepts(first)) {
+            if(concept.equals(second)) {
+                return "PARENT";
+            }
+        }
+
+        return "NON_RELATED";
+    }
+
+    public String getRelationshipSCT(ConceptSCT first, ConceptSCT second) {
+
+        for (RelationshipSCT relationship : first.getRelationships()) {
+            ConceptSCT child = relationship.getDestinationConcept();
+            if(child.equals(second)) {
+                return "CHILD";
+            }
+        }
+
+        return "NON_RELATED";
+    }
+
+    public String getRelationshipCrossmap(ConceptSMTK first, ConceptSCT second) {
+
+        for (Relationship relationship : first.getRelationships()) {
+            if(relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType()) {
+                ConceptSCT child = (ConceptSCT) relationship.getTarget();
+                if(child.equals(second)) {
+                    return "CHILD";
+                }
+            }
+        }
+
+        return "NON_RELATED";
+    }
+
     public LazyDataModel<ConceptSMTK> getConcepts() {
         return concepts;
     }
@@ -553,15 +626,6 @@ public class BrowserBean implements Serializable {
     public void setConceptBean(ConceptBean conceptBean) {
         this.conceptBean = conceptBean;
     }
-
-    public MenuModel getConceptTree() {
-        return conceptTree;
-    }
-
-    public void setConceptTree(MenuModel conceptTree) {
-        this.conceptTree = conceptTree;
-    }
-
 
     public MenuModel getMenu() {
         return menu;

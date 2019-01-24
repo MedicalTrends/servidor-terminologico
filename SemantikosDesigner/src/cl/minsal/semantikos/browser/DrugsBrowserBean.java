@@ -61,7 +61,7 @@ public class DrugsBrowserBean implements Serializable {
     ConceptManager conceptManager = (ConceptManager) ServiceLocator.getInstance().getService(ConceptManager.class);
 
     @PostConstruct
-    public void init(){
+    public void init() {
         root = new DefaultTreeNode(new ConceptSMTK(categoryManager.getCategoryById(39)), null);
         drugsCategories = drugsManager.getDrugsCategories();
     }

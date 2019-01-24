@@ -3,10 +3,14 @@ package cl.minsal.semantikos.browser;
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.components.GuestPreferences;
 import cl.minsal.semantikos.kernel.components.SnomedCTManager;
+import cl.minsal.semantikos.model.ConceptSMTK;
+import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
 import cl.minsal.semantikos.model.snomedct.DescriptionSCT;
 import cl.minsal.semantikos.model.snomedct.DescriptionSCTType;
 import cl.minsal.semantikos.model.snomedct.RelationshipSCT;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -128,6 +132,47 @@ public class ConceptSCTBean {
         if(!browserBean.isSnomedCT()) {
             browserBean.setSnomedCT(true);
         }
+        updateConceptTree(browserBean.getRoot());
+    }
+
+    public void initConceptTree() {
+        browserBean.setRoot(new DefaultTreeNode(new Object(), null));
+        DefaultTreeNode node = new DefaultTreeNode(selectedConcept, browserBean.getRoot());
+    }
+
+    public TreeNode updateConceptTree(TreeNode treeNode) {
+
+        treeNode.setExpanded(true);
+
+        if(browserBean.getRoot().getChildren().isEmpty()){
+            initConceptTree();
+            return treeNode;
+        }
+
+        if(treeNode.getChildren().isEmpty()) {
+            switch (browserBean.getRelationship(treeNode.getData(), selectedConcept)) {
+                case "CHILD":
+                    new DefaultTreeNode(selectedConcept, treeNode);
+                    return treeNode;
+                case "NON_RELATED":
+                    initConceptTree();
+                    return browserBean.getRoot();
+            }
+        }
+
+        for (TreeNode node : treeNode.getChildren()) {
+            if(node.getData().equals(selectedConcept)) {
+                node.getChildren().clear();
+                return node;
+            }
+            else {
+                return updateConceptTree(node);
+            }
+        }
+
+        initConceptTree();
+        return browserBean.getRoot();
+
     }
 
     public BrowserBean getBrowserBean() {
