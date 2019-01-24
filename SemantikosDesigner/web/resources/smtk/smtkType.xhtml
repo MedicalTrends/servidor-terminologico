@@ -286,7 +286,7 @@
                                             <h:outputText value="#{concept.descriptionFavorite.term}"/>
                                         </p:column>
 
-                                        <p:ajax update="@(.concept), @(.conceptHeader),:mainForm:editMsgs" event="itemSelect"
+                                        <p:ajax update="@(.concept), @(.conceptHeader),:mainForm:growl" event="itemSelect"
                                                 listener="#{conceptBean.addOrChangeRelationship(cc.attrs.relationshipDefinition,conceptBean.conceptSelected)}"
                                                 process="@this"/>
 

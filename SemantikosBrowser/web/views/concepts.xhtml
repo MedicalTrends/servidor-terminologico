@@ -89,7 +89,11 @@
 
                     <div class="card card-w-title">
 
+                        <p:outputLabel class="first-heading" value="#{concept.selectedConcept.descriptionFavorite}" rendered="false"/>
+
                         <h1 class="first-heading">#{concept.selectedConcept.descriptionFavorite}</h1>
+
+                        <p:outputLabel value="(Semantikos)" style="font-size: small; margin: 10px"/>
 
                         <p:separator styleClass="heading-separator"/>
 
@@ -318,14 +322,6 @@
 
                     </div>
 
-                    <div class="ui-g ui-fluid">
-
-                        <div class="ui-g-12 ui-md-4 ui-lg-2">
-                            <p:button outcome="concepts" value="Volver" rendered="false" styleClass="cyan-btn ui-priority-primary loader-trigger" icon="fa fa-arrow-left"/>
-                        </div>
-
-                    </div>
-
                 </h:form>
 
                 <h:form id="snomedForm" rendered="#{browserBean.snomedCT and conceptSCT.selectedConcept != null}">
@@ -333,6 +329,8 @@
                     <div class="card card-w-title">
 
                         <h1 class="first-heading">#{conceptSCT.selectedConcept.descriptionFSN}</h1>
+
+                        <p:outputLabel value="(Snomed-CT)" style="font-size: small; margin: 10px"/>
 
                         <p:separator styleClass="heading-separator"/>
 
@@ -386,19 +384,12 @@
                                 </div>
                                 <div class="ui-g-12 ui-md-8 ui-lg-10">
                                     <p:commandLink value="#{relationship.destinationConcept.descriptionFSN}" update="@(.conceptForm)"
+                                                   oncomplete="scrolltop();"
                                                    actionListener="#{conceptSCT.setConceptID(relationship.destinationConcept.idSnomedCT)}">
                                     </p:commandLink>
                                 </div>
                             </p:repeat>
 
-                        </div>
-
-                    </div>
-
-                    <div class="ui-g ui-fluid">
-
-                        <div class="ui-g-12 ui-md-4 ui-lg-2">
-                            <p:button outcome="concepts-snomed" value="Volver" styleClass="blue-grey-btn ui-priority-primary" icon="fa fa-arrow-left" rendered="false"/>
                         </div>
 
                     </div>

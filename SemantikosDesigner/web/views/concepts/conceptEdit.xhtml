@@ -47,11 +47,7 @@
 
                         <p:outputPanel>
 
-                            <p:outputPanel styleClass="msgUpdate">
-                                <p:growl id="editMsgs3" showDetail="true"/>
-                            </p:outputPanel>
                             <p:growl id="growl" showDetail="true" showSummary="true"/>
-                            <p:growl id="editMsgs" showDetail="true"/>
 
                             <!--p:messages autoUpdate="true"></p:messages-->
 
@@ -60,8 +56,6 @@
                             <p:separator rendered="false" />
 
                             <p:outputPanel id="conceptHeader" styleClass="conceptHeader">
-                                <p:growl id="editMsgs2" showDetail="true"/>
-
                                 <smtk:conceptHeader concept="#{conceptBean.concept}"/>
                             </p:outputPanel>
 
@@ -102,7 +96,7 @@
                                                     styleClass="panel_#{relationshipDefinition.id} #{relationshipDefinition.multiplicitySatisfied ? '': 'relationshipDefinitionError'}"
                                                     rendered="#{not relationshipDefinition.targetDefinition.crossMapType}">
 
-                                                <p:growl id="growlAttributes" showDetail="true" showSummary="true"/>
+                                                <p:growl id="growlAttributes" showDetail="true" showSummary="true" rendered="false"/>
 
                                                 <smtk:smtkType
                                                         rendered="#{(relationshipDefinition.targetDefinition.SMTKType and relationshipDefinition.compositeID eq 1) or
@@ -281,7 +275,7 @@
 
                                 <p:commandButton actionListener="#{conceptBean.saveConcept}" icon="fa fa-check"
                                                  style="float: right" rendered="#{conceptBean.concept.valid}" title="Guardar"
-                                                 update="growl, mainForm, @(.breadUpdate)">
+                                                 update="mainForm">
                                     <p:confirm header="Confirmar Acción" message="¿Desea guardar los cambios?" icon="ui-icon-alert"/>
                                 </p:commandButton>
                             </div>

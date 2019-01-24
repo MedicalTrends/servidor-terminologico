@@ -21,8 +21,8 @@
 
     <p:panel id="otherDescriptionsPanel" styleClass="otherDescriptionsPanel" widgetVar="panel">
 
-        <p:growl id="growl" showDetail="true" showSummary="true"/>
-        <p:growl id="editMsgs" showDetail="true"/>
+        <p:growl id="growl" showDetail="true" showSummary="true" rendered="true"/>
+        <p:growl id="editMsgs" showDetail="true" rendered="false"/>
 
         <p:outputPanel rendered="#{profilePermissionsBeans.permissionsBy(conceptBean.category)}">
 
