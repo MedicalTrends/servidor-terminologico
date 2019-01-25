@@ -336,6 +336,13 @@ public class QueryManagerImpl implements QueryManager {
 
     @Override
     public int countQueryResults(Query query) {
+
+        if(query instanceof BrowserQuery || query instanceof SnomedQuery) {
+            if(query.getQuery().trim().isEmpty()) {
+                return 0;
+            }
+        }
+
         query.setQuery(descriptionSearchBR.escapeSpecialCharacters(query.getQuery()));
         int quantity = (int) queryDAO.countByQuery(query);
 

@@ -308,5 +308,6 @@
 }
 
 .concept-selected {
-    background-color: #e8e8e8;
+    /*background-color: #e8e8e8;*/
+    font-weight: bold;
 }

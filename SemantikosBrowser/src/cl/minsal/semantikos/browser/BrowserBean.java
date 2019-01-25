@@ -8,6 +8,7 @@ import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.queries.BrowserQuery;
 import cl.minsal.semantikos.model.relationships.Relationship;
 import cl.minsal.semantikos.model.relationships.Target;
@@ -404,7 +405,7 @@ public class BrowserBean implements Serializable {
         if(first instanceof ConceptSMTK && second instanceof ConceptSCT) {
             return getRelationshipCrossmap((ConceptSMTK) first, (ConceptSCT) second);
         }
-        return "NON_RELATED";
+        return EMPTY_STRING;
     }
 
     public String getRelationshipSMTK(ConceptSMTK first, ConceptSMTK second) {
@@ -413,18 +414,18 @@ public class BrowserBean implements Serializable {
             if(relationship.getRelationshipDefinition().getTargetDefinition().isSMTKType()) {
                 ConceptSMTK child = (ConceptSMTK) relationship.getTarget();
                 if(child.equals(second)) {
-                    return "CHILD";
+                    return relationship.getRelationshipDefinition().getName();
                 }
             }
         }
 
         for (ConceptSMTK concept : conceptManager.getRelatedConcepts(first)) {
             if(concept.equals(second)) {
-                return "PARENT";
+                return "es un[a]";
             }
         }
 
-        return "NON_RELATED";
+        return EMPTY_STRING;
     }
 
     public String getRelationshipSCT(ConceptSCT first, ConceptSCT second) {
@@ -432,11 +433,11 @@ public class BrowserBean implements Serializable {
         for (RelationshipSCT relationship : first.getRelationships()) {
             ConceptSCT child = relationship.getDestinationConcept();
             if(child.equals(second)) {
-                return "CHILD";
+                return relationship.getTypeConcept().getDescriptionFavouriteSynonymous().getTerm();
             }
         }
 
-        return "NON_RELATED";
+        return EMPTY_STRING;
     }
 
     public String getRelationshipCrossmap(ConceptSMTK first, ConceptSCT second) {
@@ -445,12 +446,13 @@ public class BrowserBean implements Serializable {
             if(relationship.getRelationshipDefinition().getTargetDefinition().isSnomedCTType()) {
                 ConceptSCT child = (ConceptSCT) relationship.getTarget();
                 if(child.equals(second)) {
-                    return "CHILD";
+                    HelperTableRow helperTableRow = (HelperTableRow) relationship.getRelationshipTypeAttribute().getTarget();
+                    return helperTableRow.getDescription();
                 }
             }
         }
 
-        return "NON_RELATED";
+        return EMPTY_STRING;
     }
 
     public LazyDataModel<ConceptSMTK> getConcepts() {

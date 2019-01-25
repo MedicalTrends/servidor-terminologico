@@ -275,6 +275,7 @@ public class ConceptBean implements Serializable {
 
     public void initConceptTree() {
         browserBean.setRoot(new DefaultTreeNode(new Object(), null));
+        selectedConcept.setObservation("");
         DefaultTreeNode node = new DefaultTreeNode(selectedConcept, browserBean.getRoot());
     }
 
@@ -288,13 +289,17 @@ public class ConceptBean implements Serializable {
         }
 
         if(treeNode.getChildren().isEmpty()) {
-            switch (browserBean.getRelationship(treeNode.getData(), selectedConcept)) {
-                case "CHILD":
-                    new DefaultTreeNode(selectedConcept, treeNode);
-                    return treeNode;
-                case "NON_RELATED":
-                    initConceptTree();
-                    return browserBean.getRoot();
+
+            String relationship = browserBean.getRelationship(treeNode.getData(), selectedConcept);
+
+            if(!relationship.isEmpty()) {
+                selectedConcept.setObservation(relationship);
+                new DefaultTreeNode(selectedConcept, treeNode);
+                return treeNode;
+            }
+            else {
+                initConceptTree();
+                return browserBean.getRoot();
             }
         }
 

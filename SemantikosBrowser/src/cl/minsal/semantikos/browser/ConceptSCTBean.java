@@ -137,6 +137,7 @@ public class ConceptSCTBean {
 
     public void initConceptTree() {
         browserBean.setRoot(new DefaultTreeNode(new Object(), null));
+        selectedConcept.getDescriptionFSN().setLanguageCode("");
         DefaultTreeNode node = new DefaultTreeNode(selectedConcept, browserBean.getRoot());
     }
 
@@ -150,13 +151,16 @@ public class ConceptSCTBean {
         }
 
         if(treeNode.getChildren().isEmpty()) {
-            switch (browserBean.getRelationship(treeNode.getData(), selectedConcept)) {
-                case "CHILD":
-                    new DefaultTreeNode(selectedConcept, treeNode);
-                    return treeNode;
-                case "NON_RELATED":
-                    initConceptTree();
-                    return browserBean.getRoot();
+
+            String relationship = browserBean.getRelationship(treeNode.getData(), selectedConcept);
+
+            if (!relationship.isEmpty()) {
+                selectedConcept.getDescriptionFSN().setLanguageCode(relationship);
+                new DefaultTreeNode(selectedConcept, treeNode);
+                return treeNode;
+            } else {
+                initConceptTree();
+                return browserBean.getRoot();
             }
         }
 

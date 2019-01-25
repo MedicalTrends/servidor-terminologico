@@ -77,18 +77,19 @@
                         </div>
                     </p:outputPanel>
 
-                    <div class="ui-fluid ui-g">
-                        <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:outputPanel styleClass="search2">
+                        <p:outputPanel rendered="#{ true }">
+                            <div class="ui-fluid ui-g">
+                                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                    <p:outputLabel id="summary" style="font-size: small; color: #212121"
+                                                   value="Página #{browserBean.page} de #{browserBean.results} conceptos"/>
+                                    <p:remoteCommand name="onload" update="summary"
+                                                     autoRun="true" />
 
-                            <p:outputPanel styleClass="search2">
-                                <p:outputLabel id="summary" style="font-size: small; color: #212121"
-                                               value="Página #{browserBean.page} de #{browserBean.results} conceptos"/>
-                                <p:remoteCommand name="onload" update="summary"
-                                                 autoRun="true" />
-                            </p:outputPanel>
-
-                        </div>
-                    </div>
+                                </div>
+                            </div>
+                        </p:outputPanel>
+                    </p:outputPanel>
 
                     <p:outputPanel id="conceptPanel" styleClass="conceptPanel">
 
@@ -114,20 +115,7 @@
                                                                update="@(.conceptForm)" oncomplete="scrolltop();"
                                                         styleClass="context" style="font-size: medium">
                                                 </p:commandLink>
-                                                <p:link value="#{conceptSMTK.descriptionFavorite.term}" rendered="false"
-                                                               oncomplete="scrolltop();" outcome="/views/concept"
-                                                               styleClass="context" style="font-size: medium">
-                                                    <f:param name="conceptID" value="#{conceptSMTK.conceptID}" />
-                                                </p:link>
-                                            </span>
-                                            <span class="overview-detail">
-                                                <h:outputText value="#{conceptSMTK.conceptID}" style="font-size: small; color: #006621" />
-                                                <br/>
-                                                <h:outputText value="#{conceptSMTK.category.name}" style="font-size: small; color:#545454;" />
-
-                                                <p:separator style="border-top: 0px solid rgb(219, 219, 219)" rendered="#{ not empty conceptSMTK.tags }"/>
-
-                                                 <p:outputPanel rendered="#{ not empty conceptSMTK.tags}">
+                                                <p:outputPanel rendered="#{ not empty conceptSMTK.tags}">
                                                     <i class="fa fa-tags" style="font-size: small"/>
                                                     <p:repeat
                                                             offset="0"
@@ -142,6 +130,18 @@
 
                                                     </p:repeat>
                                                 </p:outputPanel>
+                                                <p:link value="#{conceptSMTK.descriptionFavorite.term}" rendered="false"
+                                                               oncomplete="scrolltop();" outcome="/views/concept"
+                                                               styleClass="context" style="font-size: medium">
+                                                    <f:param name="conceptID" value="#{conceptSMTK.conceptID}" />
+                                                </p:link>
+                                            </span>
+                                            <span class="overview-detail">
+                                                <h:outputText value="#{conceptSMTK.conceptID}" style="font-size: small; color: #006621" />
+                                                <br/>
+                                                <h:outputText value="#{conceptSMTK.category.name}" style="font-size: small; color:#545454; line-height: 0px" />
+
+                                                <p:separator style="border-top: 0px solid rgb(219, 219, 219)" rendered="#{ false }"/>
 
                                             </span>
                                         </div>

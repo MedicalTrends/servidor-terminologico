@@ -65,25 +65,26 @@
                     </div>
                 </p:outputPanel>
 
-                <p:tree value="#{browserBean.root}" var="node" style="width: 100%"
+                <p:tree value="#{browserBean.root}" var="node" style="width: 100%; background-color: transparent; border: 0px"
                         rendered="#{concept.selectedConcept != null || conceptSCT.selectedConcept !=null}"
                         dynamic="true">
                     <p:treeNode>
-                        <h:outputText value="#{node}" rendered="false" />
+                        <p:outputPanel>
+                            <h:outputText value="#{node.observation}" style="font-size: small; color: #006621" rendered="#{node['class'].simpleName eq 'ConceptSMTK'}"  />
+                            <h:outputText value="#{node.descriptionFSN.languageCode}" style="font-size: small; color: #006621" rendered="#{node['class'].simpleName eq 'ConceptSCT'}"  />
+                        </p:outputPanel>
                         <p:commandLink value="#{node.descriptionFavorite.term}" rendered="#{node['class'].simpleName eq 'ConceptSMTK'}"
                                        actionListener="#{concept.setConceptID(node.conceptID)}"
                                        update="@(.conceptForm)" oncomplete="scrolltop();"
-                                       styleClass="context">
+                                       styleClass="context #{(node == concept.selectedConcept)?'concept-selected':''}">
                         </p:commandLink>
                         <p:commandLink value="#{node.descriptionFSN.term}" rendered="#{node['class'].simpleName eq 'ConceptSCT'}"
                                        actionListener="#{conceptSCT.setConceptID(node.id)}" style="color: #E91E63"
                                        update="@(.conceptForm)" oncomplete="scrolltop();"
-                                       styleClass="context">
+                                       styleClass="context #{(node == conceptSCT.selectedConcept)?'concept-selected':''}">
                         </p:commandLink>
                     </p:treeNode>
                 </p:tree>
-
-                <br/>
 
                 <h:form id="conceptForm" rendered="#{not browserBean.snomedCT and concept.selectedConcept != null}">
 
@@ -398,16 +399,61 @@
 
                 </p:outputPanel>
 
-                <p:dialog widgetVar="categories-dialog" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true" header="Categorías" height="300">
-                    <p:outputPanel id="categories-dialog" styleClass="categories-dialog">
-                        <div class="ui-fluid ui-g">
-                            <p:repeat value="#{browserBean.categories}" var="category">
-                                <div class="ui-g-12 ui-md-12 ui-lg-12">
-                                    <p:outputLabel styleClass="label" value="#{category.name}" />
+                <p:dialog widgetVar="categories-dialog" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true" header="Categorías">
+                    <p:accordionPanel value="#{browserBean.categories}" var="category">
+                        <p:tab title="#{category.name}">
+                            <div class="card card-w-title">
+                                <h1 class="first-heading">#{category.name}</h1>
+                                <p:separator styleClass="heading-separator"/>
+                                <div class="ui-g ui-fluid" style="margin-bottom: 20px">
+
+                                    <div class="ui-g-12 ui-md-4 ui-lg-3">
+                                        <h:outputText value="Nombre abreviado:" styleClass="label" />
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-8 ui-lg-9">
+                                        <h:outputText value="#{category.nameAbbreviated}" styleClass="value" />
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-4 ui-lg-3">
+                                        <h:outputText value="Tag Semantiko:" styleClass="label" />
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-8 ui-lg-9">
+                                        <h:outputText value="#{category.tagSemantikos.name}" styleClass="value" />
+                                    </div>
+
                                 </div>
-                            </p:repeat>
-                        </div>
-                    </p:outputPanel>
+
+                                <h2 class="second-heading">Definición de atributos</h2>
+
+                                <p:separator styleClass="heading-separator"/>
+
+                                <div class="ui-g ui-fluid">
+
+                                    <ul style="width: 100%">
+
+                                    <p:repeat value="#{category.relationshipDefinitions}" var="relationshipDefinition">
+
+                                        <li>
+                                            <h:outputText value="#{relationshipDefinition.name}" styleClass="label" />
+                                            <ul style="width: 100%">
+                                                <p:repeat value="#{relationshipDefinition.relationshipAttributeDefinitions}" var="relationshipAttributeDefinition">
+                                                    <li>
+                                                        <h:outputText value="#{relationshipAttributeDefinition.name}" styleClass="label" />
+                                                    </li>
+                                                </p:repeat>
+                                            </ul>
+                                        </li>
+
+                                    </p:repeat>
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </p:tab>
+                    </p:accordionPanel>
                 </p:dialog>
 
             </div>
