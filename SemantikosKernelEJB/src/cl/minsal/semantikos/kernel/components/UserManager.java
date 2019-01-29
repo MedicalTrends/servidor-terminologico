@@ -37,9 +37,9 @@ public interface UserManager {
 
     public void updateUser(User user);
 
-    public void updateFields(User originalUser, User updatedUser, User user);
+    public void updateFields(@NotNull User originalUser, @NotNull User updatedUser, User user);
 
-    public void update(User originalUser, User updatedUser, User user);
+    public void update(@NotNull User originalUser, @NotNull User updatedUser, User user);
 
     public List<Question> getAllQuestions();
 

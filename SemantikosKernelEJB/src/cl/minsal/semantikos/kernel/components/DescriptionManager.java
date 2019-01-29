@@ -9,6 +9,7 @@ import cl.minsal.semantikos.model.users.User;
 
 import javax.ejb.Local;
 import javax.ejb.Remote;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -63,12 +64,12 @@ public interface DescriptionManager {
      * Este método es responsable de actualizar la descripción de un concepto.
      *
      * @param conceptSMTK      El concepto al cual se realiza la actualización de una descripción.
-     * @param original         La descripción original.
+     * @param initDescription  La descripción original.
      * @param finalDescription La descripción actualizada.
      * @param user             El usuario que realiza la actualización.
      */
-    public void updateDescription(ConceptSMTK conceptSMTK, Description original, Description finalDescription, User
-            user);
+    public void updateDescription(@NotNull ConceptSMTK conceptSMTK, @NotNull Description initDescription,
+                                  @NotNull Description finalDescription, @NotNull User user);
 
     /**
      * Este método es responsable de eliminar lógicamente una descripción.

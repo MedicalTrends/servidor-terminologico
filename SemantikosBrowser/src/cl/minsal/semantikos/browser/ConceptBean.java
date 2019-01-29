@@ -267,9 +267,7 @@ public class ConceptBean implements Serializable {
         selectedConcept = conceptManager.getConceptByCONCEPT_ID(conceptID);
         selectedConcept.setRelationships(relationshipManager.getRelationshipsBySourceConcept(selectedConcept));
         indirectCrossmaps = new ArrayList<>();
-        if(browserBean.isSnomedCT()) {
-            browserBean.setSnomedCT(false);
-        }
+        browserBean.setSnomedCT(false);
         updateConceptTree(browserBean.getRoot());
     }
 

@@ -57,6 +57,9 @@ public class BrowserSCTBean implements Serializable {
     @ManagedProperty(value = "#{guestPreferences}")
     GuestPreferences guestPreferences;
 
+    @ManagedProperty(value = "#{browserBean}")
+    BrowserBean browserBean;
+
     /**
      * Variables para el browser
      */
@@ -102,8 +105,6 @@ public class BrowserSCTBean implements Serializable {
     private SnomedCTManager snomedCTManager = (SnomedCTManager) ServiceLocator.getInstance().getService(SnomedCTManager.class);
 
     private transient MenuModel menu;
-
-    private CircularFifoQueue circularFifoQueue;
 
     @PostConstruct
     protected void initialize() {
@@ -179,6 +180,8 @@ public class BrowserSCTBean implements Serializable {
                 }
 
                 isFilterChanged = false;
+
+                browserBean.setShowCategories(false);
 
                 snomedQuery.setPageSize(pageSize);
                 //snomedQuery.setOrder(new Integer(sortField==null?"1":sortField));
@@ -395,11 +398,12 @@ public class BrowserSCTBean implements Serializable {
         this.menu = menu;
     }
 
-    public CircularFifoQueue getCircularFifoQueue() {
-        return circularFifoQueue;
+    public BrowserBean getBrowserBean() {
+        return browserBean;
     }
 
-    public void setCircularFifoQueue(CircularFifoQueue circularFifoQueue) {
-        this.circularFifoQueue = circularFifoQueue;
+    public void setBrowserBean(BrowserBean browserBean) {
+        this.browserBean = browserBean;
     }
+
 }

@@ -129,9 +129,7 @@ public class ConceptSCTBean {
         this.conceptID = conceptID;
         selectedConcept = snomedCTManager.getConceptByID(conceptID);
         selectedConcept.setRelationships(snomedCTManager.getRelationshipsFrom(selectedConcept));
-        if(!browserBean.isSnomedCT()) {
-            browserBean.setSnomedCT(true);
-        }
+        browserBean.setSnomedCT(true);
         updateConceptTree(browserBean.getRoot());
     }
 

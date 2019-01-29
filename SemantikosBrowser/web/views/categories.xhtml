@@ -1,0 +1,97 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:smtk="http://java.sun.com/jsf/composite/smtk"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+
+        <div class="ui-g-12 ui-md-12 ui-lg-12">
+
+            <div class="card card-w-title">
+
+                <h1 class="first-heading">CATEGORÍAS</h1>
+
+                <p:separator styleClass="heading-separator" style="margin: 0px"/>
+                <div class="ui-fluid ui-g">
+                    <p:repeat value="#{browserBean.categories}" var="category">
+                        <div class="ui-g-12 ui-md-12 ui-lg-12">
+                            <p:commandLink value="#{category.name}" oncomplete="PF('category-dialog').show()" update="@(.category)"
+                                           actionListener="#{browserBean.setCategorySelected(category)}"/>
+                        </div>
+                    </p:repeat>
+                </div>
+
+            </div>
+
+            <p:dialog widgetVar="category-dialog" showEffect="fade" hideEffect="fade" dismissable="false" showCloseIcon="true"
+                      styleClass="category"
+                      header="#{browserBean.categorySelected}">
+                <p:outputPanel>
+                    <div class="card card-w-title">
+                        <h1 class="first-heading">#{browserBean.categorySelected.name}</h1>
+                        <p:separator styleClass="heading-separator"/>
+                        <div class="ui-g ui-fluid" style="margin-bottom: 20px">
+
+                            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                                <h:outputText value="Nombre abreviado:" styleClass="label" />
+                            </div>
+
+                            <div class="ui-g-12 ui-md-8 ui-lg-9">
+                                <h:outputText value="#{category.nameAbbreviated}" styleClass="value" />
+                            </div>
+
+                            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                                <h:outputText value="Tag Semantiko:" styleClass="label" />
+                            </div>
+
+                            <div class="ui-g-12 ui-md-8 ui-lg-9">
+                                <h:outputText value="#{category.tagSemantikos.name}" styleClass="value" />
+                            </div>
+
+                        </div>
+
+                        <h2 class="second-heading">Definición de atributos</h2>
+
+                        <p:separator styleClass="heading-separator"/>
+
+                        <div class="ui-g ui-fluid">
+
+                            <ul style="width: 100%">
+
+                            <p:repeat value="#{category.relationshipDefinitions}" var="relationshipDefinition">
+
+                                <li>
+                                    <h:outputText value="#{relationshipDefinition.name}" styleClass="label" />
+                                    <ul style="width: 100%">
+                                        <p:repeat value="#{relationshipDefinition.relationshipAttributeDefinitions}" var="relationshipAttributeDefinition">
+                                            <li>
+                                                <h:outputText value="#{relationshipAttributeDefinition.name}" styleClass="label" />
+                                            </li>
+                                        </p:repeat>
+                                    </ul>
+                                </li>
+
+                            </p:repeat>
+
+                            </ul>
+
+                        </div>
+                    </div>
+                </p:outputPanel>
+
+            </p:dialog>
+
+        </div>
+
+        <script type="text/javascript">
+
+        </script>
+
+    </ui:define>
+
+</ui:composition>
+

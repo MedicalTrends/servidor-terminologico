@@ -25,13 +25,16 @@
       <h:outputStylesheet name="semantikos/css/customStyle.css"/>
    </f:facet>
 
-   <div class="layout-main" style="padding: 95px 15px 15px">
+
+   <div class="" style="padding: 5px 5px 5px">
 
       <div class="ui-g">
 
-         <div class="ui-g-0 ui-md-2 ui-lg-4"></div>
+         <div class="ui-g-0 ui-md-0 ui-lg-12" style="padding-top: 159px" id="div-top"></div>
 
-         <div class="ui-g-12 ui-md-8 ui-lg-4">
+         <div class="ui-g-0 ui-md-2 ui-lg-3"></div>
+
+         <div class="ui-g-12 ui-md-8 ui-lg-6" style="padding-left: 0px; padding-right: 0px">
 
             <!--div class="card card-w-title"-->
             <div class="">
@@ -40,17 +43,26 @@
 
                   <div class="ui-g ui-fluid">
 
-                     <div class="ui-g-12" style="text-align: center">
-                        <p:graphicImage name="images/logo-indigo.png" library="semantikos" style="width:250px; padding-top: 109px" />
+                     <div class="ui-g-12 hideable" style="text-align: center; padding-bottom: 40px">
+                        <p:graphicImage name="images/logo-indigo.png" library="semantikos" style="width:250px;" />
                      </div>
 
-                     <div class="ui-g-12" style="padding-top: 30px; padding-bottom: 30px; text-align: center; font-size: 24px; color: #4CAF50">
+                     <!-- -->
+
+                     <div class="ui-g-0 ui-md-0 ui-lg-1" style="padding: 0em"></div>
+
+                     <div class="ui-g-12 ui-md-12 ui-lg-10" style="padding-top: 30px; padding-bottom: 30px; text-align: center; font-size: 24px; color: #4CAF50">
                         <h:outputText value="Web Services OK"/>
                      </div>
+
+                     <div class="ui-g-0 ui-md-0 ui-lg-1" style="padding: 0em"></div>
+
+                     <!-- -->
 
                      <div class="ui-g-0 ui-md-3 ui-lg-4" style="padding: 0em"></div>
 
                      <div class="ui-g-1 ui-md-6 ui-lg-4" style="padding: 0em">
+
                      </div>
 
                      <div class="ui-g-0 ui-md-3 ui-lg-4" style="padding: 0em"></div>
@@ -62,16 +74,26 @@
             </div>
          </div>
 
-         <div class="ui-g-0 ui-md-2 ui-lg-4"></div>
+
       </div>
 
    </div>
 
-   <div class="login-footer">
-      <div class="card clearfix">
+   <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px;z-index: 9999">
+      <f:facet name="start">
+         <i class="fa fa-circle-o-notch fa-spin ajax-loader" aria-hidden="true"/>
+      </f:facet>
+
+      <f:facet name="complete">
+         <h:outputText value="" />
+      </f:facet>
+   </p:ajaxStatus>
+
+   <div class="login-footer hideable" style="bottom: 2px">
+      <div class="card clearfix" style="margin-bottom: 0px">
             <span class="footer-text-left">
                 <span>
-                    <i class="fa fa-copyright" style="color: #5f666c" /><h:outputText value="2018" style="color: #5f666c" /><a href="" style="color: #5f666c">Ministerio de Salud</a>
+                    <i class="fa fa-copyright" style="color: #5f666c" /><h:outputText value="2016 " style="color: #5f666c" /><a href="" style="color: #5f666c">Ministerio de Salud</a>
                 </span>
                 <br/>
                 <span style="color: #5f666c">Version: <h:outputText value="${bpversion['version']} ${bpversion['build.date']}" />
@@ -84,6 +106,7 @@
    <h:outputStylesheet name="css/layout-indigo.css" library="ultima-layout" />
 
    <script type="text/javascript">
+
 
    </script>
 </h:body>

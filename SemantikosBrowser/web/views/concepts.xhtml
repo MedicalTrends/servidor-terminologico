@@ -30,7 +30,7 @@
 
                 <p:outputPanel styleClass="conceptForm">
 
-                <p:outputPanel rendered="#{concept.selectedConcept == null and conceptSCT.selectedConcept == null}">
+                <p:outputPanel rendered="#{concept.selectedConcept == null and conceptSCT.selectedConcept == null and browserBean.categorySelected == null}">
                     <div class="card card-w-title">
                         <h1 class="first-heading">Bienvenido al sitio de consulta Semantikos</h1>
                         <p:separator styleClass="heading-separator"/>
@@ -44,7 +44,8 @@
                             </li>
                             <li>
                                 <p:outputLabel value="Puede filtrar por los "/>
-                                <p:commandLink value="dominios de conocimiento " oncomplete="PF('categories-dialog').show()"/>
+                                <p:commandLink value="dominios de conocimiento " actionListener="#{browserBean.setShowCategories(true)}"
+                                update="@(.categoryPanel)"/>
                                 <p:outputLabel value="específicos a su búsqueda"/>
                             </li>
                         </ul>
@@ -64,6 +65,59 @@
                         </p>
                     </div>
                 </p:outputPanel>
+
+                    <p:outputPanel rendered="#{browserBean.showCategories and browserBean.categorySelected != null}">
+                        <div class="card card-w-title">
+                            <h1 class="first-heading">#{browserBean.categorySelected.name}</h1>
+                            <p:separator styleClass="heading-separator"/>
+                            <div class="ui-g ui-fluid" style="margin-bottom: 20px">
+
+                                <div class="ui-g-12 ui-md-4 ui-lg-3">
+                                    <h:outputText value="Nombre abreviado:" styleClass="label" />
+                                </div>
+
+                                <div class="ui-g-12 ui-md-8 ui-lg-9">
+                                    <h:outputText value="#{browserBean.categorySelected.nameAbbreviated}" styleClass="value" />
+                                </div>
+
+                                <div class="ui-g-12 ui-md-4 ui-lg-3">
+                                    <h:outputText value="Tag Semantiko:" styleClass="label" />
+                                </div>
+
+                                <div class="ui-g-12 ui-md-8 ui-lg-9">
+                                    <h:outputText value="#{browserBean.categorySelected.tagSemantikos.name}" styleClass="value" />
+                                </div>
+
+                            </div>
+
+                            <h2 class="second-heading">Definición de atributos</h2>
+
+                            <p:separator styleClass="heading-separator"/>
+
+                            <div class="ui-g ui-fluid">
+
+                                <ul style="width: 100%">
+
+                                    <p:repeat value="#{browserBean.categorySelected.relationshipDefinitions}" var="relationshipDefinition">
+
+                                        <li>
+                                            <h:outputText value="#{relationshipDefinition.name}" styleClass="label" />
+                                            <ul style="width: 100%">
+                                                <p:repeat value="#{relationshipDefinition.relationshipAttributeDefinitions}" var="relationshipAttributeDefinition">
+                                                    <li>
+                                                        <h:outputText value="#{relationshipAttributeDefinition.name}" styleClass="label" />
+                                                    </li>
+                                                </p:repeat>
+                                            </ul>
+                                        </li>
+
+                                    </p:repeat>
+
+                                </ul>
+
+                            </div>
+                        </div>
+                    </p:outputPanel>
 
                 <p:tree value="#{browserBean.root}" var="node" style="width: 100%; background-color: transparent; border: 0px"
                         rendered="#{concept.selectedConcept != null || conceptSCT.selectedConcept !=null}"

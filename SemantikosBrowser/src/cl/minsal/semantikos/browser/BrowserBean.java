@@ -80,6 +80,8 @@ public class BrowserBean implements Serializable {
 
     private Description descriptionSelected = DescriptionTypeFactory.DUMMY_DESCRIPTION;
 
+    private Category categorySelected;
+
     /**
      * Indica si cambió algún filtro. Se utiliza para resetear la páginación al comienzo si se ha filtrado
      */
@@ -91,6 +93,8 @@ public class BrowserBean implements Serializable {
     private boolean performSearch = false;
 
     private boolean showFilters = false;
+
+    private boolean showCategories = false;
 
     private int results;
 
@@ -239,6 +243,8 @@ public class BrowserBean implements Serializable {
 
                 isFilterChanged = false;
 
+                setShowCategories(false);
+
                 browserQuery.setPageSize(pageSize);
                 //browserQuery.setOrder(new Integer(sortField==null?"0":sortField));
 
@@ -283,37 +289,6 @@ public class BrowserBean implements Serializable {
 
     public void resetTheme() {
         getGuestPreferences().setTheme("indigo");
-    }
-
-
-    public void enqueque(Target target, DefaultSubMenu subMenu) {
-
-        if(target instanceof ConceptSMTK) {
-            enqueueConcept((ConceptSMTK) target, subMenu);
-        }
-        if(target instanceof ConceptSCT) {
-            enqueueConceptSCT((ConceptSCT) target, subMenu);
-        }
-    }
-
-    public void enqueueConcept(ConceptSMTK conceptSMTK, DefaultSubMenu subMenu) {
-        DefaultMenuItem item = new DefaultMenuItem(conceptSMTK.getDescriptionFSN());
-        item.setUrl("/views/concept/"+conceptSMTK.getConceptID());
-        item.setStyleClass("loader-trigger");
-        item.setId("rm_"+conceptSMTK.getConceptID());
-        if(!subMenu.getElements().contains(item)) {
-            subMenu.addElement(item);
-        }
-    }
-
-    public void enqueueConceptSCT(ConceptSCT conceptSCT, DefaultSubMenu subMenu) {
-        DefaultMenuItem item = new DefaultMenuItem(conceptSCT.getDescriptionFSN());
-        item.setUrl("/views/snomed/concept/"+conceptSCT.getId());
-        item.setStyleClass("loader-trigger");
-        item.setId("rm_"+conceptSCT.getId());
-        if(!subMenu.getElements().contains(item)) {
-            subMenu.addElement(item);
-        }
     }
 
     public List<Description> searchSuggestedDescriptions(String term) {
@@ -469,6 +444,14 @@ public class BrowserBean implements Serializable {
 
     public void setConceptSelected(ConceptSMTK conceptSelected) {
         this.conceptSelected = conceptSelected;
+    }
+
+    public Category getCategorySelected() {
+        return categorySelected;
+    }
+
+    public void setCategorySelected(Category categorySelected) {
+        this.categorySelected = categorySelected;
     }
 
     public List<Category> getCategories() {
@@ -635,6 +618,14 @@ public class BrowserBean implements Serializable {
 
     public void setMenu(MenuModel menu) {
         this.menu = menu;
+    }
+
+    public boolean isShowCategories() {
+        return showCategories;
+    }
+
+    public void setShowCategories(boolean showCategories) {
+        this.showCategories = showCategories;
     }
 
 }

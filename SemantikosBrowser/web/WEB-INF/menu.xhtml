@@ -44,14 +44,14 @@
                                     <p:inputText id="search_input" value="#{browserBean.browserQuery.query}" placeholder="Buscar en Semantikos..."
                                                  style="width: 100%" styleClass="search_input"
                                                  onkeyup="return (this.value.length >= 3 || this.value.length == 0)" rendered="#{ not browserBean.snomedCT}">
-                                        <p:ajax event="keyup" update="@(.conceptPanel),@(.search2)" process="@this" oncomplete="mark();"
+                                        <p:ajax event="keyup" update="@(.conceptPanel),@(.search2),@(.categoryPanel)" process="@this" oncomplete="mark();"
                                                 listener="#{browserBean.setFilterChanged(true)}"/>
                                     </p:inputText>
 
                                     <p:inputText id="search_input2" value="#{browserSCTBean.snomedQuery.query}" placeholder="Buscar en Snomed-CT..."
                                                  style="width: 100%" styleClass="search_input"
                                                  onkeyup="return (this.value.length >= 3 || this.value.length == 0)" rendered="#{browserBean.snomedCT}">
-                                        <p:ajax event="keyup" update="@(.conceptPanel),@(.search2)" process="@this" oncomplete="mark();"
+                                        <p:ajax event="keyup" update="@(.conceptPanel),@(.search2),@(.categoryPanel)" process="@this" oncomplete="mark();"
                                                 listener="#{browserSCTBean.setFilterChanged(true)}"/>
                                     </p:inputText>
 
@@ -87,6 +87,19 @@
                                                      autoRun="true" />
 
                                 </div>
+                            </div>
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <p:outputPanel id="categoryPanel" styleClass="categoryPanel">
+                        <p:outputPanel rendered="#{browserBean.showCategories}">
+                            <div class="ui-fluid ui-g">
+                                <p:repeat value="#{browserBean.categories}" var="category">
+                                    <div class="ui-g-12 ui-md-12 ui-lg-12">
+                                        <p:commandLink value="#{category.name}" update="@(.conceptForm),@(.search2)"
+                                                       actionListener="#{browserBean.setCategorySelected(category)}"/>
+                                    </div>
+                                </p:repeat>
                             </div>
                         </p:outputPanel>
                     </p:outputPanel>
