@@ -311,3 +311,8 @@
     /*background-color: #e8e8e8;*/
     font-weight: bold;
 }
+
+.concept-selected-menu {
+    font-weight: bold !important;
+    color: #E91E63; !important;
+}

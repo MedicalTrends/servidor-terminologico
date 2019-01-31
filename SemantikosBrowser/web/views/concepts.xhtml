@@ -132,7 +132,7 @@
                                        update="@(.conceptForm)" oncomplete="scrolltop();"
                                        styleClass="context #{(node == concept.selectedConcept)?'concept-selected':''}">
                         </p:commandLink>
-                        <p:commandLink value="#{node.descriptionFSN.term}" rendered="#{node['class'].simpleName eq 'ConceptSCT'}"
+                        <p:commandLink value="#{node.getDescriptionFavouriteSynonymous().term}" rendered="#{node['class'].simpleName eq 'ConceptSCT'}"
                                        actionListener="#{conceptSCT.setConceptID(node.id)}" style="color: #E91E63"
                                        update="@(.conceptForm)" oncomplete="scrolltop();"
                                        styleClass="context #{(node == conceptSCT.selectedConcept)?'concept-selected':''}">
@@ -272,7 +272,7 @@
                                     </div>
 
                                     <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                        <p:commandLink value="#{relationship.target.getDescriptionFSN().term}" update="@(.conceptForm)"
+                                        <p:commandLink value="#{relationship.target.getDescriptionFavouriteSynonymous().term}" update="@(.conceptForm)"
                                                        actionListener="#{conceptSCT.setConceptID(relationship.target.id)}"
                                                        styleClass="value"/>
                                     </div>
@@ -432,13 +432,13 @@
 
                             <p:repeat value="#{conceptSCT.selectedConcept.getRelationships()}" var="relationship">
                                 <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                    <p:outputLabel value="#{relationship.typeConcept.descriptionFSN}:"/>
-                                    <p:commandLink value="#{relationship.typeConcept.descriptionFSN}:" update="@(.conceptForm)" rendered="false"
+                                    <p:outputLabel value="#{relationship.typeConcept.getDescriptionFavouriteSynonymous().term}:"/>
+                                    <p:commandLink value="#{relationship.typeConcept.descriptionFSN.term}:" update="@(.conceptForm)" rendered="false"
                                                    actionListener="#{conceptSCT.setConceptID(relationship.typeConcept.idSnomedCT)}">
                                     </p:commandLink>
                                 </div>
                                 <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                    <p:commandLink value="#{relationship.destinationConcept.descriptionFSN}" update="@(.conceptForm)"
+                                    <p:commandLink value="#{relationship.destinationConcept.getDescriptionFavouriteSynonymous().term}" update="@(.conceptForm)"
                                                    oncomplete="scrolltop();"
                                                    actionListener="#{conceptSCT.setConceptID(relationship.destinationConcept.idSnomedCT)}">
                                     </p:commandLink>

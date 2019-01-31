@@ -145,7 +145,7 @@ public class ConceptSCT extends PersistentEntity implements Target, SnomedCTComp
             }
         }
 
-        return null;
+        return getDescriptionFSN();
     }
 
     private List<DescriptionSCT> getDescriptionSynonymous() {

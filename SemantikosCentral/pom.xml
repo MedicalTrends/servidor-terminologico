@@ -132,7 +132,9 @@
                     </modules>
                 </configuration>
             </plugin>
+
         </plugins>
+
         <finalName>SemantikosCentral</finalName>
     </build>
 </project>
