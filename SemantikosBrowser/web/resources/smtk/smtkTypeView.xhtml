@@ -32,6 +32,7 @@
                                            actionListener="#{concept.setConceptID(relationship.target.conceptID)}"
                                            update="@(.conceptForm)">
                             </p:commandLink>
+                            <p:outputLabel value="#{concept.formatSMTKRelationshipAttributes(relationship)}" styleClass="value"/>
                             <p:link value="#{concept.formatSMTKRelationship(relationship)}" rendered="false"
                                     oncomplete="scrolltop();" outcome="/views/concept"
                                     styleClass="context">
@@ -51,6 +52,7 @@
                                            actionListener="#{concept.setConceptID(relationship.target.conceptID)}" rendered="true"
                                            update="@(.conceptForm)">
                             </p:commandLink>
+                            <p:outputLabel value="#{concept.formatSMTKRelationshipAttributes(relationship)}" styleClass="value"/>
                             <p:link value="#{concept.formatSMTKRelationship(relationship)}" rendered="false"
                                     oncomplete="scrolltop();" outcome="/views/concept"
                                     styleClass="context">
