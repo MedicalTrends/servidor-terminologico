@@ -236,15 +236,16 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     width: inherit !important;
 }
 
+/*******************************************************************************************************/
+
+/*
 #conceptPanel table thead {
     display: none !important;
 }
 
-/*
 #browserTable_paginator_top {
     display: none !important;
 }
-*/
 
 #conceptPanel .ui-datatable tbody tr.ui-datatable-even {
     background-color: transparent !important;
@@ -261,6 +262,10 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
 #browserTable_paginator_top {
     display: none !important;
 }
+
+*/
+
+/*******************************************************************************************************/
 
 .layout-rightpanel .layout-rightpanel-header {
     height: 50px !important;
@@ -386,3 +391,58 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     /*background: #fce4e8 !important;*/
     /*color: #F44336 !important;*/
 }
+
+/*******************Estilos para tabla de conceptos en navegador categorias************************************/
+#conceptPanel table thead {
+    display: none !important;
+}
+
+#conceptForm\:j_idt74\:smtkAttributes table thead {
+    display: none !important;
+}
+
+#conceptPanel .ui-datatable tbody tr.ui-datatable-even {
+    background-color: transparent !important;
+}
+
+#conceptPanel .ui-datatable tbody tr td {
+    border: transparent !important;
+}
+
+#conceptPanel .ui-widget-header {
+    border: transparent !important;
+}
+
+#browserForm\:conceptTable_paginator_top {
+    /*display: none !important;*/
+}
+
+/* */
+#conceptPanel .ui-paginator-current {
+    color: #1A0DAB !important;
+}
+
+#conceptPanel .ui-paginator .ui-paginator-pages .ui-paginator-page {
+    color: #1A0DAB !important;
+}
+
+#conceptPanel .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+    color: #FFFFFF !important;
+}
+
+#conceptPanel .conceptTable .ui-widget-header {
+    background: rgba(56, 73, 162, 0) !important;
+}
+
+#conceptPanel .ui-paginator .ui-paginator-first, #conceptPanel .ui-paginator .ui-paginator-prev, #conceptPanel .ui-paginator .ui-paginator-next, #conceptPanel .ui-paginator .ui-paginator-last {
+    color: #1A0DAB !important;
+}
+
+#conceptPanel #conceptTable_paginator_bottom {
+    background: #FFF none repeat scroll 0% 0% !important;
+    border-bottom: 1px solid #BDBDBD !important;
+    border-left: 1px solid #BDBDBD !important;
+    border-right: 1px solid #BDBDBD !important;
+    boorder-top: 0px !important;
+}
+/***************************************************************************************************/

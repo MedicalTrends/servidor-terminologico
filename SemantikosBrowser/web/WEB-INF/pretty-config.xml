@@ -8,10 +8,10 @@
         <view-id value="/views/concepts.xhtml" />
     </url-mapping>
 
-    <url-mapping id="concepts">
+    <!--url-mapping id="concepts">
         <pattern value="/views/concepts" />
         <view-id value="/views/concepts.xhtml" />
-    </url-mapping>
+    </url-mapping-->
 
     <url-mapping id="concept">
         <pattern value="/views/concept/#{conceptID}" />

@@ -231,7 +231,7 @@ public class BrowserBean implements Serializable {
 
                 //List<ConceptSMTK> conceptSMTKs = conceptManager.findConceptsBy(category, first, pageSize);
 
-                   if(isFilterChanged) {
+               if(isFilterChanged) {
                     browserQuery.setPageNumber(0);
                     RequestContext context = RequestContext.getCurrentInstance();
                     context.execute("PF('conceptTable').getPaginator().setPage(0);");

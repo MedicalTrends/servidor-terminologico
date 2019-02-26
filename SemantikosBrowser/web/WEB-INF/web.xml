@@ -182,6 +182,10 @@
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>
 
+    <session-config>
+        <session-timeout>1</session-timeout>
+    </session-config>
+
     <!-- Require HTTPS for everything except /img (favicon) and /css. -->
     <!--security-constraint>
         <web-resource-collection>

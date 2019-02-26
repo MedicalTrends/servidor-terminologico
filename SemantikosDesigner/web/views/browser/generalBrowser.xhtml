@@ -93,11 +93,12 @@
 
                             <p:ajax event="page" listener="#{generalBrowserBean.updatePage}" oncomplete="scrollTop();" update="@(.search2)" />
 
-                            <p:column headerText="Término Preferido">
+                            <p:column headerText="Término Preferido" style="padding: 0px">
                                 <div class="ui-g dashboard">
-                                    <div class="ui-g-12">
-                                        <p:outputPanel styleClass="card overview #{ not concept.valid?'not-valid':''}">
-                                            <div class="overview-content clearfix task-list">
+                                    <div class="ui-g-12" style="padding: 0px">
+                                        <p:outputPanel styleClass="card overview #{ not concept.valid?'not-valid':''}"
+                                                       style="min-height: 0px; border-bottom: 1px solid #cfcfcf;">
+                                            <div class="overview-content clearfix task-list" style="padding: 10px">
                                                 <span class="overview-title">
                                                     <p:link outcome="/views/concepts/conceptView" value="#{concept.descriptionFavorite.term} "
                                                             styleClass="myCustomLinkStyle loader-trigger">
@@ -174,21 +175,6 @@
                                                                 </div>
                                                             </p:repeat>
                                                         </div>
-                                                        <h:dataTable value="#{generalBrowserBean.generalQuery.getShowableColumnsByConcept(concept)}"
-                                                                     var="column" rendered="false"
-                                                                     columnIndexVar="colIndex">
-                                                            <h:column>
-                                                                <i class="fa fa-list" style="font-size: small"/>
-                                                                <h:outputText value=" #{column.relationshipDefinition.name}" style="font-weight: bold; font-size: small; color:#545454;" />
-                                                            </h:column>
-                                                            <h:column>
-                                                                <p:outputPanel>
-                                                                    <smtk:basicTypeCell basicTypeDefinition="#{column.relationshipDefinition.targetDefinition}" relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.basicType}" />
-                                                                    <smtk:helperTableTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.helperTable}" />
-                                                                    <smtk:smtkTypeCell relationshipDefinition="#{column.relationshipDefinition}" concept="#{concept}" rendered="#{column.relationshipDefinition.targetDefinition.SMTKType}" />
-                                                                </p:outputPanel>
-                                                            </h:column>
-                                                        </h:dataTable>
                                                     </p:outputPanel>
 
                                                     <p:separator style="border-top: 0px solid rgb(219, 219, 219)" rendered="#{ not empty concept.tags or concept.observation != ''}"/>

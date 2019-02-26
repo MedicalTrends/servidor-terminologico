@@ -242,6 +242,7 @@ public class GeneralBrowserBean implements Serializable {
     public void setIdCategory(int idCategory) {
         if(this.idCategory != idCategory) {
             this.generalQuery = null;
+            setFilterChanged(true);
         }
         this.idCategory = idCategory;
         this.category = categoryManager.getCategoryById(idCategory);
