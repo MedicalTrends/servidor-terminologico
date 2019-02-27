@@ -98,6 +98,8 @@ public class BrowserSCTBean implements Serializable {
 
     private int page = 1;
 
+    private int pages = 1;
+
     //@EJB
     private QueryManager queryManager = (QueryManager) ServiceLocator.getInstance().getService(QueryManager.class);
 
@@ -195,7 +197,11 @@ public class BrowserSCTBean implements Serializable {
                 }
                 */
 
+                int rowCount = 0;
+
                 List<ConceptSCT> conceptSCTs = queryManager.executeQuery(snomedQuery);
+
+                rowCount = queryManager.countQueryResults(snomedQuery);
 
                 snomedQuery.setTruncateMatch(true);
 
@@ -205,10 +211,20 @@ public class BrowserSCTBean implements Serializable {
                     }
                 }
 
-                this.setRowCount(queryManager.countQueryResults(snomedQuery));
+                if(rowCount == 0) {
+                    rowCount = queryManager.countQueryResults(snomedQuery);
+                    //rowCount = rowCount + queryManager.countQueryResults(browserQuery);
+                }
+
+                this.setRowCount(rowCount);
 
                 results = this.getRowCount();
                 seconds = (float) ((currentTimeMillis() - init)/1000.0);
+                pages = results/15 + 1;
+
+                if(results == 0) {
+                    page = 1;
+                }
 
                 return conceptSCTs;
             }
@@ -380,6 +396,14 @@ public class BrowserSCTBean implements Serializable {
 
     public void setPage(int page) {
         this.page = page;
+    }
+
+    public int getPages() {
+        return pages;
+    }
+
+    public void setPages(int pages) {
+        this.pages = pages;
     }
 
     public GuestPreferences getGuestPreferences() {

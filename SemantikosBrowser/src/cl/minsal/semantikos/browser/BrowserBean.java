@@ -104,6 +104,8 @@ public class BrowserBean implements Serializable {
 
     private int page = 1;
 
+    private int pages = 1;
+
     private boolean sort;
 
     private transient TreeNode root;
@@ -271,14 +273,21 @@ public class BrowserBean implements Serializable {
                     }
                 }
 
-                if(rowCount == 0) {
+
+                if(rowCount < conceptSMTKs.size()) {
                     rowCount = queryManager.countQueryResults(browserQuery);
+                    //rowCount = rowCount + queryManager.countQueryResults(browserQuery);
                 }
 
                 this.setRowCount(rowCount);
 
                 results = this.getRowCount();
                 seconds = (float) ((currentTimeMillis() - init)/1000.0);
+                pages = results/15 + 1;
+
+                if(results == 0) {
+                    page = 1;
+                }
 
                 return conceptSMTKs;
             }
@@ -552,6 +561,15 @@ public class BrowserBean implements Serializable {
 
     public void setPage(int page) {
         this.page = page;
+    }
+
+
+    public int getPages() {
+        return pages;
+    }
+
+    public void setPages(int pages) {
+        this.pages = pages;
     }
 
     public GuestPreferences getGuestPreferences() {

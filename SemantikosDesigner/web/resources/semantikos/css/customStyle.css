@@ -138,6 +138,13 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     left: 10px;
 }
 
+.search .loader {
+    position: absolute !important;
+    top: -7px !important;
+    left: 4px !important;
+    width: 30px !important;
+}
+
 .conceptFilters .ui-menubar .ui-menubar-options {
     float: left;
 }

@@ -39,10 +39,16 @@
 
                                     <p:inputText value="#{generalBrowserBean.generalQuery.query}" placeholder="Buscar..." style="width: 100%"
                                                  onkeyup="return (this.value.length >= 3 || this.value.length == 0)">
-                                        <p:ajax event="keyup" update="@(.browserTable),@(.search2)" process="@this" listener="#{generalBrowserBean.setFilterChanged(true)}" delay="500" />
+                                        <p:ajax event="keyup" update="@(.browserTable),@(.search2)" process="@this"
+                                                onstart="initloader();"
+                                                oncomplete="haltloader();"
+                                                listener="#{generalBrowserBean.setFilterChanged(true)}" />
                                     </p:inputText>
 
                                     <i class="fa fa-search fa-lg" />
+
+                                    <p:graphicImage library="semantikos" name="images/loader-pink.gif"
+                                                    styleClass="loader" style="display: none" />
 
                                 </p:outputPanel>
 
@@ -84,7 +90,7 @@
                                      var="concept"
                                      rows="30"
                                      paginator="true" lazy="true" dynamic="true" reflow="false"
-                                     paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                     paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                      emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
                             <p:growl id="growl" showDetail="true" showSummary="true"/>
@@ -325,6 +331,16 @@
                 listenSearchOnFocusEvent();
                 mark();
             });
+
+            function initloader() {
+                $('.loader').css("display","inline");
+                $('.search .fa').hide();
+            }
+
+            function haltloader() {
+                $('.loader').css("display","none");
+                $('.search .fa').show();
+            }
 
         </script>
 

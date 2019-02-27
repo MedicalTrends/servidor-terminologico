@@ -44,18 +44,25 @@
                                     <p:inputText id="search_input" value="#{browserBean.browserQuery.query}" placeholder="Buscar en Semantikos..."
                                                  style="width: 100%" styleClass="search_input"
                                                  onkeyup="return (this.value.length >= 3 || this.value.length == 0)" rendered="#{ not browserBean.snomedCT}">
-                                        <p:ajax event="keyup" update="@(.conceptPanel),@(.search2),@(.categoryPanel)" process="@this" oncomplete="mark();highlight()"
+                                        <p:ajax event="keyup" update="@(.conceptPanel),@(.search2),@(.categoryPanel)" process="@this"
+                                                onstart="initloader();"
+                                                oncomplete="mark();highlight();haltloader();"
                                                 listener="#{browserBean.setFilterChanged(true)}"/>
                                     </p:inputText>
 
                                     <p:inputText id="search_input2" value="#{browserSCTBean.snomedQuery.query}" placeholder="Buscar en Snomed-CT..."
                                                  style="width: 100%" styleClass="search_input"
                                                  onkeyup="return (this.value.length >= 3 || this.value.length == 0)" rendered="#{browserBean.snomedCT}">
-                                        <p:ajax event="keyup" update="@(.conceptPanel),@(.search2),@(.categoryPanel)" process="@this" oncomplete="mark();highlight()"
+                                        <p:ajax event="keyup" update="@(.conceptPanel),@(.search2),@(.categoryPanel)" process="@this"
+                                                onstart="initloader();"
+                                                oncomplete="mark();highlight();haltloader();"
                                                 listener="#{browserSCTBean.setFilterChanged(true)}"/>
                                     </p:inputText>
 
                                     <i class="fa fa-search fa-lg" />
+
+                                    <p:graphicImage library="semantikos" name="images/loader-pink.gif"
+                                                    styleClass="loader" style="display: none" />
 
                                 </p:outputPanel>
 
@@ -82,7 +89,7 @@
                             <div class="ui-fluid ui-g">
                                 <div class="ui-g-12 ui-md-12 ui-lg-12">
                                     <p:outputLabel id="summary" style="font-size: small; color: #212121"
-                                                   value="Página #{browserBean.page} de #{browserBean.results} conceptos"/>
+                                                   value="Página #{browserBean.page} de #{browserBean.pages}, #{browserBean.results} conceptos"/>
                                     <p:remoteCommand name="onload" update="summary"
                                                      autoRun="true" />
 
@@ -93,8 +100,8 @@
                             <div class="ui-fluid ui-g">
                                 <div class="ui-g-12 ui-md-12 ui-lg-12">
                                     <p:outputLabel id="summary2" style="font-size: small; color: #212121"
-                                                   value="Página #{browserSCTBean.page} de #{browserSCTBean.results} conceptos"/>
-                                    <p:remoteCommand name="onload" update="summary"
+                                                   value="Página #{browserSCTBean.page} de #{browserSCTBean.pages}, #{browserSCTBean.results} conceptos"/>
+                                    <p:remoteCommand name="onload" update="summary2"
                                                      autoRun="true" />
 
                                 </div>
@@ -223,7 +230,7 @@
                                  rows="15" rendered="false"
                                  paginator="true" lazy="true" dynamic="true"
                                  reflow="true"
-                                 paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                                  emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
                         <f:facet name="{Exporters}">
@@ -281,6 +288,15 @@
             });
         }
 
+        function initloader() {
+            $('.loader').css("display","inline");
+            $('.search .fa').hide();
+        }
+
+        function haltloader() {
+            $('.loader').css("display","none");
+            $('.search .fa').show();
+        }
 
         function loader() {
 
