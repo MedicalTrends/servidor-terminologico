@@ -36,16 +36,16 @@
         <f:facet name="last">
             <h:outputStylesheet name="semantikos/css/customStyle.css"/>
         </f:facet>
-        
+
         <div class="layout-wrapper menu-layout-static">
             <ui:include src="./topbar.xhtml" />
             <ui:include src="./rightpanel.xhtml" />
             <smtk:filters rendered="#{request.requestURI.contains('concepts.')}"  />
             <ui:include src="./menu.xhtml" />
-            
+
             <div class="layout-main">
                 <ui:insert name="content"/>
-                
+
                 <ui:include src="./footer.xhtml" />
             </div>
         </div>
@@ -59,7 +59,7 @@
                <h:outputText value="" />
            </f:facet>
        </p:ajaxStatus>
-        
+
 
         <h:outputStylesheet name="css/nanoscroller.css" library="ultima-layout" />
         <h:outputStylesheet name="css/animate.css" library="ultima-layout" />

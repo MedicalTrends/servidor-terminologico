@@ -122,7 +122,8 @@
                         </div>
                     </p:outputPanel>
 
-                <p:tree value="#{browserBean.root}" var="node" style="width: 100%; background-color: transparent; border: 0px"
+                <p:tree value="#{browserBean.root}" var="node"
+                        style="width: 100%; background-color: transparent; border: 0px; margin-bottom: 6px"
                         rendered="#{concept.selectedConcept != null || conceptSCT.selectedConcept !=null}"
                         dynamic="true">
                     <p:treeNode>
@@ -276,7 +277,7 @@
 
                                     <div class="ui-g-12 ui-md-8 ui-lg-10">
                                         <p:commandLink value="#{relationship.target.getDescriptionFavouriteSynonymous().term}" update="@(.conceptForm)"
-                                                       actionListener="#{conceptSCT.setConceptID(relationship.target.id)}"
+                                                       actionListener="#{conceptSCT.setConceptID(relationship.target.id)}" oncomplete="scrolltop();"
                                                        styleClass="value"/>
                                     </div>
 
