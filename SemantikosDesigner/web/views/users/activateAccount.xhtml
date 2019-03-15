@@ -39,7 +39,7 @@
                         <div style="text-align: center; color: #3F51B5">Por favor, complete el siguiente formulario.</div>
                     </p:outputPanel>
                     <p:outputPanel rendered="#{accountActivation.accountActive}">
-                        <div style="text-align: center; color: #4CAF50">Su cuenta ha sido activada!</div>
+                        <div style="text-align: center; color: #E91E63">Su cuenta ha sido activada</div>
                         <p:button outcome="/views/login.xhtml" value="Ir al login" styleClass="cyan-btn" icon="fa fa-arrow-left" style="width: auto; margin: 2em"/>
                     </p:outputPanel>
                 </p:outputPanel>
@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <h:form id="loginform" rendered="#{not accountActivation.accountActive}" style="margin-bottom: 40px" onkeypress="return event.keyCode != 13">
+        <h:form id="loginform" rendered="#{not accountActivation.accountActive}" style="margin-bottom: 40px" onkeypress="return event.keyCode != 13" >
             <p:growl id="growl" showDetail="true" showSummary="true"/>
             <p:fieldset legend="Cambio de contraseña">
 
@@ -98,7 +98,7 @@
                         <div class="ui-g-12 ui-md-12 ui-lg-12">
                             <p:commandButton actionListener="#{accountActivation.checkPassword}"
                                              style="width: auto;float: right; padding-bottom: 0px"
-                                             value="Enviar" process="loginform"
+                                             value="Enviar" process="loginform" oncomplete="scrollBottom();"
                                              update="growl, loginform, @(.headerPanel)">
                             </p:commandButton>
                         </div>
@@ -145,7 +145,7 @@
                                                 <p:outputPanel styleClass="search">
                                                     <p:inputText value="#{answer.answer}" autocomplete="off" readonly="true"/>
                                                     <p:commandLink process="@this"
-                                                                   update="@(.questions)"
+                                                                   update="@(.questions)" oncomplete="scrollBottom();"
                                                                    action="#{accountActivation.user.answers.remove(answer)}">
                                                         <i class="fa fa-close fa-lg" style="line-height: 1em" />
                                                     </p:commandLink>
@@ -188,8 +188,13 @@
     <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="ultima-layout" />
 
         <script type="text/javascript">
-
-
+            function scrollBottom() {
+                setTimeout(
+                        function() {
+                            window.scroll(0, 1000);
+                            listenPageOnClickEvent();
+                        }, 100);
+            }
         </script>
 
 

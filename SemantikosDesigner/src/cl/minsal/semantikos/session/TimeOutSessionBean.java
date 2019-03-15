@@ -11,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 import static cl.minsal.semantikos.users.AuthenticationBean.AUTH_KEY;
@@ -36,6 +37,10 @@ public class TimeOutSessionBean {
     public void redirectSession() throws IOException {
         ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
         eContext.getSessionMap().remove(AUTH_KEY);
+        HttpServletRequest request = (HttpServletRequest) eContext.getRequest();
+        /*Se invalida la sesión http*/
+        request.getSession().invalidate();
+        /*Se invalida la sesión en el servidor*/
         eContext.invalidateSession();
         eContext.redirect(eContext.getRequestContextPath());
         return;

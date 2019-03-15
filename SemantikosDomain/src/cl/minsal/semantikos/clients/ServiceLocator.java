@@ -4,11 +4,6 @@ package cl.minsal.semantikos.clients; /**
 
 import cl.minsal.semantikos.kernel.components.AuthenticationManager;
 import cl.minsal.semantikos.kernel.components.DescriptionManager;
-import org.jboss.ejb.client.ContextSelector;
-import org.jboss.ejb.client.EJBClientConfiguration;
-import org.jboss.ejb.client.EJBClientContext;
-import org.jboss.ejb.client.PropertiesBasedEJBClientConfiguration;
-import org.jboss.ejb.client.remoting.ConfigBasedEJBClientContextSelector;
 
 import javax.naming.*;
 
@@ -50,6 +45,7 @@ public class ServiceLocator {
         // the remote view fully qualified class name
         final String viewClassName = getViewClassName(type);
         // let's do the lookup (notice the ?stateful string as the last part of the jndi name for stateful bean lookup)
+        //String jndiname = "ejb:" + appName + moduleName + beanName + "!" + viewClassName;
         String jndiname = "ejb:" + appName + moduleName + beanName + "!" + viewClassName;
         //String jndiname = appName + moduleName + beanName + "!" + viewClassName;
 

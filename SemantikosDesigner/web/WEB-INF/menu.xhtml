@@ -14,9 +14,13 @@
                         <div class="profile">
                             <div class="profile-image"></div>
                             <a id="profile-options" href="#">
-                                <span class="profile-name">#{authenticationBean.loggedUser.fullName}</span>
+                                <span class="profile-name">#{authenticationBean.loggedUser.email}</span>
                                 <i class="material-icons">&#xE313;</i>
                             </a>
+                            <br/>
+                            <p:repeat value="#{authenticationBean.loggedUser.profiles}" var="profile">
+                                <small>#{profile.name}, </small>
+                            </p:repeat>
                         </div>
                     
                         <ul id="profile-menu" class="ultima-menu">
