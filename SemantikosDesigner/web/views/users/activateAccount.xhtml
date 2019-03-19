@@ -15,6 +15,7 @@
     <title>Semantikos Minsal</title>
     <h:outputScript name="js/ripple.js" library="ultima-layout" />
     <h:outputScript name="js/layout.js" library="ultima-layout" />
+    <h:outputScript name="js/jquery.toast.js" library="semantikos" />
 </h:head>
 
 <p:outputPanel id="account-activation" rendered="#{accountActivation.valid}">
@@ -39,7 +40,7 @@
                         <div style="text-align: center; color: #3F51B5">Por favor, complete el siguiente formulario.</div>
                     </p:outputPanel>
                     <p:outputPanel rendered="#{accountActivation.accountActive}">
-                        <div style="text-align: center; color: #E91E63">Su cuenta ha sido activada</div>
+                        <div style="text-align: center; color: #3F51B5">Su cuenta ha sido activada</div>
                         <p:button outcome="/views/login.xhtml" value="Ir al login" styleClass="cyan-btn" icon="fa fa-arrow-left" style="width: auto; margin: 2em"/>
                     </p:outputPanel>
                 </p:outputPanel>
@@ -98,7 +99,9 @@
                         <div class="ui-g-12 ui-md-12 ui-lg-12">
                             <p:commandButton actionListener="#{accountActivation.checkPassword}"
                                              style="width: auto;float: right; padding-bottom: 0px"
-                                             value="Enviar" process="loginform" oncomplete="scrollBottom();"
+                                             value="Enviar" process="loginform"
+                                             styleClass="loader-trigger"
+                                             oncomplete="scrollBottom();listenOnClick();hideLoader();"
                                              update="growl, loginform, @(.headerPanel)">
                             </p:commandButton>
                         </div>
@@ -161,6 +164,8 @@
                             <div class="ui-g-12 ui-md-12 ui-lg-12">
                                 <p:commandButton actionListener="#{accountActivation.activate}"
                                                  style="width: auto; float: right; padding-bottom: 0px"
+                                                 oncomplete="listenOnClick();hideLoader();"
+                                                 styleClass="loader-trigger"
                                                  value="Enviar" process="loginform"
                                                  update="growl, account-activation">
                                 </p:commandButton>
@@ -188,6 +193,29 @@
     <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="ultima-layout" />
 
         <script type="text/javascript">
+
+            function listenOnClick() {
+                $('.loader-trigger').click(function() {
+                    $.Toast.showToast({
+                        // toast message
+                        "title": "Un momento por favor...",
+                        // "success", "none", "error"
+                        "icon": "Cargando",
+                        // default: 1500
+                        "duration": 10000
+                    });
+                });
+            }
+
+            function hideLoader() {
+                $.Toast.hideToast();
+            }
+
+            $(document).ready(function() {
+                listenOnClick();
+            });
+
+
             function scrollBottom() {
                 setTimeout(
                         function() {

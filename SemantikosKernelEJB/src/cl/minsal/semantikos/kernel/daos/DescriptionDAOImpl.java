@@ -1,5 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
+import cl.minsal.semantikos.kernel.businessrules.DescriptionSearchBR;
 import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.singletons.DescriptionTypeSingleton;
 import cl.minsal.semantikos.kernel.singletons.UserSingleton;
@@ -53,6 +54,9 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
     @EJB
     private TagDAO tagDAO;
+
+    @EJB
+    private DescriptionSearchBR descriptionSearchBR;
 
     @Resource(lookup = "java:jboss/OracleDS")
     private DataSource dataSource;
@@ -186,6 +190,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
             logger.error(errorMsg, e);
             throw new EJBException(e);
         }
+
+        descriptionSearchBR.applyPostActions(descriptions);
 
         return descriptions;
     }
@@ -511,6 +517,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): " + descriptions);
         logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+
+        descriptionSearchBR.applyPostActions(descriptions);
         return descriptions;
     }
 
@@ -584,6 +592,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
         //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): " + descriptions);
         //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+        descriptionSearchBR.applyPostActions(descriptions);
+
         return descriptions;
     }
 
@@ -646,6 +656,8 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
         //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): " + descriptions);
         //logger.info("searchDescriptionsByTerm(" + term + ", " + categories + ", " + refsets + "): {}s", String.format("%.2f", (currentTimeMillis() - init)/1000.0));
+        descriptionSearchBR.applyPostActions(descriptions);
+
         return descriptions;
     }
 

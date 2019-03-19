@@ -156,7 +156,7 @@
 
                         <p:separator styleClass="heading-separator"/>
 
-                        <div class="ui-g ui-fluid" style="margin-bottom: 20px">
+                        <div class="ui-g ui-fluid" style="margin-bottom: 20px; margin-left: 5px">
 
                             <div class="ui-g-12 ui-md-4 ui-lg-2">
                                 <h:outputText value="ConceptID:" styleClass="label" />
@@ -436,7 +436,7 @@
 
                             <p:repeat value="#{conceptSCT.selectedConcept.getRelationships()}" var="relationship">
                                 <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                    <p:outputLabel value="#{relationship.typeConcept.getDescriptionFavouriteSynonymous().term}:"/>
+                                    <p:outputLabel value="#{relationship.typeConcept.getDescriptionFavouriteSynonymous().term}:" styleClass="label"/>
                                     <p:commandLink value="#{relationship.typeConcept.descriptionFSN.term}:" update="@(.conceptForm)" rendered="false"
                                                    actionListener="#{conceptSCT.setConceptID(relationship.typeConcept.idSnomedCT)}">
                                     </p:commandLink>

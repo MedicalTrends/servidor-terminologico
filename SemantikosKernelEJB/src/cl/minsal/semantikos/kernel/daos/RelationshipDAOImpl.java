@@ -500,7 +500,6 @@ public class RelationshipDAOImpl implements RelationshipDAO {
 
         /* El target puede ser un concepto SMTK */
         if (relationshipDefinition.getTargetDefinition().isSMTKType()) {
-
             ConceptSMTK conceptByID = (ConceptSMTK) targetDAO.getTargetByID(relationshipDefinition.getTargetDefinition(), idTarget);
             return new Relationship(id, conceptSMTK, conceptByID, relationshipDefinition, validityUntil, new ArrayList<RelationshipAttribute>());
         }

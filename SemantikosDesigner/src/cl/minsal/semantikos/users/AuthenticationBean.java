@@ -8,6 +8,7 @@ import cl.minsal.semantikos.kernel.componentsweb.TimeOutWeb;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.descriptions.DescriptionTypeFactory;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
+import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.ProfileFactory;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.users.UserFactory;
@@ -412,6 +413,25 @@ public class AuthenticationBean {
         }
 
         return  categoriesByName;
+    }
+
+    public List<String> getProfiles() {
+
+        List<String> profiles = new ArrayList<>();
+
+        for (Profile profile : loggedUser.getProfiles()) {
+            String name = profile.getName();
+            if(loggedUser.getProfiles().size() > 1) {
+                name = name + ", ";
+            }
+            profiles.add(name);
+            if(profiles.size() > 2) {
+                profiles.add("...");
+                break;
+            }
+        }
+
+        return  profiles;
     }
 
 }

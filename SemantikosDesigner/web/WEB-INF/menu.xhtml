@@ -18,8 +18,8 @@
                                 <i class="material-icons">&#xE313;</i>
                             </a>
                             <br/>
-                            <p:repeat value="#{authenticationBean.loggedUser.profiles}" var="profile">
-                                <small>#{profile.name}, </small>
+                            <p:repeat value="#{authenticationBean.getProfiles()}" var="profile">
+                                <small>#{profile}</small>
                             </p:repeat>
                         </div>
                     

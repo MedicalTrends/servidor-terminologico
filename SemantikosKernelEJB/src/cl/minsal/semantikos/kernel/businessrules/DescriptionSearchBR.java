@@ -1,7 +1,10 @@
 package cl.minsal.semantikos.kernel.businessrules;
 
 import cl.minsal.semantikos.model.descriptions.Description;
+import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.snomedct.ConceptSCT;
+import cl.minsal.semantikos.model.tags.TagSMTKFactory;
+import sun.security.krb5.internal.crypto.Des;
 
 import javax.ejb.Singleton;
 import javax.validation.constraints.NotNull;
@@ -9,6 +12,8 @@ import java.text.Normalizer;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.sun.org.apache.xml.internal.utils.LocaleUtility.EMPTY_STRING;
 
 /**
  * @author Andrés Farías on 11/24/16.
@@ -123,7 +128,8 @@ public class DescriptionSearchBR {
     public void applyPostActions(@NotNull List<Description> descriptions) {
 
         /* Se ordenan los resultados */
-        postActionsortCollections(descriptions);
+        //postActionsortCollections(descriptions);
+        postActionDecorateTerms(descriptions);
     }
 
     private void postActionsortCollections(List<Description> descriptions) {
@@ -135,6 +141,36 @@ public class DescriptionSearchBR {
 
         /* Si la lista de registros es de la tabla HT_ATC_NAME, el ordenamiento es especial */
         Collections.sort(descriptions, new DescriptionComparator());
+    }
+
+    private void postActionDecorateTerms(List<Description> descriptions) {
+
+        /* Las listas vacías no requieren ser ordenadas */
+        if (descriptions == null || descriptions.isEmpty()){
+            return;
+        }
+
+        for (Description description : descriptions) {
+            decorate(description);
+        }
+    }
+
+
+    public void decorate(Description description) {
+
+        if(description.getTerm().isEmpty()) {
+            return;
+        }
+
+        String term = description.getTerm();
+        term = term.substring(0, 1).toUpperCase() + term.substring(1);
+
+        Matcher m = Pattern.compile("\\+( .)").matcher(description.getTerm());
+
+        while(m.find()) {
+            term = term.replace(m.group(1), m.group(1).toUpperCase());
+        }
+        description.setTerm(term);
     }
 
     class DescriptionComparator implements Comparator<Description> {

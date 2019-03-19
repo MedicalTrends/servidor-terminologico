@@ -156,6 +156,10 @@ public class Category extends PersistentEntity implements TargetDefinition, Audi
         return false;
     }
 
+    public boolean isSubstance() {
+        return getName().equalsIgnoreCase("Fármacos - Sustancia");
+    }
+
     public boolean isOnlyCommercial() {
         return getName().endsWith("Comercial");
     }
