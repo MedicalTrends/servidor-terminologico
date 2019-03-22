@@ -125,7 +125,7 @@ public class DescriptionSearchBR {
      *
      * @param descriptions Los registros que se desea ordenar.
      */
-    public void applyPostActions(@NotNull List<Description> descriptions) {
+    public void applyPostActions(@NotNull Description ... descriptions) {
 
         /* Se ordenan los resultados */
         //postActionsortCollections(descriptions);
@@ -143,10 +143,10 @@ public class DescriptionSearchBR {
         Collections.sort(descriptions, new DescriptionComparator());
     }
 
-    private void postActionDecorateTerms(List<Description> descriptions) {
+    private void postActionDecorateTerms(Description ... descriptions) {
 
         /* Las listas vacías no requieren ser ordenadas */
-        if (descriptions == null || descriptions.isEmpty()){
+        if (descriptions == null || descriptions.length == 0){
             return;
         }
 
@@ -166,7 +166,7 @@ public class DescriptionSearchBR {
             return;
         }
 
-        String term = description.getTerm();
+        String term = description.getTerm().trim();
         term = term.substring(0, 1).toUpperCase() + term.substring(1);
 
         Matcher m = Pattern.compile("\\+( .)").matcher(description.getTerm());

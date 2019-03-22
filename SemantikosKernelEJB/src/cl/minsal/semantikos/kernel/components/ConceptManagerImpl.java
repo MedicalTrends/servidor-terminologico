@@ -98,7 +98,6 @@ public class ConceptManagerImpl implements ConceptManager {
 
         /* Se recupera el concepto base (sus atributos) sin sus relaciones ni descripciones */
         ConceptSMTK concept = this.conceptDAO.getConceptByCONCEPT_ID(conceptId);
-        descriptionSearchBR.applyPostActions(concept.getDescriptions());
 
         /* Se cargan las descripciones del concepto */
         // TODO: Factorizar esto para que siempre se cree el concepto de la misma manera cuando se crea.
@@ -112,7 +111,6 @@ public class ConceptManagerImpl implements ConceptManager {
 
         /* Se recupera el concepto base (sus atributos) sin sus relaciones ni descripciones */
         ConceptSMTK conceptSMTK = this.conceptDAO.getConceptByID(id);
-        descriptionSearchBR.applyPostActions(conceptSMTK.getDescriptions());
         //ConceptSMTK conceptSMTK = conceptWSDAO.getConceptByID(id);
 
         /* Se cargan las descripciones del concepto */

@@ -118,7 +118,7 @@ public class QueryDAOImpl implements QueryDAO {
             while (rs.next()) {
 
                 if(  query instanceof  GeneralQuery ) {
-                    ConceptSMTK recoveredConcept = conceptManager.getConceptByID( rs.getLong(1));
+                    ConceptSMTK recoveredConcept = conceptManager.getConceptByID(rs.getLong(1));
                     queryResult.add(recoveredConcept);
                 }
                 if(  query instanceof  DescriptionQuery ) {
