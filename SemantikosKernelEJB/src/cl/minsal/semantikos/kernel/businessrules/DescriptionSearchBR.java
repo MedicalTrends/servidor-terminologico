@@ -162,6 +162,10 @@ public class DescriptionSearchBR {
             return;
         }
 
+        if(!description.getConceptSMTK().getCategory().isMC()) {
+            return;
+        }
+
         String term = description.getTerm();
         term = term.substring(0, 1).toUpperCase() + term.substring(1);
 
@@ -170,6 +174,13 @@ public class DescriptionSearchBR {
         while(m.find()) {
             term = term.replace(m.group(1), m.group(1).toUpperCase());
         }
+
+        m = Pattern.compile("\\-( .)").matcher(description.getTerm());
+
+        while(m.find()) {
+            term = term.replace(m.group(1), m.group(1).toUpperCase());
+        }
+
         description.setTerm(term);
     }
 

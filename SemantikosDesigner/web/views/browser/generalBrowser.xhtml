@@ -37,11 +37,12 @@
 
                                 <p:outputPanel styleClass="search" style="width: 100%">
 
-                                    <p:inputText value="#{generalBrowserBean.generalQuery.query}" placeholder="Buscar..." style="width: 100%"
+                                    <p:inputText id="search_input" value="#{generalBrowserBean.generalQuery.query}"
+                                                 placeholder="Buscar..." style="width: 100%"
                                                  onkeyup="return (this.value.length >= 3 || this.value.length == 0)">
                                         <p:ajax event="keyup" update="@(.browserTable),@(.search2)" process="@this"
                                                 onstart="initloader();"
-                                                oncomplete="haltloader();"
+                                                oncomplete="haltloader();mark();"
                                                 listener="#{generalBrowserBean.setFilterChanged(true)}" />
                                     </p:inputText>
 
@@ -107,7 +108,7 @@
                                             <div class="overview-content clearfix task-list" style="padding: 10px">
                                                 <span class="overview-title">
                                                     <p:link outcome="/views/concepts/conceptView" value="#{concept.descriptionFavorite.term} "
-                                                            styleClass="myCustomLinkStyle loader-trigger">
+                                                            styleClass="myCustomLinkStyle loader-trigger context">
                                                         <f:param name="conceptID" value="#{concept.conceptID}" />
                                                     </p:link>
                                                     <p:link rendered="#{concept.modeled}" outcome="/views/concepts/conceptView" title="Modelado"
