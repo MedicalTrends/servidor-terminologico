@@ -63,6 +63,7 @@ public class ServiceLocator {
     private ServiceLocator() {
 
         props = new Properties();
+        //props.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
         props.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
         //props.put(InitialContext.SECURITY_PRINCIPAL, "user@admin.cl");
         //props.put(InitialContext.SECURITY_CREDENTIALS, "1234567z");

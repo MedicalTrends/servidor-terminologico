@@ -131,19 +131,6 @@
                 $('.rightpanel-btn').trigger('click');
             }
 
-            var offSet = 0;
-
-            var x = window.matchMedia("(max-width: 700px)")
-            myFunction(x) // Call listener function at run time
-            x.addListener(myFunction) // Attach listener function on state changes
-
-            function myFunction(x) {
-                if (x.matches) { // If media query matches
-                    offSet = ($('#browserForm').first().offset().top) - 60;
-                } else {
-                    offSet = 0;
-                }
-            }
 
             $(document).ready(function() {
                 $('.ui-paginator-next, .ui-paginator-last, .ui-paginator-prev, .ui-paginator-first').on('click', function() {

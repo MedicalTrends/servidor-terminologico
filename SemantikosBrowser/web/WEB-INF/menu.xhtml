@@ -133,7 +133,7 @@
                                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
                                  emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
-                        <p:ajax event="page" listener="#{browserBean.updatePage}" oncomplete="scrollTop(); loader(); listen(); highlight()" update="@(.search),@(.search2)" />
+                        <p:ajax event="page" listener="#{browserBean.updatePage}" oncomplete="scrollTop(); loader(); highlight()" update="@(.search),@(.search2)" />
 
                         <p:column headerText="Termino Preferido" style="padding: 0px" styleClass="#{concept == concept.selectedConcept ? 'concept-selected':''}">
                             <div class="ui-g dashboard">
@@ -192,7 +192,7 @@
                                  paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
                                  emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
-                        <p:ajax event="page" listener="#{browserSCTBean.updatePage}" oncomplete="scrollTop(); loader(); listen(); highlight()" update="@(.search),@(.search2)" />
+                        <p:ajax event="page" listener="#{browserSCTBean.updatePage}" oncomplete="scrollTop(); loader(); highlight()" update="@(.search),@(.search2)" />
 
                         <p:column headerText="Termino Preferido" style="padding: 0px">
                             <div class="ui-g dashboard">
@@ -323,7 +323,6 @@
             });
 
         }
-
 
         function scrolltop() {
             setTimeout(

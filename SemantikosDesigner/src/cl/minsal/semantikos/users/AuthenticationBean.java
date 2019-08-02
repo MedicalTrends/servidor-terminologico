@@ -378,7 +378,7 @@ public class AuthenticationBean {
             //adminSubmenu.addElement(item9);
 
             DefaultMenuItem item10 = new DefaultMenuItem("Extracción Fármacos");
-            item10.setUrl("/views/concepts/extraction");
+            item10.setUrl("/views/extraction");
             item10.setIcon("fa fa-file-excel-o");
             item10.setStyleClass("loader-trigger");
             item10.setId("rm_extraction");

@@ -297,7 +297,7 @@ public class BrowserBean implements Serializable {
     }
 
     public void resetTheme() {
-        getGuestPreferences().setTheme("indigo");
+        getGuestPreferences().setTheme("teal");
     }
 
     public List<Description> searchSuggestedDescriptions(String term) {

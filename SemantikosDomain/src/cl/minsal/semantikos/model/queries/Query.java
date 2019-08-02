@@ -165,5 +165,6 @@ public class Query implements IQuery, Serializable {
         setAsc("asc");
         setQuery(EMPTY_STRING);
         setTruncateMatch(false);
+        setPageSize(15);
     }
 }

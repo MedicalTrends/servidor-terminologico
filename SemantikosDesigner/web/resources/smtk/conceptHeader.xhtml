@@ -43,12 +43,14 @@
         </div>
 
         <div class="ui-g-12 ui-md-8 ui-lg-4">
-            <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" style="width: 100%">
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
                 <p:selectBooleanCheckbox id="toBeReviewedCheck" itemLabel="Revisar"
                                          value="#{cc.attrs.concept.toBeReviewed}" style="width:100%;"><p:ajax/></p:selectBooleanCheckbox>
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
                 <p:selectBooleanCheckbox id="toBeConsultatedCheck" itemLabel="Consultar"
                                          value="#{cc.attrs.concept.toBeConsulted}" style="width:100%;"><p:ajax/></p:selectBooleanCheckbox>
-            </p:panelGrid>
+            </div>
         </div>
 
         <div class="ui-g-12 ui-md-4 ui-lg-2">
@@ -58,10 +60,10 @@
         </div>
 
         <div class="ui-g-12 ui-md-8 ui-lg-4">
-            <p:selectOneRadio value="#{conceptBean.fullyDefined}" layout="responsive" columns="2" style="width: 100%"
+            <p:selectOneRadio value="#{conceptBean.fullyDefined}" layout="responsive" columns="1" style="width: 100%"
                               disabled="#{snomedBean.existRelationshipISAMapping(conceptBean.concept)}">
                 <f:selectItem itemValue="#{false}" itemLabel="Primitivo" />
-                <f:selectItem itemValue="#{true}" itemLabel="Completamente Def."/>
+                <f:selectItem itemValue="#{true}" itemLabel="Completamente Definido"/>
                 <p:ajax event="change" listener="#{conceptBean.changeFullyDefined(conceptBean.concept)}" process="@this" update="@(.conceptHeader)" />
             </p:selectOneRadio>
         </div>

@@ -81,7 +81,7 @@ public class ConceptBean implements Serializable {
     //Inicializacion del Bean
     @PostConstruct
     protected void initialize() {
-        guestPreferences.setTheme("indigo");
+        guestPreferences.setTheme("cyan");
     }
 
     public RelationshipManager getRelationshipManager() {

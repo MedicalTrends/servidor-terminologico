@@ -123,7 +123,7 @@
                     </p:outputPanel>
 
                 <p:tree value="#{browserBean.root}" var="node"
-                        style="width: 100%; background-color: transparent; border: 0px; margin-bottom: 6px"
+                        style="width: 100%; background-color: transparent; border: 0px;"
                         rendered="#{concept.selectedConcept != null || conceptSCT.selectedConcept !=null}"
                         dynamic="true">
                     <p:treeNode>
@@ -152,7 +152,7 @@
 
                         <h1 class="first-heading">#{concept.selectedConcept.descriptionFavorite}</h1>
 
-                        <p:outputLabel value="(Semantikos)" style="font-size: small; margin: 10px"/>
+                        <p:outputLabel value="(Semantikos)" style="font-size: small; margin: 10px; color: #545454"/>
 
                         <p:separator styleClass="heading-separator"/>
 
@@ -389,7 +389,7 @@
 
                         <h1 class="first-heading">#{conceptSCT.selectedConcept.descriptionFSN}</h1>
 
-                        <p:outputLabel value="(Snomed-CT)" style="font-size: small; margin: 10px"/>
+                        <p:outputLabel value="(Snomed-CT)" style="font-size: small; margin: 10px; color: #545454"/>
 
                         <p:separator styleClass="heading-separator"/>
 

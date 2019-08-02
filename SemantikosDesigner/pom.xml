@@ -6,7 +6,7 @@
 
     <groupId>cl.minsal.semantikos</groupId>
     <artifactId>SemantikosDesigner</artifactId>
-    <version>1.6</version>
+    <version>1.8</version>
     <packaging>war</packaging>
 
     <properties>
@@ -16,7 +16,7 @@
     <parent>
         <groupId>cl.minsal.semantikos</groupId>
         <artifactId>Semantikos</artifactId>
-        <version>1.6</version>
+        <version>1.8</version>
     </parent>
 
     <dependencies>
@@ -50,7 +50,7 @@
         <dependency>
             <groupId>cl.minsal.semantikos</groupId>
             <artifactId>SemantikosDomain</artifactId>
-            <version>1.6</version>
+            <version>1.8</version>
             <type>jar</type>
         </dependency>
 
