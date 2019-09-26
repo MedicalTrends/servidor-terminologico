@@ -1,12 +1,10 @@
 package cl.minsal.semantikos.concept;
 
-import cl.minsal.semantikos.CompoundSpecialty;
 import cl.minsal.semantikos.MainMenuBean;
 import cl.minsal.semantikos.browser.PendingBrowserBean;
 import cl.minsal.semantikos.category.CategoryBean;
 import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.designer.AutogenerateBean;
-import cl.minsal.semantikos.designer.CompositeAditional;
 import cl.minsal.semantikos.designer.CrossmapBean;
 import cl.minsal.semantikos.kernel.businessrules.ConceptDefinitionalGradeBR;
 import cl.minsal.semantikos.kernel.businessrules.RelationshipBindingBR;
@@ -98,12 +96,6 @@ public class ConceptBean implements Serializable {
     //@EJB
     ConceptDefinitionalGradeBR conceptDefinitionalGradeBR = (ConceptDefinitionalGradeBR) ServiceLocator.getInstance().getService(ConceptDefinitionalGradeBR.class);
 
-    @ManagedProperty(value = "#{smtkBean}")
-    private SMTKTypeBean smtkTypeBean;
-
-    @ManagedProperty(value = "#{compositeAditionalBean}")
-    private CompositeAditional compositeAditionalBean;
-
     @ManagedProperty(value = "#{conceptExport}")
     private ConceptExportMBean conceptBeanExport;
 
@@ -124,9 +116,6 @@ public class ConceptBean implements Serializable {
 
     @ManagedProperty( value = "#{sctBean}")
     private SCTTypeBean sctTypeBean;
-
-    @ManagedProperty( value = "#{sensibilityBean}")
-    private SensibilityDescriptionDefaultBean sensibilityDescriptionDefaultBean;
 
     @ManagedProperty( value = "#{pendingBrowserBean}")
     private PendingBrowserBean pendingBrowserBean;
@@ -325,10 +314,6 @@ public class ConceptBean implements Serializable {
 
     public void setPendingBrowserBean(PendingBrowserBean pendingBrowserBean) {
         this.pendingBrowserBean = pendingBrowserBean;
-    }
-
-    public void setSensibilityDescriptionDefaultBean(SensibilityDescriptionDefaultBean sensibilityDescriptionDefaultBean) {
-        this.sensibilityDescriptionDefaultBean = sensibilityDescriptionDefaultBean;
     }
 
     public void setSctTypeBean(SCTTypeBean sctTypeBean) {
@@ -1317,10 +1302,6 @@ public class ConceptBean implements Serializable {
         this.conceptSCTSelected = conceptSCTSelected;
     }
 
-    public void setSmtkTypeBean(SMTKTypeBean smtkTypeBean) {
-        this.smtkTypeBean = smtkTypeBean;
-    }
-
     public String getFavoriteDescription() {
         return favoriteDescription;
     }
@@ -1497,10 +1478,6 @@ public class ConceptBean implements Serializable {
 
     public void setConceptSMTKNotValid(ConceptSMTK conceptSMTKNotValid) {
         this.conceptSMTKNotValid = conceptSMTKNotValid;
-    }
-
-    public void setCompositeAditionalBean(CompositeAditional compositeAditionalBean) {
-        this.compositeAditionalBean = compositeAditionalBean;
     }
 
     public Map<Long, Relationship> getRelationshipPlaceholders() {
