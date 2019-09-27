@@ -3,7 +3,6 @@
 $primaryDarkColor: #D7D7D7;
 $primaryLightColor: #2D2D2D;
 */
-/*$accentColor: #ff3300;*/
 /* Compact */
 /* roboto-300 - latin */
 @font-face {
@@ -718,7 +717,6 @@ $primaryLightColor: #2D2D2D;
   vertical-align: middle;
   width: 200px;
   height: 30px;
-  /*background: url("#{resource['ultima-layout:images/logo.png']}") top left no-repeat;*/
   background: url("#{resource['semantikos/images/logo-31.png']}") top left no-repeat;
 }
 .landing-wrapper #header .header-top #menu {
@@ -1060,7 +1058,6 @@ $primaryLightColor: #2D2D2D;
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .landing-wrapper .header .header-top .logo {
-    /*background: url("#{resource['ultima-layout:images/logo2x.png']}") top left no-repeat;*/
     background: url("#{resource['semantikos/images/logo-31.png']}") top left no-repeat;
     background-size: 200px 30px;
   }
@@ -1111,7 +1108,6 @@ body a {
   vertical-align: middle;
   width: 200px;
   height: 30px;
-  /*background: url("#{resource['ultima-layout:images/logo.png']}") top left no-repeat;*/
   background: url("#{resource['semantikos/images/logo-31.png']}") top left no-repeat;
 }
 .layout-wrapper .topbar .topbar-left {
@@ -1138,7 +1134,7 @@ body a {
   position: relative;
   left: -16px;
   top: 3px;
-  background-color: #fb7a5a;
+  background-color: #ff3300;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
@@ -1306,8 +1302,7 @@ body a {
   width: 60px;
   height: 60px;
   margin: 0 auto 5px auto;
-  /*background: url("#{resource['ultima-layout:images/avatar2x.png']}") top left no-repeat;*/
-  background: url("#{resource['semantikos/images/user-9.png']}") top left no-repeat;
+  background: url("#{resource['ultima-layout:images/avatar2x.png']}") top left no-repeat;
   background-size: 60px 60px;
 }
 .layout-wrapper .layout-menu .profile .profile-name {
@@ -1365,11 +1360,11 @@ body a {
 }
 .layout-wrapper .layout-menu.layout-menu-dark ul.ultima-menu li.active-menuitem > a {
   color: #ffffff;
-  background-color: #fb7a5a;
+  background-color: #ff3300;
 }
 .layout-wrapper .layout-menu.layout-menu-dark ul.ultima-menu li.active-menuitem > a .menuitem-badge {
   background-color: #ffffff;
-  color: #fb7a5a;
+  color: #ff3300;
 }
 .layout-wrapper .layout-menu .layout-menu-tooltip {
   display: none;
@@ -1500,7 +1495,7 @@ body a {
   position: absolute;
   right: 35px;
   top: 12px;
-  background-color: #fb7a5a;
+  background-color: #ff3300;
   color: #ffffff;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
@@ -1758,7 +1753,7 @@ body a {
 
 .ajax-loader {
   font-size: 32px;
-  color: #fb7a5a;
+  color: #ff3300;
 }
 
 @media (min-width: 1025px) {
@@ -1785,7 +1780,7 @@ body a {
     position: absolute;
     right: -5px;
     top: -5px;
-    background-color: #fb7a5a;
+    background-color: #ff3300;
     color: #ffffff;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
@@ -1809,8 +1804,7 @@ body a {
   .layout-wrapper .topbar-items > li.profile-item .profile-image {
     width: 36px;
     height: 36px;
-    /*background: url("#{resource['ultima-layout:images/avatar2x.png']}") top left no-repeat;*/
-    background: url("#{resource['semantikos/images/user-9.png']}") top left no-repeat;
+    background: url("#{resource['ultima-layout:images/avatar2x.png']}") top left no-repeat;
     background-size: 36px 36px;
   }
   .layout-wrapper .topbar-items > li > ul {
@@ -1954,7 +1948,7 @@ body a {
   }
   .layout-wrapper.menu-layout-horizontal .layout-menu ul.ultima-menu > li.active-menuitem > a {
     color: #ffffff;
-    background-color: #fb7a5a;
+    background-color: #ff3300;
   }
   .layout-wrapper.menu-layout-horizontal .layout-menu ul.ultima-menu > li.active-menuitem > a i {
     color: #ffffff;
@@ -1964,7 +1958,7 @@ body a {
     top: 3px;
   }
   .layout-wrapper.menu-layout-horizontal .layout-menu ul.ultima-menu li.active-menuitem a .menuitem-badge {
-    color: #fb7a5a;
+    color: #ff3300;
     background-color: #ffffff;
   }
   .layout-wrapper.menu-layout-horizontal .layout-menu.layout-menu-dark {
@@ -1981,7 +1975,7 @@ body a {
   }
   .layout-wrapper.menu-layout-horizontal .layout-menu.layout-menu-dark ul.ultima-menu li.active-menuitem > a {
     color: #ffffff;
-    background-color: #fb7a5a;
+    background-color: #ff3300;
   }
   .layout-wrapper.menu-layout-horizontal .layout-menu.layout-menu-dark ul.ultima-menu li ul {
     background-color: #424242;
@@ -2045,7 +2039,7 @@ body a {
   }
   .layout-wrapper.layout-menu-slim .layout-menu.layout-menu-dark ul.ultima-menu li.active-menuitem > a {
     color: #ffffff;
-    background-color: #fb7a5a;
+    background-color: #ff3300;
   }
   .layout-wrapper.layout-menu-slim .layout-menu.layout-menu-dark ul.ultima-menu li ul {
     background-color: #424242;
@@ -2291,7 +2285,7 @@ body a {
     position: absolute;
     left: 30px;
     top: 10px;
-    background-color: #fb7a5a;
+    background-color: #ff3300;
     color: #ffffff;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
@@ -2352,8 +2346,7 @@ body a {
     vertical-align: middle;
     width: 24px;
     height: 24px;
-    /*background: url("#{resource['ultima-layout:images/avatar2x.png']}") top left no-repeat;*/
-    background: url("#{resource['semantikos/images/user-9.png']}") top left no-repeat;
+    background: url("#{resource['ultima-layout:images/avatar2x.png']}") top left no-repeat;
     background-size: 24px 24px;
     margin-right: 14px;
   }
@@ -2432,7 +2425,6 @@ body a {
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .layout-wrapper .topbar .logo {
-    /*background: url("#{resource['ultima-layout:images/logo2x.png']}") top left no-repeat;*/
     background: url("#{resource['semantikos/images/logo-31.png']}") top left no-repeat;
     background-size: 200px 30px;
   }

@@ -35,12 +35,6 @@
             <version>1.7.21</version>
         </dependency>
 
-        <!--dependency>
-            <groupId>org.apache.axis</groupId>
-            <artifactId>axis</artifactId>
-            <version>1.4</version>
-        </dependency-->
-
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -54,25 +48,6 @@
             <artifactId>commons-codec</artifactId>
             <version>1.8</version>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
-        <!--dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
-        </dependency-->
-
-        <!--dependency>
-            <groupId>javax.cache</groupId>
-            <artifactId>cache-api</artifactId>
-            <version>1.0.0</version>
-        </dependency-->
-
-        <!--dependency>
-            <groupId>org.ehcache</groupId>
-            <artifactId>ehcache</artifactId>
-            <version>3.1.2</version>
-        </dependency-->
 
         <!-- dependencia del runtime de jboss que incluye jee, ejb, jsf y mucho mas -->
         <dependency>
@@ -111,19 +86,6 @@
             <version>2.8.0</version>
         </dependency>
 
-        <!--dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>9.1-901-1.jdbc4</version>
-        </dependency-->
-
-        <!-- https://mvnrepository.com/artifact/com.github.noraui/ojdbc7 -->
-        <!--dependency>
-            <groupId>com.github.noraui</groupId>
-            <artifactId>ojdbc7</artifactId>
-            <version>12.1.0.2</version>
-        </dependency-->
-
         <!-- ojdbc7.jar example -->
         <dependency>
             <groupId>com.oracle</groupId>
@@ -131,21 +93,6 @@
             <version>12.2.0.1.0</version>
             <scope>provided</scope>
         </dependency>
-
-        <!-- ojdbc8.jar example -->
-        <!--dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc8</artifactId>
-            <version>12.2.0.1.0</version>
-            <scope>provided</scope>
-        </dependency-->
-
-        <!--dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc7</artifactId>
-            <version>12.1.0.1.0</version>
-            <scope>provided</scope>
-        </dependency-->
 
         <dependency>
             <groupId>junit</groupId>
@@ -183,29 +130,12 @@
             <version>1.10.1</version>
         </dependency>
 
-        <!--dependency>
-            <groupId>net.bull.javamelody</groupId>
-            <artifactId>javamelody-core</artifactId>
-            <version>1.59.0</version>
-        </dependency-->
 
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>23.0</version>
         </dependency>
-
-        <!--dependency>
-            <groupId>org.jboss.spec.javax.servlet</groupId>
-            <artifactId>jboss-servlet-api_3.1_spec</artifactId>
-            <version>1.0.0.Final</version>
-        </dependency-->
-
-        <!--dependency>
-            <groupId>com.github.noraui</groupId>
-            <artifactId>ojdbc7</artifactId>
-            <version>12.1.0.2</version>
-        </dependency-->
 
     </dependencies>
 
@@ -230,21 +160,6 @@
                 </configuration>
                 <version>3.5.1</version>
             </plugin>
-
-            <!--plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <reportFormat>brief</reportFormat>
-                    <useFile>false</useFile>
-                    <systemProperties>
-                        <property>
-                            <name>oracle.jdbc.Trace</name>
-                            <value>true</value>
-                        </property>
-                    </systemProperties>
-                </configuration>
-            </plugin-->
 
             <plugin>
                 <artifactId>maven-ejb-plugin</artifactId>

@@ -118,8 +118,9 @@
         <p:dataTable id="collectionValuesWithAttributes"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
                      var="relationship"
+                     reflow="true"
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
-                     style="width: 100%"
+                     style="width: 100%; text-align: center; font-size: small"
                      editable="true">
 
             <!-- Parámetros del validador -->

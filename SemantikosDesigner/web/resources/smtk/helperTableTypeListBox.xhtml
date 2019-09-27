@@ -312,7 +312,7 @@
                      draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}"
                      var="relationship"
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
-                     style="width: 100%"
+                     style="width: 100%; text-align: center; font-size: small"
                      reflow="true">
 
             <!-- Parámetros del validador -->
@@ -425,6 +425,7 @@
         <p:dataTable id="collectionValues12"
                      styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
                      var="relationship"
+                     style="width: 100%; text-align: center; font-size: small"
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      reflow="true">
 

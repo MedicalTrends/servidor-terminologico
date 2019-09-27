@@ -119,6 +119,7 @@
                             update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.relationships_#{cc.attrs.relationshipDefinition.id})"
                             process="@this"
                             immediate="true"
+                            style="width: 100%; text-align: center; font-size: small"
                             actionListener="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition, relationship)}"
                             styleClass="relationships">
                         <p:confirm header="Confirmar Acción" message="¿Desea eliminar este atributo?"
