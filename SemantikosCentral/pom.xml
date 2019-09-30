@@ -10,7 +10,7 @@
 
     <artifactId>SemantikosCentral</artifactId>
     <version>1.8</version>
-    <packaging>war</packaging>
+    <packaging>ear</packaging>
 
     <name>SemantikosCentral</name>
 
