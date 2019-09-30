@@ -11,6 +11,7 @@
     <file type="javaeeApplication" url="file://$PROJECT_DIR$/SemantikosCentralEAR" />
     <file type="javaeeApplication" url="file://$PROJECT_DIR$/SemantikosWebEAR" />
     <file type="web" url="file://$PROJECT_DIR$/SemantikosBrowser" />
+    <file type="web" url="file://$PROJECT_DIR$/SemantikosCentral" />
     <file type="web" url="file://$PROJECT_DIR$/SemantikosClientesWS/ClienteJava" />
     <file type="web" url="file://$PROJECT_DIR$/SemantikosDesigner" />
     <file type="web" url="file://$PROJECT_DIR$/SemantikosWS" />
