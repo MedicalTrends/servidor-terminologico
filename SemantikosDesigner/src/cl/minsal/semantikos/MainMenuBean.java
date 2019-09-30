@@ -110,8 +110,6 @@ public class MainMenuBean implements Serializable {
 
     }
 
-
-
     public TagSMTKFactory getTagSMTKFactory() {
         return tagSMTKFactory;
     }

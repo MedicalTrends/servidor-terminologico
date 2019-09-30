@@ -21,11 +21,6 @@
     </parent>
 
     <dependencies>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.21</version>
-        </dependency>
 
         <dependency>
             <groupId>cl.minsal.semantikos</groupId>
@@ -47,31 +42,6 @@
             <version>1.8</version>
             <type>war</type>
         </dependency>
-
-        <!-- Clases para validaciones básicas tipo @NotNull -->
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>1.0.0.GA</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- javamelody-core -->
-        <!--dependency>
-            <groupId>net.bull.javamelody</groupId>
-            <artifactId>javamelody-core</artifactId>
-            <version>1.69.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.thoughtworks.xstream</groupId>
-            <artifactId>xstream</artifactId>
-            <version>1.4.10</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jrobin</groupId>
-            <artifactId>jrobin</artifactId>
-            <version>1.5.9</version>
-        </dependency-->
 
     </dependencies>
 
@@ -107,17 +77,6 @@
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
                     <earSourceDirectory>src/main/java</earSourceDirectory>
                     <modules>
-                        <!--Modulos para java melody-->
-                        <!--jarModule>
-                            <groupId>net.bull.javamelody</groupId>
-                            <artifactId>javamelody-core</artifactId>
-                            <includeInApplicationXml>true</includeInApplicationXml>
-                        </jarModule>
-                        <jarModule>
-                            <groupId>org.jrobin</groupId>
-                            <artifactId>jrobin</artifactId>
-                            <includeInApplicationXml>true</includeInApplicationXml>
-                        </jarModule-->
                         <!-- Modulos para WS SOAP -->
                         <webModule>
                             <groupId>cl.minsal.semantikos</groupId>
@@ -131,6 +90,19 @@
                         </ejbModule>
                     </modules>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>io.thorntail</groupId>
+                <artifactId>thorntail-maven-plugin</artifactId>
+                <version>2.5.0.Final</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>package</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>
