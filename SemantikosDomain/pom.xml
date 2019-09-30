@@ -101,7 +101,7 @@
 
         <plugins>
 
-            <!--plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
@@ -113,7 +113,7 @@
                         </manifest>
                     </archive>
                 </configuration>
-            </plugin-->
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -125,7 +125,7 @@
                 <version>2.3.2</version>
             </plugin>
 
-            <plugin>
+            <!--plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
@@ -168,7 +168,8 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin-->
+
         </plugins>
     </build>
 
