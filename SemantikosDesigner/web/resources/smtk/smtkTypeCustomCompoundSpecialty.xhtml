@@ -132,7 +132,7 @@
                 </p:outputPanel>
             </p:columns>
 
-            <p:column headerText="Eliminar" style="text-align: center;" rendered="#{cc.attrs.concept.editable and profilePermissionsBeans.modeler}" >
+            <p:column headerText="Eliminar" style="text-align: center;" rendered="#{profilePermissionsBeans.modeler}" >
                 <p:commandButton icon="fa fa-trash" title="Eliminar"
                                  action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
                                  update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"

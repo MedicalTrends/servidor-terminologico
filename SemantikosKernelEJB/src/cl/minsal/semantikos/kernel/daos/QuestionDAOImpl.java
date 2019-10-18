@@ -1,11 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
-import cl.minsal.semantikos.kernel.util.ConnectionBD;
-import cl.minsal.semantikos.kernel.util.StringUtils;
-import cl.minsal.semantikos.model.audit.RefSetAuditAction;
 import cl.minsal.semantikos.model.users.Answer;
-import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.Question;
 import cl.minsal.semantikos.model.users.User;
 import oracle.jdbc.OracleTypes;
@@ -19,7 +14,6 @@ import javax.ejb.Stateless;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

@@ -1,37 +1,21 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.businessrules.DescriptionSearchBR;
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
-import cl.minsal.semantikos.kernel.singletons.DescriptionTypeSingleton;
-import cl.minsal.semantikos.kernel.singletons.UserSingleton;
 import cl.minsal.semantikos.model.*;
-import cl.minsal.semantikos.model.categories.Category;
-import cl.minsal.semantikos.model.categories.CategoryFactory;
 import cl.minsal.semantikos.model.descriptions.*;
-import cl.minsal.semantikos.model.tags.TagSMTK;
-import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.model.users.UserFactory;
 import oracle.jdbc.OracleConnection;
 import oracle.jdbc.OracleTypes;
-import org.apache.commons.collections4.iterators.SingletonListIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static java.util.Collections.singletonList;
-
 import javax.annotation.Resource;
 import javax.ejb.*;
-import javax.interceptor.AroundInvoke;
-import javax.interceptor.Interceptors;
-import javax.interceptor.InvocationContext;
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.sql.*;
 import java.util.*;
-import java.util.concurrent.Future;
 
-import static cl.minsal.semantikos.kernel.util.StringUtils.underScoreToCamelCaseJSON;
 import static cl.minsal.semantikos.model.DAO.NON_PERSISTED_ID;
 import static java.lang.System.currentTimeMillis;
 
@@ -129,8 +113,6 @@ public class DescriptionDAOImpl implements DescriptionDAO {
     public Description getDescriptionByDescriptionID(String descriptionId) {
 
         Description description= null;
-
-        //conceptSMTKMap = new HashMap<>();
 
         String sql = "begin ? := stk.stk_pck_description.get_description_by_business_id(?); end;";
 

@@ -106,9 +106,16 @@ public class ConceptEditionBusinessRuleContainerImpl implements BusinessRulesCon
     private void br103ConceptInvalidation(ConceptSMTK conceptSMTK) {
 
         List<ConceptSMTK> relatedConcepts = conceptManager.getRelatedConcepts(conceptSMTK);
+        List<ConceptSMTK> validConcepts = new ArrayList<>();
 
-        if(!relatedConcepts.isEmpty()) {
-            throw new BusinessRuleException("BR-UNK", "No es posible invalidar el concepto, ya que tiene los siguientes conceptos relacionados: " + relatedConcepts);
+        for (ConceptSMTK relatedConcept : relatedConcepts) {
+            if(relatedConcept.getValidUntil() == null) {
+                validConcepts.add(relatedConcept);
+            }
+        }
+
+        if(!validConcepts.isEmpty()) {
+            throw new BusinessRuleException("BR-UNK", "No es posible invalidar el concepto, ya que tiene los siguientes conceptos relacionados: " + validConcepts);
         }
 
     }

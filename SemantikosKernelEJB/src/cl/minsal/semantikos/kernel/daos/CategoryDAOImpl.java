@@ -1,7 +1,5 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.util.ConnectionBD;
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;

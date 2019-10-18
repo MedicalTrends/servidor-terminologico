@@ -75,10 +75,4 @@ public interface InitFactoriesDAO {
      */
     EmailFactory refreshEmail() throws NamingException;
 
-    /**
-     * Este método es responsable de retornar un Factory.
-     *
-     * @return El factory correspondiente
-     */
-    DataSourceFactory refreshDataSource() throws NamingException;
 }

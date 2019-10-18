@@ -1,6 +1,5 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.model.relationships.*;
 import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
@@ -18,8 +17,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.Collections.emptyList;
 
 /**
  * @author Andrés Farías

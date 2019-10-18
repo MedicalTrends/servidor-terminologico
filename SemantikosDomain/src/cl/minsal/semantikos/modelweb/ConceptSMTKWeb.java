@@ -556,22 +556,6 @@ public class ConceptSMTKWeb extends ConceptSMTK implements Serializable {
         return null;
     }
 
-    public RelationshipAttribute getAttributeOrderNoWeb(RelationshipDefinition relationshipDefinition, int order){
-
-        for (Relationship relationship : getValidRelationshipsByRelationDefinition(relationshipDefinition)) {
-            if(relationship.getRelationshipDefinition().getOrderAttributeDefinition() != null){
-                for (RelationshipAttribute attribute : relationship.getRelationshipAttributes()) {
-                    if(attribute.getRelationAttributeDefinition().isOrderAttribute()){
-                        BasicTypeValue basicTypeValue = (BasicTypeValue) attribute.getTarget();
-                        if(basicTypeValue.getValue().equals(new Integer(order)))
-                            return attribute;
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
     public boolean isMultiplicitySatisfied(RelationshipDefinition relationshipDefinition) {
         for (RelationshipWeb relationshipWeb : getValidRelationshipsWebByRelationDefinition(relationshipDefinition)) {
             if(relationshipDefinition.getTargetDefinition().isSMTKType()) {

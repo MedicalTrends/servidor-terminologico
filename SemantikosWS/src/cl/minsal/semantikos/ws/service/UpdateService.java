@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.jws.WebMethod;
@@ -46,13 +47,13 @@ public class UpdateService {
 
     private static final Logger logger = LoggerFactory.getLogger(UpdateService.class);
 
-    @EJB
+    @Inject
     private ConceptController conceptController;
 
-    @EJB
+    @Inject
     private DescriptionController descriptionController;
 
-    @EJB
+    @Inject
     private RefSetController refSetController;
 
     @Resource
@@ -67,7 +68,6 @@ public class UpdateService {
     User user;
 
     Institution institution;
-
 
     /**
      * Metodo de envoltura de los web methods

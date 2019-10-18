@@ -1,8 +1,7 @@
 package cl.minsal.semantikos.ws.service;
 
 
-
-
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.*;
 import cl.minsal.semantikos.model.categories.Category;
 
@@ -15,6 +14,12 @@ import cl.minsal.semantikos.ws.component.*;
 import cl.minsal.semantikos.modelws.fault.IllegalInputFault;
 
 
+import cl.minsal.semantikos.ws.component.CategoryController;
+import cl.minsal.semantikos.ws.component.ConceptController;
+import cl.minsal.semantikos.ws.component.CrossmapController;
+import cl.minsal.semantikos.ws.component.RefSetController;
+import cl.minsal.semantikos.ws.component.SnomedController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import cl.minsal.semantikos.ws.utils.UtilsWS;
@@ -22,7 +27,8 @@ import cl.minsal.semantikos.ws.utils.UtilsWS;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 
-
+import javax.faces.bean.ManagedProperty;
+import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.jws.WebMethod;
@@ -45,19 +51,20 @@ import java.util.concurrent.ExecutionException;
 @WebService(serviceName = "ServicioDeBusqueda")
 public class SearchService {
 
-    @EJB
+
+    @Inject
     private CrossmapController crossmapsController;
 
-    @EJB
+    @Inject
     private ConceptController conceptController;
 
-    @EJB
+    @Inject
     private SnomedController snomedController;
 
-    @EJB
+    @Inject
     private CategoryController categoryController;
 
-    @EJB
+    @Inject
     private RefSetController refSetController;
 
     @EJB
@@ -76,7 +83,6 @@ public class SearchService {
      * //@param ctx Contexto de invocacion
      * @throws Exception
      */
-
     @AroundInvoke
     protected Object webMethodWrapper(InvocationContext ctx) throws Exception {
 

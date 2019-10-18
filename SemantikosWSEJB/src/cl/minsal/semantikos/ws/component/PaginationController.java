@@ -2,13 +2,15 @@ package cl.minsal.semantikos.ws.component;
 
 import cl.minsal.semantikos.modelws.response.PaginationResponse;
 
+import javax.annotation.ManagedBean;
 import javax.ejb.Stateless;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 
 /**
  * Created by Development on 2016-11-18.
  *
  */
-
 @Stateless
 public class PaginationController {
 

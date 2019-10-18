@@ -21,11 +21,6 @@
     </parent>
 
     <dependencies>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.21</version>
-        </dependency>
 
         <dependency>
             <groupId>cl.minsal.semantikos</groupId>
@@ -46,14 +41,6 @@
             <artifactId>SemantikosWS</artifactId>
             <version>1.8</version>
             <type>war</type>
-        </dependency>
-
-        <!-- Clases para validaciones básicas tipo @NotNull -->
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>1.0.0.GA</version>
-            <scope>compile</scope>
         </dependency>
 
         <!-- javamelody-core -->
@@ -101,8 +88,6 @@
 
                 <configuration>
                     <resourcesDir>src/main/resources</resourcesDir>
-                    <!--applicationXml>${artifactId}/application.xml</applicationXml-->
-                    <!--jboss>${artifactId}/src/main/resources/jboss-app.xml</jboss-->
                     <filtering>true</filtering>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
                     <earSourceDirectory>src/main/java</earSourceDirectory>

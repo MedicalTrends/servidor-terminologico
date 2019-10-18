@@ -1,39 +1,33 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.singletons.CategorySingleton;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
-import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.helpertables.HelperTableRow;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.relationships.Relationship;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
-import cl.minsal.semantikos.model.relationships.Target;
+
 import cl.minsal.semantikos.model.tags.Tag;
 import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 import cl.minsal.semantikos.model.users.User;
 import oracle.jdbc.OracleConnection;
 import oracle.jdbc.OracleTypes;
-import org.apache.commons.lang.ArrayUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 import javax.ejb.*;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.System.currentTimeMillis;
-import static java.util.Collections.EMPTY_LIST;
-import static org.apache.commons.lang.ArrayUtils.EMPTY_LONG_OBJECT_ARRAY;
 
 /**
  * @author Gusatvo Punucura on 13-07-16.
@@ -54,11 +48,6 @@ public class ConceptDAOImpl implements ConceptDAO {
     public static ConceptSMTK NO_VALID_CONCEPT;
 
     public static ConceptSMTK PENDING_CONCEPT;
-
-    /*
-    @PersistenceContext(unitName = "SEMANTIKOS_PU")
-    private EntityManager em;
-    */
 
     @EJB
     private CategoryDAO categoryDAO;
@@ -100,7 +89,6 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         String sql = "begin ? := stk.stk_pck_concept.delete_concept(?); end;";
 
-        //ConnectionBD connect = new ConnectionBD();
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
@@ -118,7 +106,6 @@ public class ConceptDAOImpl implements ConceptDAO {
     @Override
     public List<ConceptSMTK> findConcepts(Long[] categories, Long[] refsets, Boolean modeled) {
         List<ConceptSMTK> concepts = new ArrayList<>();
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_concept.find_concept(?,?,?); end;";
 
@@ -137,7 +124,6 @@ public class ConceptDAOImpl implements ConceptDAO {
 
             call.execute();
 
-            //ResultSet rs = call.getResultSet();
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
@@ -155,7 +141,6 @@ public class ConceptDAOImpl implements ConceptDAO {
 
     @Override
     public ConceptSMTK getConceptByCONCEPT_ID(String conceptID) {
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_concept.get_concept_by_conceptid(?); end;";
 
@@ -167,7 +152,6 @@ public class ConceptDAOImpl implements ConceptDAO {
             call.setString(2, conceptID);
             call.execute();
 
-            //ResultSet rs = call.getResultSet();
             ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
@@ -188,7 +172,6 @@ public class ConceptDAOImpl implements ConceptDAO {
 
     @Override
     public ConceptSMTK getConceptByID(long id) {
-        //ConnectionBD connect = new ConnectionBD();
         /* Se registra el tiempo de inicio */
         long init = currentTimeMillis();
 
@@ -198,13 +181,10 @@ public class ConceptDAOImpl implements ConceptDAO {
         try (Connection connection = dataSource.getConnection();
              CallableStatement call = connection.prepareCall(sql)) {
 
-            //connection.setReadOnly(true);
-
             call.registerOutParameter (1, OracleTypes.CURSOR);
             call.setLong(2, id);
             call.execute();
 
-            //ResultSet rs = call.getResultSet();
             ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
@@ -231,7 +211,6 @@ public class ConceptDAOImpl implements ConceptDAO {
 
     @Override
     public ConceptSMTK getConceptByID(long id, boolean chargeDescriptions) {
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_concept.get_concept_by_id(?); end;";
 
@@ -243,7 +222,6 @@ public class ConceptDAOImpl implements ConceptDAO {
             call.setLong(2, id);
             call.execute();
 
-            //ResultSet rs = call.getResultSet();
             ResultSet rs = (ResultSet) call.getObject(1);
 
             if (rs.next()) {
@@ -266,7 +244,6 @@ public class ConceptDAOImpl implements ConceptDAO {
     public List<ConceptSMTK> findConceptsByTag(Tag tag) {
 
         List<ConceptSMTK> concepts = new ArrayList<>();
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_concept.find_concepts_by_tag(?); end;";
 
@@ -277,7 +254,6 @@ public class ConceptDAOImpl implements ConceptDAO {
             call.setLong(1, tag.getId());
             call.execute();
 
-            //ResultSet rs = call.getResultSet();
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
@@ -298,7 +274,6 @@ public class ConceptDAOImpl implements ConceptDAO {
     public List<ConceptSMTK> findConceptsByRefSet(RefSet refSet) {
 
         List<ConceptSMTK> concepts = new ArrayList<>();
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_concept.find_concept_by_refset(?); end;";
 
@@ -309,7 +284,6 @@ public class ConceptDAOImpl implements ConceptDAO {
             call.setLong(2, refSet.getId());
             call.execute();
 
-            //ResultSet rs = call.getResultSet();
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
@@ -329,7 +303,6 @@ public class ConceptDAOImpl implements ConceptDAO {
     @Override
     public void persistConceptAttributes(ConceptSMTK conceptSMTK, User user) {
 
-        //ConnectionBD connect = new ConnectionBD();
         long id;
 
         String sql = "begin ? := stk.stk_pck_concept.create_concept(?,?,?,?,?,?,?,?,?,?); end;";
@@ -349,9 +322,6 @@ public class ConceptDAOImpl implements ConceptDAO {
             call.setString(10, conceptSMTK.getObservation());
             call.setLong(11, conceptSMTK.getTagSMTK().getId());
             call.execute();
-
-            //ResultSet rs = call.getResultSet();
-            //ResultSet rs = (ResultSet) call.getObject(1);
 
             if (call.getLong(1) > 0) {
                 /* Se recupera el ID del concepto persistido */
@@ -376,7 +346,7 @@ public class ConceptDAOImpl implements ConceptDAO {
     public void update(ConceptSMTK conceptSMTK) {
 
         logger.info("Actualizando información básica de concepto: " + conceptSMTK.toString());
-        //ConnectionBD connect = new ConnectionBD();
+
         long updated;
 
         String sql = "begin ? := stk.stk_pck_concept.update_concept(?,?,?,?,?,?,?,?,?,?,?,?); end;";
@@ -399,9 +369,6 @@ public class ConceptDAOImpl implements ConceptDAO {
             call.setTimestamp(13, conceptSMTK.getValidUntil());
             call.execute();
 
-            //ResultSet rs = call.getResultSet();
-            //ResultSet rs = (ResultSet) call.getObject(1);
-
             if (call.getLong(1) > 0) {
                 /* Se recupera el ID del concepto persistido */
                 updated = call.getLong(1);
@@ -411,7 +378,6 @@ public class ConceptDAOImpl implements ConceptDAO {
                 logger.error(errorMsg);
                 throw new EJBException(errorMsg);
             }
-            //rs.close();
         } catch (SQLException e) {
             String errorMsg = "El concepto " + conceptSMTK.toString() + " no fue actualizado.";
             logger.error(errorMsg, e);
@@ -433,7 +399,6 @@ public class ConceptDAOImpl implements ConceptDAO {
     public void forcedModeledConcept(Long idConcept) {
 
         logger.info("Pasando a modelado el concepto de ID=" + idConcept);
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_concept.force_modeled_concept(?); end;";
 
@@ -458,7 +423,6 @@ public class ConceptDAOImpl implements ConceptDAO {
         /* De otro modo, se recupera desde la base de datos. Primero se busca su categoría por nombre */
         Category specialConceptCategory;
         try {
-            //specialConceptCategory = categoryDAO.getCategoryByName("Concepto Especial");
             specialConceptCategory = CategoryFactory.getInstance().findCategoryByName("Concepto Especial");
         } catch (IllegalArgumentException iae) {
             String errorMsg = "No se encontró la categoría Especial!";
@@ -519,8 +483,6 @@ public class ConceptDAOImpl implements ConceptDAO {
 
         List<ConceptSMTK> concepts = new ArrayList<>();
 
-        //ConnectionBD connect = new ConnectionBD();
-
         String sql = "begin ? := stk.stk_pck_concept.get_related_concept(?); end;";
 
         try (Connection connection = dataSource.getConnection();
@@ -530,7 +492,6 @@ public class ConceptDAOImpl implements ConceptDAO {
             call.setLong(2, conceptSMTK.getId());
             call.execute();
 
-            //ResultSet rs = call.getResultSet();
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {
@@ -598,8 +559,6 @@ public class ConceptDAOImpl implements ConceptDAO {
     public List<ConceptSMTK> findTruncateMatch(String pattern, Long[] categories, Long[] refsets, Boolean modeled) {
         List<ConceptSMTK> concepts;
 
-        //ConnectionBD connect = new ConnectionBD();
-
         String sql = "begin ? := stk.stk_pck_concept.find_concept_truncate_match(?,?,?,?); end;";
 
         try (Connection connection = dataSource.getConnection(); CallableStatement call =
@@ -630,7 +589,6 @@ public class ConceptDAOImpl implements ConceptDAO {
             }
             call.execute();
 
-            //ResultSet rs = call.getResultSet();
             ResultSet rs = (ResultSet) call.getObject(1);
 
             concepts = new ArrayList<>();
@@ -652,8 +610,6 @@ public class ConceptDAOImpl implements ConceptDAO {
     @Override
     public List<ConceptSMTK> findPerfectMatch(String pattern, Long[] categories, Long[] refsets, Boolean modeled) {
         List<ConceptSMTK> concepts;
-
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_concept.find_concept_perfect_match(?,?,?,?); end;";
 
@@ -685,7 +641,6 @@ public class ConceptDAOImpl implements ConceptDAO {
             }
             call.execute();
 
-            //ResultSet rs = call.getResultSet();
             ResultSet rs = (ResultSet) call.getObject(1);
 
             concepts = new ArrayList<>();
@@ -707,8 +662,6 @@ public class ConceptDAOImpl implements ConceptDAO {
     @Override
     public int countPerfectMatch(String pattern, Long[] categories, Long[] refsets, Boolean modeled) {
         int concepts=0;
-
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_concept.count_concept_perfect_match(?,?,?,?); end;";
 
@@ -740,7 +693,6 @@ public class ConceptDAOImpl implements ConceptDAO {
 
             call.execute();
 
-            //ResultSet rs = call.getResultSet();
             concepts =  call.getInt(1);
 
             call.close();
@@ -756,8 +708,6 @@ public class ConceptDAOImpl implements ConceptDAO {
     @Override
     public int countTruncateMatch(String pattern, Long[] categories, Long[] refsets, Boolean modeled) {
         int concepts=0;
-
-        //ConnectionBD connect = new ConnectionBD();
 
         String sql = "begin ? := stk.stk_pck_concept.count_concept_truncate_match(?,?,?,?); end;";
 
@@ -789,7 +739,6 @@ public class ConceptDAOImpl implements ConceptDAO {
 
             call.execute();
 
-            //ResultSet rs = call.getResultSet();
             concepts =  call.getInt(1);
 
             call.close();
@@ -825,7 +774,6 @@ public class ConceptDAOImpl implements ConceptDAO {
 
             call.execute();
 
-            //ResultSet rs = call.getResultSet();
             ResultSet rs = (ResultSet) call.getObject(1);
 
             while (rs.next()) {

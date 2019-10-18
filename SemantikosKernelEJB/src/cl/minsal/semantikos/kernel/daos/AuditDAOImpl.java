@@ -1,7 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.factories.AuditableEntityFactory;
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.User;
@@ -19,8 +18,6 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.Collections.emptyList;
 
 /**
  * @author Andrés Farías on 8/23/16.

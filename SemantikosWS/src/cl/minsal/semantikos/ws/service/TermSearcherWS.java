@@ -6,6 +6,7 @@ import cl.minsal.semantikos.modelws.fault.NotFoundFault;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -19,7 +20,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Singleton
 public class TermSearcherWS {
 
-    @EJB
+    @Inject
     ConceptController conceptController;
 
     @GET

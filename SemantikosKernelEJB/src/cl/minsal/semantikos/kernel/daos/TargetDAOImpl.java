@@ -1,13 +1,11 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.kernel.util.DaoTools;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.relationships.*;
 import oracle.jdbc.OracleTypes;
-import oracle.sql.NUMBER;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,8 +15,7 @@ import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
 import java.sql.*;
-import java.sql.Date;
-import java.util.*;
+
 
 import static cl.minsal.semantikos.model.relationships.TargetType.*;
 import static java.sql.Types.*;

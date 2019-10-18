@@ -1,6 +1,5 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 import cl.minsal.semantikos.model.relationships.TargetDefinition;
 
 import cl.minsal.semantikos.model.snomedct.SnomedCT;

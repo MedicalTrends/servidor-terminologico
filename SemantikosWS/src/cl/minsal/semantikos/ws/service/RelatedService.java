@@ -20,6 +20,7 @@ import cl.minsal.semantikos.ws.utils.UtilsWS;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.jws.WebMethod;
@@ -36,7 +37,7 @@ import javax.xml.ws.WebServiceContext;
 @WebService(serviceName = "ServicioDeRelacionados")
 public class RelatedService {
 
-    @EJB
+    @Inject
     private ConceptController conceptController;
 
     @EJB

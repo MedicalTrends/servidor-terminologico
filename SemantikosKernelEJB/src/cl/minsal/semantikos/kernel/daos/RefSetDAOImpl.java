@@ -1,7 +1,5 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
-import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.*;
 import cl.minsal.semantikos.model.refsets.RefSet;
 import cl.minsal.semantikos.model.users.Institution;
@@ -16,9 +14,6 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.apache.commons.lang.ArrayUtils.EMPTY_LONG_ARRAY;
-import static org.apache.commons.lang.ArrayUtils.EMPTY_LONG_OBJECT_ARRAY;
 
 /**
  * @author Andrés Farías on 9/20/16.

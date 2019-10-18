@@ -1,8 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.factories.BasicTypeDefinitionFactory;
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
-import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.kernel.util.DaoTools;
 import cl.minsal.semantikos.model.basictypes.BasicTypeDefinition;
 
@@ -20,7 +18,6 @@ import javax.ejb.Stateless;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static java.util.Arrays.asList;

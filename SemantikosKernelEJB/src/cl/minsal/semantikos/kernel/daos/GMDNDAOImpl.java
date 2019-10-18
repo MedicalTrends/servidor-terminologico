@@ -2,7 +2,6 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.model.crossmaps.CrossmapSet;
 import cl.minsal.semantikos.model.crossmaps.CrossmapSetFactory;
-import cl.minsal.semantikos.model.crossmaps.cie10.Disease;
 import cl.minsal.semantikos.model.crossmaps.gmdn.CollectiveTerm;
 import cl.minsal.semantikos.model.crossmaps.gmdn.GenericDeviceGroup;
 import oracle.jdbc.OracleTypes;

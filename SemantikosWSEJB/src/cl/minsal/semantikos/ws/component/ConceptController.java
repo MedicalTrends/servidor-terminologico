@@ -23,8 +23,12 @@ import cl.minsal.semantikos.ws.mapping.ISPRegisterMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.ManagedBean;
 import javax.annotation.Resource;
 import javax.ejb.*;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -58,17 +62,18 @@ public class ConceptController {
     @EJB
     private AuditManager auditManager;
     @EJB
+    private PendingTermsManager pendingTermManager;
+    @EJB
+    private UserManager userManager;
+
+    @EJB
     private PaginationController paginationController;
     @EJB
     private CategoryController categoryController;
     @EJB
     private RefSetController refSetController;
     @EJB
-    private PendingTermsManager pendingTermManager;
-    @EJB
     private CrossmapController crossmapController;
-    @EJB
-    private UserManager userManager;
 
     @Resource
     private SessionContext ctx;
@@ -1047,7 +1052,6 @@ public class ConceptController {
         }
 
         //Si esta ok, construir respuesta
-
         GTINByConceptIDResponse res = new GTINByConceptIDResponse(conceptSMTK);
 
         return res;

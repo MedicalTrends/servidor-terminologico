@@ -73,7 +73,8 @@
                                                      concept="#{cc.attrs.concept}"
                                                      relationshipAttributeDefinition="#{relationshipAttributeDefinition}"
                                                      targetDefinition="#{relationshipAttributeDefinition.targetDefinition}"
-                                                     rendered="#{relationshipAttributeDefinition.targetDefinition.basicType and not relationshipAttributeDefinition.isOrderAttribute()
+                                                     rendered="#{relationshipAttributeDefinition.targetDefinition.basicType
+                                                                 and not relationshipAttributeDefinition.isOrderAttribute()
                                                                  and not relationshipAttributeDefinition.groupSCT}"
                             />
 
@@ -102,7 +103,7 @@
                                             forceSelection="true"
                                             id="findConceptSCT"
                                             widgetVar="findConceptSCT"
-                                            queryDelay="500"
+                                            queryDelay="300"
                                             scrollHeight="200"
                                             size="5"
                                             completeMethod="#{sctBean.getConceptSearchInput}"
@@ -129,8 +130,6 @@
                                 <p:column style="width: 500px">
                                     <h:outputText value="#{concept.descriptionFSN.term}" />
                                 </p:column>
-
-                                <p:ajax event="query" update="findConceptSCT" />
 
                                 <p:ajax event="itemSelect"
                                         listener="#{conceptBean.setTarget(cc.attrs.relationshipDefinition, conceptBean.conceptSCTSelected)}"
@@ -179,7 +178,6 @@
 
             <p:ajax event="rowReorder" listener="#{conceptBean.onRowReorder}"
                     update="@(.conceptHeader),@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id})">
-
             </p:ajax>
 
             <f:attribute name="relationshipDefinitionRowEdit" value="#{cc.attrs.relationshipDefinition}" />

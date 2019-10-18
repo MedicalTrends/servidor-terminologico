@@ -1,12 +1,10 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
-import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.kernel.util.DaoTools;
 import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.helpertables.*;
 import oracle.jdbc.OracleTypes;
-import org.jboss.ejb3.annotation.TransactionTimeout;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

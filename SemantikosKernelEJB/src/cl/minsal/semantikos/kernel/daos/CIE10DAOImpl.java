@@ -1,12 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.model.ConceptSMTK;
 import cl.minsal.semantikos.model.crossmaps.*;
 import cl.minsal.semantikos.model.crossmaps.cie10.Disease;
-import cl.minsal.semantikos.model.relationships.MultiplicityFactory;
-import cl.minsal.semantikos.model.relationships.RelationshipDefinition;
-import cl.minsal.semantikos.model.relationships.SnomedCTRelationship;
-import cl.minsal.semantikos.model.users.User;
 import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

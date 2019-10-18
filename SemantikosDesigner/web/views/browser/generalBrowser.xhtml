@@ -151,11 +151,14 @@
                                                     </p:commandButton>
 
                                                     <p:commandButton icon="fa fa-trash" title="Dejar no válido"
-                                                                     onclick="PF('dlg-elimination-causals').show();"
+                                                                     oncomplete="PF('dlg-elimination-causals').show();updateBtn_#{concept.id}()"
                                                                      update="@(.browserTable),@(.cause-concept)"
-                                                                     type="submit" process="@this"
-                                                                     style="float: right" actionListener="#{generalBrowserBean.setSelectedConcept(concept)}"
+                                                                     process="@this"
+                                                                     style="float: right" type="submit"
+                                                                     ajax="true" actionListener="#{generalBrowserBean.setSelectedConcept(concept)}"
                                                                      rendered="#{concept.modeled and concept.valid}">
+                                                        <f:setPropertyActionListener value="#{concept}" target="#{generalBrowserBean.selectedConcept}" />
+                                                        <p:remoteCommand name="updateBtn_#{concept.id}" actionListener="#{generalBrowserBean.setSelectedConcept(concept)}" />
                                                     </p:commandButton>
                                                 </span>
 
@@ -270,8 +273,9 @@
                                     </p:selectOneMenu>
                                 </div>
                                 <div class="ui-g-12 ui-md-12 ui-lg-12">
-                                    <p:commandButton value="Aceptar" actionListener="#{generalBrowserBean.invalidateConcept()}"
-                                                     update="@(.cause-concept),growl2,@(.conceptRelated),@(.browserTable)" style="float: right; width: auto" onsuccess="PF('dlg-elimination-causals').hide();">
+                                    <p:commandButton value="Aceptar" actionListener="#{generalBrowserBean.invalidateConcept(concept)}"
+                                                     update="@(.cause-concept),growl2,@(.conceptRelated),@(.browserTable)" style="float: right; width: auto"
+                                                     onsuccess="PF('dlg-elimination-causals').hide();">
                                         <p:confirm header="Confirmar Acción" message="¿Está seguro de eliminar este concepto?" icon="ui-icon-alert"/>
                                     </p:commandButton>
                                     <p:commandButton value="Cancelar" onclick="PF('dlg-elimination-causals').hide();" style="float: right; width: auto"
@@ -329,8 +333,9 @@
                 $.removeCookie('myCookie');
                 listenPageOnClickEvent();
                 listenSearchOnClickEvent();
-                listenSearchOnFocusEvent();
                 mark();
+
+
             });
 
             function initloader() {
@@ -342,6 +347,7 @@
                 $('.loader').css("display","none");
                 $('.search .fa').show();
             }
+
 
         </script>
 

@@ -3,6 +3,7 @@
 $primaryDarkColor: #D7D7D7;
 $primaryLightColor: #2D2D2D;
 */
+/*$accentColor: #ff3300;*/
 /* Compact */
 /* roboto-300 - latin */
 @font-face {
@@ -1134,7 +1135,7 @@ body a {
   position: relative;
   left: -16px;
   top: 3px;
-  background-color: #ff3300;
+  background-color: #ff8466;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
@@ -1360,11 +1361,11 @@ body a {
 }
 .layout-wrapper .layout-menu.layout-menu-dark ul.ultima-menu li.active-menuitem > a {
   color: #ffffff;
-  background-color: #ff3300;
+  background-color: #ff8466;
 }
 .layout-wrapper .layout-menu.layout-menu-dark ul.ultima-menu li.active-menuitem > a .menuitem-badge {
   background-color: #ffffff;
-  color: #ff3300;
+  color: #ff8466;
 }
 .layout-wrapper .layout-menu .layout-menu-tooltip {
   display: none;
@@ -1495,7 +1496,7 @@ body a {
   position: absolute;
   right: 35px;
   top: 12px;
-  background-color: #ff3300;
+  background-color: #ff8466;
   color: #ffffff;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
@@ -1753,7 +1754,7 @@ body a {
 
 .ajax-loader {
   font-size: 32px;
-  color: #ff3300;
+  color: #ff8466;
 }
 
 @media (min-width: 1025px) {
@@ -1780,7 +1781,7 @@ body a {
     position: absolute;
     right: -5px;
     top: -5px;
-    background-color: #ff3300;
+    background-color: #ff8466;
     color: #ffffff;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
@@ -1948,7 +1949,7 @@ body a {
   }
   .layout-wrapper.menu-layout-horizontal .layout-menu ul.ultima-menu > li.active-menuitem > a {
     color: #ffffff;
-    background-color: #ff3300;
+    background-color: #ff8466;
   }
   .layout-wrapper.menu-layout-horizontal .layout-menu ul.ultima-menu > li.active-menuitem > a i {
     color: #ffffff;
@@ -1958,7 +1959,7 @@ body a {
     top: 3px;
   }
   .layout-wrapper.menu-layout-horizontal .layout-menu ul.ultima-menu li.active-menuitem a .menuitem-badge {
-    color: #ff3300;
+    color: #ff8466;
     background-color: #ffffff;
   }
   .layout-wrapper.menu-layout-horizontal .layout-menu.layout-menu-dark {
@@ -1975,7 +1976,7 @@ body a {
   }
   .layout-wrapper.menu-layout-horizontal .layout-menu.layout-menu-dark ul.ultima-menu li.active-menuitem > a {
     color: #ffffff;
-    background-color: #ff3300;
+    background-color: #ff8466;
   }
   .layout-wrapper.menu-layout-horizontal .layout-menu.layout-menu-dark ul.ultima-menu li ul {
     background-color: #424242;
@@ -2039,7 +2040,7 @@ body a {
   }
   .layout-wrapper.layout-menu-slim .layout-menu.layout-menu-dark ul.ultima-menu li.active-menuitem > a {
     color: #ffffff;
-    background-color: #ff3300;
+    background-color: #ff8466;
   }
   .layout-wrapper.layout-menu-slim .layout-menu.layout-menu-dark ul.ultima-menu li ul {
     background-color: #424242;
@@ -2285,7 +2286,7 @@ body a {
     position: absolute;
     left: 30px;
     top: 10px;
-    background-color: #ff3300;
+    background-color: #ff8466;
     color: #ffffff;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;

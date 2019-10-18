@@ -195,18 +195,6 @@
                 $('.rightpanel-btn').trigger('click');
             }
 
-            function listenSearchOnFocusEvent() {
-                $('input[id$=search_input]').on("focus", function () {
-                    $('html, body').animate({
-                        scrollTop: offSet
-                    }, 0);
-                });
-                $('input[id$=search_input]').on("blur", function () {
-                    $('html, body').animate({
-                        scrollTop: 0
-                    }, 0);
-                });
-            }
 
             function mark() {
 

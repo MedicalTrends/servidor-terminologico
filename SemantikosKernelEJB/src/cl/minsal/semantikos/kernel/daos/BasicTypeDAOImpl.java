@@ -1,10 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
-import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.kernel.util.DaoTools;
 import cl.minsal.semantikos.model.basictypes.BasicTypeValue;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,10 +10,7 @@ import javax.annotation.Resource;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.sql.*;
-
-import static cl.minsal.semantikos.util.StringUtils.underScoreToCamelCaseJSON;
 
 /**
  * @author Andrés Farías

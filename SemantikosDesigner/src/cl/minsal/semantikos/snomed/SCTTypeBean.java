@@ -53,7 +53,7 @@ public class SCTTypeBean implements Serializable {
 
     List<Integer> relationshipGroups = Arrays.asList(new Integer[] {0, 1, 2, 3, 4});
 
-    private int pageSize = 100;
+    private int pageSize = 50;
 
     /**
      * Constructor por defecto para la inicialización de componentes.
@@ -103,9 +103,11 @@ public class SCTTypeBean implements Serializable {
 
         List<ConceptSCT> concepts = new ArrayList<>();
 
+        /*
         if( !validateQueryResultSize() ) {
             return concepts;
         }
+        */
 
         /* Si el patrón viene vacío o es menor a tres caracteres, no se hace nada */
         if ( searchOption.equals("term") &&  ( patron == null || patron.trim().length() < 3 ) ) {

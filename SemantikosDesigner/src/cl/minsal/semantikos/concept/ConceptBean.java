@@ -52,7 +52,6 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.*;
 
-import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_DESCRIPTION_DELETION;
 import static cl.minsal.semantikos.model.audit.AuditActionType.CONCEPT_INVALIDATION;
 import static org.primefaces.util.Constants.EMPTY_STRING;
 

@@ -286,7 +286,6 @@
             <version>2.5</version>
         </dependency>
 
-
     </dependencies>
 
     <!-- para poner automaticamente estampa de version en footer -->

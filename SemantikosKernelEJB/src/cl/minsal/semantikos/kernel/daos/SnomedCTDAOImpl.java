@@ -1,8 +1,5 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
-import cl.minsal.semantikos.kernel.util.ConnectionBD;
-import cl.minsal.semantikos.model.descriptions.Description;
 import cl.minsal.semantikos.model.snomedct.*;
 import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;

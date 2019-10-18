@@ -2,12 +2,6 @@ package cl.minsal.semantikos.kernel.daos;
 
 import cl.minsal.semantikos.kernel.factories.EmailFactory;
 import cl.minsal.semantikos.kernel.factories.QueryFactory;
-import cl.minsal.semantikos.kernel.factories.ThreadFactory;
-import cl.minsal.semantikos.kernel.singletons.CategorySingleton;
-import cl.minsal.semantikos.kernel.singletons.DescriptionTypeSingleton;
-import cl.minsal.semantikos.kernel.singletons.UserSingleton;
-import cl.minsal.semantikos.kernel.util.ConnectionBD;
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
 
 import cl.minsal.semantikos.model.categories.Category;
 import cl.minsal.semantikos.model.categories.CategoryFactory;
@@ -28,9 +22,9 @@ import cl.minsal.semantikos.model.tags.TagSMTK;
 import cl.minsal.semantikos.model.tags.TagSMTKFactory;
 
 import cl.minsal.semantikos.model.users.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import oracle.jdbc.OracleTypes;
-import oracle.jdbc.driver.OracleConnection;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,18 +37,15 @@ import javax.ejb.Startup;
 import javax.mail.Session;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.resource.spi.work.WorkManager;
+
 import javax.sql.DataSource;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
 
-import static cl.minsal.semantikos.kernel.util.StringUtils.underScoreToCamelCaseJSON;
 
 /**
  * @author Diego Soto on 9/5/16.
@@ -101,7 +92,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
     @PostConstruct
     private void init() {
         try {
-            this.refreshDataSource();
             this.refreshEmail();
         } catch (NamingException e) {
             e.printStackTrace();
@@ -145,50 +135,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         TagSMTK tagSMTKByID = tagSMTKDAO.findTagSMTKByID(idTagSMTK);
 
         return new Category(idCategory, nameCategory, nameAbbreviated, restriction, color, tagSMTKByID);
-    }
-
-    private User makeUserFromResult(ResultSet rs) throws SQLException {
-
-        User u = new User();
-
-        u.setId(rs.getBigDecimal(1).longValue());
-        u.setUsername(rs.getString(2));
-        u.setPasswordHash(rs.getString(3));
-        u.setPasswordSalt(rs.getString(4));
-        u.setName(rs.getString(5));
-        u.setLastName(rs.getString(6));
-        u.setSecondLastName(rs.getString(7));
-        u.setEmail(rs.getString(8));
-
-        u.setLocked(rs.getBoolean(9));
-        u.setFailedLoginAttempts(rs.getInt(10));
-        u.setFailedAnswerAttempts(rs.getInt(11));
-
-        u.setLastLogin(rs.getTimestamp(12));
-        u.setLastPasswordChange(rs.getTimestamp(13));
-
-        u.setLastPasswordHash1(rs.getString(14));
-        u.setLastPasswordHash2(rs.getString(15));
-        u.setLastPasswordHash3(rs.getString(16));
-        u.setLastPasswordHash4(rs.getString(17));
-
-        u.setLastPasswordSalt1(rs.getString(18));
-        u.setLastPasswordSalt2(rs.getString(19));
-        u.setLastPasswordSalt3(rs.getString(20));
-        u.setLastPasswordSalt4(rs.getString(21));
-
-        u.setDocumentNumber(rs.getString(22));
-        u.setVerificationCode(rs.getString(23));
-        u.setValid(rs.getBoolean(24));
-        u.setDocumentRut(rs.getBoolean(25));
-
-        u.setProfiles(profileDAO.getProfilesBy(u));
-
-        u.setInstitutions(institutionDAO.getInstitutionBy(u));
-
-        u.setAnswers(questionDAO.getAnswersByUser(u));
-
-        return u;
     }
 
 
@@ -477,41 +423,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
         return EmailFactory.getInstance();
     }
 
-    @Override
-    public DataSourceFactory refreshDataSource() throws NamingException {
-        InitialContext c = new InitialContext();
-        DataSource dataSource = (DataSource) c.lookup("java:jboss/OracleDS");
-        DataSourceFactory.getInstance().setDataSource(dataSource);
-        return DataSourceFactory.getInstance();
-    }
-
-    /**
-     * Este método es responsable de crear un HelperTable Record a partir de un objeto JSON.
-     *
-     * @param rs El objeto JSON a partir del cual se crea el objeto. El formato JSON será:
-     *                       <code>{"TableName":"helper_table_atc","records":[{"id":1,"codigo_atc":"atc1"}</code>
-     *
-     * @return Un objeto fresco de tipo <code>HelperTableRecord</code> creado a partir del objeto JSON.
-     *
-     * @throws IOException Arrojada si hay un problema.
-     */
-    public DescriptionType createDescriptionTypeFromResultSet(ResultSet rs) {
-
-        DescriptionType descriptionType = new DescriptionType();
-
-        try {
-            descriptionType.setId(rs.getLong("id"));
-            descriptionType.setName(rs.getString("name"));
-            descriptionType.setDescription(rs.getString("description"));
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return descriptionType;
-
-    }
-
     /**
      * Este método es responsable de crear un HelperTable Record a partir de un objeto JSON.
      *
@@ -575,17 +486,6 @@ public class InitFactoriesDAOImpl implements InitFactoriesDAO {
 
         return helperTableColumn;
 
-    }
-
-    public CrossmapSet createCrossmapSetFromResultSet(ResultSet rs) throws SQLException {
-        // id bigint, id_concept bigint, id_crossmapset bigint, id_user bigint, id_validity_until timestamp
-        long id = rs.getLong("id");
-        String nameAbbreviated = rs.getString("name_abbreviated");
-        String name = rs.getString("name");
-        int version = Integer.parseInt(rs.getString("version"));
-        boolean state = rs.getBoolean("state");
-
-        return new CrossmapSet(id, nameAbbreviated, name, version, state);
     }
 
 }

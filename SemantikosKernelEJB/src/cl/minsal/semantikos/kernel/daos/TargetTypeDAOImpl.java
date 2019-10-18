@@ -159,8 +159,6 @@ public class TargetTypeDAOImpl implements TargetTypeDAO {
         return basicTypeDefinition;
     }
 
-
-
     private BasicTypeDefinition addToDomain(ResultSet rs3, BasicTypeDefinition basicTypeDefinition) throws SQLException{
         if(rs3 == null)
             return basicTypeDefinition;

@@ -20,6 +20,7 @@ import cl.minsal.semantikos.ws.utils.UtilsWS;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.jws.WebParam;
@@ -48,16 +49,16 @@ import static org.apache.commons.lang.ArrayUtils.EMPTY_LONG_ARRAY;
 @Stateless
 public class SearchServiceRest {
 
-    @EJB
+    @Inject
     private CrossmapController crossmapsController;
 
-    @EJB
+    @Inject
     private ConceptController conceptController;
 
-    @EJB
+    @Inject
     private CategoryController categoryController;
 
-    @EJB
+    @Inject
     private RefSetController refSetController;
 
     @EJB

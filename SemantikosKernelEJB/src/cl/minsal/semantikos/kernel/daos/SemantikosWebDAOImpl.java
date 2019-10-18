@@ -1,13 +1,6 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.daos.ExtendedRelationshipAttributeDefinitionInfo;
-import cl.minsal.semantikos.kernel.daos.ExtendedRelationshipDefinitionInfo;
-import cl.minsal.semantikos.kernel.daos.SemantikosWebDAO;
-import cl.minsal.semantikos.kernel.daos.TargetDAO;
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
-import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.model.categories.Category;
-
 
 import cl.minsal.semantikos.model.relationships.RelationshipAttributeDefinition;
 import cl.minsal.semantikos.model.relationships.RelationshipDefinition;

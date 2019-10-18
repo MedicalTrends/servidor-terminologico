@@ -27,11 +27,14 @@ import cl.minsal.semantikos.ws.mapping.ISPRegisterMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.ManagedBean;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 import javax.jws.WebService;
 import javax.validation.constraints.NotNull;
 import java.util.*;

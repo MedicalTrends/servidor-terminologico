@@ -7,6 +7,9 @@
         <element id="file-copy" path="$PROJECT_DIR$/SemantikosCentral/target/SemantikosCentral/META-INF/MANIFEST.MF" />
       </element>
       <element id="dir-copy" path="src/main/java" />
+      <element id="archive" name="SemantikosKernelEJB">
+        <element id="artifact" artifact-name="SemantikosKernelEJB:ejb exploded" />
+      </element>
       <element id="directory" name="lib">
         <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:1.7.21" />
         <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.21" />
@@ -42,10 +45,6 @@
         <element id="library" level="project" name="Maven: commons-lang:commons-lang:2.6" />
         <element id="library" level="project" name="Maven: com.sun.mail:javax.mail:1.5.1" />
         <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
-        <element id="library" level="project" name="Maven: javax.validation:validation-api:1.0.0.GA" />
-      </element>
-      <element id="archive" name="SemantikosKernelEJB">
-        <element id="artifact" artifact-name="SemantikosKernelEJB:ejb exploded" />
       </element>
       <element id="archive" name="SemantikosWSEJB-1.8.jar">
         <element id="artifact" artifact-name="SemantikosWSEJB:ejb exploded" />

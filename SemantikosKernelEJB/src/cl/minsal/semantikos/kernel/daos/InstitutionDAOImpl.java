@@ -1,11 +1,7 @@
 package cl.minsal.semantikos.kernel.daos;
 
-import cl.minsal.semantikos.kernel.factories.DataSourceFactory;
-import cl.minsal.semantikos.kernel.util.ConnectionBD;
 import cl.minsal.semantikos.kernel.util.DaoTools;
-import cl.minsal.semantikos.kernel.util.StringUtils;
 import cl.minsal.semantikos.model.users.Institution;
-import cl.minsal.semantikos.model.users.Profile;
 import cl.minsal.semantikos.model.users.User;
 import oracle.jdbc.OracleTypes;
 import org.slf4j.Logger;

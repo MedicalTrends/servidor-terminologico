@@ -445,8 +445,14 @@ public class GeneralBrowserBean implements Serializable {
             context.addMessage(null, new FacesMessage("Successful", "Concepto eliminado"));
 
         } else {
-            conceptManager.invalidate(concept, authenticationBean.getLoggedUser());
-            context.addMessage(null, new FacesMessage("Successful", "Concepto invalidado"));
+            try {
+                conceptManager.invalidate(concept, authenticationBean.getLoggedUser());
+                context.addMessage(null, new FacesMessage("Successful", "Concepto invalidado"));
+            }
+            catch(Exception e) {
+                context.addMessage(null, new FacesMessage("Error", e.getMessage()));
+            }
+
         }
 
     }
@@ -475,7 +481,7 @@ public class GeneralBrowserBean implements Serializable {
         eContext.redirect(eContext.getRequestContextPath() + Constants.VIEWS_FOLDER + "/concepts/new/" + idCategory + "/0/" + query);
     }
 
-    public void invalidateConcept() throws IOException {
+    public void invalidateConcept(ConceptSMTK concept) throws IOException {
 
         FacesContext context = FacesContext.getCurrentInstance();
         RequestContext rContext = RequestContext.getCurrentInstance();
@@ -498,7 +504,7 @@ public class GeneralBrowserBean implements Serializable {
             getAuditActionQueue().add(conceptAuditAction);
 
             conceptManager.invalidate(selectedConcept, user, auditActionQueue);
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Acción exitosa", "Concepto invalidado" ));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Acción exitosa", "Concepto invalidado" ));
 
         }
         catch (Exception e) {
