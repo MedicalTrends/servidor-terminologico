@@ -1,13 +1,28 @@
 /*$primaryColor: #E6E6E6;
 $primaryDarkColor: #D7D7D7;
 $primaryLightColor: #F5F5F5;*/
+
+/*
+$primaryColor: #7e97ac;
+$primaryDarkColor: #446f93;
+$primaryLightColor: #97b6d0;
+*/
+
+/*
+$primaryColor: #0096e0;
+$primaryDarkColor: #037ebb;
+$primaryLightColor: #40ade3;
+*/
+
 $primaryColor: #337ab7;
 $primaryDarkColor: #045282;
 $primaryLightColor: #3091C1;
+
 /*$accentColor: #ff3300;*/
-$accentColor: #ff8466;
-$accentDarkColor: #ff6a48;
-$accentLightColor: #ffa18b;
+$accentColor: #e55a37;
+$accentDarkColor: #e17c63;
+$accentLightColor: #e33d13;
+
 $accentTextColor: #ffffff;
 
 @import '../sass/theme/_theme';

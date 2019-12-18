@@ -383,7 +383,7 @@
 
                 </h:form>
 
-                <h:form id="snomedForm" rendered="#{browserBean.snomedCT and conceptSCT.selectedConcept != null}">
+                <h:form id="snomedForm" rendered="#{concept.selectedConcept == null and conceptSCT.selectedConcept != null}">
 
                     <div class="card card-w-title">
 

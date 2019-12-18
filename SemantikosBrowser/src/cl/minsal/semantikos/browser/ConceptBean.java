@@ -259,7 +259,7 @@ public class ConceptBean implements Serializable {
     }
 
     public void setConceptID(String conceptID) {
-        if(conceptID.equals("RES_NOT_FOUND") || conceptID.equals("0")) {
+        if(conceptID.equals("RES_NOT_FOUND") || conceptID.equals("0") || conceptID.trim().equals("")) {
             return;
         }
         this.conceptID = conceptID;
@@ -276,6 +276,7 @@ public class ConceptBean implements Serializable {
         selectedConcept.setObservation("");
         DefaultTreeNode node = new DefaultTreeNode(selectedConcept, browserBean.getRoot());
     }
+
 
     public TreeNode updateConceptTree(TreeNode treeNode) {
 

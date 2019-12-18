@@ -37,17 +37,21 @@
     line-height: .5em !important;
 }
 
+/*
 .browserLayout .ui-widget-content {
     border: 1px solid #d5d5d5;
     background: #fff;
     color: #222;
 }
+*/
 
+/*
 .ui-widget-content {
     border: 1px solid #d5d5d5;
     background: #fff;
     color: #222;
 }
+*/
 
 .browserLayout {
     width:  100%;
@@ -123,6 +127,7 @@
     border-bottom: 0;
 }
 
+
 #browserForm\:conceptPanel table thead {
     display: none !important;
 }
@@ -131,13 +136,17 @@
     display: none !important;
 }
 
+/*
 #browserForm\:conceptPanel .ui-datatable tbody tr.ui-datatable-even {
     background-color: transparent !important;
 }
+*/
 
+/*
 #browserForm\:conceptPanel .ui-datatable tbody tr td {
     border: transparent !important;
 }
+*/
 
 #browserForm\:conceptPanel .ui-widget-header {
     border: transparent !important;
@@ -148,6 +157,7 @@
 }
 
 /* */
+
 #browserForm\:conceptPanel .ui-paginator-current {
     color: #1A0DAB !important;
 }
@@ -183,6 +193,7 @@
 #browserForm\:conceptTableSCT_paginator_bottom {
     background: transparent !important;
 }
+
 /* ---------------- */
 
 

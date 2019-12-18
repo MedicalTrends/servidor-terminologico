@@ -4049,7 +4049,7 @@ body .ui-widget-header .ui-icon {
   color: #ffffff;
 }
 body .ui-state-active, body .ui-state-highlight {
-  background-color: #ff8466;
+  background-color: #e55a37;
   color: #ffffff;
 }
 body .ui-state-active .ui-icon, body .ui-state-highlight .ui-icon {
@@ -4261,7 +4261,7 @@ body .ui-fieldset .ui-fieldset-legend.ui-state-focus {
   background-color: transparent;
 }
 body .ui-notificationbar {
-  background-color: #ff8466;
+  background-color: #e55a37;
   color: #ffffff;
 }
 body .ui-picklist .ui-picklist-caption {
@@ -4666,9 +4666,9 @@ body .ui-datatable thead th .ui-column-resizer:before {
   content: "";
 }
 body .ui-datatable thead th.ui-state-active, body .ui-datatable thead th.ui-state-highlight {
-  background-color: #ff8466;
+  background-color: #e55a37;
   color: #ffffff;
-  border-top-color: #ff8466;
+  border-top-color: #e55a37;
 }
 body .ui-datatable thead th.ui-state-active .ui-icon, body .ui-datatable thead th.ui-state-highlight .ui-icon {
   color: #ffffff;
@@ -4695,7 +4695,7 @@ body .ui-datatable tbody tr.ui-datatable-even.ui-state-hover {
   color: #000000;
 }
 body .ui-datatable tbody tr.ui-datatable-even.ui-state-highlight {
-  background-color: #ff8466;
+  background-color: #e55a37;
   color: #ffffff;
 }
 body .ui-datatable tbody tr td {
@@ -4727,7 +4727,7 @@ body .ui-datatable tbody tr.ui-widget-content {
   border: 0 none;
 }
 body .ui-datatable tbody tr.ui-state-highlight  {
-  background-color: #ff8466;
+  background-color: #e55a37;
   color: #ffffff;
 }
 body .ui-datatable tbody tr .ui-cell-editor-input input {
@@ -4768,7 +4768,7 @@ body .ui-datatable tbody tr.ui-state-highlight .ui-inputfield:focus {
 }
 body .ui-datatable > .ui-icon-arrowthick-1-s {
   font-size: 18px;
-  color: #ff8466;
+  color: #e55a37;
 }
 body .ui-datatable > .ui-icon-arrowthick-1-n {
   display: none !important;
@@ -4944,15 +4944,15 @@ body .ui-button.ui-button-text-icon-right {
   padding-right: 40px;
 }
 body .ui-button.secondary {
-  background-color: #ff8466;
+  background-color: #e55a37;
   color: #ffffff;
 }
 body .ui-button.secondary.ui-state-hover {
-  background-color: #ff6a48;
+  background-color: #e17c63;
 }
 body .ui-button.secondary.ui-state-focus {
   outline: 0 none;
-  background-color: #ffad99;
+  background-color: #eb7f64;
 }
 body .ui-button.blue-grey-btn {
   background-color: #607D8B;
@@ -5071,7 +5071,7 @@ body .ui-button.flat {
   -moz-box-shadow: none;
 }
 body .ui-buttonset .ui-state-active {
-  background-color: #ff8466;
+  background-color: #e55a37;
   color: #ffffff;
 }
 body .ui-splitbutton {
@@ -5114,7 +5114,7 @@ body .ui-selectbooleanbutton {
   box-sizing: border-box;
 }
 body .ui-selectbooleanbutton.ui-state-active {
-  background-color: #ff8466;
+  background-color: #e55a37;
   color: #ffffff;
 }
 body .ui-chkbox {
@@ -5565,7 +5565,7 @@ body .ui-selectmanymenu .ui-selectlistbox-item .ui-chkbox {
 }
 body .ui-selectmanymenu .ui-selectlistbox-item .ui-chkbox .ui-chkbox-box.ui-state-active {
   border-color: #ffffff;
-  background-color: #ff8466;
+  background-color: #e55a37;
 }
 body .ui-selectmanymenu .ui-selectlistbox-filter-container {
   padding: 10px 16px;
@@ -5646,15 +5646,15 @@ body .ui-inputswitch .ui-inputswitch-off span, body .ui-inputswitch .ui-inputswi
   visibility: hidden;
 }
 body .ui-inputswitch.ui-inputswitch-checked {
-  background-color: #ffa18b;
-  border-color: #ffa18b;
+  background-color: #e33d13;
+  border-color: #e33d13;
 }
 body .ui-inputswitch.ui-inputswitch-checked .ui-inputswitch-handle {
-  background-color: #ff8466;
+  background-color: #e55a37;
   color: #ffffff;
 }
 body .ui-slider .ui-slider-handle {
-  background-color: #ff8466;
+  background-color: #e55a37;
   color: #ffffff;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
@@ -5690,7 +5690,7 @@ body .ui-slider.ui-slider-vertical .ui-slider-handle {
   left: -9px;
 }
 body .ui-slider .ui-slider-range {
-  background-color: #ff8466;
+  background-color: #e55a37;
   color: #ffffff;
 }
 body .ui-calendar .ui-datepicker-trigger {
@@ -5848,17 +5848,17 @@ body .ui-datepicker tbody td a.ui-state-hover, body .ui-datepicker tbody td span
 }
 body .ui-datepicker tbody td a.ui-state-active, body .ui-datepicker tbody td span.ui-state-active {
   color: #ffffff;
-  background-color: #ff8466;
+  background-color: #e55a37;
   color: #ffffff;
 }
 body .ui-datepicker tbody td.ui-datepicker-today a, body .ui-datepicker tbody td.ui-datepicker-today span {
   color: #212121;
   background-color: #ffffff;
-  border: 1px solid #ff8466;
+  border: 1px solid #e55a37;
 }
 body .ui-datepicker tbody td.ui-datepicker-today a.ui-state-active, body .ui-datepicker tbody td.ui-datepicker-today span.ui-state-active {
   color: #ffffff;
-  background-color: #ff8466;
+  background-color: #e55a37;
   color: #ffffff;
 }
 body .ui-datepicker.ui-datepicker-multi .ui-datepicker-header {
@@ -6290,12 +6290,12 @@ body .ui-accordion .ui-accordion-header.ui-state-hover {
   background-color: #045282;
 }
 body .ui-accordion .ui-accordion-header.ui-state-active {
-  background-color: #ff8466;
+  background-color: #e55a37;
   color: #ffffff;
 }
 body .ui-accordion .ui-accordion-header.ui-state-active.ui-tabs-outline {
   outline: 0 none;
-  background-color: #ffad99;
+  background-color: #eb7f64;
 }
 body .ui-accordion .ui-accordion-header .ui-icon-triangle-1-e {
   margin-top: -12px;
@@ -6318,7 +6318,7 @@ body .ui-scrollpanel .ui-scrollpanel-drag {
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
-  background-color: #ff8466;
+  background-color: #e55a37;
 }
 body .ui-toolbar {
   background-color: #045282;
@@ -6366,18 +6366,18 @@ body .ui-tabs .ui-tabs-nav > li.ui-state-hover {
 }
 body .ui-tabs .ui-tabs-nav > li.ui-state-active {
   background-color: #ffffff;
-  border-color: #ff8466;
+  border-color: #e55a37;
   border-style: solid;
 }
 body .ui-tabs .ui-tabs-nav > li.ui-state-active a {
   color: #337ab7;
 }
 body .ui-tabs .ui-tabs-nav > li.ui-state-active > .ui-icon-close {
-  color: #ff8466;
+  color: #e55a37;
 }
 body .ui-tabs .ui-tabs-nav > li.ui-tabs-outline {
   outline: 0 none;
-  border-color: #ffa18b;
+  border-color: #e33d13;
 }
 body .ui-tabs .ui-tabs-panel {
   padding: 10px 16px;
@@ -6535,7 +6535,7 @@ body .ui-wizard .ui-wizard-step-titles > li {
 body .ui-wizard .ui-wizard-step-titles > li.ui-state-highlight {
   color: #ffffff;
   background-color: transparent;
-  border-bottom: 2px solid #ff8466;
+  border-bottom: 2px solid #e55a37;
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
   border-radius: 0;
@@ -6784,7 +6784,7 @@ body .ui-tabmenu .ui-tabmenu-nav > .ui-tabmenuitem.ui-state-hover {
 }
 body .ui-tabmenu .ui-tabmenu-nav > .ui-tabmenuitem.ui-state-active {
   background-color: #ffffff;
-  border-color: #ff8466;
+  border-color: #e55a37;
   border-style: solid;
 }
 body .ui-tabmenu .ui-tabmenu-nav > .ui-tabmenuitem.ui-state-active a {
@@ -6807,7 +6807,7 @@ body .ui-panelmenu .ui-panelmenu-header .ui-icon {
   margin-top: -12px;
 }
 body .ui-panelmenu .ui-panelmenu-header.ui-state-active {
-  background-color: #ff8466;
+  background-color: #e55a37;
   -moz-border-radius-bottomleft: 0;
   -webkit-border-bottom-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -6898,7 +6898,7 @@ body .ui-tree .ui-treenode-content .ui-treenode-label {
   vertical-align: middle;
 }
 body .ui-tree .ui-tree-droppoint.ui-state-hover {
-  background-color: #ff8466;
+  background-color: #e55a37;
 }
 body .ui-tree.ui-tree-horizontal {
   padding-left: 0;
@@ -6916,7 +6916,7 @@ body .ui-tree.ui-tree-horizontal .ui-treenode-content .ui-treenode-icon {
   margin-right: 4px;
 }
 body .ui-tree.ui-tree-horizontal .ui-treenode-content.ui-state-highlight {
-  background-color: #ff8466;
+  background-color: #e55a37;
   color: #ffffff;
 }
 body .ui-tree .ui-tree-filter-container .ui-icon {
@@ -6930,7 +6930,7 @@ body .fc .fc-button-group .ui-icon {
   margin-top: 3px;
 }
 body .fc .fc-button-group .ui-state-active {
-  background-color: #ff8466;
+  background-color: #e55a37;
 }
 body .fc .fc-event {
   background-color: #3091C1;
@@ -6966,7 +6966,7 @@ body .ui-treetable thead th .ui-sortable-column-icon {
   margin: -4px 0 0 0;
 }
 body .ui-treetable thead th.ui-state-active {
-  background-color: #ff8466;
+  background-color: #e55a37;
   color: #ffffff;
 }
 body .ui-treetable thead th.ui-state-active .ui-icon {
@@ -7036,7 +7036,7 @@ body .ui-treetable.ui-treetable-scrollable thead th {
   border-top: 1px solid #bdbdbd;
 }
 body .ui-treetable.ui-treetable-scrollable thead th.ui-state-active {
-  background-color: #ff8466;
+  background-color: #e55a37;
   color: #ffffff;
 }
 body .ui-treetable.ui-treetable-scrollable thead.ui-treetable-scrollable-theadclone th {
@@ -7226,7 +7226,7 @@ body .ui-rating .ui-rating-star a:before {
   content: "";
 }
 body .ui-rating .ui-rating-star.ui-rating-star-on a {
-  color: #ff8466;
+  color: #e55a37;
   font-family: "Material Icons";
   font-weight: normal;
   font-style: normal;
@@ -7259,7 +7259,7 @@ body .ui-overlaypanel.ui-shadow {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 body .ui-overlaypanel .ui-overlaypanel-close {
-  background-color: #ff8466;
+  background-color: #e55a37;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
@@ -7282,7 +7282,7 @@ body .ui-overlaypanel .ui-overlaypanel-close span:before {
   top: 3px;
 }
 body .ui-overlaypanel .ui-overlaypanel-close.ui-state-hover {
-  background-color: #ff6a48;
+  background-color: #e17c63;
 }
 body .ui-password-panel.ui-shadow {
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -7296,10 +7296,10 @@ body .ui-fileupload .ui-fileupload-buttonbar .ui-icon-arrowreturnthick-1-n:befor
   content: "file_upload";
 }
 body .ui-fileupload .ui-fileupload-buttonbar .ui-button {
-  background-color: #ff8466;
+  background-color: #e55a37;
 }
 body .ui-fileupload .ui-fileupload-buttonbar .ui-button.ui-state-hover {
-  background-color: #ff6a48;
+  background-color: #e17c63;
 }
 body .ui-fileupload .ui-fileupload-content .ui-messages-error .ui-icon {
   color: #ffffff;
@@ -7354,8 +7354,8 @@ body .timeline-frame .timeline-event {
   background-color: #ffffff;
 }
 body .timeline-frame .timeline-event.ui-state-active {
-  background-color: #ff8466;
-  border-color: #ff8466;
+  background-color: #e55a37;
+  border-color: #e55a37;
   color: #ffffff;
 }
 body .timeline-frame .timeline-axis {

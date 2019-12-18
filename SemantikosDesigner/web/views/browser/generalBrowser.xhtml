@@ -169,7 +169,7 @@
                                                     <br/>
 
                                                     <p:outputPanel rendered="#{not empty generalBrowserBean.generalQuery.getShowableColumnsByConcept(concept)}">
-                                                        <p:separator style="border-top: 0px solid rgb(219, 219, 219)"/>
+                                                        <p:separator style="border-top: 0px solid rgb(219, 219, 219); border-bottom: 1px solid lightgray;"/>
                                                         <div class="ui-fluid ui-g">
                                                             <p:repeat value="#{generalBrowserBean.generalQuery.getShowableColumnsByConcept(concept)}" var="column">
                                                                 <div class="ui-g-12 ui-md-4 ui-lg-2" style="padding: 0px;">
@@ -187,7 +187,7 @@
                                                         </div>
                                                     </p:outputPanel>
 
-                                                    <p:separator style="border-top: 0px solid rgb(219, 219, 219)" rendered="#{ not empty concept.tags or concept.observation != ''}"/>
+                                                    <p:separator style="border-top: 0px solid rgb(219, 219, 219); border-bottom: 1px solid lightgray;" rendered="#{ not empty concept.tags or concept.observation != ''}"/>
 
                                                      <p:outputPanel rendered="#{ not empty concept.tags}">
                                                         <i class="fa fa-tags" style="font-size: small"/>

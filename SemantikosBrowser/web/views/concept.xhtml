@@ -152,7 +152,8 @@
                                     </div>
 
                                     <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                        <p:commandLink value="#{relationship.target.getDescriptionFSN().term}" update="@(.conceptForm)"
+                                        <p:commandLink value="#{relationship.target.getDescriptionFSN().term}"
+                                                       update="@(.conceptForm),@(.conceptPanel)"
                                                        rendered="true" oncomplete="scrolltop();"
                                                        actionListener="#{conceptSCT.setConceptID(relationship.target.id)}"
                                                        styleClass="value"/>

@@ -292,6 +292,25 @@ public class BrowserBean implements Serializable {
                 return conceptSMTKs;
             }
 
+            @Override
+            public Object getRowKey(ConceptSMTK conceptSMTK) {
+                return conceptSMTK != null ? conceptSMTK.getConceptID() : null;
+            }
+
+            @Override
+            public ConceptSMTK getRowData(String rowKey) {
+                List<ConceptSMTK> conceptSMTKList = getWrappedData();
+                String value = String.valueOf(rowKey);
+
+                for (ConceptSMTK conceptSMTK : conceptSMTKList) {
+                    if (conceptSMTK.getConceptID().equals(value)) {
+                        return conceptSMTK;
+                    }
+                }
+
+                return null;
+            }
+
         };
 
     }

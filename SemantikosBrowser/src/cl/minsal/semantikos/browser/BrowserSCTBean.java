@@ -229,8 +229,26 @@ public class BrowserSCTBean implements Serializable {
                 return conceptSCTs;
             }
 
-        };
+            @Override
+            public Object getRowKey(ConceptSCT conceptSCT) {
+                return conceptSCT != null ? conceptSCT.getId() : null;
+            }
 
+            @Override
+            public ConceptSCT getRowData(String rowKey) {
+                List<ConceptSCT> conceptSCTList = getWrappedData();
+                String value = String.valueOf(rowKey);
+
+                for (ConceptSCT conceptSCT : conceptSCTList) {
+                    if (conceptSCT.getId() == Long.parseLong(value)) {
+                        return conceptSCT;
+                    }
+                }
+
+                return null;
+            }
+
+        };
 
     }
 

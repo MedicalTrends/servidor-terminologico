@@ -45,6 +45,9 @@ public class ConceptSCTBean {
     @ManagedProperty(value = "#{browserBean}")
     BrowserBean browserBean;
 
+    @ManagedProperty(value = "#{concept}")
+    ConceptBean conceptBean;
+
     //Inicializacion del Bean
     @PostConstruct
     protected void initialize() {
@@ -129,7 +132,8 @@ public class ConceptSCTBean {
         this.conceptID = conceptID;
         selectedConcept = snomedCTManager.getConceptByID(conceptID);
         selectedConcept.setRelationships(snomedCTManager.getRelationshipsFrom(selectedConcept));
-        browserBean.setSnomedCT(true);
+        //browserBean.setSnomedCT(true);
+        conceptBean.setSelectedConcept(null);
         updateConceptTree(browserBean.getRoot());
     }
 
@@ -183,6 +187,10 @@ public class ConceptSCTBean {
 
     public void setBrowserBean(BrowserBean browserBean) {
         this.browserBean = browserBean;
+    }
+
+    public void setConceptBean(ConceptBean conceptBean) {
+        this.conceptBean = conceptBean;
     }
 
 }

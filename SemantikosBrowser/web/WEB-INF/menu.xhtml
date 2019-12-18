@@ -124,153 +124,147 @@
 
                     <p:outputPanel id="conceptPanel" styleClass="conceptPanel">
 
-                    <p:dataTable id="conceptTable" value="#{browserBean.concepts}" var="conceptSMTK" styleClass="conceptTable"
-                                 widgetVar="conceptTable"
-                                 rendered="#{not empty browserBean.concepts and not browserBean.snomedCT}"
-                                 multiViewState="true"
-                                 rows="15"
-                                 paginator="true" lazy="true" dynamic="true"
-                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
-                                 emptyMessage="No se han encontrado conceptos con los criterios utilizados">
+                        <p:dataTable id="conceptTable" value="#{browserBean.concepts}" var="conceptSMTK"
+                                     styleClass="conceptTable"
+                                     widgetVar="conceptTable"
+                                     rendered="#{not empty browserBean.concepts and not browserBean.snomedCT}"
+                                     multiViewState="true"
+                                     rows="15" selectionMode="single" rowKey="#{conceptSMTK.conceptID}"
+                                     selection="#{browserBean.conceptSelected}"
+                                     paginator="true" lazy="true" dynamic="true"
+                                     paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
+                                     emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
-                        <p:ajax event="page" listener="#{browserBean.updatePage}" oncomplete="scrollTop(); loader(); highlight()" update="@(.search),@(.search2)" />
+                            <p:ajax event="page" listener="#{browserBean.updatePage}" oncomplete="scrollTop(); loader(); highlight(); mark();" update="@(.search),@(.search2)" />
+                            <p:ajax event="rowSelect" listener="#{concept.setConceptID(browserBean.conceptSelected.conceptID)}" oncomplete="scrolltop();" update="@(.conceptForm)"/>
 
-                        <p:column headerText="Termino Preferido" style="padding: 0px" styleClass="#{concept == concept.selectedConcept ? 'concept-selected':''}">
-                            <div class="ui-g dashboard">
-                                <div class="ui-g-12" style="padding: 0px">
-                                    <div class="card overview" style="min-height: 0px; border-bottom: 1px solid #cfcfcf;">
-                                        <div class="overview-content clearfix" style="padding: 10px">
-                                            <span class="overview-title">
-                                                <p:commandLink value="#{conceptSMTK.descriptionFavorite.term}" rendered="true"
-                                                               actionListener="#{concept.setConceptID(conceptSMTK.conceptID)}"
-                                                               update="@(.conceptForm)" oncomplete="scrolltop(); highlight(this);"
-                                                        styleClass="context" style="font-size: medium">
-                                                </p:commandLink>
-                                                <p:outputPanel rendered="#{ not empty conceptSMTK.tags}">
-                                                    <i class="fa fa-tags" style="font-size: small"/>
-                                                    <p:repeat
-                                                            offset="0"
-                                                            size="#{conceptSMTK.tags.size()}"
-                                                            step="1"
-                                                            varStatus="var"
-                                                            value="#{conceptSMTK.tags}"
-                                                            var="tag">
+                            <p:column headerText="Termino Preferido" style="padding-bottom: 10px; padding-top: 10px">
 
-                                                        <h:outputText value=" #{tag}" style="font-size: small; background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
-                                                        <h:outputText value=", " style="font-size: small; color: #545454"/>
+                                <p:commandLink value="#{conceptSMTK.descriptionFavorite.term}" rendered="false"
+                                               actionListener="#{concept.setConceptID(conceptSMTK.conceptID)}"
+                                               update="@(.conceptForm)" oncomplete="scrolltop(); highlight(this);"
+                                        styleClass="context" style="font-size: medium">
+                                </p:commandLink>
+                                <h:outputText value="#{conceptSMTK.descriptionFavorite.term}" rendered="true"
+                                               styleClass="context">
+                                </h:outputText>
+                                <br/>
+                                <p:outputPanel rendered="#{ not empty conceptSMTK.tags}">
+                                    <i class="fa fa-tags" style="font-size: small"/>
+                                    <p:repeat
+                                            offset="0"
+                                            size="#{conceptSMTK.tags.size()}"
+                                            step="1"
+                                            varStatus="var"
+                                            value="#{conceptSMTK.tags}"
+                                            var="tag">
 
-                                                    </p:repeat>
-                                                </p:outputPanel>
-                                                <p:link value="#{conceptSMTK.descriptionFavorite.term}" rendered="false"
-                                                               oncomplete="scrolltop();" outcome="/views/concept"
-                                                               styleClass="context" style="font-size: medium">
-                                                    <f:param name="conceptID" value="#{conceptSMTK.conceptID}" />
-                                                </p:link>
-                                            </span>
-                                            <span class="overview-detail">
-                                                <h:outputText value="#{conceptSMTK.conceptID}" style="font-size: small; color: #006621" />
-                                                <br/>
-                                                <h:outputText value="#{conceptSMTK.category.name}" style="font-size: small; color:#545454; line-height: 0px" />
+                                        <h:outputText value=" #{tag}" style="font-size: small; background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
+                                        <h:outputText value=", " style="font-size: small; color: #545454"/>
+                                    </p:repeat>
+                                </p:outputPanel>
+                                <p:link value="#{conceptSMTK.descriptionFavorite.term}" rendered="false"
+                                               oncomplete="scrolltop();" outcome="/views/concept"
+                                               styleClass="context" style="font-size: medium">
+                                    <f:param name="conceptID" value="#{conceptSMTK.conceptID}" />
+                                </p:link>
+                                <span class="overview-detail">
+                                    <h:outputText value="#{conceptSMTK.conceptID}" style="font-size: smaller;" />
+                                    <br/>
+                                    <h:outputText value="#{conceptSMTK.category.name}" style="font-size: small;" />
 
-                                                <p:separator style="border-top: 0px solid rgb(219, 219, 219)" rendered="#{ false }"/>
+                                    <p:separator style="border-top: 0px solid rgb(219, 219, 219)" rendered="#{ false }"/>
 
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </p:column>
+                                </span>
 
-                    </p:dataTable>
+                            </p:column>
 
-                    <p:dataTable id="conceptTableSCT" value="#{browserSCTBean.concepts}" var="concept" styleClass="conceptTableSCT"
-                                 widgetVar="conceptTable"
-                                 rendered="#{not empty browserSCTBean.concepts and browserBean.snomedCT}"
-                                 multiViewState="true"
-                                 rows="15"
-                                 paginator="true" lazy="true" dynamic="true"
-                                 paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
-                                 emptyMessage="No se han encontrado conceptos con los criterios utilizados">
+                        </p:dataTable>
 
-                        <p:ajax event="page" listener="#{browserSCTBean.updatePage}" oncomplete="scrollTop(); loader(); highlight()" update="@(.search),@(.search2)" />
+                        <p:dataTable id="conceptTableSCT" value="#{browserSCTBean.concepts}" var="concept" styleClass="conceptTableSCT"
+                                     widgetVar="conceptTable"
+                                     rendered="#{not empty browserSCTBean.concepts and browserBean.snomedCT}"
+                                     multiViewState="true"
+                                     rows="15"
+                                     selectionMode="single" rowKey="#{concept.id}"
+                                     selection="#{browserSCTBean.conceptSelected}"
+                                     paginator="true" lazy="true" dynamic="true"
+                                     paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
+                                     emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
-                        <p:column headerText="Termino Preferido" style="padding: 0px">
-                            <div class="ui-g dashboard">
-                                <div class="ui-g-12" style="padding: 0px">
-                                    <div class="card overview" style="min-height: 0px; border-bottom: 1px solid #cfcfcf;">
-                                        <div class="overview-content clearfix" style="padding: 10px">
-                                                <span class="overview-title">
-                                                    <p:commandLink value="#{concept.getDescriptionFavouriteSynonymous().term}" rendered="true"
-                                                                   actionListener="#{conceptSCT.setConceptID(concept.id)}"
-                                                                   update="@(.conceptForm)"
-                                                                   styleClass="context" style="font-size: medium">
-                                                    </p:commandLink>
-                                                    <p:link value="#{concept.getDescriptionFSN().term}" rendered="false"
-                                                            oncomplete="scrolltop();" outcome="/views/concept-snomed"
-                                                            styleClass="context" style="font-size: medium">
-                                                        <f:param name="conceptID" value="#{concept.id}" />
-                                                    </p:link>
-                                                </span>
-                                                <span class="overview-detail">
-                                                    <h:outputText value="#{concept.id}" style="font-size: small; color: #006621" />
-                                                    <br/>
+                            <p:ajax event="page" listener="#{browserSCTBean.updatePage}" oncomplete="scrollTop(); loader(); highlight(); mark();" update="@(.search),@(.search2)" />
+                            <p:ajax event="rowSelect" listener="#{conceptSCT.setConceptID(browserSCTBean.conceptSelected.id)}" oncomplete="scrolltop();" update="@(.conceptForm)"/>
 
-                                                </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </p:column>
+                            <p:column headerText="Termino Preferido" style="padding-bottom: 10px; padding-top: 10px">
 
-                    </p:dataTable>
+                                <span class="overview-title">
+                                    <h:outputText value="#{concept.getDescriptionFavouriteSynonymous().term}" rendered="true"
+                                                  styleClass="context">
+                                    </h:outputText>
+                                    <p:link value="#{concept.getDescriptionFSN().term}" rendered="false"
+                                            oncomplete="scrolltop();" outcome="/views/concept-snomed"
+                                            styleClass="context">
+                                        <f:param name="conceptID" value="#{concept.id}" />
+                                    </p:link>
+                                </span>
+                                <br/>
+                                <span class="overview-detail">
+                                    <h:outputText value="#{concept.id}" style="font-size: smaller;" />
+                                    <br/>
 
-                    <p:dataTable id="conceptTableExcel" widgetVar="conceptTableExcel" value="#{browserBean.concepts}"
-                                 var="conceptSMTK" styleClass="conceptTable"
-                                 style="display: none"
-                                 rows="15" rendered="false"
-                                 paginator="true" lazy="true" dynamic="true"
-                                 reflow="true"
-                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                                 emptyMessage="No se han encontrado conceptos con los criterios utilizados">
+                                </span>
 
-                        <f:facet name="{Exporters}">
-                            <p:commandButton ajax="false" value="Exportar a Excel" process="@this" update="@this"
-                                             icon="fa fa-file-excel-o">
-                                <p:dataExporter type="xls" target="conceptTable"
-                                                fileName="conceptos"/>
-                            </p:commandButton>
-                        </f:facet>
+                            </p:column>
 
-                        <p:column headerText="Concept ID">
-                            <h:outputText value="#{conceptSMTK.conceptID}"/>
-                        </p:column>
+                        </p:dataTable>
 
-                        <p:column headerText="Termino Preferido">
-                            <h:outputText value="#{conceptSMTK.descriptionFavorite.term}"/>
-                        </p:column>
+                        <p:dataTable id="conceptTableExcel" widgetVar="conceptTableExcel" value="#{browserBean.concepts}"
+                                     var="conceptSMTK" styleClass="conceptTable"
+                                     style="display: none"
+                                     rows="15" rendered="false"
+                                     paginator="true" lazy="true" dynamic="true"
+                                     reflow="true"
+                                     paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                     emptyMessage="No se han encontrado conceptos con los criterios utilizados">
 
-                        <p:column headerText="Categoría">
-                            <h:outputText value="#{conceptSMTK.category.name}"/>
-                        </p:column>
+                            <f:facet name="{Exporters}">
+                                <p:commandButton ajax="false" value="Exportar a Excel" process="@this" update="@this"
+                                                 icon="fa fa-file-excel-o">
+                                    <p:dataExporter type="xls" target="conceptTable"
+                                                    fileName="conceptos"/>
+                                </p:commandButton>
+                            </f:facet>
 
-                        <p:column headerText="Etiquetas" styleClass="tags" exportable="false">
+                            <p:column headerText="Concept ID">
+                                <h:outputText value="#{conceptSMTK.conceptID}"/>
+                            </p:column>
 
-                            <p:repeat
-                                    offset="0"
-                                    size="#{conceptSMTK.tags.size()}"
-                                    step="1"
-                                    varStatus="var"
-                                    value="#{conceptSMTK.tags}"
-                                    var="tag">
+                            <p:column headerText="Termino Preferido">
+                                <h:outputText value="#{conceptSMTK.descriptionFavorite.term}"/>
+                            </p:column>
 
-                                <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
-                                <h:outputText value=", " rendered="#{conceptSMTK.tags.size() > 1}" />
+                            <p:column headerText="Categoría">
+                                <h:outputText value="#{conceptSMTK.category.name}"/>
+                            </p:column>
 
-                            </p:repeat>
+                            <p:column headerText="Etiquetas" styleClass="tags" exportable="false">
 
-                        </p:column>
+                                <p:repeat
+                                        offset="0"
+                                        size="#{conceptSMTK.tags.size()}"
+                                        step="1"
+                                        varStatus="var"
+                                        value="#{conceptSMTK.tags}"
+                                        var="tag">
 
-                    </p:dataTable>
+                                    <h:outputText value="#{tag}" style="background-color: ##{tag.colorBackground}; color:##{tag.colorLetter}; border: 1px" styleClass="BorderAll SoftGrayBack LeadenGreen"  />
+                                    <h:outputText value=", " rendered="#{conceptSMTK.tags.size() > 1}" />
+
+                                </p:repeat>
+
+                            </p:column>
+
+                        </p:dataTable>
 
                     </p:outputPanel>
 
@@ -281,11 +275,14 @@
 
     <script type="text/javascript">
 
+
         function highlight() {
+            /*
             $('.conceptPanel .context').on('click', function() {
                $('.concept-selected-menu').removeClass('concept-selected-menu');
                $(this).addClass('concept-selected-menu');
             });
+            */
         }
 
         function initloader() {

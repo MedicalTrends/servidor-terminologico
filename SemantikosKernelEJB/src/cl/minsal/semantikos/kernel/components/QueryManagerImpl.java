@@ -321,6 +321,10 @@ public class QueryManagerImpl implements QueryManager {
 
         //Principal principal = ctx.getCallerPrincipal();
 
+        if(query.getQuery().trim().isEmpty()) {
+            return EMPTY_LIST;
+        }
+
         List<ConceptSCT> concepts = (List<ConceptSCT>) (Object) queryDAO.executeQuery(query);
 
         /*
