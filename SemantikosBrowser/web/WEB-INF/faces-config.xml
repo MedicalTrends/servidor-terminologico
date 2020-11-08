@@ -10,11 +10,14 @@
             <base-name>cl.minsal.semantikos.version</base-name>
             <var>bpversion</var>
         </resource-bundle>
+        <resource-handler>cl.minsal.semantikos.filters.ResourceHandlerImplPatch</resource-handler>
     </application>
 
     <factory>
         <exception-handler-factory>org.primefaces.application.exceptionhandler.PrimeExceptionHandlerFactory</exception-handler-factory>
     </factory>
+
+
 
 
     <!-- para  menu de layout rio -->

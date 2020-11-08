@@ -3,8 +3,8 @@
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
     <file url="file://$PROJECT_DIR$/SemantikosBrowser" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SemantikosCentral" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/SemantikosCentralEAR" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SemantikosClientesWS/ClienteJava" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SemantikosDCI" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SemantikosDesigner" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SemantikosDomain" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SemantikosKernelEJB" charset="UTF-8" />
@@ -18,6 +18,5 @@
     <file url="file://$PROJECT_DIR$/SemantikosLoader/resources/datafiles/test/PCCE/08_Producto_Comercial_Con_Envase.Base.txt" charset="UTF-16" />
     <file url="file://$PROJECT_DIR$/SemantikosWS" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SemantikosWSEJB" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/SemantikosWebEAR" charset="UTF-8" />
   </component>
 </project>

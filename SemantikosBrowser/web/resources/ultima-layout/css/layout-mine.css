@@ -1099,7 +1099,7 @@ body a {
   z-index: 100;
   width: 100%;
   height: 75px;
-  background-color: #337ab7;
+  background-color: #4a6882;
   -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
@@ -1116,7 +1116,7 @@ body a {
   padding: 20px;
   height: 75px;
   width: 250px;
-  background-color: #045282;
+  background-color: #324658;
   float: left;
   -webkit-box-shadow: 3px 0 6px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 3px 0 6px rgba(0, 0, 0, 0.3);
@@ -1513,7 +1513,7 @@ body a {
   color: #212121;
 }
 .layout-wrapper .ultima-menu li.active-menuitem > a {
-  color: #337ab7;
+  color: #4a6882;
   background-color: #e8e8e8;
 }
 .layout-wrapper .ultima-menu li.active-menuitem > a i:last-child {
@@ -1831,7 +1831,7 @@ body a {
     margin-right: 12px;
   }
   .layout-wrapper .topbar-items .search-item input {
-    background-image: linear-gradient(to bottom, #ffffff, #ffffff), linear-gradient(to bottom, #9db7cc, #9db7cc);
+    background-image: linear-gradient(to bottom, #ffffff, #ffffff), linear-gradient(to bottom, #a4a6a8, #a4a6a8);
   }
   .layout-wrapper.menu-layout-static .layout-menu {
     margin-left: 0;
@@ -1854,7 +1854,7 @@ body a {
     -moz-box-shadow: none;
   }
   .layout-wrapper.menu-layout-horizontal .topbar .topbar-left {
-    background-color: #337ab7;
+    background-color: #4a6882;
     box-shadow: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -1868,7 +1868,7 @@ body a {
     width: 100%;
     top: 75px;
     height: auto;
-    background-color: #045282;
+    background-color: #324658;
     -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
     -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
@@ -1944,7 +1944,7 @@ body a {
     padding-left: 96px;
   }
   .layout-wrapper.menu-layout-horizontal .layout-menu ul.ultima-menu > li > ul li.active-menuitem > a {
-    color: #337ab7;
+    color: #4a6882;
     background-color: #e8e8e8;
   }
   .layout-wrapper.menu-layout-horizontal .layout-menu ul.ultima-menu > li.active-menuitem > a {
@@ -1994,7 +1994,7 @@ body a {
   }
   .layout-wrapper.layout-menu-slim .topbar .topbar-left {
     box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-    background-color: #337ab7;
+    background-color: #4a6882;
   }
   .layout-wrapper.layout-menu-slim .topbar .topbar-right #menu-button {
     display: none;
@@ -2304,7 +2304,7 @@ body a {
     vertical-align: middle;
   }
   .layout-wrapper .topbar .topbar-right .topbar-items > li.active-top-menu > a {
-    color: #337ab7;
+    color: #4a6882;
   }
   .layout-wrapper .topbar .topbar-right .topbar-items > li.active-top-menu > ul {
     display: block;
@@ -2331,7 +2331,7 @@ body a {
   .layout-wrapper .topbar .topbar-right .topbar-items > li.search-item input:focus ~ label,
 .layout-wrapper .topbar .topbar-right .topbar-items > li.search-item input.ui-state-filled ~ label {
     top: -20px;
-    color: #337ab7;
+    color: #4a6882;
   }
   .layout-wrapper .topbar .topbar-right .topbar-items > li.search-item label {
     top: 1px;
@@ -3273,3 +3273,5 @@ body.layout-compact .ui-slider.ui-slider-horizontal .ui-slider-handle {
   }
 }
 /* Add your customizations of layout here */
+
+/*# sourceMappingURL=layout-mine.css.map */

@@ -71,6 +71,10 @@
         <listener-class>net.bull.javamelody.SessionListener</listener-class>
     </listener-->
 
+    <listener>
+        <listener-class>cl.minsal.semantikos.listeners.SessionTimeOutListener</listener-class>
+    </listener>
+
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>

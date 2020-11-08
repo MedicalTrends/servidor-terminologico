@@ -1,0 +1,2 @@
+ConceptID;Term;RegNUM;RegAÑO
+810911000167103;digoxina comprimido (Mintlab);FX-87;18

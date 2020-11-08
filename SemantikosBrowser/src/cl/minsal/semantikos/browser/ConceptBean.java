@@ -78,6 +78,12 @@ public class ConceptBean implements Serializable {
     @ManagedProperty(value = "#{browserBean}")
     BrowserBean browserBean;
 
+    @ManagedProperty(value = "#{conceptTreeBean}")
+    ConceptTreeBean conceptTreeBean;
+
+
+    private transient TreeNode conceptRoot;
+
     //Inicializacion del Bean
     @PostConstruct
     protected void initialize() {
@@ -269,6 +275,7 @@ public class ConceptBean implements Serializable {
         indirectCrossmaps = new ArrayList<>();
         browserBean.setSnomedCT(false);
         updateConceptTree(browserBean.getRoot());
+        //conceptTreeBean.getConceptTree(selectedConcept);
     }
 
     public void initConceptTree() {
@@ -317,11 +324,12 @@ public class ConceptBean implements Serializable {
 
     }
 
+    public TreeNode getConceptRoot() {
+        return conceptRoot;
+    }
 
-
-    public boolean isParent(String conceptID) {
-        // TODO
-        return false;
+    public void setConceptRoot(TreeNode conceptRoot) {
+        this.conceptRoot = conceptRoot;
     }
 
     public GuestPreferences getGuestPreferences() {
@@ -330,6 +338,14 @@ public class ConceptBean implements Serializable {
 
     public void setGuestPreferences(GuestPreferences guestPreferences) {
         this.guestPreferences = guestPreferences;
+    }
+
+    public ConceptTreeBean getConceptTreeBean() {
+        return conceptTreeBean;
+    }
+
+    public void setConceptTreeBean(ConceptTreeBean conceptTreeBean) {
+        this.conceptTreeBean = conceptTreeBean;
     }
 
     public BrowserBean getBrowserBean() {

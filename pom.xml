@@ -16,6 +16,7 @@
         <module>SemantikosDesigner</module>
         <module>SemantikosBrowser</module>
         <module>SemantikosLoader</module>
+        <module>SemantikosDCI</module>
         <module>SemantikosWS</module>
         <module>SemantikosCentral</module>
     </modules>

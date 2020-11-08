@@ -140,13 +140,13 @@
 
                             <p:column headerText="Termino Preferido" style="padding-bottom: 10px; padding-top: 10px">
 
-                                <p:commandLink value="#{conceptSMTK.descriptionFavorite.term}" rendered="false"
+                                <p:commandLink value="#{conceptSMTK.descriptionFavorite.term}" rendered="true"
                                                actionListener="#{concept.setConceptID(conceptSMTK.conceptID)}"
                                                update="@(.conceptForm)" oncomplete="scrolltop(); highlight(this);"
-                                        styleClass="context" style="font-size: medium">
+                                        styleClass="myCustomLinkStyle context" style="font-size: medium">
                                 </p:commandLink>
-                                <h:outputText value="#{conceptSMTK.descriptionFavorite.term}" rendered="true"
-                                               styleClass="context">
+                                <h:outputText value="#{conceptSMTK.descriptionFavorite.term}" rendered="false"
+                                               styleClass="context" style="font-size: 16px; color: #212121">
                                 </h:outputText>
                                 <br/>
                                 <p:outputPanel rendered="#{ not empty conceptSMTK.tags}">
@@ -169,9 +169,9 @@
                                     <f:param name="conceptID" value="#{conceptSMTK.conceptID}" />
                                 </p:link>
                                 <span class="overview-detail">
-                                    <h:outputText value="#{conceptSMTK.conceptID}" style="font-size: smaller;" />
+                                    <h:outputText value="#{conceptSMTK.conceptID}" style="font-size: smaller; color: #006621" />
                                     <br/>
-                                    <h:outputText value="#{conceptSMTK.category.name}" style="font-size: small;" />
+                                    <h:outputText value="#{conceptSMTK.category.name}" style="font-size: small; color:#545454;" />
 
                                     <p:separator style="border-top: 0px solid rgb(219, 219, 219)" rendered="#{ false }"/>
 
@@ -277,12 +277,15 @@
 
 
         function highlight() {
-            /*
-            $('.conceptPanel .context').on('click', function() {
-               $('.concept-selected-menu').removeClass('concept-selected-menu');
-               $(this).addClass('concept-selected-menu');
+            $('.myCustomLinkStyle').on('click', function() {
+                $('.myCustomLinkStyle').parent().parent().removeClass('ui-state-highlight');
+                $(this).parent().parent().addClass('ui-state-highlight');
             });
-            */
+
+            //$('.conceptPanel .context').on('click', function() {
+              // $('.concept-selected-menu').removeClass('concept-selected-menu');
+             //  $(this).addClass('concept-selected-menu');
+            //});
         }
 
         function initloader() {

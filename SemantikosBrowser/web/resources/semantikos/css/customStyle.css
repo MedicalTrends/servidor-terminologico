@@ -207,17 +207,17 @@
 
 .myCustomLinkStyle:link {
     color: #1a0dab;
-    font-size: 18px;
+    font-size: medium;
 }
 
 .myCustomLinkStyle:visited {
     color: #6717ab !important;
-    font-size: 18px !important;
+    font-size: medium !important;
 }
 
 .myCustomLinkStyle:hover {
     color: #1a0dab !important;
-    font-size: 18px !important;
+    font-size: medium !important;
     text-decoration: underline !important;
 }
 
@@ -330,6 +330,26 @@
 .concept-selected-menu {
     font-weight: bold !important;
     /*color: #E91E63; !important;*/
+}
+
+.conceptTable .ui-datatable-even {
+    background-color: #ffffff !important;
+}
+
+.conceptTable .ui-datatable-even.ui-state-hover {
+    background-color: #e8e8e8 !important;
+}
+
+.conceptTable .ui-datatable-even.ui-state-highlight {
+    background-color: #fbf9ce !important;
+    border: 1px solid rgba(95,125,79,.6) !important;
+    color: black;
+}
+
+.ui-datatable .ui-state-highlight {
+    background-color: #fbf9ce !important;
+    border: 1px solid rgba(95,125,79,.6) !important;
+    color: black;
 }
 
 /*

@@ -31,8 +31,18 @@ public class AuthFilterBrowser implements Filter {
         if(!req.getContextPath().equals("/designer")) {
 
             if(req.getSession().isNew()) {
-                req.getSession().invalidate();
+                //req.getSession().invalidate();
+                ((HttpServletResponse) response).setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+                ((HttpServletResponse) response).setHeader("Pragma", "no-cache"); // HTTP 1.0.
+                ((HttpServletResponse) response).setHeader("Expires", "0");
             }
+            /*
+            else {
+                ((HttpServletResponse) response).setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+                ((HttpServletResponse) response).setHeader("Pragma", "no-cache"); // HTTP 1.0.
+                ((HttpServletResponse) response).setHeader("Expires", "0");
+            }
+            */
 
             /*
             if((req.getRequestURI().equals("/views/home.xhtml") || req.getRequestURI().equals("/")) && req.getParameterMap().isEmpty()) {

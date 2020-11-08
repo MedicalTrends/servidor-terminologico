@@ -452,4 +452,10 @@ form#mainForm .ui-panelgrid .ui-panelgrid-cell {
     border-right: 1px solid #BDBDBD !important;
     boorder-top: 0px !important;
 }
+
+tr.ui-state-highlight {
+    background-color: #fbf9ce !important;
+    border: 1px solid rgba(193, 160, 61, 0.6) !important;
+    color: black;
+}
 /***************************************************************************************************/

@@ -5,6 +5,7 @@
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/SemantikosClientesWS/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/SemantikosDCI/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -12,15 +13,15 @@
     <orderEntry type="module-library">
       <library name="PHARS">
         <CLASSES>
-          <root url="phar://$MODULE_DIR$/SemantikosClientesWS/clientePHP/vendor/symfony/symfony/src/Symfony/Component/DependencyInjection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
-          <root url="phar://$MODULE_DIR$/SemantikosClientesWS/clientePHP/vendor/twig/twig/test/Twig/Tests/Loader/Fixtures/phar/phar-sample.phar/" />
-          <root url="phar://$MODULE_DIR$/SemantikosClientesWS/clientePHP/composer.phar/" />
+          <root url="phar:///home/des01c7/IdeaProjects/servidor-terminologico/SemantikosClientesWS/clientePHP/vendor/symfony/symfony/src/Symfony/Component/DependencyInjection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar:///home/des01c7/IdeaProjects/servidor-terminologico/SemantikosClientesWS/clientePHP/vendor/twig/twig/test/Twig/Tests/Loader/Fixtures/phar/phar-sample.phar/" />
+          <root url="phar:///home/des01c7/IdeaProjects/servidor-terminologico/SemantikosClientesWS/clientePHP/composer.phar/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="phar://$MODULE_DIR$/SemantikosClientesWS/clientePHP/vendor/symfony/symfony/src/Symfony/Component/DependencyInjection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
-          <root url="phar://$MODULE_DIR$/SemantikosClientesWS/clientePHP/vendor/twig/twig/test/Twig/Tests/Loader/Fixtures/phar/phar-sample.phar/" />
-          <root url="phar://$MODULE_DIR$/SemantikosClientesWS/clientePHP/composer.phar/" />
+          <root url="phar:///home/des01c7/IdeaProjects/servidor-terminologico/SemantikosClientesWS/clientePHP/vendor/symfony/symfony/src/Symfony/Component/DependencyInjection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
+          <root url="phar:///home/des01c7/IdeaProjects/servidor-terminologico/SemantikosClientesWS/clientePHP/vendor/twig/twig/test/Twig/Tests/Loader/Fixtures/phar/phar-sample.phar/" />
+          <root url="phar:///home/des01c7/IdeaProjects/servidor-terminologico/SemantikosClientesWS/clientePHP/composer.phar/" />
         </SOURCES>
       </library>
     </orderEntry>

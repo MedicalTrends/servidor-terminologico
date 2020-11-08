@@ -126,7 +126,7 @@
                         style="width: 100%; background-color: transparent; border: 0px;"
                         rendered="#{concept.selectedConcept != null || conceptSCT.selectedConcept !=null}"
                         dynamic="true">
-                    <p:treeNode>
+                    <p:treeNode icon="#{node['class'].simpleName eq 'ConceptSMTK'?'fa fa-edit':'ui-icon-public'}">
                         <p:outputPanel>
                             <h:outputText value="#{node.observation}" style="font-size: small; color: #006621" rendered="#{node['class'].simpleName eq 'ConceptSMTK'}"  />
                             <h:outputText value="#{node.descriptionFSN.languageCode}" style="font-size: small; color: #006621" rendered="#{node['class'].simpleName eq 'ConceptSCT'}"  />
@@ -137,7 +137,7 @@
                                        styleClass="context #{(node == concept.selectedConcept)?'concept-selected':''}">
                         </p:commandLink>
                         <p:commandLink value="#{node.getDescriptionFavouriteSynonymous().term}" rendered="#{node['class'].simpleName eq 'ConceptSCT'}"
-                                       actionListener="#{conceptSCT.setConceptID(node.id)}" style="color: #E91E63"
+                                       actionListener="#{conceptSCT.setConceptID(node.id)}"
                                        update="@(.conceptForm)" oncomplete="scrolltop();"
                                        styleClass="context #{(node == conceptSCT.selectedConcept)?'concept-selected':''}">
                         </p:commandLink>

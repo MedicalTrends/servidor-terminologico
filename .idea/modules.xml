@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/Semantikos.iml" filepath="$PROJECT_DIR$/Semantikos.iml" />
       <module fileurl="file://$PROJECT_DIR$/SemantikosBrowser/SemantikosBrowser.iml" filepath="$PROJECT_DIR$/SemantikosBrowser/SemantikosBrowser.iml" />
       <module fileurl="file://$PROJECT_DIR$/SemantikosCentral/SemantikosCentral.iml" filepath="$PROJECT_DIR$/SemantikosCentral/SemantikosCentral.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SemantikosDCI/SemantikosDCI.iml" filepath="$PROJECT_DIR$/SemantikosDCI/SemantikosDCI.iml" />
       <module fileurl="file://$PROJECT_DIR$/SemantikosDesigner/SemantikosDesigner.iml" filepath="$PROJECT_DIR$/SemantikosDesigner/SemantikosDesigner.iml" />
       <module fileurl="file://$PROJECT_DIR$/SemantikosDomain/SemantikosDomain.iml" filepath="$PROJECT_DIR$/SemantikosDomain/SemantikosDomain.iml" />
       <module fileurl="file://$PROJECT_DIR$/SemantikosKernelEJB/SemantikosKernelEJB.iml" filepath="$PROJECT_DIR$/SemantikosKernelEJB/SemantikosKernelEJB.iml" />

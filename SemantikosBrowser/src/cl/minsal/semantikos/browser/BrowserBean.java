@@ -395,7 +395,7 @@ public class BrowserBean implements Serializable {
         int pageindex = event.getPage();
         page = pageindex + 1;
         RequestContext reqCtx = RequestContext.getCurrentInstance();
-        reqCtx.execute("PF('conceptTableExcel').getPaginator().setPage("+pageindex+")");
+        //reqCtx.execute("PF('conceptTableExcel').getPaginator().setPage("+pageindex+")");
     }
 
     public String getRelationship(Object first, Object second) {
