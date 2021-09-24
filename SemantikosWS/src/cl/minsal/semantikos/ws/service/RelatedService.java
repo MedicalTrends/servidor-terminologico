@@ -40,10 +40,10 @@ public class RelatedService {
     @Inject
     private ConceptController conceptController;
 
-    //@EJB
-    //private AuthenticationManager authenticationManager;
+    @EJB
+    private AuthenticationManager authenticationManager;
 
-    AuthenticationManager authenticationManager = (AuthenticationManager) ServiceLocator.getInstance().getService(AuthenticationManager.class);
+    //AuthenticationManager authenticationManager = (AuthenticationManager) ServiceLocator.getInstance().getService(AuthenticationManager.class);
 
     @Resource
     WebServiceContext wsctx;
