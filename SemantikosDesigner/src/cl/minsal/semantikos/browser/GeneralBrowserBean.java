@@ -171,8 +171,7 @@ public class GeneralBrowserBean implements Serializable {
 
         /**
          * Si el patrón de consulta tiene menos de 3 caracteres retornar inmediatamente
-         */
-        if(generalQuery.getQuery().length() > 0 && generalQuery.getQuery().length() < 3) {
+         */ if(generalQuery.getQuery().trim().length() > 0 && generalQuery.getQuery().trim().length() < 3) {
             return;
         }
 
@@ -191,8 +190,9 @@ public class GeneralBrowserBean implements Serializable {
                     reqCtx.execute("PF('conceptTable').getPaginator().setPage(0)");
                     isCategoryChanged = false;
                 }
-
                 if(isFilterChanged) {
+                    RequestContext reqCtx = RequestContext.getCurrentInstance();
+                    reqCtx.execute("PF('conceptTable').getPaginator().setPage(0)");
                     generalQuery.setPageNumber(0);
                 }
                 else {
@@ -539,6 +539,9 @@ public class GeneralBrowserBean implements Serializable {
     }
 
     public void setFilterChanged(boolean filterChanged) {
+        if(generalQuery != null && generalQuery.getQuery() != null) {
+            generalQuery.setQuery(generalQuery.getQuery().trim());
+        }
         isFilterChanged = filterChanged;
     }
 

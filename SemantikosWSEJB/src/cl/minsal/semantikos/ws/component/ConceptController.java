@@ -23,12 +23,8 @@ import cl.minsal.semantikos.ws.mapping.ISPRegisterMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.ManagedBean;
 import javax.annotation.Resource;
 import javax.ejb.*;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 import java.util.concurrent.ExecutionException;

@@ -36,8 +36,9 @@ public class DescriptionSearchBR {
             "suyo","una ","aquello","cuántas","ese","mientras","no","porque","suyos","unas","aquellos","cuanto","esos",
             "mío","nos","que","tal","unos"};
 
-    static final String[] SPECIAL_CHARACTERS = new String[] {",","&","=","?","{","}","\\","(", ")","[","]","-",";","~",
-            "|", "$","!",">","*","%","_"};
+    //static final String[] SPECIAL_CHARACTERS = new String[] {",","&","=","?","{","}","\\","(", ")","[","]","-",";","~", "|", "$","!",">","*","%","_"};
+
+    static final String[] SPECIAL_CHARACTERS = new String[] {"&","=","?","{","}","\\","(", ")","[","]","-",";","~", "|", "$","!",">","*","%","_"};
 
     /**
      * Método de normalización del patrón de búsqueda, lleva las palabras a minúsculas,

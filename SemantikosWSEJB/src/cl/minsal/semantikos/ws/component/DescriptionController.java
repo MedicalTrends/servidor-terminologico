@@ -7,11 +7,8 @@ import cl.minsal.semantikos.modelws.response.DescriptionResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
 
 /**
  * @author Andres Farias on 2016-11-17.

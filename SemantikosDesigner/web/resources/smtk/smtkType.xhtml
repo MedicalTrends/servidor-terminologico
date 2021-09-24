@@ -79,16 +79,16 @@
                      var="rel">
 
             <p:column headerText="ConceptID">
-                <h:outputText value="#{rel.target.id}"/>
+                <h:outputText value="#{rel.target.id}" style="font-size: small; color:#545454;"/>
             </p:column>
 
-            <p:column headerText="Término Preferida">
+            <p:column headerText="Término Preferida"  style="font-size: small; color:#545454;">
                 <h:outputText value="#{rel.target.descriptionFavorite.term}"/>
             </p:column>
 
 
             <p:column headerText="Estado">
-                <h:outputText value="#{rel.target.modeled}"/>
+                <h:outputText value="#{rel.target.modeled}" style="font-size: small; color:#545454;"/>
             </p:column>
             <p:column headerText="Eliminar" style="text-align: center;">
                 <p:commandButton icon="fa fa-trash" title="Eliminar" rendered="#{rel.isValid()}"
@@ -204,11 +204,11 @@
             <f:attribute name="relationshipDefinitionRowEdit" value="#{cc.attrs.relationshipDefinition}" />
 
             <p:column headerText="ConceptID">
-                <h:outputText value="#{rel.target.conceptID}"/>
+                <h:outputText value="#{rel.target.conceptID}" style="font-size: small; color:#545454;"/>
             </p:column>
 
             <p:column headerText="Descripción">
-                <h:outputText value="#{rel.target.descriptionFavorite.term}"/>
+                <h:outputText value="#{rel.target.descriptionFavorite.term}" style="font-size: small; color:#545454;"/>
             </p:column>
 
             <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"

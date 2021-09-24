@@ -39,7 +39,7 @@
 
                                     <p:inputText id="search_input" value="#{generalBrowserBean.generalQuery.query}"
                                                  placeholder="Buscar..." style="width: 100%"
-                                                 onkeyup="return (this.value.length >= 3 || this.value.length == 0)">
+                                                 onkeyup="return (this.value.trim().length >= 3 || this.value.trim().length == 0)">
                                         <p:ajax event="keyup" update="@(.browserTable),@(.search2)" process="@this"
                                                 onstart="initloader();"
                                                 oncomplete="haltloader();mark();"
@@ -98,7 +98,7 @@
 
                             <p:ajax event="rowToggle" listener="#{generalBrowserBean.onRowToggle}" />
 
-                            <p:ajax event="page" listener="#{generalBrowserBean.updatePage}" oncomplete="scrollTop();" update="@(.search2)" />
+                            <p:ajax event="page" listener="#{generalBrowserBean.updatePage}" oncomplete="scrollTop();mark();" update="@(.search2)" />
 
                             <p:column headerText="Término Preferido" style="padding: 0px">
                                 <div class="ui-g dashboard">
@@ -108,7 +108,7 @@
                                             <div class="overview-content clearfix task-list" style="padding: 10px">
                                                 <span class="overview-title">
                                                     <p:link outcome="/views/concepts/conceptView" value="#{concept.descriptionFavorite.term} "
-                                                            styleClass="myCustomLinkStyle loader-trigger context">
+                                                            styleClass="myCustomLinkStyle context">
                                                         <f:param name="conceptID" value="#{concept.conceptID}" />
                                                     </p:link>
                                                     <p:link rendered="#{concept.modeled}" outcome="/views/concepts/conceptView" title="Modelado"
@@ -335,6 +335,11 @@
                 listenSearchOnClickEvent();
                 mark();
 
+                //alert($('#browserTable tr').length);
+
+                if($('#browserTable tr').length == 1) {
+                    $("#search_input").trigger("keyup");
+                }
 
             });
 
