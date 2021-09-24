@@ -67,11 +67,15 @@ public class SearchService {
     @Inject
     private RefSetController refSetController;
 
-    @EJB
-    private CategoryManager categoryManager;
+    //@EJB
+    //private CategoryManager categoryManager;
 
-    @EJB
-    private AuthenticationManager authenticationManager;
+    //@EJB
+    //private AuthenticationManager authenticationManager;
+
+    CategoryManager categoryManager = (CategoryManager) ServiceLocator.getInstance().getService(CategoryManager.class);
+
+    AuthenticationManager authenticationManager = (AuthenticationManager) ServiceLocator.getInstance().getService(AuthenticationManager.class);
 
     @Resource
     WebServiceContext wsctx;

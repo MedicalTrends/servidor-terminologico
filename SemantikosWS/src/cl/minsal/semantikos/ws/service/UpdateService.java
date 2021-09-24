@@ -1,8 +1,7 @@
 package cl.minsal.semantikos.ws.service;
 
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.AuthenticationManager;
-import cl.minsal.semantikos.kernel.components.AuthenticationManagerImpl;
-import cl.minsal.semantikos.kernel.components.UserManager;
 import cl.minsal.semantikos.model.users.Institution;
 import cl.minsal.semantikos.model.users.User;
 import cl.minsal.semantikos.modelweb.Pair;
@@ -61,8 +60,8 @@ public class UpdateService {
     @EJB
     private AuthenticationManager authenticationManager;
 
-    @EJB
-    private UserManager userManager;
+    //AuthenticationManager authenticationManager = (AuthenticationManager) ServiceLocator.getInstance().getService(AuthenticationManager.class);
+
 
     User user;
 

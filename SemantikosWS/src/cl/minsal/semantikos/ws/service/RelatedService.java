@@ -1,8 +1,8 @@
 package cl.minsal.semantikos.ws.service;
 
 
+import cl.minsal.semantikos.clients.ServiceLocator;
 import cl.minsal.semantikos.kernel.components.AuthenticationManager;
-import cl.minsal.semantikos.kernel.components.AuthenticationManagerImpl;
 import cl.minsal.semantikos.modelweb.Pair;
 import cl.minsal.semantikos.modelws.fault.NotFoundFault;
 import cl.minsal.semantikos.modelws.request.RelatedConceptsByCategoryRequest;
@@ -40,8 +40,10 @@ public class RelatedService {
     @Inject
     private ConceptController conceptController;
 
-    @EJB
-    private AuthenticationManager authenticationManager;
+    //@EJB
+    //private AuthenticationManager authenticationManager;
+
+    AuthenticationManager authenticationManager = (AuthenticationManager) ServiceLocator.getInstance().getService(AuthenticationManager.class);
 
     @Resource
     WebServiceContext wsctx;
