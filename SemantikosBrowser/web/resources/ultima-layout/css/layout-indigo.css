@@ -826,7 +826,7 @@
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .landing-wrapper .header .header-top .logo {
     /*background: url("#{resource['ultima-layout:images/logo2x.png']}") top left no-repeat;*/
-    background: url("#{resource['semantikos/images/logo-31-dark.png']}") top left no-repeat;
+    background: url("#{resource['semantikos/images/logo-31.png']}") top left no-repeat;
     /*background: url("#{resource['ultima-layout:images/logo2x.png']}") top left no-repeat;*/
     background-size: 200px 30px;
     /*background-size: 200px 30px;*/
@@ -872,7 +872,7 @@ body a {
   vertical-align: middle;
   width: 200px;
   height: 30px;
-  background: url("#{resource['semantikos/images/logo-31-dark.png']}") top left no-repeat;
+  background: url("#{resource['semantikos/images/logo-31.png']}") top left no-repeat;
   /*background: url("#{resource['ultima-layout:images/logo2x.png']}") top left no-repeat;*/
   /*background: url("#{resource['ultima-layout:images/logo.png']}") top left no-repeat;*/
 }
@@ -1942,7 +1942,7 @@ body a {
     margin-left: 0px; } }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .layout-wrapper .topbar .logo {
-    background: url("#{resource['semantikos/images/logo-31-dark.png']}") top left no-repeat;
+    background: url("#{resource['semantikos/images/logo-31.png']}") top left no-repeat;
     /*background: url("#{resource['ultima-layout:images/logo2x.png']}") top left no-repeat;*/
     background-size: 200px 30px;
   }

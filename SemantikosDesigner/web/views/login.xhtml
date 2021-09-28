@@ -43,7 +43,7 @@
                 </h:panelGroup>
             </div>
             <div id="div_captcha" class="ui-g-12" style="padding: 0;">
-                <p:captcha id="captcha" label="Captcha" language="es" rendered="false"/>
+                <p:captcha id="captcha" label="Captcha" language="es" rendered="true"/>
             </div>
             <div class="ui-g-12">
                 <p:commandButton update="loginform" value="Ingresar" icon="ui-icon-person" actionListener="#{authenticationBean.login}"
@@ -70,6 +70,10 @@
     <h:outputStylesheet id="customCSS">
         div#loginform\:captcha div {
             margin: 0px auto;
+        }
+
+        .login-panel {
+            margin-top: 2% !important;
         }
     </h:outputStylesheet>
 
@@ -112,7 +116,7 @@
             else {
                 $("#div_captcha").css({
                     "transform":"scale(1)",
-                    "transform-origin":"left top"
+                    "transform-origin":"center top"
                 });
             }
         };

@@ -63,7 +63,7 @@
         <h:outputStylesheet name="css/nanoscroller.css" library="ultima-layout" />
         <h:outputStylesheet name="css/animate.css" library="ultima-layout" />
         <h:outputStylesheet name="css/ripple.css" library="ultima-layout" />
-        <h:outputStylesheet name="css/layout-mine.css" library="ultima-layout" />
+        <h:outputStylesheet name="css/layout-indigo.css" library="ultima-layout" />
         <!--h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="ultima-layout" /-->
 
         <script type="text/javascript">
@@ -73,6 +73,7 @@
             function loader() {
 
                 $('.loader-trigger').on('click', function() {
+
                     $.Toast.showToast({
                         // toast message
                         "title": "Un momento por favor...",
@@ -83,7 +84,13 @@
                     });
                 });
 
+
                 $('.ui-paginator-page').on('click', function() {
+
+                    if($(this).hasClass("ui-state-active")) {
+                        return false;
+                    }
+
                     $.Toast.showToast({
                         // toast message
                         "title": "Un momento por favor...",
@@ -99,6 +106,11 @@
             function loaderPage() {
 
                 $('.ui-paginator-page').on('click', function() {
+
+                    if($(this).hasClass("ui-state-active")) {
+                        return false;
+                    }
+
                     $.Toast.showToast({
                         // toast message
                         "title": "Un momento por favor...",
@@ -143,6 +155,7 @@
                         "duration": 10000
                     });
                 });
+
             });
 
             function scrollTop() {

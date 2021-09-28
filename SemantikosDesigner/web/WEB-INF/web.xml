@@ -37,7 +37,7 @@
 
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>ultima-mine</param-value>
+        <param-value>ultima-indigo</param-value>
         <!--param-value>ultima-#{guestPreferences.theme}</param-value-->
     </context-param>
 
