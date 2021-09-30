@@ -49,6 +49,7 @@
                 <p:commandButton update="loginform" value="Ingresar" icon="ui-icon-person" actionListener="#{authenticationBean.login}"
                                  oncomplete="changeCapthaSize();listenOnClick();hideLoader();" styleClass="loader-trigger" />
                 <p:button outcome="/views/users/forgotPassword.xhtml" value="Olvido de Clave" icon="ui-icon-help" styleClass="secondary"/>
+                <h:outputLink value="#{request.contextPath.replace('designer','')}" style="font-size: 15px">Navegador de términos</h:outputLink>
             </div>
         </div>
         </h:form>

@@ -32,6 +32,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -47,7 +48,7 @@ import static java.lang.System.currentTimeMillis;
 import static org.primefaces.util.Constants.EMPTY_STRING;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class BrowserBean implements Serializable {
 
     private static final long serialVersionUID = 20120925L;

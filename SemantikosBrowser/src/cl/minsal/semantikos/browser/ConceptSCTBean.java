@@ -27,7 +27,7 @@ import java.util.List;
  */
 
 @ManagedBean(name = "conceptSCT")
-@SessionScoped
+@ViewScoped
 public class ConceptSCTBean {
 
     static private final Logger logger = LoggerFactory.getLogger(ConceptSCTBean.class);
@@ -129,6 +129,9 @@ public class ConceptSCTBean {
     }
 
     public void setConceptID(long conceptID) {
+        if(conceptID == 0) {
+            return;
+        }
         this.conceptID = conceptID;
         selectedConcept = snomedCTManager.getConceptByID(conceptID);
         selectedConcept.setRelationships(snomedCTManager.getRelationshipsFrom(selectedConcept));

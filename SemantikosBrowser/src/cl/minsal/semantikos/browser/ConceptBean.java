@@ -42,7 +42,7 @@ import java.util.List;
  */
 
 @ManagedBean(name = "concept")
-@SessionScoped
+@ViewScoped
 public class ConceptBean implements Serializable {
 
     static private final Logger logger = LoggerFactory.getLogger(ConceptBean.class);

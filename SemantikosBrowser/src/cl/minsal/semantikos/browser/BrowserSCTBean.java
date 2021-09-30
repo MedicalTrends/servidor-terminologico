@@ -25,6 +25,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -39,7 +40,7 @@ import static java.lang.System.currentTimeMillis;
 import static org.primefaces.util.Constants.EMPTY_STRING;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class BrowserSCTBean implements Serializable {
 
     private static final long serialVersionUID = 20120925L;
@@ -309,7 +310,7 @@ public class BrowserSCTBean implements Serializable {
         int pageindex = event.getPage();
         page = pageindex + 1;
         RequestContext reqCtx = RequestContext.getCurrentInstance();
-        reqCtx.execute("PF('conceptTableExcel').getPaginator().setPage("+pageindex+")");
+        //reqCtx.execute("PF('conceptTableExcel').getPaginator().setPage("+pageindex+")");
     }
 
     public LazyDataModel<ConceptSCT> getConcepts() {

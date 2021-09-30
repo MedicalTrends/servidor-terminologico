@@ -182,7 +182,7 @@
                         </p:dataTable>
 
                         <p:dataTable id="conceptTableSCT" value="#{browserSCTBean.concepts}" var="concept" styleClass="conceptTableSCT"
-                                     widgetVar="conceptTable"
+                                     widgetVar="conceptTableSCT"
                                      rendered="#{not empty browserSCTBean.concepts and browserBean.snomedCT}"
                                      multiViewState="true"
                                      rows="15"
@@ -198,7 +198,12 @@
                             <p:column headerText="Termino Preferido" style="padding-bottom: 10px; padding-top: 10px">
 
                                 <span class="overview-title">
-                                    <h:outputText value="#{concept.getDescriptionFavouriteSynonymous().term}" rendered="true"
+                                    <p:commandLink value="#{concept.getDescriptionFavouriteSynonymous().term}" rendered="true"
+                                                   actionListener="#{conceptSCT.setConceptID(concept.id)}"
+                                                   oncomplete="scrolltop(); highlight(this);" update="@(.conceptForm)"
+                                                   styleClass="myCustomLinkStyle context" style="font-size: medium">
+                                    </p:commandLink>
+                                    <h:outputText value="#{concept.getDescriptionFavouriteSynonymous().term}" rendered="false"
                                                   styleClass="context">
                                     </h:outputText>
                                     <p:link value="#{concept.getDescriptionFSN().term}" rendered="false"
@@ -209,7 +214,7 @@
                                 </span>
                                 <br/>
                                 <span class="overview-detail">
-                                    <h:outputText value="#{concept.id}" style="font-size: smaller;" />
+                                    <h:outputText value="#{concept.id}" style="font-size: smaller;color: #006621" />
                                     <br/>
 
                                 </span>
@@ -279,6 +284,7 @@
         function highlight() {
             $('.myCustomLinkStyle').on('click', function() {
                 $('.myCustomLinkStyle').parent().parent().removeClass('ui-state-highlight');
+                $('.myCustomLinkStyle').parent().parent().removeClass('ui-state-hover');
                 $(this).parent().parent().addClass('ui-state-highlight');
             });
 
