@@ -212,16 +212,26 @@ public class BrowserSCTBean implements Serializable {
                     }
                 }
 
-                if(rowCount == 0) {
+                /*
+                if(rowCount < conceptSCTs.size()) {
                     rowCount = queryManager.countQueryResults(snomedQuery);
                     //rowCount = rowCount + queryManager.countQueryResults(browserQuery);
                 }
+                */
+
+                rowCount = queryManager.countQueryResults(snomedQuery);
 
                 this.setRowCount(rowCount);
 
                 results = this.getRowCount();
                 seconds = (float) ((currentTimeMillis() - init)/1000.0);
-                pages = results/15 + 1;
+
+                if((results % 15) == 0) {
+                    pages = results/15;
+                }
+                else {
+                    pages = results/15 + 1;
+                }
 
                 if(results == 0) {
                     page = 1;

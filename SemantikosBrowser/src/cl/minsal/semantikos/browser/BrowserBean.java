@@ -284,7 +284,13 @@ public class BrowserBean implements Serializable {
 
                 results = this.getRowCount();
                 seconds = (float) ((currentTimeMillis() - init)/1000.0);
-                pages = results/15 + 1;
+
+                if((results % 15) == 0) {
+                    pages = results/15;
+                }
+                else {
+                    pages = results/15 + 1;
+                }
 
                 if(results == 0) {
                     page = 1;

@@ -384,3 +384,19 @@ body.layout-compact .ui-selectonemenu .ui-selectonemenu-trigger .ui-icon {
     background-color: #C8C8C8 !important;
 }
 */
+
+.subfolder {
+    color: #FBC02D !important;
+}
+
+.favorite {
+    /*color: #FFC107 !important;*/
+}
+
+.exception-panel {
+    margin: -12% auto 0 auto !important;
+}
+
+.exception-detail {
+    margin: 20px 0px 50px 0px !important;
+}

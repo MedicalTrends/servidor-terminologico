@@ -327,6 +327,11 @@ public class QueryManagerImpl implements QueryManager {
 
         List<ConceptSCT> concepts = (List<ConceptSCT>) (Object) queryDAO.executeQuery(query);
 
+        if(concepts.isEmpty()) {
+            query.setQuery(descriptionSearchBR.removeStopWords(query.getQuery()));
+            concepts = (List<ConceptSCT>) (Object) queryDAO.executeQuery(query);
+        }
+
         /*
         if(concepts.isEmpty()) {
             query.setTruncateMatch(true);

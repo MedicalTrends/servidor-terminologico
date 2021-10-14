@@ -42,7 +42,7 @@
       <module name="Semantikos" target="1.7" />
       <module name="SemantikosBrowser" target="1.8" />
       <module name="SemantikosCentral" target="1.7" />
-      <module name="SemantikosDCI" target="1.8" />
+      <module name="SemantikosDCI" target="1.7" />
       <module name="SemantikosDesigner" target="1.8" />
       <module name="SemantikosDomain" target="1.8" />
       <module name="SemantikosKernelEJB" target="1.8" />

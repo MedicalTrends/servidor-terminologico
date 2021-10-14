@@ -132,12 +132,12 @@
                             <h:outputText value="#{node.descriptionFSN.languageCode}" style="font-size: small; color: #006621" rendered="#{node['class'].simpleName eq 'ConceptSCT'}"  />
                         </p:outputPanel>
                         <p:commandLink value="#{node.descriptionFavorite.term}" rendered="#{node['class'].simpleName eq 'ConceptSMTK'}"
-                                       actionListener="#{concept.setConceptID(node.conceptID)}"
+                                       actionListener="#{concept.setConceptID(node.conceptID)}" style="font-size: small"
                                        update="@(.conceptForm)" oncomplete="scrolltop();"
                                        styleClass="context #{(node == concept.selectedConcept)?'concept-selected':''}">
                         </p:commandLink>
                         <p:commandLink value="#{node.getDescriptionFavouriteSynonymous().term}" rendered="#{node['class'].simpleName eq 'ConceptSCT'}"
-                                       actionListener="#{conceptSCT.setConceptID(node.id)}"
+                                       actionListener="#{conceptSCT.setConceptID(node.id)}" style="font-size: small"
                                        update="@(.conceptForm)" oncomplete="scrolltop();"
                                        styleClass="context #{(node == conceptSCT.selectedConcept)?'concept-selected':''}">
                         </p:commandLink>
@@ -146,312 +146,60 @@
 
                 <h:form id="conceptForm" rendered="#{not browserBean.snomedCT and concept.selectedConcept != null}">
 
-                    <div class="card card-w-title">
+                    <p:tree value="#{conceptTreeBean.getConceptTree(concept.selectedConcept)}" var="node"
+                            style="width: 100%; background-color: transparent; border: 0px;"
+                            rendered="true"
+                            dynamic="true">
+                        <p:treeNode icon="#{node['class'].simpleName eq 'MyTreeNode'?node.icon:'fa fa-edit'}">
+                            <p:outputPanel>
+                                <h:outputText value="#{node.title}" styleClass="context" style="font-size: small; color: #006621" rendered="#{node['class'].simpleName eq 'MyTreeNode'}" />
+                            </p:outputPanel>
+                            <p:outputPanel>
+                                <h:outputText value="#{node}" style="font-size: small; color: #545454" rendered="#{node['class'].simpleName != 'MyTreeNode'}" />
+                                <h:outputText value="#{node}" style="font-size: small; color: #545454" rendered="#{node['class'].simpleName eq 'MyTreeNode' and node.type eq 'default'}" />
+                                <p:commandLink value="#{node}" rendered="#{node['class'].simpleName eq 'MyTreeNode' and node.type eq 'ConceptSMTK'}"
+                                               actionListener="#{concept.setConceptID(node.detail)}"
+                                               update="@(.conceptForm)" oncomplete="scrolltop();"
+                                               styleClass="context">
+                                </p:commandLink>
+                                <p:commandLink value="#{node}" rendered="#{node['class'].simpleName eq 'MyTreeNode' and node.type eq 'ConceptSCT'}"
+                                               actionListener="#{conceptSCT.setConceptID(node.detail)}"
+                                               update="@(.conceptForm)" oncomplete="scrolltop();"
+                                               styleClass="context">
+                                </p:commandLink>
+                            </p:outputPanel>
+                        </p:treeNode>
+                    </p:tree>
 
-                        <p:outputLabel class="first-heading" value="#{concept.selectedConcept.descriptionFavorite}" rendered="false"/>
-
-                        <h1 class="first-heading">#{concept.selectedConcept.descriptionFavorite}</h1>
-
-                        <p:outputLabel value="(Semantikos)" style="font-size: small; margin: 10px; color: #545454"/>
-
-                        <p:separator styleClass="heading-separator"/>
-
-                        <div class="ui-g ui-fluid" style="margin-bottom: 20px; margin-left: 5px">
-
-                            <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <h:outputText value="ConceptID:" styleClass="label" />
-                            </div>
-
-                            <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                <h:outputText value="#{concept.selectedConcept.conceptID}" styleClass="value" />
-                            </div>
-
-                            <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <h:outputText value="Categoría:" styleClass="label" />
-                            </div>
-
-                            <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                <h:outputText value="#{concept.selectedConcept.category}" styleClass="value"/>
-                            </div>
-
-                            <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <h:outputText value="FSN:" styleClass="label"/>
-                            </div>
-
-                            <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                <h:outputText rows="1" value="#{concept.selectedConcept.descriptionFSN}" styleClass="value"/>
-                            </div>
-
-                            <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <h:outputText value="Preferida:" styleClass="label" />
-                            </div>
-
-                            <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                <h:outputText rows="1" value="#{concept.selectedConcept.descriptionFavorite}" styleClass="value"/>
-                            </div>
-
-                        </div>
-
-                        <p:outputPanel rendered="#{ not empty concept.getOtherDescriptions()}" style="margin-bottom: 20px">
-
-                            <h2 class="second-heading">Otras Descripciones</h2>
-
-                            <p:separator styleClass="heading-separator"/>
-
-                            <div class="ui-g ui-fluid">
-
-                                <p:repeat value="#{concept.getOtherDescriptions()}" var="description">
-
-                                    <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                        <h:outputText value="#{description.descriptionType.name}:" styleClass="label" />
-                                    </div>
-
-                                    <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                        <h:outputText value="#{description.term}" styleClass="value"/>
-                                    </div>
-
-                                </p:repeat>
-
-                            </div>
-
-                        </p:outputPanel>
-
-                        <p:outputPanel rendered="#{ not empty concept.getSMTKRelationships()}" style="margin-bottom: 20px">
-
-                            <h2 class="second-heading">Atributos</h2>
-
-                            <p:separator styleClass="heading-separator"/>
-
-                            <h:dataTable style="width: 100%;"
-                                         value="#{categoryBean.getNotEmptySMTKDefinitionsByCategory(concept.selectedConcept)}"
-                                         var="relationshipDefinition">
-
-                                <h:column>
-
-                                    <p:outputPanel
-                                            id="panelRelationshipDefiniton2"
-                                            styleClass="panel_#{relationshipDefinition.id}"
-                                            rendered="#{not relationshipDefinition.targetDefinition.crossMapType}">
-
-                                        <p:growl id="growlAttributes2" showDetail="true" showSummary="true"/>
-
-                                        <smtk:smtkTypeView
-                                                rendered="#{relationshipDefinition.targetDefinition.SMTKType}"
-                                                targetDefinition="#{relationshipDefinition.targetDefinition}"
-                                                relationshipDefinition="#{relationshipDefinition}"
-                                                concept="#{concept.selectedConcept}"/>
-
-                                        <smtk:helperTableTypeView
-                                                rendered="#{relationshipDefinition.targetDefinition.helperTable}"
-                                                relationshipDefinition="#{relationshipDefinition}"
-                                                targetDefinition="#{relationshipDefinition.targetDefinition}"
-                                                concept="#{concept.selectedConcept}"/>
-
-                                        <smtk:basicTypeView
-                                                targetDefinition="#{relationshipDefinition.targetDefinition}"
-                                                relationshipDefinition="#{relationshipDefinition}"
-                                                concept="#{concept.selectedConcept}"
-                                                rendered="#{relationshipDefinition.targetDefinition.basicType}"/>
-
-                                    </p:outputPanel>
-
-                                </h:column>
-
-                            </h:dataTable>
-
-                        </p:outputPanel>
-
-                        <p:outputPanel rendered="#{ not empty concept.getSnomedCTRelationships()}" style="margin-bottom: 20px">
-
-                            <h2 class="second-heading">Snomed-CT</h2>
-
-                            <p:separator styleClass="heading-separator"/>
-
-                            <div class="ui-g ui-fluid">
-
-                                <p:repeat value="#{concept.getSnomedCTRelationships()}" var="relationship">
-
-                                    <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                        <h:outputText value="#{relationship.getRelationshipTypeAttribute().target.description}:" styleClass="label" />
-                                    </div>
-
-                                    <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                        <p:commandLink value="#{relationship.target.getDescriptionFavouriteSynonymous().term}" update="@(.conceptForm)"
-                                                       actionListener="#{conceptSCT.setConceptID(relationship.target.id)}" oncomplete="scrolltop();"
-                                                       styleClass="value"/>
-                                    </div>
-
-                                </p:repeat>
-
-                            </div>
-
-                        </p:outputPanel>
-
-                        <p:outputPanel rendered="#{ not empty concept.getDirectCrossmapsRelationships() or not empty concept.getIndirectCrossmapsRelationships()}"
-                                       style="margin-bottom: 20px">
-
-                            <h2 class="second-heading">Crossmaps</h2>
-
-                            <p:separator styleClass="heading-separator"/>
-
-                            <p:fieldset legend="Crossmaps Directos" rendered="#{ not empty concept.getDirectCrossmapsRelationships() }">
-
-                                <p:dataTable id="directCrossmaps2"
-                                             paginator="false"
-                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                             var="crossmap"
-                                             value="#{concept.getDirectCrossmapsRelationships()}"
-                                             reflow="true">
-
-                                    <p:column headerText="Terminología">
-                                        <p:outputPanel>
-                                            <h:outputText value="#{crossmap.target.crossmapSet.name}"/>
-                                        </p:outputPanel>
-                                    </p:column>
-
-                                    <p:column headerText="Cod-1 Crossmapset Member">
-                                        <p:outputPanel>
-                                            <h:outputText value="#{crossmap.target.code1}" rendered="#{crossmap.relationshipDefinition.CIE10}"/>
-                                            <h:outputText value="#{crossmap.target.code}" rendered="#{crossmap.relationshipDefinition.GMDN}"/>
-                                        </p:outputPanel>
-                                    </p:column>
-
-                                    <p:column headerText="Descripción">
-                                        <p:outputPanel>
-                                            <h:outputText value="#{crossmap.target.gloss}" rendered="#{crossmap.relationshipDefinition.CIE10}" />
-                                            <h:outputText value="#{crossmap.target.termName}" rendered="#{crossmap.relationshipDefinition.GMDN}" />
-                                        </p:outputPanel>
-                                    </p:column>
-
-                                    <p:column headerText="Fecha Creación">
-                                        <p:outputPanel>
-                                            <h:outputText value="#{concept.getDateCreationFormat(crossmap.creationDate)}"/>
-                                        </p:outputPanel>
-                                    </p:column>
-
-                                </p:dataTable>
-
-                            </p:fieldset>
-
-                            <p:fieldset legend="Crossmaps Indirectos" rendered="#{ not empty concept.getIndirectCrossmapsRelationships() }">
-
-                                <p:dataTable id="indirectCrossmaps2"
-                                             paginator="false"
-                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                             var="crossmap"
-                                             value="#{concept.getIndirectCrossmapsRelationships()}"
-                                             reflow="true">
-
-                                    <p:column headerText="Terminología">
-                                        <p:outputPanel>
-                                            <h:outputText value="#{crossmap.target.crossmapSet.name}"/>
-                                        </p:outputPanel>
-                                    </p:column>
-                                    <p:column headerText="Cod-1 Crossmapset Member">
-                                        <p:outputPanel>
-                                            <h:outputText value="#{crossmap.target.code}"/>
-                                        </p:outputPanel>
-                                    </p:column>
-                                    <p:column headerText="Descripción">
-                                        <p:outputPanel>
-                                            <h:outputText value="#{crossmap.target.gloss}"/>
-                                        </p:outputPanel>
-                                    </p:column>
-                                    <p:column headerText="MapRule">
-                                        <p:outputPanel>
-                                            <h:outputText value="#{crossmap.mapRule}"/>
-                                        </p:outputPanel>
-                                    </p:column>
-                                    <p:column headerText="MapAdvice">
-                                        <p:outputPanel>
-                                            <h:outputText value="#{crossmap.mapAdvice}"/>
-                                        </p:outputPanel>
-                                    </p:column>
-                                    <p:column headerText="Origen">
-                                        <p:outputPanel>
-                                            <h:outputText value=""/>
-                                        </p:outputPanel>
-                                    </p:column>
-
-                                </p:dataTable>
-
-                            </p:fieldset>
-
-                        </p:outputPanel>
-
-                    </div>
 
                 </h:form>
 
                 <h:form id="snomedForm" rendered="#{concept.selectedConcept == null and conceptSCT.selectedConcept != null}">
 
-                    <div class="card card-w-title">
-
-                        <h1 class="first-heading">#{conceptSCT.selectedConcept.descriptionFSN}</h1>
-
-                        <p:outputLabel value="(Snomed-CT)" style="font-size: small; margin: 10px; color: #545454"/>
-
-                        <p:separator styleClass="heading-separator"/>
-
-                        <div class="ui-g ui-fluid" style="margin-bottom: 20px">
-
-                            <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <h:outputText value="ConceptID:" styleClass="label" />
-                            </div>
-
-                            <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                <h:outputText value="#{conceptSCT.selectedConcept.idSnomedCT}" styleClass="value"/>
-                            </div>
-
-                            <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                <h:outputText value="FSN:" styleClass="label" />
-                            </div>
-
-                            <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                <h:outputText value="#{conceptSCT.selectedConcept.descriptionFSN}" styleClass="value"/>
-                                <p:outputLabel rendered="#{conceptSCT.selectedConcept.descriptionFSN.favourite}">
-                                    <i class="ui-icon ui-icon-star" style="font-size: small; color: #FFC107"/>
-                                </p:outputLabel>
-                            </div>
-
-                            <p:repeat value="#{conceptSCT.otherDescriptions}" var="otherDescription">
-                                <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                    <h:outputText value="#{otherDescription.descriptionType.name}:" styleClass="label" />
-                                </div>
-                                <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                    <h:outputText value="#{otherDescription.term}" styleClass="value" />
-                                    <p:outputLabel rendered="#{otherDescription.favourite}">
-                                        <i class="ui-icon ui-icon-star" style="font-size: small; color: #FFC107"/>
-                                    </p:outputLabel>
-                                </div>
-                            </p:repeat>
-
-                        </div>
-
-                        <h2 class="second-heading">Relaciones</h2>
-
-                        <p:separator styleClass="heading-separator"/>
-
-                        <div class="ui-g ui-fluid">
-
-                            <p:repeat value="#{conceptSCT.selectedConcept.getRelationships()}" var="relationship">
-                                <div class="ui-g-12 ui-md-4 ui-lg-2">
-                                    <p:outputLabel value="#{relationship.typeConcept.getDescriptionFavouriteSynonymous().term}:" styleClass="label"/>
-                                    <p:commandLink value="#{relationship.typeConcept.descriptionFSN.term}:" update="@(.conceptForm)" rendered="false"
-                                                   actionListener="#{conceptSCT.setConceptID(relationship.typeConcept.idSnomedCT)}">
-                                    </p:commandLink>
-                                </div>
-                                <div class="ui-g-12 ui-md-8 ui-lg-10">
-                                    <p:commandLink value="#{relationship.destinationConcept.getDescriptionFavouriteSynonymous().term}" update="@(.conceptForm)"
-                                                   oncomplete="scrolltop();"
-                                                   actionListener="#{conceptSCT.setConceptID(relationship.destinationConcept.idSnomedCT)}">
-                                    </p:commandLink>
-                                </div>
-                            </p:repeat>
-
-                        </div>
-
-                    </div>
+                    <p:tree value="#{conceptSnomedTreeBean.getConceptTree(conceptSCT.selectedConcept)}" var="node"
+                            style="width: 100%; background-color: transparent; border: 0px;"
+                            rendered="true"
+                            dynamic="true">
+                        <p:treeNode icon="#{node['class'].simpleName eq 'MyTreeNode'?node.icon:'fa fa-folder'}">
+                            <p:outputPanel>
+                                <h:outputText value="#{node.title}" styleClass="context" style="font-size: small; color: #006621" rendered="#{node['class'].simpleName eq 'MyTreeNode'}" />
+                            </p:outputPanel>
+                            <p:outputPanel>
+                                <h:outputText value="#{node}" style="font-size: small; color: #545454" rendered="#{node['class'].simpleName != 'MyTreeNode'}" />
+                                <h:outputText value="#{node}" style="font-size: small; color: #545454" rendered="#{node['class'].simpleName eq 'MyTreeNode' and node.type eq 'default'}" />
+                                <p:commandLink value="#{node}" rendered="#{node['class'].simpleName eq 'MyTreeNode' and node.type eq 'ConceptSMTK'}"
+                                               actionListener="#{concept.setConceptID(node.detail)}"
+                                               update="@(.conceptForm)" oncomplete="scrolltop();"
+                                               styleClass="context">
+                                </p:commandLink>
+                                <p:commandLink value="#{node}" rendered="#{node['class'].simpleName eq 'MyTreeNode' and node.type eq 'ConceptSCT'}"
+                                               actionListener="#{conceptSCT.setConceptID(node.detail)}"
+                                               update="@(.conceptForm)" oncomplete="scrolltop();"
+                                               styleClass="context">
+                                </p:commandLink>
+                            </p:outputPanel>
+                        </p:treeNode>
+                    </p:tree>
 
                 </h:form>
 

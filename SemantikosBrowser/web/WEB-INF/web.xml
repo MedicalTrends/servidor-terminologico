@@ -101,8 +101,8 @@
 
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <!--location>/views/login.xhtml</location-->
-        <location>/views/errors/error.xhtml</location>
+        <location>/views/concepts.xhtml</location>
+        <!--location>/views/errors/error.xhtml</location-->
     </error-page>
 
     <error-page>

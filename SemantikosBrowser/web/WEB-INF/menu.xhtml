@@ -1,10 +1,10 @@
-<ui:composition 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:pu="http://primefaces.org/ultima">
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pu="http://primefaces.org/ultima">
 
 
     <h:form id="browserForm">
@@ -19,7 +19,7 @@
 
                     <pu:menu widgetVar="me" model="#{browserSCTBean.menu}" rendered="#{false}"/>
 
-                    <p:outputPanel rendered="true">
+                    <p:outputPanel id="terminology-menu" rendered="true" style="padding-top: 5px">
                         <div class="ui-fluid ui-g">
                             <div class="ui-g-4 ui-md-4 ui-lg-4">
                                 <p:outputLabel value="Buscar en:"/>
@@ -29,7 +29,7 @@
                                     <f:selectItem itemLabel="Semantikos" itemValue="false"/>
                                     <f:selectItem itemLabel="Snomed-CT" itemValue="true"/>
                                     <p:ajax event="itemSelect" process="@this"
-                                           update="@(.search),@(.conceptPanel)"  />
+                                            update="@(.search),@(.conceptPanel)"  />
                                 </p:selectOneMenu>
                             </div>
                         </div>
@@ -143,10 +143,10 @@
                                 <p:commandLink value="#{conceptSMTK.descriptionFavorite.term}" rendered="true"
                                                actionListener="#{concept.setConceptID(conceptSMTK.conceptID)}"
                                                update="@(.conceptForm)" oncomplete="scrolltop(); highlight(this);"
-                                        styleClass="myCustomLinkStyle context" style="font-size: medium">
+                                               styleClass="myCustomLinkStyle stk context" style="font-size: medium">
                                 </p:commandLink>
                                 <h:outputText value="#{conceptSMTK.descriptionFavorite.term}" rendered="false"
-                                               styleClass="context" style="font-size: 16px; color: #212121">
+                                              styleClass="context" style="font-size: 16px; color: #212121">
                                 </h:outputText>
                                 <br/>
                                 <p:outputPanel rendered="#{ not empty conceptSMTK.tags}">
@@ -164,8 +164,8 @@
                                     </p:repeat>
                                 </p:outputPanel>
                                 <p:link value="#{conceptSMTK.descriptionFavorite.term}" rendered="false"
-                                               oncomplete="scrolltop();" outcome="/views/concept"
-                                               styleClass="context" style="font-size: medium">
+                                        oncomplete="scrolltop();" outcome="/views/concept"
+                                        styleClass="context" style="font-size: medium">
                                     <f:param name="conceptID" value="#{conceptSMTK.conceptID}" />
                                 </p:link>
                                 <span class="overview-detail">
@@ -282,15 +282,26 @@
 
 
         function highlight() {
-            $('.myCustomLinkStyle').on('click', function() {
+
+            $('.myCustomLinkStyle').on('click', function(e) {
                 $('.myCustomLinkStyle').parent().parent().removeClass('ui-state-highlight');
                 $('.myCustomLinkStyle').parent().parent().removeClass('ui-state-hover');
-                $(this).parent().parent().addClass('ui-state-highlight');
+
+                if($(this).hasClass("stk")) {
+                    $(e.target).parent().parent().addClass('ui-state-highlight');
+                }
+                else {
+                    $(e.target).parent().parent().trigger('click');
+                }
             });
 
+            $(".nano").nanoScroller();
+
+            //$('.nano-slider').css('position','relative');
+
             //$('.conceptPanel .context').on('click', function() {
-              // $('.concept-selected-menu').removeClass('concept-selected-menu');
-             //  $(this).addClass('concept-selected-menu');
+            // $('.concept-selected-menu').removeClass('concept-selected-menu');
+            //  $(this).addClass('concept-selected-menu');
             //});
         }
 
