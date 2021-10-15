@@ -287,14 +287,14 @@
                      styleClass="relationships_#{cc.attrs.relationshipDefinition.id}"
                      var="relationship"
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
-                     reflow="true">
+                     reflow="false">
 
-            <p:column>
+            <p:column priority="1">
                 <h:outputText value="#{relationship.target.description}"/>
             </p:column>
 
             <p:columns value="#{cc.attrs.targetDefinition.columns}"
-                       var="column"
+                       var="column" priority="6"
                        columnIndexVar="colIndex">
                 <f:facet name="header">
                     <h:outputText value="#{column.name}" />
@@ -302,8 +302,7 @@
                 <h:outputText value="#{relationship.target.getColumnValue(column)}" />
             </p:columns>
 
-
-            <p:column headerText="Acción">
+            <p:column headerText="Acción" priority="1">
                 <div style="text-align: center">
                     <p:commandButton
                             icon="fa fa-trash"
@@ -394,8 +393,7 @@
                      draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}"
                      var="relationship"
                      value="#{cc.attrs.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
-                     style="width: 100%"
-                     reflow="true">
+                     style="width: 100%">
 
             <!-- Parámetros del validador -->
             <f:attribute name="relationshipDefinition" value="#{cc.attrs.relationshipDefinition}"  />
@@ -407,7 +405,7 @@
             </p:ajax>
 
             <p:columns value="#{cc.attrs.targetDefinition.showableColumns}"
-                       var="column"
+                       var="column" priority="1"
                        columnIndexVar="colIndex"
                        >
                 <f:facet name="header">
@@ -417,7 +415,7 @@
             </p:columns>
 
             <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
-                       var="attribute"
+                       var="attribute" priority="6"
                        columnIndexVar="colIndex">
                 <f:facet name="header">
                     <h:outputText value="#{attribute.name}" />
@@ -426,7 +424,7 @@
                 <smtk:helperTableTypeAttributeCell attribute="#{attribute}" relationship="#{relationship}" rendered="#{attribute.targetDefinition.helperTable}" />
             </p:columns>
 
-            <p:column style="">
+            <p:column style="" priority="1">
                 <div style="text-align: center">
                     <p:commandButton
                             icon="fa fa-trash"

@@ -72,25 +72,26 @@
         <p:spacer />
 
         <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
-                     id="tableRelationship2" reflow="true"
+                     id="tableRelationship2" reflow="false"
                      sortBy="#{rel.getOrder()}"
                      draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null and cc.attrs.concept.editable}" style="margin: 10px;"
                      value="#{conceptBean.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      var="rel">
 
-            <p:column headerText="ConceptID">
+            <p:column headerText="ConceptID" priority="2">
                 <h:outputText value="#{rel.target.id}" style="font-size: small; color:#545454;"/>
             </p:column>
 
-            <p:column headerText="Término Preferida"  style="font-size: small; color:#545454;">
+            <p:column headerText="Término Preferido"  style="font-size: small; color:#545454;" priority="1">
                 <h:outputText value="#{rel.target.descriptionFavorite.term}"/>
             </p:column>
 
 
-            <p:column headerText="Estado">
+            <p:column headerText="Estado"  priority="6">
                 <h:outputText value="#{rel.target.modeled}" style="font-size: small; color:#545454;"/>
             </p:column>
-            <p:column headerText="Eliminar" style="text-align: center;">
+
+            <p:column headerText="Eliminar" style="text-align: center;" priority="1">
                 <p:commandButton icon="fa fa-trash" title="Eliminar" rendered="#{rel.isValid()}"
                                  action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
                                  update="@(.panel_#{cc.attrs.relationshipDefinition.id})"
@@ -186,10 +187,10 @@
         </p:outputPanel>
 
         <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
-                     id="tableRelationship3" reflow="true"
+                     id="tableRelationship3"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
                      draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}"
-                     style="margin: 0px; text-align: center; font-size: small"
+                     style="margin: 0px; text-align: center; font-size: small; width: 100%"
                      value="#{conceptBean.concept.getValidRelationshipsWebByRelationDefinition(cc.attrs.relationshipDefinition)}"
                      var="rel">
 
@@ -203,16 +204,16 @@
             </p:ajax>
             <f:attribute name="relationshipDefinitionRowEdit" value="#{cc.attrs.relationshipDefinition}" />
 
-            <p:column headerText="ConceptID">
+            <p:column headerText="ConceptID" priority="2">
                 <h:outputText value="#{rel.target.conceptID}" style="font-size: small; color:#545454;"/>
             </p:column>
 
-            <p:column headerText="Descripción">
+            <p:column headerText="Término Preferido" priority="1">
                 <h:outputText value="#{rel.target.descriptionFavorite.term}" style="font-size: small; color:#545454;"/>
             </p:column>
 
             <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitions}"
-                       var="attribute"
+                       var="attribute" priority="6"
                        columnIndexVar="colIndex">
                 <f:facet name="header">
                     <h:outputText value="#{attribute.name}" />
@@ -224,7 +225,7 @@
                 </p:outputPanel>
             </p:columns>
 
-            <p:column headerText="Eliminar" style="text-align: center;">
+            <p:column headerText="Eliminar" style="text-align: center;" priority="1">
                 <p:commandButton icon="fa fa-trash" title="Eliminar" rendered="#{rel.isValid()}"
                                  action="#{conceptBean.removeRelationship(cc.attrs.relationshipDefinition,rel)}"
                                  update="@(.relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}),@(.conceptHeader)"

@@ -165,7 +165,7 @@
 
         <p:dataTable emptyMessage="No existen relaciones, se debe agregar al menos: #{cc.attrs.relationshipDefinition.multiplicity.lowerBoundary}."
                      id="tableRelationship3"
-                     reflow="true"
+                     reflow="false"
                      styleClass="relationshipsWithAttributes_#{cc.attrs.relationshipDefinition.id}"
                      draggableRows="#{cc.attrs.relationshipDefinition.getOrderAttributeDefinition() != null}"
                      style="width: 100%; text-align: center; font-size: small"
@@ -183,7 +183,7 @@
             <f:attribute name="relationshipDefinitionRowEdit" value="#{cc.attrs.relationshipDefinition}" />
 
             <p:columns value="#{cc.attrs.relationshipDefinition.relationshipAttributeDefinitionWebs}"
-                       var="attribute"
+                       var="attribute" priority="6"
                        columnIndexVar="colIndex">
                 <f:facet name="header">
                     <h:outputText value="#{attribute.name}" />
@@ -196,15 +196,15 @@
                 </p:outputPanel>
             </p:columns>
 
-            <p:column headerText="ConceptID">
-                <h:outputText value="#{rel.target.idSnomedCT}"/>
+            <p:column headerText="ConceptID" priority="2">
+                <h:outputText value="#{rel.target.idSnomedCT}" style="font-size: small"/>
             </p:column>
 
-            <p:column headerText="FSN">
-                <h:outputText value="#{rel.target.descriptionFSN.term}"/>
+            <p:column headerText="FSN" priority="1">
+                <h:outputText value="#{rel.target.descriptionFSN.term}" style="font-size: small"/>
             </p:column>
 
-            <p:column headerText="Acción">
+            <p:column headerText="Acción" priority="1">
                 <div style="text-align: center">
 
                     <p:commandButton title="Ver" oncomplete="PF('dialogC').show()" process="@this"
